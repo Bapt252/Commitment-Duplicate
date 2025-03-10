@@ -1,0 +1,470 @@
+/**
+ * Styles additionnels pour améliorer l'UI/UX
+ */
+
+/* Bouton de retour en haut */
+.scroll-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background-color: var(--primary);
+  color: white;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 99;
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+  border: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scroll-to-top.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.scroll-to-top:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+}
+
+/* Style d'autocomplétion pour la recherche */
+.autocomplete {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  border-radius: 0 0 var(--radius) var(--radius);
+  box-shadow: var(--shadow-lg);
+  z-index: 10;
+  max-height: 200px;
+  overflow-y: auto;
+  margin-top: 5px;
+}
+
+.suggestion {
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.suggestion:hover {
+  background-color: var(--light-bg);
+  color: var(--primary);
+}
+
+/* Animation de pulsation pour les badges */
+.pulse {
+  animation: pulse-animation 2s infinite;
+}
+
+@keyframes pulse-animation {
+  0% {
+    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 15px rgba(99, 102, 241, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);
+  }
+}
+
+/* Amélioration des focus pour l'accessibilité */
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+/* Styles pour l'état de focus des éléments interactifs */
+.focus-visible {
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
+}
+
+/* Animations lorsque la page charge */
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 0.8s forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Animations séquentielles pour les cartes */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Mode sombre amélioré */
+body.dark-mode {
+  --light-bg: #111827;
+  --light-bg-alt: #1F2937;
+  --dark: #F9FAFB;
+  --text: #E5E7EB;
+  --text-light: #9CA3AF;
+  --text-lighter: #6B7280;
+  
+  background-color: var(--light-bg);
+  color: var(--text);
+}
+
+body.dark-mode header {
+  background-color: rgba(17, 24, 39, 0.8);
+}
+
+body.dark-mode .card,
+body.dark-mode .job-card,
+body.dark-mode .user-type-card,
+body.dark-mode .feature-card,
+body.dark-mode .modal-content {
+  background-color: #1F2937;
+  border-color: #374151;
+}
+
+body.dark-mode .search-bar {
+  background-color: #1F2937;
+}
+
+body.dark-mode .search-bar input {
+  background-color: #1F2937;
+  color: white;
+}
+
+body.dark-mode .search-bar select {
+  background-color: #374151;
+  color: white;
+  border-left-color: #4B5563;
+}
+
+body.dark-mode .job-card-footer,
+body.dark-mode .job-details-footer {
+  background-color: #111827;
+}
+
+body.dark-mode .step-circle {
+  background-color: #1F2937;
+  border-color: #374151;
+}
+
+/* Bouton de basculement du mode sombre */
+#dark-mode-toggle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+#dark-mode-toggle::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(99, 102, 241, 0.1);
+  border-radius: 50%;
+  transform: scale(0);
+  transition: transform 0.3s ease;
+}
+
+#dark-mode-toggle:hover::before {
+  transform: scale(1);
+}
+
+#dark-mode-toggle i {
+  position: relative;
+  z-index: 1;
+  transition: transform 0.3s ease;
+}
+
+#dark-mode-toggle.active i {
+  transform: rotate(360deg);
+}
+
+body.dark-mode #dark-mode-toggle i::before {
+  content: '\f185'; /* Icône du soleil */
+}
+
+/* Style d'autocomplétion adapté au mode sombre */
+body.dark-mode .autocomplete {
+  background-color: #1F2937;
+  border: 1px solid #374151;
+}
+
+body.dark-mode .suggestion {
+  color: var(--text);
+}
+
+body.dark-mode .suggestion:hover {
+  background-color: #374151;
+}
+
+/* Style pour les tooltips */
+.tooltip {
+  position: relative;
+}
+
+.tooltip::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(17, 24, 39, 0.9);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  pointer-events: none;
+  z-index: 100;
+}
+
+.tooltip::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: rgba(17, 24, 39, 0.9) transparent transparent transparent;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 100;
+}
+
+.tooltip:hover::after,
+.tooltip:hover::before {
+  opacity: 1;
+  visibility: visible;
+}
+
+body.dark-mode .tooltip::after {
+  background-color: rgba(249, 250, 251, 0.9);
+  color: #111827;
+}
+
+body.dark-mode .tooltip::before {
+  border-color: rgba(249, 250, 251, 0.9) transparent transparent transparent;
+}
+
+/* Effet de surbrillance pour mise en évidence */
+.highlight {
+  position: relative;
+  display: inline-block;
+}
+
+.highlight::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40%;
+  background-color: rgba(99, 102, 241, 0.2);
+  z-index: -1;
+  border-radius: 3px;
+}
+
+body.dark-mode .highlight::after {
+  background-color: rgba(99, 102, 241, 0.3);
+}
+
+/* Animation de chargement pour les boutons */
+.btn-loading {
+  position: relative;
+  pointer-events: none;
+}
+
+.btn-loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin-top: -10px;
+  margin-left: -10px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.btn-loading span {
+  opacity: 0;
+}
+
+/* Animation pour mettre en évidence les nouveaux éléments */
+@keyframes highlight-new {
+  0%, 100% {
+    background-color: transparent;
+  }
+  50% {
+    background-color: rgba(99, 102, 241, 0.1);
+  }
+}
+
+.highlight-new {
+  animation: highlight-new 2s ease;
+}
+
+/* Styles pour les messages de notification (toast) */
+.toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.toast {
+  padding: 1rem 1.5rem;
+  border-radius: var(--radius);
+  background-color: white;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-width: 300px;
+  max-width: 400px;
+  transform: translateX(150%);
+  animation: toast-slide-in 0.3s forwards, toast-slide-out 0.3s 5s forwards;
+}
+
+@keyframes toast-slide-in {
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes toast-slide-out {
+  to {
+    transform: translateX(150%);
+  }
+}
+
+.toast.success {
+  border-left: 5px solid var(--success);
+}
+
+.toast.warning {
+  border-left: 5px solid var(--warning);
+}
+
+.toast.error {
+  border-left: 5px solid var(--error);
+}
+
+.toast.info {
+  border-left: 5px solid var(--info);
+}
+
+.toast-icon {
+  font-size: 1.5rem;
+}
+
+.toast.success .toast-icon {
+  color: var(--success);
+}
+
+.toast.warning .toast-icon {
+  color: var(--warning);
+}
+
+.toast.error .toast-icon {
+  color: var(--error);
+}
+
+.toast.info .toast-icon {
+  color: var(--info);
+}
+
+.toast-content {
+  flex: 1;
+}
+
+.toast-title {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  color: var(--dark);
+}
+
+.toast-message {
+  font-size: 0.875rem;
+  color: var(--text);
+}
+
+.toast-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.25rem;
+  color: var(--text-light);
+  transition: color 0.2s ease;
+}
+
+.toast-close:hover {
+  color: var(--dark);
+}
+
+body.dark-mode .toast {
+  background-color: #1F2937;
+}
+
+body.dark-mode .toast-title {
+  color: white;
+}
+
+body.dark-mode .toast-message {
+  color: var(--text);
+}
+
+body.dark-mode .toast-close:hover {
+  color: white;
+}
