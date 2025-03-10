@@ -6,11 +6,12 @@
     <title>Questionnaire Recruteur - Nexten</title>
     <link rel="stylesheet" href="../static/styles/modern.css">
     <link rel="stylesheet" href="../static/styles/additional.css">
+    <link rel="stylesheet" href="../static/styles/nexten-theme.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&libraries=places&callback=initAutocomplete" defer></script>
     <style>
-        /* Styles principaux modernisés */
+        /* Styles spécifiques au questionnaire */
         .questionnaire-section {
             padding: 4rem 0;
             background-color: var(--light-bg);
@@ -52,33 +53,16 @@
             z-index: 1;
         }
         
-        .section-title {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--dark);
-            margin-bottom: 1rem;
-            position: relative;
-            display: inline-block;
+        .question-container {
+            display: none;
+            animation: fadeIn 0.5s forwards;
         }
         
-        .section-title::after {
-            content: "";
-            position: absolute;
-            left: 0;
-            bottom: -10px;
-            width: 40%;
-            height: 3px;
-            background: var(--primary);
-            border-radius: 10px;
+        .question-container.active {
+            display: block;
         }
         
-        .section-description {
-            color: var(--text);
-            font-size: 1.1rem;
-            margin-bottom: 2.5rem;
-        }
-        
-        /* Stepper modernisé */
+        /* Stepper modernisé avec numérotation 1-10 */
         .stepper {
             display: flex;
             justify-content: space-between;
@@ -124,538 +108,7 @@
             width: 100%;
         }
         
-        .step {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .step-circle {
-            width: 50px;
-            height: 50px;
-            background-color: white;
-            border: 3px solid #e2e8f0;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 12px;
-            font-weight: 600;
-            color: var(--text);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .step-text {
-            font-weight: 500;
-            color: var(--text);
-            transition: all 0.3s ease;
-        }
-        
-        .step.active .step-circle {
-            border-color: var(--primary);
-            color: white;
-            box-shadow: 0 0 0 5px rgba(108, 99, 255, 0.2);
-        }
-        
-        .step.active .step-circle::before {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-color: var(--primary);
-            z-index: -1;
-            animation: circleAnim 0.5s forwards;
-        }
-        
-        .step.active .step-text {
-            color: var(--primary);
-            font-weight: 600;
-        }
-        
-        .step.completed .step-circle {
-            background-color: var(--primary);
-            border-color: var(--primary);
-            color: white;
-        }
-        
-        .step.completed .step-circle i {
-            animation: fadeIn 0.5s forwards;
-        }
-        
-        /* Styles des questions et formulaires */
-        .question-container {
-            display: none;
-            animation: fadeIn 0.5s forwards;
-        }
-        
-        .question-container.active {
-            display: block;
-        }
-        
-        .question-header {
-            margin-bottom: 2rem;
-        }
-        
-        .question-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--dark);
-            margin-bottom: 0.8rem;
-        }
-        
-        .question-description {
-            color: var(--text);
-            font-size: 1.05rem;
-            line-height: 1.5;
-        }
-        
-        .form-group {
-            margin-bottom: 1.8rem;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 0.7rem;
-            font-weight: 500;
-            color: var(--dark);
-            position: relative;
-        }
-        
-        .label-required::after {
-            content: '*';
-            color: var(--primary);
-            margin-left: 4px;
-        }
-        
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 0.9rem;
-            border: 1px solid #e2e8f0;
-            border-radius: var(--radius);
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            background-color: white;
-        }
-        
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            border-color: var(--primary);
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.2);
-            transform: translateY(-2px);
-        }
-        
-        .form-divider {
-            margin: 2rem 0;
-            border-top: 1px solid #e2e8f0;
-            position: relative;
-        }
-        
-        .divider-text {
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: white;
-            padding: 0 15px;
-            font-weight: 600;
-            color: var(--primary);
-            font-size: 0.95rem;
-        }
-        
-        /* Checkbox modernisés */
-        .checkbox-group {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-        
-        .checkbox-item {
-            display: flex;
-            align-items: center;
-            position: relative;
-        }
-        
-        .custom-checkbox {
-            position: absolute;
-            opacity: 0;
-            cursor: pointer;
-            height: 0;
-            width: 0;
-        }
-        
-        .checkmark {
-            position: relative;
-            height: 22px;
-            width: 22px;
-            background-color: #e2e8f0;
-            border-radius: 4px;
-            margin-right: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
-            flex-shrink: 0;
-        }
-        
-        .checkbox-item:hover input ~ .checkmark {
-            background-color: #d1d5db;
-        }
-        
-        .checkbox-item input:checked ~ .checkmark {
-            background-color: var(--primary);
-        }
-        
-        .checkmark:after {
-            content: '';
-            position: absolute;
-            display: none;
-            width: 6px;
-            height: 12px;
-            border: solid white;
-            border-width: 0 2px 2px 0;
-            transform: rotate(45deg);
-        }
-        
-        .checkbox-item input:checked ~ .checkmark:after {
-            display: block;
-        }
-        
-        .checkbox-label {
-            font-size: 0.95rem;
-            color: var(--dark);
-            cursor: pointer;
-        }
-        
-        /* Radio buttons */
-        .radio-group {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            margin-bottom: 1.8rem;
-        }
-        
-        .radio-item {
-            display: flex;
-            align-items: center;
-            position: relative;
-            padding: 0.8rem 1rem;
-            border: 1px solid #e2e8f0;
-            border-radius: var(--radius);
-            transition: all 0.3s ease;
-        }
-        
-        .radio-item:hover {
-            border-color: var(--primary);
-            background-color: rgba(108, 99, 255, 0.05);
-            transform: translateY(-2px);
-        }
-        
-        .custom-radio {
-            position: absolute;
-            opacity: 0;
-            cursor: pointer;
-            height: 0;
-            width: 0;
-        }
-        
-        .radio-checkmark {
-            position: relative;
-            height: 22px;
-            width: 22px;
-            background-color: #e2e8f0;
-            border-radius: 50%;
-            margin-right: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
-            flex-shrink: 0;
-        }
-        
-        .radio-item input:checked ~ .radio-checkmark {
-            background-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.2);
-        }
-        
-        .radio-checkmark:after {
-            content: '';
-            position: absolute;
-            display: none;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background-color: white;
-        }
-        
-        .radio-item input:checked ~ .radio-checkmark:after {
-            display: block;
-        }
-        
-        .radio-content {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .radio-label {
-            font-weight: 500;
-            color: var(--dark);
-            margin-bottom: 0.2rem;
-        }
-        
-        .radio-description {
-            font-size: 0.9rem;
-            color: var(--text);
-        }
-        
-        /* Info tips */
-        .info-tip {
-            background-color: rgba(52, 152, 219, 0.1);
-            border-left: 3px solid #3498db;
-            padding: 1rem;
-            border-radius: 0 var(--radius) var(--radius) 0;
-            margin-bottom: 2rem;
-            display: flex;
-            align-items: flex-start;
-        }
-        
-        .info-tip i {
-            color: #3498db;
-            margin-right: 0.8rem;
-            font-size: 1.2rem;
-            margin-top: 0.2rem;
-        }
-        
-        .info-tip-content {
-            flex: 1;
-        }
-        
-        .info-tip-title {
-            font-weight: 600;
-            color: var(--dark);
-            margin-bottom: 0.5rem;
-        }
-        
-        .info-tip-text {
-            color: var(--text);
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-        
-        .ai-badge {
-            display: inline-flex;
-            align-items: center;
-            background-color: rgba(108, 99, 255, 0.1);
-            color: var(--primary);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-weight: 500;
-            margin-bottom: 1rem;
-        }
-        
-        .ai-badge i {
-            margin-right: 0.5rem;
-        }
-        
-        /* Conditional section */
-        .conditional-section {
-            padding: 1.5rem;
-            background-color: #f8fafc;
-            border-radius: var(--radius);
-            margin-bottom: 2rem;
-            border-left: 3px solid var(--primary);
-            animation: fadeIn 0.5s forwards;
-            display: none;
-        }
-        
-        .conditional-section.active {
-            display: block;
-        }
-        
-        /* Boutons navigation */
-        .form-navigation {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 2.5rem;
-        }
-        
-        .nav-btn {
-            padding: 0.9rem 1.8rem;
-            border-radius: 30px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 120px;
-        }
-        
-        .btn-prev {
-            background-color: white;
-            color: var(--primary);
-            border: 2px solid var(--primary);
-        }
-        
-        .btn-prev:hover {
-            background-color: rgba(108, 99, 255, 0.1);
-            transform: translateY(-3px);
-        }
-        
-        .btn-prev i {
-            margin-right: 0.5rem;
-        }
-        
-        .btn-next, .btn-submit {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            box-shadow: 0 4px 10px rgba(108, 99, 255, 0.3);
-        }
-        
-        .btn-next:hover, .btn-submit:hover {
-            background-color: var(--primary-dark);
-            transform: translateY(-3px);
-            box-shadow: 0 7px 15px rgba(108, 99, 255, 0.4);
-        }
-        
-        .btn-next i, .btn-submit i {
-            margin-left: 0.5rem;
-        }
-        
-        /* Summary section */
-        .summary-section {
-            margin-top: 1.5rem;
-        }
-        
-        .summary-block {
-            background-color: #f8fafc;
-            border-radius: var(--radius);
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border-left: 3px solid var(--primary);
-        }
-        
-        .summary-title {
-            font-weight: 600;
-            color: var(--dark);
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-        }
-        
-        .summary-title i {
-            color: var(--primary);
-            margin-right: 0.5rem;
-        }
-        
-        .summary-item {
-            display: flex;
-            margin-bottom: 0.8rem;
-            padding-bottom: 0.8rem;
-            border-bottom: 1px dashed #e2e8f0;
-        }
-        
-        .summary-item:last-child {
-            margin-bottom: 0;
-            padding-bottom: 0;
-            border-bottom: none;
-        }
-        
-        .summary-label {
-            font-weight: 500;
-            width: 180px;
-            color: var(--primary-dark);
-            flex-shrink: 0;
-        }
-        
-        .summary-value {
-            color: var(--dark);
-            flex: 1;
-        }
-        
-        .summary-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-        
-        .summary-tag {
-            background-color: rgba(108, 99, 255, 0.1);
-            color: var(--primary);
-            padding: 0.4rem 0.8rem;
-            border-radius: 20px;
-            font-weight: 500;
-            font-size: 0.9rem;
-        }
-        
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        @keyframes circleAnim {
-            from { transform: scale(0); }
-            to { transform: scale(1); }
-        }
-
-        /* Responsive design */
-        @media (max-width: 768px) {
-            .questionnaire-section {
-                padding: 3rem 0;
-            }
-            
-            .questionnaire-container {
-                padding: 1.5rem;
-            }
-            
-            .stepper {
-                margin-bottom: 2rem;
-            }
-            
-            .step-circle {
-                width: 40px;
-                height: 40px;
-                font-size: 0.9rem;
-            }
-            
-            .step-text {
-                font-size: 0.8rem;
-            }
-            
-            .checkbox-group {
-                grid-template-columns: 1fr;
-            }
-            
-            .summary-item {
-                flex-direction: column;
-            }
-            
-            .summary-label {
-                width: 100%;
-                margin-bottom: 0.5rem;
-            }
-            
-            .form-navigation {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            
-            .nav-btn {
-                width: 100%;
-            }
-        }
-
-        /* Style pour la section Avez-vous un poste */
+        /* Recruitment form - Mise à jour pour le concept de 10 connexions */
         .recruitment-form {
             background-color: #ffffff;
             border-radius: var(--radius);
@@ -672,6 +125,52 @@
         body.dark-mode .recruitment-form {
             background-color: #1F2937;
         }
+        
+        /* Afficher les 10 connexions avec compteurs */
+        .connection-counter {
+            counter-reset: connection-step;
+        }
+        
+        .connection-step {
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 1.5rem;
+            counter-increment: connection-step;
+        }
+        
+        .connection-step::before {
+            content: counter(connection-step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 2.5rem;
+            height: 2.5rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+        
+        /* Animation pulse pour les badges */
+        @keyframes pulse-badge {
+            0% {
+                box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.5);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(99, 102, 241, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);
+            }
+        }
+        
+        .pulse-badge {
+            animation: pulse-badge 2s infinite;
+        }
     </style>
 </head>
 <body>
@@ -679,18 +178,7 @@
         <div class="container">
             <h1>
                 <a href="index.html" aria-label="Accueil Nexten">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 50" style="height: 40px; margin-right: 5px;">
-                      <defs>
-                        <linearGradient id="logo-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                          <stop offset="0%" stop-color="#6366F1" />
-                          <stop offset="100%" stop-color="#8B5CF6" />
-                        </linearGradient>
-                      </defs>
-                      <path d="M20,10 L30,10 L30,40 L20,40 L20,25 L10,40 L0,40 L0,10 L10,10 L10,25 Z" fill="url(#logo-gradient)"/>
-                      <text x="35" y="32" font-family="Inter, Arial, sans-serif" font-weight="bold" font-size="24" fill="#374151">exten</text>
-                      <circle cx="180" cy="15" r="12" fill="url(#logo-gradient)" opacity="0.2"/>
-                      <text x="173" y="20" font-family="Inter, Arial, sans-serif" font-weight="bold" font-size="12" fill="#6366F1">10</text>
-                    </svg>
+                    <img src="../static/images/nexten-logo.svg" alt="Nexten - 10 connexions stratégiques" height="50">
                 </a>
             </h1>
             
@@ -717,7 +205,9 @@
     <section class="questionnaire-section" id="main-content">
         <div class="container">
             <h2 class="section-title">Questionnaire recruteur</h2>
-            <p class="section-description">Afin d'optimiser le matching avec les candidats, veuillez nous fournir plus de détails sur votre structure et vos besoins.</p>
+            <p class="section-description">
+                Afin d'optimiser vos <span class="ten-accent">10</span> connexions stratégiques avec les candidats, veuillez nous fournir des détails sur votre structure et vos besoins.
+            </p>
             
             <div class="questionnaire-container">
                 <div class="stepper step1">
@@ -750,9 +240,36 @@
                         <div class="info-tip">
                             <i class="fas fa-lightbulb"></i>
                             <div class="info-tip-content">
-                                <div class="info-tip-title">Conseil</div>
+                                <div class="info-tip-title">Conseil de connexion</div>
                                 <p class="info-tip-text">Une description précise de votre entreprise permet aux candidats de mieux comprendre votre culture et votre environnement de travail, ce qui améliore la qualité des candidatures.</p>
                             </div>
+                        </div>
+                        
+                        <!-- Ajout de la section expliquant les 10 connexions -->
+                        <div class="ten-strategy-banner" style="background-color: rgba(99, 102, 241, 0.05); padding: 1.5rem; border-radius: var(--radius); margin-bottom: 2rem; position: relative; overflow: hidden;">
+                            <div class="pulse-badge" style="position: absolute; top: 1rem; right: 1rem; background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); color: white; width: 2.5rem; height: 2.5rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">10</div>
+                            
+                            <h4 style="color: var(--dark); margin-top: 0; margin-bottom: 1rem; padding-right: 3rem;">Les 10 connexions stratégiques de Nexten</h4>
+                            <p style="color: var(--text); margin-bottom: 1rem;">Chaque information que vous fournissez contribue à l'une de nos 10 connexions qui optimisent le matching avec les candidats:</p>
+                            
+                            <div class="connection-counter" style="margin-top: 1.5rem;">
+                                <div class="connection-step">
+                                    <strong style="color: var(--dark); display: block; margin-bottom: 0.25rem;">Analyse des compétences et expériences</strong>
+                                    <span style="color: var(--text); font-size: 0.9rem;">Identifie les correspondances techniques précises</span>
+                                </div>
+                                <div class="connection-step">
+                                    <strong style="color: var(--dark); display: block; margin-bottom: 0.25rem;">Culture d'entreprise</strong>
+                                    <span style="color: var(--text); font-size: 0.9rem;">Garantit une intégration harmonieuse du candidat</span>
+                                </div>
+                                <div class="connection-step">
+                                    <strong style="color: var(--dark); display: block; margin-bottom: 0.25rem;">Contexte de recrutement</strong>
+                                    <span style="color: var(--text); font-size: 0.9rem;">Adapte les profils aux besoins spécifiques</span>
+                                </div>
+                            </div>
+                            
+                            <a href="#" id="show-all-connections" style="color: var(--primary); font-weight: 500; display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1rem;">
+                                Voir les 10 connexions <i class="fas fa-chevron-right"></i>
+                            </a>
                         </div>
                         
                         <div class="form-group">
@@ -814,7 +331,7 @@
                         
                         <!-- Nouvelle section pour le questionnaire demandé -->
                         <div id="recruitment-details" class="recruitment-form" style="display: none;">
-                            <h3>Détails du recrutement</h3>
+                            <h3>Détails du recrutement <span class="ten-badge">Connexions 4-10</span></h3>
                             
                             <div class="recruitment-options">
                                 <div class="form-group">
@@ -1040,16 +557,7 @@
             <div class="footer-content">
                 <div>
                     <div class="footer-logo">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 50" style="height: 30px; margin-right: 5px;">
-                          <defs>
-                            <linearGradient id="footer-logo-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                              <stop offset="0%" stop-color="#6366F1" />
-                              <stop offset="100%" stop-color="#8B5CF6" />
-                            </linearGradient>
-                          </defs>
-                          <path d="M20,10 L30,10 L30,40 L20,40 L20,25 L10,40 L0,40 L0,10 L10,10 L10,25 Z" fill="url(#footer-logo-gradient)"/>
-                        </svg>
-                        Nexten
+                        <img src="../static/images/nexten-logo.svg" alt="Nexten - 10 connexions stratégiques" height="40">
                     </div>
                     <p class="footer-description">Notre plateforme utilise l'intelligence artificielle pour révolutionner le processus de recrutement, offrant des correspondances personnalisées pour les candidats et les recruteurs.</p>
                 </div>
@@ -1071,8 +579,83 @@
         </div>
     </footer>
 
+    <!-- Ajout d'une modal pour expliquer les 10 connexions -->
+    <div id="connections-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 2000; align-items: center; justify-content: center;">
+        <div style="background-color: white; border-radius: var(--radius-lg); box-shadow: var(--shadow-xl); max-width: 700px; width: 90%; max-height: 90vh; overflow-y: auto; animation: fadeIn 0.3s forwards; padding: 2rem; position: relative;">
+            <button id="close-modal" style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; cursor: pointer; font-size: 1.25rem; color: var(--text);">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <h3 style="color: var(--dark); margin-top: 0; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem;">
+                <span class="ten-accent" style="font-size: 1rem;">10</span> Connexions stratégiques de Nexten
+            </h3>
+            
+            <p style="color: var(--text); margin-bottom: 2rem;">
+                Notre algorithme de matching établit 10 connexions stratégiques entre les candidats et les recruteurs pour garantir 
+                des correspondances optimales. Voici comment fonctionne chaque connexion:
+            </p>
+            
+            <div class="connection-counter">
+                <div class="connection-step">
+                    <strong style="color: var(--dark); display: block; margin-bottom: 0.25rem;">Analyse des compétences techniques</strong>
+                    <span style="color: var(--text); font-size: 0.95rem;">Match précis entre les compétences demandées et celles du candidat</span>
+                </div>
+                
+                <div class="connection-step">
+                    <strong style="color: var(--dark); display: block; margin-bottom: 0.25rem;">Compatibilité culturelle</strong>
+                    <span style="color: var(--text); font-size: 0.95rem;">Analyse de la culture d'entreprise et des valeurs du candidat</span>
+                </div>
+                
+                <div class="connection-step">
+                    <strong style="color: var(--dark); display: block; margin-bottom: 0.25rem;">Contexte de recrutement</strong>
+                    <span style="color: var(--text); font-size: 0.95rem;">Adaptation des profils au contexte spécifique (remplacement, création, etc.)</span>
+                </div>
+                
+                <div class="connection-step">
+                    <strong style="color: var(--dark); display: block; margin-bottom: 0.25rem;">Potentiel d'évolution</strong>
+                    <span style="color: var(--text); font-size: 0.95rem;">Correspondance entre les aspirations du candidat et les perspectives offertes</span>
+                </div>
+                
+                <div class="connection-step">
+                    <strong style="color: var(--dark); display: block; margin-bottom: 0.25rem;">Disponibilité et délais</strong>
+                    <span style="color: var(--text); font-size: 0.95rem;">Synchronisation des calendriers entre besoins immédiats et préavis</span>
+                </div>
+                
+                <div class="connection-step">
+                    <strong style="color: var(--dark); display: block; margin-bottom: 0.25rem;">Environnement de travail</strong>
+                    <span style="color: var(--text); font-size: 0.95rem;">Compatibilité avec les préférences d'espace et d'organisation</span>
+                </div>
+                
+                <div class="connection-step">
+                    <strong style="color: var(--dark); display: block; margin-bottom: 0.25rem;">Expérience sectorielle</strong>
+                    <span style="color: var(--text); font-size: 0.95rem;">Évaluation de la connaissance du secteur et de sa pertinence</span>
+                </div>
+                
+                <div class="connection-step">
+                    <strong style="color: var(--dark); display: block; margin-bottom: 0.25rem;">Dynamiques d'équipe</strong>
+                    <span style="color: var(--text); font-size: 0.95rem;">Analyse de l'intégration potentielle dans l'équipe existante</span>
+                </div>
+                
+                <div class="connection-step">
+                    <strong style="color: var(--dark); display: block; margin-bottom: 0.25rem;">Attentes salariales</strong>
+                    <span style="color: var(--text); font-size: 0.95rem;">Alignement entre le budget disponible et les attentes du candidat</span>
+                </div>
+                
+                <div class="connection-step">
+                    <strong style="color: var(--dark); display: block; margin-bottom: 0.25rem;">Facteurs de réussite</strong>
+                    <span style="color: var(--text); font-size: 0.95rem;">Identification des clés de succès à long terme dans la relation</span>
+                </div>
+            </div>
+            
+            <div style="margin-top: 2rem; text-align: center;">
+                <button id="got-it-btn" class="btn btn-primary">J'ai compris !</button>
+            </div>
+        </div>
+    </div>
+
     <script src="../static/services/uiEffects.js"></script>
     <script src="../static/services/notifications.js"></script>
+    <script src="../static/services/nexten-concept.js"></script>
     <script>
         // Fonction pour initialiser l'autocomplete Google Maps Places
         function initAutocomplete() {
@@ -1115,6 +698,56 @@
                 });
             });
             
+            // Gérer la modale des 10 connexions
+            const showAllConnectionsBtn = document.getElementById('show-all-connections');
+            const connectionsModal = document.getElementById('connections-modal');
+            const closeModalBtn = document.getElementById('close-modal');
+            const gotItBtn = document.getElementById('got-it-btn');
+            
+            if (showAllConnectionsBtn && connectionsModal) {
+                showAllConnectionsBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    connectionsModal.style.display = 'flex';
+                    
+                    // Animation d'entrée
+                    setTimeout(() => {
+                        const modalContent = connectionsModal.querySelector('div');
+                        if (modalContent) {
+                            modalContent.style.opacity = '1';
+                            modalContent.style.transform = 'translateY(0)';
+                        }
+                    }, 10);
+                });
+                
+                // Fermer la modale
+                const closeModal = () => {
+                    const modalContent = connectionsModal.querySelector('div');
+                    if (modalContent) {
+                        modalContent.style.opacity = '0';
+                        modalContent.style.transform = 'translateY(-20px)';
+                    }
+                    
+                    setTimeout(() => {
+                        connectionsModal.style.display = 'none';
+                    }, 300);
+                };
+                
+                if (closeModalBtn) {
+                    closeModalBtn.addEventListener('click', closeModal);
+                }
+                
+                if (gotItBtn) {
+                    gotItBtn.addEventListener('click', closeModal);
+                }
+                
+                // Fermer en cliquant en dehors
+                connectionsModal.addEventListener('click', function(e) {
+                    if (e.target === connectionsModal) {
+                        closeModal();
+                    }
+                });
+            }
+            
             // Générer une description à partir du site web
             const generateDescriptionBtn = document.getElementById('generate-description');
             const companyWebsiteInput = document.getElementById('company-website');
@@ -1150,7 +783,7 @@
                 });
             }
             
-            // Soumettre le formulaire
+            // Soumettre le formulaire et créer une connexion Nexten
             const recruiterForm = document.getElementById('recruiter-form');
             if (recruiterForm) {
                 recruiterForm.addEventListener('submit', function(e) {
@@ -1167,8 +800,13 @@
                     // Stocker les données dans localStorage
                     localStorage.setItem('recruiterData', JSON.stringify(formDataObj));
                     
+                    // Afficher une notification de succès sur les 10 connexions stratégiques
+                    notifications.success('Connexions stratégiques activées', 'Vos informations ont été enregistrées et vos 10 connexions stratégiques sont prêtes!');
+                    
                     // Rediriger vers le tableau de bord
-                    window.location.href = 'recruiter-dashboard.html';
+                    setTimeout(() => {
+                        window.location.href = 'recruiter-dashboard.html';
+                    }, 2000);
                 });
             }
             
@@ -1183,15 +821,43 @@
                         if (hasPosition && hasPosition.value === 'no') {
                             // Rediriger vers le tableau de bord sans le formulaire complet
                             localStorage.setItem('recruiterFlow', 'noJob');
-                            window.location.href = 'recruiter-dashboard.html';
+                            
+                            // Notification spéciale pour les 10 connexions
+                            notifications.info('Exploration des profils', 'Nous allons activer vos 10 connexions stratégiques pour explorer les profils disponibles.');
+                            
+                            setTimeout(() => {
+                                window.location.href = 'recruiter-dashboard.html';
+                            }, 2000);
                         } else {
                             // Continuer avec le formulaire complet
                             // Ici, nous simulons juste une redirection vers le tableau de bord
-                            // Dans la version complète, on naviguerait vers l'étape suivante
                             localStorage.setItem('recruiterFlow', 'withJob');
-                            window.location.href = 'recruiter-dashboard.html';
+                            
+                            // Notification pour les connexions stratégiques
+                            notifications.success('Connexions stratégiques activées', 'Vos informations ont été enregistrées. Vos 10 connexions stratégiques sont en cours d\'activation!');
+                            
+                            setTimeout(() => {
+                                window.location.href = 'recruiter-dashboard.html';
+                            }, 2000);
                         }
                     }
+                });
+            }
+            
+            // Animation des compteurs pour le concept "10"
+            const tenAccents = document.querySelectorAll('.ten-accent');
+            if (tenAccents.length > 0) {
+                tenAccents.forEach(accent => {
+                    // Animation de comptage de 1 à 10
+                    let count = 0;
+                    const interval = setInterval(() => {
+                        count++;
+                        accent.textContent = count;
+                        
+                        if (count >= 10) {
+                            clearInterval(interval);
+                        }
+                    }, 150);
                 });
             }
             
