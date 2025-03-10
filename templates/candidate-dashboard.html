@@ -314,6 +314,238 @@
             padding: 0 20px;
         }
         
+        /* Profile card */
+        .profile-summary {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 25px;
+        }
+        
+        .profile-summary-left {
+            flex: 2;
+        }
+        
+        .profile-summary-right {
+            flex: 1;
+        }
+        
+        .profile-skills {
+            margin-top: 20px;
+        }
+        
+        .skill-progress {
+            margin-bottom: 15px;
+        }
+        
+        .skill-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.875rem;
+        }
+        
+        .skill-name {
+            font-weight: 500;
+        }
+        
+        .skill-level {
+            color: var(--gray);
+        }
+        
+        .skill-bar {
+            height: 6px;
+            background-color: var(--cream-dark);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .skill-fill {
+            height: 100%;
+            background-color: var(--purple);
+        }
+        
+        .profile-info-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .profile-info-item {
+            display: flex;
+            margin-bottom: 15px;
+            font-size: 0.875rem;
+        }
+        
+        .profile-info-label {
+            width: 120px;
+            color: var(--gray);
+        }
+        
+        .profile-info-value {
+            font-weight: 500;
+        }
+        
+        .work-experience {
+            margin-top: 25px;
+        }
+        
+        .experience-item {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--cream-dark);
+        }
+        
+        .experience-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .experience-company {
+            font-weight: 500;
+        }
+        
+        .experience-period {
+            color: var(--gray);
+            font-size: 0.875rem;
+        }
+        
+        .experience-title {
+            font-weight: 400;
+            margin-bottom: 8px;
+        }
+        
+        .experience-description {
+            font-size: 0.875rem;
+            color: var(--gray);
+        }
+        
+        .cv-preview {
+            background-color: var(--cream);
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+            margin-top: 15px;
+        }
+        
+        .cv-preview img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+        
+        /* Applications */
+        .applications-status {
+            display: flex;
+            margin-bottom: 25px;
+            gap: 15px;
+        }
+        
+        .status-item {
+            padding: 15px;
+            border: 1px solid var(--cream-dark);
+            background-color: var(--white);
+            flex: 1;
+            text-align: center;
+            border-radius: 5px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .status-item:hover, .status-item.active {
+            border-color: var(--purple);
+            background-color: var(--cream);
+        }
+        
+        .status-item.active {
+            border-bottom: 3px solid var(--purple);
+        }
+        
+        .status-count {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 5px;
+        }
+        
+        .status-label {
+            font-size: 0.875rem;
+            color: var(--gray);
+        }
+        
+        .reminder-box {
+            background-color: var(--cream);
+            border-left: 3px solid var(--purple);
+            padding: 15px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .reminder-icon {
+            font-size: 1.5rem;
+            color: var(--purple);
+        }
+        
+        .reminder-text {
+            flex-grow: 1;
+        }
+        
+        .reminder-text strong {
+            font-weight: 500;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .reminder-text p {
+            margin: 0;
+            font-size: 0.875rem;
+        }
+        
+        .dashboard-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--cream-dark);
+            margin-bottom: 25px;
+        }
+        
+        .dashboard-tab {
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .dashboard-tab:hover {
+            color: var(--purple);
+        }
+        
+        .dashboard-tab.active {
+            color: var(--purple);
+            font-weight: 500;
+        }
+        
+        .dashboard-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--purple);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
         @media (max-width: 992px) {
             .dashboard-container {
                 grid-template-columns: 1fr;
@@ -336,6 +568,10 @@
             
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .profile-summary {
+                flex-direction: column;
             }
         }
         
@@ -416,146 +652,444 @@
                         <p>Voici un aperçu de votre activité et de vos opportunités personnalisées.</p>
                     </div>
                     
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-label">Offres correspondantes</div>
-                            <div class="stat-value">10</div>
-                            <div class="stat-change">
-                                <i class="fas fa-arrow-up"></i> +2 cette semaine
+                    <div class="dashboard-tabs">
+                        <div class="dashboard-tab active" data-tab="overview">Vue d'ensemble</div>
+                        <div class="dashboard-tab" data-tab="profile">Mon profil</div>
+                        <div class="dashboard-tab" data-tab="applications">Mes candidatures</div>
+                    </div>
+                    
+                    <div class="tab-content active" id="overview">
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-label">Offres correspondantes</div>
+                                <div class="stat-value">10</div>
+                                <div class="stat-change">
+                                    <i class="fas fa-arrow-up"></i> +2 cette semaine
+                                </div>
+                            </div>
+                            
+                            <div class="stat-card">
+                                <div class="stat-label">Candidatures envoyées</div>
+                                <div class="stat-value">4</div>
+                                <div class="stat-change">
+                                    <i class="fas fa-arrow-up"></i> +1 cette semaine
+                                </div>
+                            </div>
+                            
+                            <div class="stat-card">
+                                <div class="stat-label">Vues de profil</div>
+                                <div class="stat-value">27</div>
+                                <div class="stat-change">
+                                    <i class="fas fa-arrow-up"></i> +8 cette semaine
+                                </div>
                             </div>
                         </div>
                         
-                        <div class="stat-card">
-                            <div class="stat-label">Candidatures envoyées</div>
-                            <div class="stat-value">4</div>
-                            <div class="stat-change">
-                                <i class="fas fa-arrow-up"></i> +1 cette semaine
+                        <div class="reminder-box">
+                            <div class="reminder-icon">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <div class="reminder-text">
+                                <strong>Complétez votre profil pour augmenter vos chances</strong>
+                                <p>Ajoutez votre expérience dans la gestion de projet pour améliorer votre score de matching.</p>
+                            </div>
+                            <a href="#" class="btn btn-outline">Compléter</a>
+                        </div>
+                        
+                        <div class="dashboard-card">
+                            <h3 class="dashboard-card-title">
+                                Vos meilleurs matchings
+                                <a href="candidate-matches.html">Voir tout</a>
+                            </h3>
+                            
+                            <div class="match-grid">
+                                <div class="match-card">
+                                    <div class="match-header">
+                                        <img src="https://via.placeholder.com/50x50?text=ACME" alt="ACME Inc." class="match-logo">
+                                        <div class="match-percentage">95% match</div>
+                                    </div>
+                                    <h4 class="match-title">Développeur Full-Stack React/Node.js</h4>
+                                    <div class="match-company">ACME Inc.</div>
+                                    <div class="match-details">
+                                        <div class="match-detail">
+                                            <i class="fas fa-map-marker-alt"></i> Paris, France
+                                        </div>
+                                        <div class="match-detail">
+                                            <i class="fas fa-euro-sign"></i> 50 000€ - 65 000€
+                                        </div>
+                                        <div class="match-detail">
+                                            <i class="fas fa-briefcase"></i> CDI
+                                        </div>
+                                    </div>
+                                    <div class="match-skills">
+                                        <div class="match-skill">React</div>
+                                        <div class="match-skill">Node.js</div>
+                                        <div class="match-skill">TypeScript</div>
+                                        <div class="match-skill">MongoDB</div>
+                                    </div>
+                                    <div style="margin-top: 20px;">
+                                        <a href="#" class="btn btn-primary" style="width: 100%;">Voir l'offre</a>
+                                    </div>
+                                </div>
+                                
+                                <div class="match-card">
+                                    <div class="match-header">
+                                        <img src="https://via.placeholder.com/50x50?text=Tech" alt="TechStart" class="match-logo">
+                                        <div class="match-percentage">93% match</div>
+                                    </div>
+                                    <h4 class="match-title">Développeur Front-End Senior</h4>
+                                    <div class="match-company">TechStart</div>
+                                    <div class="match-details">
+                                        <div class="match-detail">
+                                            <i class="fas fa-map-marker-alt"></i> Remote
+                                        </div>
+                                        <div class="match-detail">
+                                            <i class="fas fa-euro-sign"></i> 55 000€ - 70 000€
+                                        </div>
+                                        <div class="match-detail">
+                                            <i class="fas fa-briefcase"></i> CDI
+                                        </div>
+                                    </div>
+                                    <div class="match-skills">
+                                        <div class="match-skill">React</div>
+                                        <div class="match-skill">JavaScript</div>
+                                        <div class="match-skill">CSS</div>
+                                        <div class="match-skill">Redux</div>
+                                    </div>
+                                    <div style="margin-top: 20px;">
+                                        <a href="#" class="btn btn-primary" style="width: 100%;">Voir l'offre</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         
-                        <div class="stat-card">
-                            <div class="stat-label">Vues de profil</div>
-                            <div class="stat-value">27</div>
-                            <div class="stat-change">
-                                <i class="fas fa-arrow-up"></i> +8 cette semaine
+                        <div class="dashboard-card">
+                            <h3 class="dashboard-card-title">
+                                Activité récente
+                                <a href="#">Tout voir</a>
+                            </h3>
+                            
+                            <ul class="activity-list">
+                                <li class="activity-item">
+                                    <div class="activity-icon">
+                                        <i class="fas fa-paper-plane"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <div class="activity-title">Vous avez postulé pour "Développeur Front-End Senior" chez TechStart</div>
+                                        <div class="activity-time">Il y a 2 heures</div>
+                                    </div>
+                                </li>
+                                
+                                <li class="activity-item">
+                                    <div class="activity-icon">
+                                        <i class="fas fa-eye"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <div class="activity-title">ACME Inc. a consulté votre profil</div>
+                                        <div class="activity-time">Hier à 14:30</div>
+                                    </div>
+                                </li>
+                                
+                                <li class="activity-item">
+                                    <div class="activity-icon">
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <div class="activity-title">Nouvelle offre correspondant à votre profil : "Développeur Full-Stack React/Node.js"</div>
+                                        <div class="activity-time">Il y a 2 jours</div>
+                                    </div>
+                                </li>
+                                
+                                <li class="activity-item">
+                                    <div class="activity-icon">
+                                        <i class="fas fa-file-alt"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <div class="activity-title">Vous avez mis à jour votre CV</div>
+                                        <div class="activity-time">Il y a 3 jours</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="profile">
+                        <div class="profile-summary">
+                            <div class="profile-summary-left">
+                                <div class="dashboard-card">
+                                    <h3 class="dashboard-card-title">
+                                        Informations personnelles
+                                        <a href="#">Modifier</a>
+                                    </h3>
+                                    
+                                    <ul class="profile-info-list">
+                                        <li class="profile-info-item">
+                                            <div class="profile-info-label">Nom complet</div>
+                                            <div class="profile-info-value">Thomas Dubois</div>
+                                        </li>
+                                        <li class="profile-info-item">
+                                            <div class="profile-info-label">Email</div>
+                                            <div class="profile-info-value">thomas.dubois@gmail.com</div>
+                                        </li>
+                                        <li class="profile-info-item">
+                                            <div class="profile-info-label">Téléphone</div>
+                                            <div class="profile-info-value">+33 6 12 34 56 78</div>
+                                        </li>
+                                        <li class="profile-info-item">
+                                            <div class="profile-info-label">Localisation</div>
+                                            <div class="profile-info-value">Paris, France</div>
+                                        </li>
+                                        <li class="profile-info-item">
+                                            <div class="profile-info-label">Poste actuel</div>
+                                            <div class="profile-info-value">Développeur Full-Stack</div>
+                                        </li>
+                                        <li class="profile-info-item">
+                                            <div class="profile-info-label">Expérience</div>
+                                            <div class="profile-info-value">5 ans</div>
+                                        </li>
+                                        <li class="profile-info-item">
+                                            <div class="profile-info-label">Disponibilité</div>
+                                            <div class="profile-info-value">Préavis de 3 mois</div>
+                                        </li>
+                                    </ul>
+                                    
+                                    <div class="work-experience">
+                                        <h4 style="margin-bottom: 15px;">Expérience professionnelle</h4>
+                                        
+                                        <div class="experience-item">
+                                            <div class="experience-header">
+                                                <div class="experience-company">WebTech Solutions</div>
+                                                <div class="experience-period">Jan 2021 - Présent</div>
+                                            </div>
+                                            <div class="experience-title">Développeur Full-Stack Senior</div>
+                                            <div class="experience-description">
+                                                Développement d'applications web complexes pour des clients dans les secteurs de la finance et de l'éducation. Technologies principales : React, Node.js, MongoDB, AWS.
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="experience-item">
+                                            <div class="experience-header">
+                                                <div class="experience-company">Digital Innovation Agency</div>
+                                                <div class="experience-period">Mar 2018 - Déc 2020</div>
+                                            </div>
+                                            <div class="experience-title">Développeur Front-End</div>
+                                            <div class="experience-description">
+                                                Conception et développement d'interfaces utilisateur pour diverses applications web et mobiles. Technologies principales : JavaScript, React, CSS, HTML5.
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="experience-item">
+                                            <div class="experience-header">
+                                                <div class="experience-company">StartupMakers</div>
+                                                <div class="experience-period">Juin 2016 - Fév 2018</div>
+                                            </div>
+                                            <div class="experience-title">Développeur Web Junior</div>
+                                            <div class="experience-description">
+                                                Développement de sites web et d'applications pour des startups dans divers secteurs. Technologies principales : PHP, JavaScript, MySQL.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="profile-summary-right">
+                                <div class="dashboard-card">
+                                    <h3 class="dashboard-card-title">
+                                        Compétences principales
+                                        <a href="#">Modifier</a>
+                                    </h3>
+                                    
+                                    <div class="profile-skills">
+                                        <div class="skill-progress">
+                                            <div class="skill-header">
+                                                <div class="skill-name">JavaScript</div>
+                                                <div class="skill-level">Expert</div>
+                                            </div>
+                                            <div class="skill-bar">
+                                                <div class="skill-fill" style="width: 95%;"></div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="skill-progress">
+                                            <div class="skill-header">
+                                                <div class="skill-name">React</div>
+                                                <div class="skill-level">Expert</div>
+                                            </div>
+                                            <div class="skill-bar">
+                                                <div class="skill-fill" style="width: 90%;"></div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="skill-progress">
+                                            <div class="skill-header">
+                                                <div class="skill-name">Node.js</div>
+                                                <div class="skill-level">Avancé</div>
+                                            </div>
+                                            <div class="skill-bar">
+                                                <div class="skill-fill" style="width: 85%;"></div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="skill-progress">
+                                            <div class="skill-header">
+                                                <div class="skill-name">TypeScript</div>
+                                                <div class="skill-level">Avancé</div>
+                                            </div>
+                                            <div class="skill-bar">
+                                                <div class="skill-fill" style="width: 80%;"></div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="skill-progress">
+                                            <div class="skill-header">
+                                                <div class="skill-name">CSS/SASS</div>
+                                                <div class="skill-level">Avancé</div>
+                                            </div>
+                                            <div class="skill-bar">
+                                                <div class="skill-fill" style="width: 85%;"></div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="skill-progress">
+                                            <div class="skill-header">
+                                                <div class="skill-name">MongoDB</div>
+                                                <div class="skill-level">Intermédiaire</div>
+                                            </div>
+                                            <div class="skill-bar">
+                                                <div class="skill-fill" style="width: 75%;"></div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="skill-progress">
+                                            <div class="skill-header">
+                                                <div class="skill-name">Git</div>
+                                                <div class="skill-level">Avancé</div>
+                                            </div>
+                                            <div class="skill-bar">
+                                                <div class="skill-fill" style="width: 85%;"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="dashboard-card">
+                                    <h3 class="dashboard-card-title">
+                                        Votre CV
+                                        <a href="#">Mettre à jour</a>
+                                    </h3>
+                                    
+                                    <div class="cv-preview">
+                                        <img src="https://via.placeholder.com/200x280?text=CV+Preview" alt="Aperçu CV">
+                                        <div>CV_Thomas_Dubois_2025.pdf</div>
+                                        <a href="#" class="btn btn-outline" style="margin-top: 10px;">Télécharger</a>
+                                    </div>
+                                </div>
+                                
+                                <div class="dashboard-card">
+                                    <h3 class="dashboard-card-title">
+                                        Préférences d'emploi
+                                        <a href="#">Modifier</a>
+                                    </h3>
+                                    
+                                    <ul class="profile-info-list">
+                                        <li class="profile-info-item">
+                                            <div class="profile-info-label">Type de contrat</div>
+                                            <div class="profile-info-value">CDI, Freelance</div>
+                                        </li>
+                                        <li class="profile-info-item">
+                                            <div class="profile-info-label">Mode de travail</div>
+                                            <div class="profile-info-value">Hybride, Remote</div>
+                                        </li>
+                                        <li class="profile-info-item">
+                                            <div class="profile-info-label">Salaire souhaité</div>
+                                            <div class="profile-info-value">60 000€ - 75 000€</div>
+                                        </li>
+                                        <li class="profile-info-item">
+                                            <div class="profile-info-label">Mobilité</div>
+                                            <div class="profile-info-value">France, Europe</div>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="dashboard-card">
-                        <h3 class="dashboard-card-title">
-                            Vos meilleurs matchings
-                            <a href="candidate-matches.html">Voir tout</a>
-                        </h3>
-                        
-                        <div class="match-grid">
-                            <div class="match-card">
-                                <div class="match-header">
-                                    <img src="https://via.placeholder.com/50x50?text=ACME" alt="ACME Inc." class="match-logo">
-                                    <div class="match-percentage">95% match</div>
-                                </div>
-                                <h4 class="match-title">Développeur Full-Stack React/Node.js</h4>
-                                <div class="match-company">ACME Inc.</div>
-                                <div class="match-details">
-                                    <div class="match-detail">
-                                        <i class="fas fa-map-marker-alt"></i> Paris, France
-                                    </div>
-                                    <div class="match-detail">
-                                        <i class="fas fa-euro-sign"></i> 50 000€ - 65 000€
-                                    </div>
-                                    <div class="match-detail">
-                                        <i class="fas fa-briefcase"></i> CDI
-                                    </div>
-                                </div>
-                                <div class="match-skills">
-                                    <div class="match-skill">React</div>
-                                    <div class="match-skill">Node.js</div>
-                                    <div class="match-skill">TypeScript</div>
-                                    <div class="match-skill">MongoDB</div>
-                                </div>
-                                <div style="margin-top: 20px;">
-                                    <a href="#" class="btn btn-primary" style="width: 100%;">Voir l'offre</a>
-                                </div>
+                    <div class="tab-content" id="applications">
+                        <div class="applications-status">
+                            <div class="status-item active">
+                                <div class="status-count">4</div>
+                                <div class="status-label">Total</div>
                             </div>
+                            <div class="status-item">
+                                <div class="status-count">2</div>
+                                <div class="status-label">En cours</div>
+                            </div>
+                            <div class="status-item">
+                                <div class="status-count">1</div>
+                                <div class="status-label">Entretien</div>
+                            </div>
+                            <div class="status-item">
+                                <div class="status-count">1</div>
+                                <div class="status-label">Refusé</div>
+                            </div>
+                        </div>
+                        
+                        <div class="dashboard-card">
+                            <h3 class="dashboard-card-title">
+                                Vos candidatures
+                                <a href="candidate-applications.html">Voir tout</a>
+                            </h3>
                             
-                            <div class="match-card">
-                                <div class="match-header">
-                                    <img src="https://via.placeholder.com/50x50?text=Tech" alt="TechStart" class="match-logo">
-                                    <div class="match-percentage">93% match</div>
-                                </div>
-                                <h4 class="match-title">Développeur Front-End Senior</h4>
-                                <div class="match-company">TechStart</div>
-                                <div class="match-details">
-                                    <div class="match-detail">
-                                        <i class="fas fa-map-marker-alt"></i> Remote
+                            <div class="match-grid">
+                                <div class="match-card">
+                                    <div class="match-header">
+                                        <img src="https://via.placeholder.com/50x50?text=Tech" alt="TechStart" class="match-logo">
+                                        <div class="match-percentage" style="background-color: #4CAF50;">Entretien</div>
                                     </div>
-                                    <div class="match-detail">
-                                        <i class="fas fa-euro-sign"></i> 55 000€ - 70 000€
+                                    <h4 class="match-title">Développeur Front-End Senior</h4>
+                                    <div class="match-company">TechStart</div>
+                                    <div class="match-details">
+                                        <div class="match-detail">
+                                            <i class="fas fa-map-marker-alt"></i> Remote
+                                        </div>
+                                        <div class="match-detail">
+                                            <i class="fas fa-calendar-alt"></i> Postulé le 05/03/2025
+                                        </div>
+                                        <div class="match-detail">
+                                            <i class="fas fa-comment"></i> Dernier contact : 08/03/2025
+                                        </div>
                                     </div>
-                                    <div class="match-detail">
-                                        <i class="fas fa-briefcase"></i> CDI
+                                    <div style="margin-top: 20px; display: flex; gap: 10px;">
+                                        <a href="#" class="btn btn-primary" style="flex: 1;">Préparer l'entretien</a>
+                                        <a href="#" class="btn btn-outline" style="flex: 1;">Messages</a>
                                     </div>
                                 </div>
-                                <div class="match-skills">
-                                    <div class="match-skill">React</div>
-                                    <div class="match-skill">JavaScript</div>
-                                    <div class="match-skill">CSS</div>
-                                    <div class="match-skill">Redux</div>
-                                </div>
-                                <div style="margin-top: 20px;">
-                                    <a href="#" class="btn btn-primary" style="width: 100%;">Voir l'offre</a>
+                                
+                                <div class="match-card">
+                                    <div class="match-header">
+                                        <img src="https://via.placeholder.com/50x50?text=ACME" alt="ACME Inc." class="match-logo">
+                                        <div class="match-percentage" style="background-color: #2196F3;">En cours</div>
+                                    </div>
+                                    <h4 class="match-title">Développeur Full-Stack React/Node.js</h4>
+                                    <div class="match-company">ACME Inc.</div>
+                                    <div class="match-details">
+                                        <div class="match-detail">
+                                            <i class="fas fa-map-marker-alt"></i> Paris, France
+                                        </div>
+                                        <div class="match-detail">
+                                            <i class="fas fa-calendar-alt"></i> Postulé le 01/03/2025
+                                        </div>
+                                        <div class="match-detail">
+                                            <i class="fas fa-comment"></i> Dernier contact : 03/03/2025
+                                        </div>
+                                    </div>
+                                    <div style="margin-top: 20px; display: flex; gap: 10px;">
+                                        <a href="#" class="btn btn-primary" style="flex: 1;">Voir le statut</a>
+                                        <a href="#" class="btn btn-outline" style="flex: 1;">Messages</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="dashboard-card">
-                        <h3 class="dashboard-card-title">
-                            Activité récente
-                            <a href="#">Tout voir</a>
-                        </h3>
-                        
-                        <ul class="activity-list">
-                            <li class="activity-item">
-                                <div class="activity-icon">
-                                    <i class="fas fa-paper-plane"></i>
-                                </div>
-                                <div class="activity-content">
-                                    <div class="activity-title">Vous avez postulé pour "Développeur Front-End Senior" chez TechStart</div>
-                                    <div class="activity-time">Il y a 2 heures</div>
-                                </div>
-                            </li>
-                            
-                            <li class="activity-item">
-                                <div class="activity-icon">
-                                    <i class="fas fa-eye"></i>
-                                </div>
-                                <div class="activity-content">
-                                    <div class="activity-title">ACME Inc. a consulté votre profil</div>
-                                    <div class="activity-time">Hier à 14:30</div>
-                                </div>
-                            </li>
-                            
-                            <li class="activity-item">
-                                <div class="activity-icon">
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <div class="activity-content">
-                                    <div class="activity-title">Nouvelle offre correspondant à votre profil : "Développeur Full-Stack React/Node.js"</div>
-                                    <div class="activity-time">Il y a 2 jours</div>
-                                </div>
-                            </li>
-                            
-                            <li class="activity-item">
-                                <div class="activity-icon">
-                                    <i class="fas fa-file-alt"></i>
-                                </div>
-                                <div class="activity-content">
-                                    <div class="activity-title">Vous avez mis à jour votre CV</div>
-                                    <div class="activity-time">Il y a 3 jours</div>
-                                </div>
-                            </li>
-                        </ul>
                     </div>
                 </div>
             </div>
@@ -616,6 +1150,24 @@
                     this.classList.toggle('active');
                 });
             }
+            
+            // Tabs functionality
+            const tabs = document.querySelectorAll('.dashboard-tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    // Remove active class from all tabs and contents
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    
+                    // Add active class to clicked tab and corresponding content
+                    this.classList.add('active');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
         });
     </script>
 </body>
