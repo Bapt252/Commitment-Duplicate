@@ -3,883 +3,303 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Questionnaire Recruteur - Nexten</title>
+    <title>Questionnaire Recruteur - Commitment</title>
     <link rel="stylesheet" href="../static/styles/modern.css">
+    <link rel="stylesheet" href="../static/styles/styles.css">
     <link rel="stylesheet" href="../static/styles/additional.css">
-    <link rel="stylesheet" href="../static/styles/nexten-theme.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&libraries=places&callback=initAutocomplete" defer></script>
     <style>
-        /* Styles spécifiques au questionnaire */
-        .questionnaire-section {
-            padding: 4rem 0;
-            background-color: var(--light-bg);
+        /* Styles spécifiques pour le questionnaire */
+        .radio-option, .checkbox-option {
+            display: flex;
+            align-items: flex-start;
+            padding: 0.8rem 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: var(--radius);
+            margin-bottom: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
         }
-        
-        .questionnaire-container {
-            background-color: white;
-            padding: 2.5rem;
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-lg);
-            max-width: 800px;
-            margin: 0 auto;
-            transition: all 0.4s ease;
-            position: relative;
+
+        .radio-option:hover, .checkbox-option:hover {
+            background-color: rgba(108, 99, 255, 0.05);
+            border-color: var(--primary);
+        }
+
+        .radio-option.selected, .checkbox-option.selected {
+            background-color: rgba(108, 99, 255, 0.1);
+            border: 2px solid var(--primary);
+        }
+
+        .radio-option input[type="radio"], .checkbox-option input[type="checkbox"] {
+            margin-right: 0.8rem;
+            margin-top: 0.25rem;
+        }
+
+        .option-label {
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .form-progress {
+            height: 6px;
+            background-color: #e2e8f0;
+            border-radius: 3px;
+            margin-bottom: 2rem;
             overflow: hidden;
         }
-        
-        .questionnaire-container::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(
-                to bottom right,
-                rgba(108, 99, 255, 0.03) 0%,
-                rgba(0, 194, 203, 0.03) 25%,
-                rgba(108, 99, 255, 0.03) 50%,
-                rgba(0, 194, 203, 0.03) 75%,
-                rgba(108, 99, 255, 0.03) 100%
-            );
-            transform: rotate(30deg);
-            z-index: 0;
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 3px;
+            transition: width 0.3s ease;
         }
-        
-        .questionnaire-container > * {
-            position: relative;
-            z-index: 1;
-        }
-        
-        .question-container {
-            display: none;
-            animation: fadeIn 0.5s forwards;
-        }
-        
-        .question-container.active {
-            display: block;
-        }
-        
-        /* Stepper modernisé avec numérotation 1-10 */
-        .stepper {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 3rem;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .stepper::before {
-            content: '';
-            position: absolute;
-            height: 3px;
-            background-color: #e2e8f0;
-            width: 100%;
-            top: 25px;
-            z-index: -1;
-        }
-        
-        .stepper::after {
-            content: '';
-            position: absolute;
-            height: 3px;
-            background-color: var(--primary);
-            width: 0%;
-            top: 25px;
-            z-index: -1;
-            transition: width 0.5s ease;
-        }
-        
-        .stepper.step1::after {
-            width: 0%;
-        }
-        
-        .stepper.step2::after {
-            width: 33.3%;
-        }
-        
-        .stepper.step3::after {
-            width: 66.6%;
-        }
-        
-        .stepper.step4::after {
-            width: 100%;
-        }
-        
-        /* Recruitment form - Mise à jour pour le concept de 10 connexions */
-        .recruitment-form {
-            background-color: #ffffff;
-            border-radius: var(--radius);
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border-left: 3px solid var(--primary);
-            animation: fadeIn 0.5s forwards;
-        }
-        
-        .recruitment-options {
-            margin-top: 1rem;
-        }
-        
-        body.dark-mode .recruitment-form {
-            background-color: #1F2937;
-        }
-        
-        /* Afficher les 10 connexions avec compteurs */
-        .connection-counter {
-            counter-reset: connection-step;
-        }
-        
-        .connection-step {
-            position: relative;
-            padding-left: 3rem;
-            margin-bottom: 1.5rem;
-            counter-increment: connection-step;
-        }
-        
-        .connection-step::before {
-            content: counter(connection-step);
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 2.5rem;
-            height: 2.5rem;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1.25rem;
-        }
-        
-        /* Animation pulse pour les badges */
-        @keyframes pulse-badge {
-            0% {
-                box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.5);
-            }
-            70% {
-                box-shadow: 0 0 0 10px rgba(99, 102, 241, 0);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);
-            }
-        }
-        
-        .pulse-badge {
-            animation: pulse-badge 2s infinite;
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1>
-                <a href="index.html" aria-label="Accueil Nexten">
-                    <img src="../static/images/nexten-logo.svg" alt="Nexten - 10 connexions stratégiques" height="50">
-                </a>
-            </h1>
-            
-            <button class="menu-toggle" aria-label="Menu principal">
-                <i class="fas fa-bars"></i>
-            </button>
-            
-            <nav>
+    <header class="site-header">
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <img src="../static/images/logo.svg" alt="Commitment Logo">
+            </a>
+            <nav class="main-nav">
                 <ul>
                     <li><a href="index.html">Accueil</a></li>
-                    <li><a href="post-job.html" class="active">Publier une offre</a></li>
-                    <li><a href="candidate-upload.html">Espace candidat</a></li>
-                    <li><a href="recruiter-dashboard.html">Espace recruteur</a></li>
-                    <li>
-                        <button id="dark-mode-toggle" class="btn-tertiary" aria-label="Activer/désactiver le mode sombre">
-                            <i class="fas fa-moon"></i>
-                        </button>
-                    </li>
+                    <li><a href="recruiter-dashboard.html">Tableau de bord</a></li>
+                    <li><a href="post-job.html">Publier une offre</a></li>
+                    <li><a href="recruiter-matches.html">Correspondances</a></li>
                 </ul>
             </nav>
+            <div class="header-actions">
+                <a href="recruiter-dashboard.html" class="user-profile">
+                    <i class="fas fa-user-circle"></i>
+                    <span>Mon profil</span>
+                </a>
+            </div>
         </div>
     </header>
 
-    <section class="questionnaire-section" id="main-content">
+    <section style="padding: 4rem 0; background-color: var(--gray);">
         <div class="container">
-            <h2 class="section-title">Questionnaire recruteur</h2>
-            <p class="section-description">
-                Afin d'optimiser vos <span class="ten-accent">10</span> connexions stratégiques avec les candidats, veuillez nous fournir des détails sur votre structure et vos besoins.
-            </p>
-            
-            <div class="questionnaire-container">
-                <div class="stepper step1">
-                    <div class="step active">
-                        <div class="step-circle">1</div>
-                        <div class="step-text">Entreprise</div>
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <span class="badge badge-ai">
+                    <i class="fas fa-robot"></i> Propulsé par l'IA
+                </span>
+                <h2 style="font-size: 2.2rem; font-weight: 700; color: var(--dark); margin-top: 1rem; margin-bottom: 0.5rem;">
+                    Questionnaire Recruteur
+                </h2>
+                <p style="color: var(--text); font-size: 1.1rem; max-width: 700px; margin: 0 auto;">
+                    Précisez les critères du poste pour trouver les candidats qui correspondent parfaitement à vos besoins.
+                </p>
+            </div>
+
+            <div class="card" style="max-width: 900px; margin: 0 auto; padding: 2.5rem;">
+                <div class="progress-steps">
+                    <div class="step completed">
+                        <div class="step-circle"><i class="fas fa-check"></i></div>
+                        <div class="step-text">Poste publié</div>
                     </div>
-                    <div class="step">
+                    <div class="step active">
                         <div class="step-circle">2</div>
-                        <div class="step-text">Fiche de poste</div>
+                        <div class="step-text">Questionnaire</div>
                     </div>
                     <div class="step">
                         <div class="step-circle">3</div>
-                        <div class="step-text">Détails</div>
-                    </div>
-                    <div class="step">
-                        <div class="step-circle">4</div>
-                        <div class="step-text">Résumé</div>
+                        <div class="step-text">Matching</div>
                     </div>
                 </div>
-                
+
+                <div class="form-progress">
+                    <div class="progress-bar" style="width: 0%"></div>
+                </div>
+
                 <form id="recruiter-form">
-                    <!-- Question 1: Informations sur l'entreprise -->
-                    <div class="question-container active" id="question1">
-                        <div class="question-header">
-                            <h3 class="question-title">Informations sur votre structure</h3>
-                            <p class="question-description">Ces informations nous permettront de mieux comprendre votre organisation et de présenter votre entreprise aux candidats.</p>
-                        </div>
-                        
-                        <div class="info-tip">
-                            <i class="fas fa-lightbulb"></i>
-                            <div class="info-tip-content">
-                                <div class="info-tip-title">Conseil de connexion</div>
-                                <p class="info-tip-text">Une description précise de votre entreprise permet aux candidats de mieux comprendre votre culture et votre environnement de travail, ce qui améliore la qualité des candidatures.</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Ajout de la section expliquant les 10 connexions -->
-                        <div class="ten-strategy-banner" style="background-color: rgba(99, 102, 241, 0.05); padding: 1.5rem; border-radius: var(--radius); margin-bottom: 2rem; position: relative; overflow: hidden;">
-                            <div class="pulse-badge" style="position: absolute; top: 1rem; right: 1rem; background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); color: white; width: 2.5rem; height: 2.5rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">10</div>
-                            
-                            <h4 style="color: var(--dark); margin-top: 0; margin-bottom: 1rem; padding-right: 3rem;">Les 10 connexions stratégiques de Nexten</h4>
-                            <p style="color: var(--text); margin-bottom: 1rem;">Chaque information que vous fournissez contribue à l'une de nos 10 connexions qui optimisent le matching avec les candidats:</p>
-                            
-                            <div class="connection-counter" style="margin-top: 1.5rem;">
-                                <div class="connection-step">
-                                    <strong style="color: var(--dark); display: block; margin-bottom: 0.25rem;">Analyse des compétences et expériences</strong>
-                                    <span style="color: var(--text); font-size: 0.9rem;">Identifie les correspondances techniques précises</span>
-                                </div>
-                                <div class="connection-step">
-                                    <strong style="color: var(--dark); display: block; margin-bottom: 0.25rem;">Culture d'entreprise</strong>
-                                    <span style="color: var(--text); font-size: 0.9rem;">Garantit une intégration harmonieuse du candidat</span>
-                                </div>
-                                <div class="connection-step">
-                                    <strong style="color: var(--dark); display: block; margin-bottom: 0.25rem;">Contexte de recrutement</strong>
-                                    <span style="color: var(--text); font-size: 0.9rem;">Adapte les profils aux besoins spécifiques</span>
-                                </div>
-                            </div>
-                            
-                            <a href="#" id="show-all-connections" style="color: var(--primary); font-weight: 500; display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1rem;">
-                                Voir les 10 connexions <i class="fas fa-chevron-right"></i>
-                            </a>
-                        </div>
+                    <!-- Étape 1: Informations sur le poste -->
+                    <div class="form-step" id="step-1">
+                        <h3 style="font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--dark);">Informations sur le poste</h3>
                         
                         <div class="form-group">
-                            <label for="company-name" class="label-required">Nom de la structure</label>
-                            <input type="text" id="company-name" placeholder="Ex: TechSolutions" required>
+                            <label for="job-title" class="form-label">Intitulé du poste <span style="color: var(--primary);">*</span></label>
+                            <input type="text" id="job-title" name="job-title" class="form-control" required>
                         </div>
-                        
+
                         <div class="form-group">
-                            <label for="company-address" class="label-required">Adresse complète</label>
-                            <input type="text" id="company-address" placeholder="Ex: 123 Avenue des Champs-Élysées, 75008 Paris" required>
+                            <label for="job-description" class="form-label">Description courte du poste <span style="color: var(--primary);">*</span></label>
+                            <textarea id="job-description" name="job-description" class="form-control" rows="3" required></textarea>
                         </div>
-                        
+
                         <div class="form-group">
-                            <label for="company-website">Site internet</label>
-                            <input type="url" id="company-website" placeholder="Ex: https://www.example.com">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="company-description" class="label-required">Présentation rapide</label>
-                            <textarea id="company-description" rows="5" placeholder="Décrivez brièvement votre entreprise, son activité et sa mission..." required></textarea>
-                            <div class="ai-badge" id="generate-description" style="margin-top: 0.5rem; cursor: pointer;">
-                                <i class="fas fa-magic"></i> Générer une description
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="company-size" class="label-required">Taille de structure</label>
-                            <select id="company-size" required>
-                                <option value="">Sélectionnez une option</option>
-                                <option value="startup">Startup (moins de 10 employés)</option>
-                                <option value="tpe">TPE (moins de 20 employés)</option>
-                                <option value="pme">PME (20 à 250 employés)</option>
-                                <option value="eti">ETI (250 à 5000 employés)</option>
-                                <option value="grand-groupe">Grand groupe (plus de 5000 employés)</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="has-position" class="label-required">Avez-vous un poste sur lequel vous souhaitez recruter ?</label>
-                            <div class="radio-group">
-                                <label class="radio-item">
-                                    <input type="radio" name="has-position" value="yes" class="custom-radio" required>
-                                    <span class="radio-checkmark"></span>
-                                    <div class="radio-content">
-                                        <span class="radio-label">Oui</span>
-                                        <span class="radio-description">Je souhaite publier une offre d'emploi spécifique</span>
-                                    </div>
-                                </label>
-                                <label class="radio-item">
-                                    <input type="radio" name="has-position" value="no" class="custom-radio">
-                                    <span class="radio-checkmark"></span>
-                                    <div class="radio-content">
-                                        <span class="radio-label">Non</span>
-                                        <span class="radio-description">Je souhaite juste explorer les profils disponibles</span>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-                        
-                        <!-- Nouvelle section pour le questionnaire demandé -->
-                        <div id="recruitment-details" class="recruitment-form" style="display: none;">
-                            <h3>Détails du recrutement <span class="ten-badge">Connexions 4-10</span></h3>
-                            
-                            <div class="recruitment-options">
-                                <div class="form-group">
-                                    <label for="recruitment-deadline" class="label-required">Délai de recrutement</label>
-                                    <div class="checkbox-group">
-                                        <label class="checkbox-item">
-                                            <input type="checkbox" class="custom-checkbox" name="recruitment-deadline" value="immediate">
-                                            <span class="checkmark"></span>
-                                            <span class="checkbox-label">Immédiat</span>
-                                        </label>
-                                        <label class="checkbox-item">
-                                            <input type="checkbox" class="custom-checkbox" name="recruitment-deadline" value="2-weeks">
-                                            <span class="checkmark"></span>
-                                            <span class="checkbox-label">2 semaines</span>
-                                        </label>
-                                        <label class="checkbox-item">
-                                            <input type="checkbox" class="custom-checkbox" name="recruitment-deadline" value="1-month">
-                                            <span class="checkmark"></span>
-                                            <span class="checkbox-label">1 mois</span>
-                                        </label>
-                                        <label class="checkbox-item">
-                                            <input type="checkbox" class="custom-checkbox" name="recruitment-deadline" value="2-months">
-                                            <span class="checkmark"></span>
-                                            <span class="checkbox-label">2 mois</span>
-                                        </label>
-                                        <label class="checkbox-item">
-                                            <input type="checkbox" class="custom-checkbox" name="recruitment-deadline" value="3-months">
-                                            <span class="checkmark"></span>
-                                            <span class="checkbox-label">3 mois</span>
-                                        </label>
-                                    </div>
+                            <label class="form-label">Type de contrat <span style="color: var(--primary);">*</span></label>
+                            <div class="checkbox-options">
+                                <div class="checkbox-option">
+                                    <input type="checkbox" id="contract-cdi" name="contract-type" value="CDI">
+                                    <label for="contract-cdi" class="option-label">CDI</label>
                                 </div>
-                                
-                                <div class="form-group">
-                                    <label for="notice-period" class="label-required">Pouvez-vous gérer un préavis ?</label>
-                                    <div class="radio-group">
-                                        <label class="radio-item">
-                                            <input type="radio" name="notice-period" value="1-month" class="custom-radio" required>
-                                            <span class="radio-checkmark"></span>
-                                            <span class="radio-label">Oui, 1 mois</span>
-                                        </label>
-                                        <label class="radio-item">
-                                            <input type="radio" name="notice-period" value="2-months" class="custom-radio">
-                                            <span class="radio-checkmark"></span>
-                                            <span class="radio-label">Oui, 2 mois</span>
-                                        </label>
-                                        <label class="radio-item">
-                                            <input type="radio" name="notice-period" value="3-months" class="custom-radio">
-                                            <span class="radio-checkmark"></span>
-                                            <span class="radio-label">Oui, 3 mois</span>
-                                        </label>
-                                        <label class="radio-item">
-                                            <input type="radio" name="notice-period" value="no" class="custom-radio">
-                                            <span class="radio-checkmark"></span>
-                                            <span class="radio-label">Non</span>
-                                        </label>
-                                    </div>
+                                <div class="checkbox-option">
+                                    <input type="checkbox" id="contract-cdd" name="contract-type" value="CDD">
+                                    <label for="contract-cdd" class="option-label">CDD</label>
                                 </div>
-                                
-                                <div class="form-group">
-                                    <label for="recruitment-context" class="label-required">Contexte de recrutement</label>
-                                    <select id="recruitment-context" required>
-                                        <option value="">Sélectionnez une option</option>
-                                        <option value="new-position">Création de poste</option>
-                                        <option value="replacement">Remplacement</option>
-                                        <option value="growth">Accroissement d'activité / Renfort</option>
-                                        <option value="not-specified">Je ne souhaite pas communiquer</option>
-                                    </select>
+                                <div class="checkbox-option">
+                                    <input type="checkbox" id="contract-interim" name="contract-type" value="Intérim">
+                                    <label for="contract-interim" class="option-label">Intérim</label>
                                 </div>
-                                
-                                <div class="form-group">
-                                    <label for="experience-required" class="label-required">Années d'expérience requises pour le poste</label>
-                                    <select id="experience-required" required>
-                                        <option value="">Sélectionnez une option</option>
-                                        <option value="junior">Profil Junior (0-2 ans)</option>
-                                        <option value="2-3-years">2-3 ans</option>
-                                        <option value="3-5-years">3-5 ans</option>
-                                        <option value="5-10-years">5-10 ans</option>
-                                        <option value="10-plus-years">10 ans et plus</option>
-                                    </select>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="sector-knowledge" class="label-required">La connaissance de votre secteur est-elle obligatoire ?</label>
-                                    <div class="radio-group">
-                                        <label class="radio-item">
-                                            <input type="radio" name="sector-knowledge" value="yes" class="custom-radio" required>
-                                            <span class="radio-checkmark"></span>
-                                            <span class="radio-label">Oui</span>
-                                        </label>
-                                        <label class="radio-item">
-                                            <input type="radio" name="sector-knowledge" value="no" class="custom-radio">
-                                            <span class="radio-checkmark"></span>
-                                            <span class="radio-label">Non</span>
-                                        </label>
-                                    </div>
-                                </div>
-                                
-                                <div id="sector-knowledge-details" style="display: none;">
-                                    <div class="form-group">
-                                        <label for="specific-sector" class="label-required">Secteur d'activité requis</label>
-                                        <select id="specific-sector" required>
-                                            <option value="">Sélectionnez un secteur</option>
-                                            <option value="technology">Technologie</option>
-                                            <option value="finance">Finance/Banque/Assurance</option>
-                                            <option value="healthcare">Santé/Pharmaceutique</option>
-                                            <option value="retail">Commerce/Distribution</option>
-                                            <option value="manufacturing">Industrie/Production</option>
-                                            <option value="construction">BTP/Construction</option>
-                                            <option value="education">Éducation/Formation</option>
-                                            <option value="hospitality">Hôtellerie/Restauration/Tourisme</option>
-                                            <option value="media">Médias/Communication</option>
-                                            <option value="logistics">Transport/Logistique</option>
-                                            <option value="consulting">Conseil/Études</option>
-                                            <option value="energy">Énergie/Environnement</option>
-                                            <option value="public">Secteur public/Administration</option>
-                                            <option value="legal">Juridique</option>
-                                            <option value="real-estate">Immobilier</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="work-environment" class="label-required">Environnement de travail</label>
-                                    <div class="checkbox-group">
-                                        <label class="checkbox-item">
-                                            <input type="checkbox" class="custom-checkbox" name="work-environment" value="open-space">
-                                            <span class="checkmark"></span>
-                                            <span class="checkbox-label">Open space</span>
-                                        </label>
-                                        <label class="checkbox-item">
-                                            <input type="checkbox" class="custom-checkbox" name="work-environment" value="private-office">
-                                            <span class="checkmark"></span>
-                                            <span class="checkbox-label">Bureau fermé</span>
-                                        </label>
-                                    </div>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="team-composition">Composition de l'équipe et rattachement interne</label>
-                                    <textarea id="team-composition" rows="3" placeholder="Ex: Équipe de 5 personnes, rattaché à un responsable de service. Rattaché à la direction générale..."></textarea>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="career-opportunities">Perspectives d'évolution</label>
-                                    <textarea id="career-opportunities" rows="3" placeholder="Décrivez les possibilités d'évolution au sein de votre entreprise..."></textarea>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="salary">Rémunération</label>
-                                    <input type="text" id="salary" placeholder="Ex: 45 000 € - 60 000 € / an">
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="benefits">Avantages</label>
-                                    <div class="checkbox-group">
-                                        <label class="checkbox-item">
-                                            <input type="checkbox" class="custom-checkbox" name="benefits" value="remote-work">
-                                            <span class="checkmark"></span>
-                                            <span class="checkbox-label">Télétravail</span>
-                                        </label>
-                                        <label class="checkbox-item">
-                                            <input type="checkbox" class="custom-checkbox" name="benefits" value="rtt">
-                                            <span class="checkmark"></span>
-                                            <span class="checkbox-label">RTT</span>
-                                        </label>
-                                        <label class="checkbox-item">
-                                            <input type="checkbox" class="custom-checkbox" name="benefits" value="13th-month">
-                                            <span class="checkmark"></span>
-                                            <span class="checkbox-label">13ème mois</span>
-                                        </label>
-                                        <label class="checkbox-item">
-                                            <input type="checkbox" class="custom-checkbox" name="benefits" value="other">
-                                            <span class="checkmark"></span>
-                                            <span class="checkbox-label">Autres</span>
-                                        </label>
-                                    </div>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="contract-type" class="label-required">Type de contrat</label>
-                                    <div class="radio-group">
-                                        <label class="radio-item">
-                                            <input type="radio" name="contract-type" value="35h-non-cadre" class="custom-radio" required>
-                                            <span class="radio-checkmark"></span>
-                                            <span class="radio-label">35h, non-cadre</span>
-                                        </label>
-                                        <label class="radio-item">
-                                            <input type="radio" name="contract-type" value="35h-cadre" class="custom-radio">
-                                            <span class="radio-checkmark"></span>
-                                            <span class="radio-label">35h, cadre</span>
-                                        </label>
-                                        <label class="radio-item">
-                                            <input type="radio" name="contract-type" value="39h-non-cadre" class="custom-radio">
-                                            <span class="radio-checkmark"></span>
-                                            <span class="radio-label">39h, non-cadre</span>
-                                        </label>
-                                        <label class="radio-item">
-                                            <input type="radio" name="contract-type" value="39h-cadre" class="custom-radio">
-                                            <span class="radio-checkmark"></span>
-                                            <span class="radio-label">39h, cadre</span>
-                                        </label>
-                                    </div>
+                                <div class="checkbox-option">
+                                    <input type="checkbox" id="contract-freelance" name="contract-type" value="Freelance">
+                                    <label for="contract-freelance" class="option-label">Freelance</label>
                                 </div>
                             </div>
                         </div>
-                        
-                        <div class="form-navigation">
-                            <div></div> <!-- Espace vide pour l'alignement -->
-                            <button type="button" class="nav-btn btn-next" id="next1">Suivant <i class="fas fa-arrow-right"></i></button>
+
+                        <div class="form-group">
+                            <label for="salary-range" class="form-label">Fourchette de salaire <span style="color: var(--primary);">*</span></label>
+                            <input type="text" id="salary-range" name="salary-range" class="form-control" placeholder="Ex: 45-50K€" required>
                         </div>
                     </div>
-                    
-                    <!-- Autres questions et sections existantes -->
-                    <!-- ... inchangées ... -->
+
+                    <!-- Étape finale: Confirmation et matching -->
+                    <div class="form-step" id="step-6" style="display: none;">
+                        <div style="text-align: center; margin-bottom: 2rem;">
+                            <i class="fas fa-check-circle" style="font-size: 3rem; color: var(--success); margin-bottom: 1rem;"></i>
+                            <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--dark);">Parfait ! Vos critères sont enregistrés</h3>
+                            <p style="color: var(--text); margin-bottom: 2rem;">Nous allons maintenant analyser vos besoins et vous proposer les candidats qui correspondent le mieux à votre recherche.</p>
+                        </div>
+
+                        <div class="info-card" style="background-color: rgba(16, 185, 129, 0.1); border-left-color: var(--success); margin-bottom: 2rem;">
+                            <div style="display: flex; align-items: flex-start;">
+                                <i class="fas fa-lightbulb" style="color: var(--success); margin-right: 0.8rem; margin-top: 0.2rem;"></i>
+                                <div>
+                                    <h4 style="font-weight: 600; margin-bottom: 0.5rem; color: var(--dark);">
+                                        Intelligence artificielle en action
+                                    </h4>
+                                    <p style="color: var(--text);">
+                                        Notre IA utilise vos critères pour analyser plus de 100 paramètres et vous proposer les candidats qui correspondent le mieux à votre recherche.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
+                            Voir les candidats <i class="fas fa-arrow-right" style="margin-left: 0.8rem;"></i>
+                        </button>
+                    </div>
+
+                    <!-- Navigation des étapes -->
+                    <div class="navigation-buttons" id="form-navigation">
+                        <button type="button" id="prev-button" class="btn btn-secondary" disabled>
+                            <i class="fas fa-arrow-left" style="margin-right: 0.5rem;"></i> Précédent
+                        </button>
+                        <button type="button" id="next-button" class="btn btn-primary">
+                            Suivant <i class="fas fa-arrow-right" style="margin-left: 0.5rem;"></i>
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>
     </section>
 
-    <footer>
+    <footer class="site-footer">
         <div class="container">
             <div class="footer-content">
-                <div>
-                    <div class="footer-logo">
-                        <img src="../static/images/nexten-logo.svg" alt="Nexten - 10 connexions stratégiques" height="40">
-                    </div>
-                    <p class="footer-description">Notre plateforme utilise l'intelligence artificielle pour révolutionner le processus de recrutement, offrant des correspondances personnalisées pour les candidats et les recruteurs.</p>
+                <div class="footer-logo">
+                    <img src="../static/images/logo.svg" alt="Commitment Logo">
                 </div>
-                
-                <div>
-                    <h4 class="footer-heading">Liens rapides</h4>
-                    <ul class="footer-links">
-                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Accueil</a></li>
-                        <li><a href="post-job.html"><i class="fas fa-chevron-right"></i> Publier une offre</a></li>
-                        <li><a href="candidate-upload.html"><i class="fas fa-chevron-right"></i> Espace candidat</a></li>
-                        <li><a href="recruiter-dashboard.html"><i class="fas fa-chevron-right"></i> Espace recruteur</a></li>
-                    </ul>
-                </div>
+                <!-- Footer content -->
             </div>
-            
             <div class="footer-bottom">
-                <p>&copy; 2025 Nexten - Tous droits réservés</p>
+                <p>&copy; 2025 Commitment. Tous droits réservés.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Ajout d'une modal pour expliquer les 10 connexions -->
-    <div id="connections-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 2000; align-items: center; justify-content: center;">
-        <div style="background-color: white; border-radius: var(--radius-lg); box-shadow: var(--shadow-xl); max-width: 700px; width: 90%; max-height: 90vh; overflow-y: auto; animation: fadeIn 0.3s forwards; padding: 2rem; position: relative;">
-            <button id="close-modal" style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; cursor: pointer; font-size: 1.25rem; color: var(--text);">
-                <i class="fas fa-times"></i>
-            </button>
-            
-            <h3 style="color: var(--dark); margin-top: 0; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem;">
-                <span class="ten-accent" style="font-size: 1rem;">10</span> Connexions stratégiques de Nexten
-            </h3>
-            
-            <p style="color: var(--text); margin-bottom: 2rem;">
-                Notre algorithme de matching établit 10 connexions stratégiques entre les candidats et les recruteurs pour garantir 
-                des correspondances optimales. Voici comment fonctionne chaque connexion:
-            </p>
-            
-            <div class="connection-counter">
-                <div class="connection-step">
-                    <strong style="color: var(--dark); display: block; margin-bottom: 0.25rem;">Analyse des compétences techniques</strong>
-                    <span style="color: var(--text); font-size: 0.95rem;">Match précis entre les compétences demandées et celles du candidat</span>
-                </div>
-                
-                <div class="connection-step">
-                    <strong style="color: var(--dark); display: block; margin-bottom: 0.25rem;">Compatibilité culturelle</strong>
-                    <span style="color: var(--text); font-size: 0.95rem;">Analyse de la culture d'entreprise et des valeurs du candidat</span>
-                </div>
-                
-                <div class="connection-step">
-                    <strong style="color: var(--dark); display: block; margin-bottom: 0.25rem;">Contexte de recrutement</strong>
-                    <span style="color: var(--text); font-size: 0.95rem;">Adaptation des profils au contexte spécifique (remplacement, création, etc.)</span>
-                </div>
-                
-                <div class="connection-step">
-                    <strong style="color: var(--dark); display: block; margin-bottom: 0.25rem;">Potentiel d'évolution</strong>
-                    <span style="color: var(--text); font-size: 0.95rem;">Correspondance entre les aspirations du candidat et les perspectives offertes</span>
-                </div>
-                
-                <div class="connection-step">
-                    <strong style="color: var(--dark); display: block; margin-bottom: 0.25rem;">Disponibilité et délais</strong>
-                    <span style="color: var(--text); font-size: 0.95rem;">Synchronisation des calendriers entre besoins immédiats et préavis</span>
-                </div>
-                
-                <div class="connection-step">
-                    <strong style="color: var(--dark); display: block; margin-bottom: 0.25rem;">Environnement de travail</strong>
-                    <span style="color: var(--text); font-size: 0.95rem;">Compatibilité avec les préférences d'espace et d'organisation</span>
-                </div>
-                
-                <div class="connection-step">
-                    <strong style="color: var(--dark); display: block; margin-bottom: 0.25rem;">Expérience sectorielle</strong>
-                    <span style="color: var(--text); font-size: 0.95rem;">Évaluation de la connaissance du secteur et de sa pertinence</span>
-                </div>
-                
-                <div class="connection-step">
-                    <strong style="color: var(--dark); display: block; margin-bottom: 0.25rem;">Dynamiques d'équipe</strong>
-                    <span style="color: var(--text); font-size: 0.95rem;">Analyse de l'intégration potentielle dans l'équipe existante</span>
-                </div>
-                
-                <div class="connection-step">
-                    <strong style="color: var(--dark); display: block; margin-bottom: 0.25rem;">Attentes salariales</strong>
-                    <span style="color: var(--text); font-size: 0.95rem;">Alignement entre le budget disponible et les attentes du candidat</span>
-                </div>
-                
-                <div class="connection-step">
-                    <strong style="color: var(--dark); display: block; margin-bottom: 0.25rem;">Facteurs de réussite</strong>
-                    <span style="color: var(--text); font-size: 0.95rem;">Identification des clés de succès à long terme dans la relation</span>
-                </div>
-            </div>
-            
-            <div style="margin-top: 2rem; text-align: center;">
-                <button id="got-it-btn" class="btn btn-primary">J'ai compris !</button>
-            </div>
-        </div>
-    </div>
-
-    <script src="../static/services/uiEffects.js"></script>
-    <script src="../static/services/notifications.js"></script>
-    <script src="../static/services/nexten-concept.js"></script>
+    <!-- Inclusion des scripts -->
+    <script src="../static/services/proposals.js"></script>
     <script>
-        // Fonction pour initialiser l'autocomplete Google Maps Places
-        function initAutocomplete() {
-            // Autocomplete pour l'adresse de l'entreprise
-            const addressInput = document.getElementById('company-address');
-            if (addressInput) {
-                const autocomplete = new google.maps.places.Autocomplete(addressInput, {
-                    types: ['address'],
-                    componentRestrictions: { country: ['fr'] }  // Limiter aux adresses françaises
-                });
-            }
-        }
-        
         document.addEventListener('DOMContentLoaded', function() {
-            // Afficher le questionnaire détaillé lorsque "Oui" est sélectionné
-            const hasPositionRadios = document.getElementsByName('has-position');
-            const recruitmentDetails = document.getElementById('recruitment-details');
+            // Éléments du formulaire
+            const form = document.getElementById('recruiter-form');
+            const prevButton = document.getElementById('prev-button');
+            const nextButton = document.getElementById('next-button');
+            const progressBar = document.querySelector('.progress-bar');
             
-            hasPositionRadios.forEach(radio => {
-                radio.addEventListener('change', function() {
-                    if (this.value === 'yes') {
-                        recruitmentDetails.style.display = 'block';
-                    } else {
-                        recruitmentDetails.style.display = 'none';
-                    }
-                });
-            });
-            
-            // Afficher les options du secteur lorsque "Oui" est sélectionné
-            const sectorKnowledgeRadios = document.getElementsByName('sector-knowledge');
-            const sectorKnowledgeDetails = document.getElementById('sector-knowledge-details');
-            
-            sectorKnowledgeRadios.forEach(radio => {
-                radio.addEventListener('change', function() {
-                    if (this.value === 'yes') {
-                        sectorKnowledgeDetails.style.display = 'block';
-                    } else {
-                        sectorKnowledgeDetails.style.display = 'none';
-                    }
-                });
-            });
-            
-            // Gérer la modale des 10 connexions
-            const showAllConnectionsBtn = document.getElementById('show-all-connections');
-            const connectionsModal = document.getElementById('connections-modal');
-            const closeModalBtn = document.getElementById('close-modal');
-            const gotItBtn = document.getElementById('got-it-btn');
-            
-            if (showAllConnectionsBtn && connectionsModal) {
-                showAllConnectionsBtn.addEventListener('click', function(e) {
+            // Si le formulaire existe, ajouter l'écouteur d'événement
+            if (form) {
+                form.addEventListener('submit', function(e) {
                     e.preventDefault();
-                    connectionsModal.style.display = 'flex';
                     
-                    // Animation d'entrée
-                    setTimeout(() => {
-                        const modalContent = connectionsModal.querySelector('div');
-                        if (modalContent) {
-                            modalContent.style.opacity = '1';
-                            modalContent.style.transform = 'translateY(0)';
-                        }
-                    }, 10);
-                });
-                
-                // Fermer la modale
-                const closeModal = () => {
-                    const modalContent = connectionsModal.querySelector('div');
-                    if (modalContent) {
-                        modalContent.style.opacity = '0';
-                        modalContent.style.transform = 'translateY(-20px)';
+                    // Animer le bouton de soumission
+                    const submitButton = form.querySelector('button[type="submit"]');
+                    if (submitButton) {
+                        submitButton.disabled = true;
+                        submitButton.innerHTML = '<span class="loading-spinner"></span> Traitement...';
                     }
                     
+                    // Rediriger vers la page des propositions de candidats
                     setTimeout(() => {
-                        connectionsModal.style.display = 'none';
-                    }, 300);
-                };
-                
-                if (closeModalBtn) {
-                    closeModalBtn.addEventListener('click', closeModal);
-                }
-                
-                if (gotItBtn) {
-                    gotItBtn.addEventListener('click', closeModal);
-                }
-                
-                // Fermer en cliquant en dehors
-                connectionsModal.addEventListener('click', function(e) {
-                    if (e.target === connectionsModal) {
-                        closeModal();
-                    }
-                });
-            }
-            
-            // Générer une description à partir du site web
-            const generateDescriptionBtn = document.getElementById('generate-description');
-            const companyWebsiteInput = document.getElementById('company-website');
-            const companyDescriptionInput = document.getElementById('company-description');
-            
-            if (generateDescriptionBtn) {
-                generateDescriptionBtn.addEventListener('click', function() {
-                    const website = companyWebsiteInput.value;
-                    
-                    if (!website) {
-                        notifications.warning('Site web manquant', 'Veuillez entrer l\'URL de votre site web pour générer une description automatiquement.');
-                        return;
-                    }
-                    
-                    // Simuler le chargement
-                    generateDescriptionBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Génération en cours...';
-                    generateDescriptionBtn.style.pointerEvents = 'none';
-                    
-                    // Simulation d'une réponse API (à remplacer par une vraie API)
-                    setTimeout(() => {
-                        // Description fictive générée
-                        const generatedDescription = "Notre entreprise est spécialisée dans le développement de solutions innovantes dans le secteur de la technologie. Avec une équipe dynamique et passionnée, nous nous efforçons de créer des produits qui répondent aux besoins changeants du marché. Notre mission est de simplifier la vie quotidienne grâce à des technologies accessibles et intuitives.";
-                        
-                        companyDescriptionInput.value = generatedDescription;
-                        
-                        // Réinitialiser le bouton
-                        generateDescriptionBtn.innerHTML = '<i class="fas fa-magic"></i> Générer une description';
-                        generateDescriptionBtn.style.pointerEvents = 'auto';
-                        
-                        // Afficher une notification de succès
-                        notifications.success('Description générée', 'Une description a été générée avec succès à partir de votre site web.');
+                        window.location.href = 'recruiter-candidates-proposals.html';
                     }, 2000);
                 });
             }
             
-            // Soumettre le formulaire et créer une connexion Nexten
-            const recruiterForm = document.getElementById('recruiter-form');
-            if (recruiterForm) {
-                recruiterForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    
-                    // Collecter les données du formulaire
-                    const formData = new FormData(this);
-                    const formDataObj = {};
-                    
-                    formData.forEach((value, key) => {
-                        formDataObj[key] = value;
-                    });
-                    
-                    // Stocker les données dans localStorage
-                    localStorage.setItem('recruiterData', JSON.stringify(formDataObj));
-                    
-                    // Afficher une notification de succès sur les 10 connexions stratégiques
-                    notifications.success('Connexions stratégiques activées', 'Vos informations ont été enregistrées et vos 10 connexions stratégiques sont prêtes!');
-                    
-                    // Rediriger vers le tableau de bord
-                    setTimeout(() => {
-                        window.location.href = 'recruiter-dashboard.html';
-                    }, 2000);
-                });
-            }
-            
-            // Navigation entre les étapes (exemple simplifié)
-            const next1Btn = document.getElementById('next1');
-            if (next1Btn) {
-                next1Btn.addEventListener('click', function() {
-                    const formValid = validateForm();
-                    if (formValid) {
-                        // Si l'utilisateur a choisi "Non" pour le poste
-                        const hasPosition = document.querySelector('input[name="has-position"]:checked');
-                        if (hasPosition && hasPosition.value === 'no') {
-                            // Rediriger vers le tableau de bord sans le formulaire complet
-                            localStorage.setItem('recruiterFlow', 'noJob');
-                            
-                            // Notification spéciale pour les 10 connexions
-                            notifications.info('Exploration des profils', 'Nous allons activer vos 10 connexions stratégiques pour explorer les profils disponibles.');
-                            
-                            setTimeout(() => {
-                                window.location.href = 'recruiter-dashboard.html';
-                            }, 2000);
+            // Initialisation des options cliquables
+            document.querySelectorAll('.radio-option, .checkbox-option').forEach(option => {
+                option.addEventListener('click', function(e) {
+                    const input = this.querySelector('input');
+                    if (e.target !== input) {
+                        if (input.type === 'radio') {
+                            input.checked = true;
+                            // Mettre à jour l'apparence des autres radios
+                            const name = input.getAttribute('name');
+                            document.querySelectorAll(`input[name="${name}"]`).forEach(radio => {
+                                radio.closest('.radio-option').classList.toggle('selected', radio.checked);
+                            });
                         } else {
-                            // Continuer avec le formulaire complet
-                            // Ici, nous simulons juste une redirection vers le tableau de bord
-                            localStorage.setItem('recruiterFlow', 'withJob');
-                            
-                            // Notification pour les connexions stratégiques
-                            notifications.success('Connexions stratégiques activées', 'Vos informations ont été enregistrées. Vos 10 connexions stratégiques sont en cours d\'activation!');
-                            
-                            setTimeout(() => {
-                                window.location.href = 'recruiter-dashboard.html';
-                            }, 2000);
+                            input.checked = !input.checked;
+                            this.classList.toggle('selected', input.checked);
                         }
                     }
                 });
-            }
+            });
             
-            // Animation des compteurs pour le concept "10"
-            const tenAccents = document.querySelectorAll('.ten-accent');
-            if (tenAccents.length > 0) {
-                tenAccents.forEach(accent => {
-                    // Animation de comptage de 1 à 10
-                    let count = 0;
-                    const interval = setInterval(() => {
-                        count++;
-                        accent.textContent = count;
-                        
-                        if (count >= 10) {
-                            clearInterval(interval);
-                        }
-                    }, 150);
-                });
-            }
-            
-            // Fonction de validation
-            function validateForm() {
-                const requiredInputs = document.querySelectorAll('#question1 input[required], #question1 select[required], #question1 textarea[required]');
-                let isValid = true;
-                
-                requiredInputs.forEach(input => {
-                    if (!input.value.trim()) {
-                        isValid = false;
-                        input.style.borderColor = '#ef4444';
-                    } else {
-                        input.style.borderColor = '#e2e8f0';
+            // Initialisation simplifiée pour cet exemple
+            if (nextButton) {
+                nextButton.addEventListener('click', function() {
+                    // Pour cette version simplifiée, on simule l'avancée directe à l'étape finale
+                    const step1 = document.getElementById('step-1');
+                    const step6 = document.getElementById('step-6');
+                    
+                    if (step1 && step6) {
+                        step1.style.display = 'none';
+                        step6.style.display = 'block';
+                        progressBar.style.width = '100%';
                     }
+                    
+                    // Mise à jour des boutons
+                    prevButton.disabled = false;
+                    nextButton.style.display = 'none';
                 });
-                
-                if (!isValid) {
-                    notifications.error('Formulaire incomplet', 'Veuillez remplir tous les champs obligatoires avant de continuer.');
-                }
-                
-                return isValid;
+            }
+            
+            if (prevButton) {
+                prevButton.addEventListener('click', function() {
+                    const step1 = document.getElementById('step-1');
+                    const step6 = document.getElementById('step-6');
+                    
+                    if (step1 && step6) {
+                        step1.style.display = 'block';
+                        step6.style.display = 'none';
+                        progressBar.style.width = '20%';
+                    }
+                    
+                    // Mise à jour des boutons
+                    prevButton.disabled = true;
+                    nextButton.style.display = 'block';
+                });
             }
         });
     </script>
