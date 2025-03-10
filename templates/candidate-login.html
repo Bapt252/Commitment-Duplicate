@@ -3,299 +3,293 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion Candidat - Nexten</title>
-    <link rel="stylesheet" href="../static/styles/styles.css">
+    <meta name="description" content="Nexten - Connexion candidat">
+    <title>Nexten - Connexion candidat</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../static/styles/nexten-modern.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../static/images/favicon.ico" type="image/x-icon">
+    
     <style>
-        .auth-container {
-            max-width: 500px;
-            margin: 100px auto;
-            padding: 2rem;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-        }
-        
-        .auth-form {
-            margin-top: 2rem;
-        }
-        
-        .auth-form label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-        }
-        
-        .auth-form input {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #E5E7EB;
-            border-radius: var(--radius);
-            margin-bottom: 1.5rem;
-        }
-        
-        .auth-form button {
-            width: 100%;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 0.75rem;
-            border-radius: var(--radius);
-            cursor: pointer;
-            font-weight: 600;
-            margin-top: 1rem;
-        }
-        
-        .auth-form button:hover {
-            background-color: var(--primary-dark);
-        }
-        
-        .auth-tabs {
-            display: flex;
-            margin-bottom: 2rem;
-            border-bottom: 1px solid #E5E7EB;
-        }
-        
-        .auth-tab {
-            padding: 1rem;
-            cursor: pointer;
-            font-weight: 500;
-            flex: 1;
-            text-align: center;
-        }
-        
-        .auth-tab.active {
-            border-bottom: 2px solid var(--primary);
-            color: var(--primary);
-        }
-        
-        .divider {
+        /* Styles spécifiques à la page de connexion */
+        .login-section {
+            min-height: 100vh;
             display: flex;
             align-items: center;
+            padding-top: 100px;
+        }
+        
+        .login-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            max-width: 1000px;
+            margin: 0 auto;
+            gap: 50px;
+        }
+        
+        .login-image {
+            background-color: var(--cream);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 50px;
+        }
+        
+        .login-image img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .login-form {
+            padding: 30px 0;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 400;
+            color: var(--black);
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--cream-dark);
+            background-color: var(--white);
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            font-size: 16px;
+        }
+        
+        .form-group input:focus {
+            border-color: var(--purple);
+            outline: none;
+        }
+        
+        .login-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .remember-me {
+            display: flex;
+            align-items: center;
+        }
+        
+        .remember-me input {
+            margin-right: 8px;
+        }
+        
+        .social-login {
+            margin-top: 40px;
             text-align: center;
-            margin: 1.5rem 0;
         }
-
-        .divider::before,
-        .divider::after {
-            content: '';
-            flex: 1;
-            border-bottom: 1px solid #E5E7EB;
-        }
-
-        .divider::before {
-            margin-right: 1rem;
-        }
-
-        .divider::after {
-            margin-left: 1rem;
+        
+        .social-login p {
+            margin-bottom: 20px;
+            color: var(--gray);
         }
         
         .social-buttons {
             display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
+            gap: 15px;
+            justify-content: center;
         }
         
-        .social-btn {
-            flex: 1;
-            padding: 0.75rem;
-            border: 1px solid #E5E7EB;
-            border-radius: var(--radius);
-            background: white;
-            cursor: pointer;
+        .social-button {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.5rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--cream);
+            color: var(--black);
+            transition: all 0.3s;
+        }
+        
+        .social-button:hover {
+            background-color: var(--purple);
+            color: var(--white);
         }
         
         .register-link {
-            display: block;
+            margin-top: 30px;
             text-align: center;
-            margin-top: 1.5rem;
-            color: var(--primary);
-            text-decoration: none;
+            color: var(--gray);
         }
         
-        .register-link:hover {
-            text-decoration: underline;
+        .register-link a {
+            color: var(--purple);
+            font-weight: 500;
         }
         
-        #registerForm {
-            display: none;
+        @media (max-width: 992px) {
+            .login-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .login-image {
+                display: none;
+            }
         }
     </style>
 </head>
 <body>
-    <header>
-        <!-- Le header sera chargé par JavaScript -->
-    </header>
-
-    <div class="auth-container">
-        <h2 style="text-align: center;">Espace Candidat</h2>
-        
-        <div class="auth-tabs">
-            <div class="auth-tab active" id="loginTab">Connexion</div>
-            <div class="auth-tab" id="registerTab">Créer un compte</div>
-        </div>
-        
-        <form class="auth-form" id="loginForm">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required>
-            
-            <label for="password">Mot de passe</label>
-            <input type="password" id="password" name="password" required>
-            
-            <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
-                <label style="display: flex; align-items: center; gap: 0.5rem;">
-                    <input type="checkbox" style="width: auto; margin: 0;">
-                    Se souvenir de moi
-                </label>
-                <a href="#" style="color: var(--primary); text-decoration: none;">Mot de passe oublié ?</a>
-            </div>
-            
-            <button type="submit">Se connecter</button>
-            
-            <div class="divider">ou</div>
-            
-            <div class="social-buttons">
-                <button type="button" class="social-btn">
-                    <i class="fab fa-google"></i>
-                    Google
-                </button>
-                <button type="button" class="social-btn">
-                    <i class="fab fa-linkedin"></i>
-                    LinkedIn
-                </button>
-            </div>
-        </form>
-        
-        <form class="auth-form" id="registerForm">
-            <label for="fullName">Nom complet</label>
-            <input type="text" id="fullName" name="fullName" required>
-            
-            <label for="registerEmail">Email</label>
-            <input type="email" id="registerEmail" name="email" required>
-            
-            <label for="registerPassword">Mot de passe</label>
-            <input type="password" id="registerPassword" name="password" required>
-            
-            <label for="confirmPassword">Confirmer le mot de passe</label>
-            <input type="password" id="confirmPassword" name="confirmPassword" required>
-            
-            <button type="submit">Créer un compte</button>
-            
-            <div class="divider">ou</div>
-            
-            <div class="social-buttons">
-                <button type="button" class="social-btn">
-                    <i class="fab fa-google"></i>
-                    Google
-                </button>
-                <button type="button" class="social-btn">
-                    <i class="fab fa-linkedin"></i>
-                    LinkedIn
-                </button>
-            </div>
-        </form>
+    <!-- Notification bar -->
+    <div class="notification-bar">
+        Votre recrutement change, votre approche aussi : découvrez notre diagnostic
     </div>
 
-    <footer>
-        <!-- Le footer sera chargé par JavaScript -->
+    <!-- Lien d'accessibilité pour sauter au contenu principal -->
+    <a href="#main-content" class="skip-to-content">Aller au contenu principal</a>
+
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    nex<span>ten</span><div class="logo-badge">10</div>
+                </a>
+            </div>
+            
+            <button class="menu-toggle" aria-label="Menu principal">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="post-job.html">Publier une offre</a></li>
+                    <li><a href="candidate-upload.html" class="active">Espace candidat</a></li>
+                    <li><a href="recruiter-dashboard.html">Espace recruteur</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="login-section" id="main-content">
+        <div class="container">
+            <div class="login-container">
+                <div class="login-image">
+                    <img src="../static/images/login-illustration.svg" alt="Connexion candidat" onerror="this.src='https://via.placeholder.com/400x400?text=Connexion+Candidat'">
+                </div>
+                
+                <div class="login-form">
+                    <h1>Connexion candidat</h1>
+                    <p class="hero-subtitle">Accédez à votre espace personnel pour découvrir vos 10 meilleures opportunités.</p>
+                    
+                    <form action="candidate-dashboard.html" method="get">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="password">Mot de passe</label>
+                            <input type="password" id="password" name="password" required>
+                        </div>
+                        
+                        <div class="login-options">
+                            <div class="remember-me">
+                                <input type="checkbox" id="remember" name="remember">
+                                <label for="remember">Se souvenir de moi</label>
+                            </div>
+                            
+                            <a href="#">Mot de passe oublié ?</a>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Connexion</button>
+                    </form>
+                    
+                    <div class="social-login">
+                        <p>Ou connectez-vous avec</p>
+                        <div class="social-buttons">
+                            <a href="#" class="social-button" aria-label="LinkedIn">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="#" class="social-button" aria-label="Google">
+                                <i class="fab fa-google"></i>
+                            </a>
+                            <a href="#" class="social-button" aria-label="Apple">
+                                <i class="fab fa-apple"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="register-link">
+                        <p>Vous n'avez pas de compte ? <a href="#">Créer un compte</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <h4 class="footer-heading">Nexten</h4>
+                    <p class="footer-description">Notre plateforme utilise l'intelligence artificielle pour révolutionner le processus de recrutement, offrant 10 correspondances personnalisées pour les candidats et les recruteurs.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="footer-heading">Navigation</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Accueil</a></li>
+                        <li><a href="post-job.html"><i class="fas fa-chevron-right"></i> Publier une offre</a></li>
+                        <li><a href="candidate-upload.html"><i class="fas fa-chevron-right"></i> Espace candidat</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> À propos</a></li>
+                        <li><a href="#contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="footer-heading">Contact</h4>
+                    <div class="footer-contact">
+                        <p><i class="fas fa-map-marker-alt"></i> 123 Avenue de l'Innovation, 75001 Paris</p>
+                        <p><i class="fas fa-phone"></i> +33 1 23 45 67 89</p>
+                        <p><i class="fas fa-envelope"></i> contact@nexten.fr</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Nexten - Tous droits réservés | <a href="#">Politique de confidentialité</a> | <a href="#">Conditions d'utilisation</a></p>
+            </div>
+        </div>
     </footer>
 
-    <script src="../static/services/dataService.js"></script>
-    <script src="../static/components/header.js"></script>
-    <script src="../static/components/footer.js"></script>
+    <!-- JavaScript -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const loginTab = document.getElementById('loginTab');
-            const registerTab = document.getElementById('registerTab');
-            const loginForm = document.getElementById('loginForm');
-            const registerForm = document.getElementById('registerForm');
+            // Menu mobile toggle
+            const menuToggle = document.querySelector('.menu-toggle');
+            const nav = document.querySelector('nav');
             
-            // Récupérer l'ID de l'offre d'emploi depuis l'URL (si disponible)
-            const urlParams = new URLSearchParams(window.location.search);
-            const jobId = urlParams.get('jobId');
-            
-            loginTab.addEventListener('click', function() {
-                loginTab.classList.add('active');
-                registerTab.classList.remove('active');
-                loginForm.style.display = 'block';
-                registerForm.style.display = 'none';
-            });
-            
-            registerTab.addEventListener('click', function() {
-                registerTab.classList.add('active');
-                loginTab.classList.remove('active');
-                registerForm.style.display = 'block';
-                loginForm.style.display = 'none';
-            });
-            
-            // Gestion de la connexion
-            loginForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const email = document.getElementById('email').value;
-                const password = document.getElementById('password').value;
-                
-                // Tentative de connexion via le service de données
-                const user = dataService.login(email, password, 'candidate');
-                
-                if (user) {
-                    // Si l'utilisateur existe, rediriger vers le dashboard
-                    if (jobId) {
-                        // Si l'utilisateur vient d'une offre d'emploi, rediriger directement vers la page de candidature
-                        window.location.href = `candidate-job-selection.html?jobId=${jobId}`;
-                    } else {
-                        window.location.href = 'candidate-dashboard.html';
-                    }
-                } else {
-                    // Si l'utilisateur n'existe pas, afficher un message d'erreur
-                    alert('Email ou mot de passe incorrect. Essayez avec candidat@example.com / password123');
-                }
-            });
-            
-            // Gestion de l'inscription
-            registerForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const fullName = document.getElementById('fullName').value;
-                const email = document.getElementById('registerEmail').value;
-                const password = document.getElementById('registerPassword').value;
-                const confirmPassword = document.getElementById('confirmPassword').value;
-                
-                // Vérifier que les mots de passe correspondent
-                if (password !== confirmPassword) {
-                    alert('Les mots de passe ne correspondent pas.');
-                    return;
-                }
-                
-                // Créer un nouvel utilisateur
-                const newUser = dataService.register({
-                    type: 'candidate',
-                    email: email,
-                    password: password,
-                    name: fullName,
-                    applicationIds: [],
-                    profileCompleted: false
+            if (menuToggle && nav) {
+                menuToggle.addEventListener('click', function() {
+                    nav.classList.toggle('active');
+                    this.classList.toggle('active');
                 });
-                
-                // Connecter l'utilisateur
-                dataService.login(email, password, 'candidate');
-                
-                // Rediriger vers la page de téléchargement de CV
-                window.location.href = 'candidate-upload.html';
-            });
-            
-            // Gestion des boutons sociaux
-            document.querySelectorAll('.social-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    alert('Connexion via services sociaux non disponible dans cette démo.');
-                });
-            });
+            }
         });
     </script>
 </body>
