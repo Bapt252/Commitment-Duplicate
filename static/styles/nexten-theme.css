@@ -1,0 +1,283 @@
+/**
+ * Nexten Theme - UI/UX spécialement conçu pour mettre en avant 
+ * le concept de "10 connexions stratégiques"
+ */
+
+:root {
+  /* Palette de couleurs principale */
+  --nexten-primary: #6366F1;
+  --nexten-primary-dark: #4F46E5;
+  --nexten-secondary: #8B5CF6;
+  --nexten-accent: #C4B5FD;
+  
+  /* Couleurs neutres */
+  --nexten-bg: #F9FAFB;
+  --nexten-dark: #1F2937;
+  --nexten-text: #4B5563;
+  
+  /* Animations */
+  --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Classe pour mettre en évidence le "10" */
+.ten-accent {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--nexten-primary) 0%, var(--nexten-secondary) 100%);
+  color: white;
+  font-weight: 700;
+  border-radius: 50%;
+  padding: 0.5rem;
+  height: 2.5rem;
+  width: 2.5rem;
+  margin: 0 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(99, 102, 241, 0.3);
+}
+
+.ten-accent::after {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--nexten-primary) 0%, var(--nexten-secondary) 100%);
+  opacity: 0.2;
+  z-index: -1;
+  animation: pulse 2s infinite;
+}
+
+/* Les 10 connexions stratégiques */
+.ten-connections {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  counter-reset: connection-counter;
+}
+
+.connection-item {
+  position: relative;
+  background-color: white;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: all var(--transition-normal);
+  border-left: 3px solid var(--nexten-primary);
+  overflow: hidden;
+}
+
+.connection-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(99, 102, 241, 0.2);
+}
+
+.connection-item::before {
+  counter-increment: connection-counter;
+  content: counter(connection-counter);
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: linear-gradient(135deg, var(--nexten-primary) 0%, var(--nexten-secondary) 100%);
+  color: white;
+  font-weight: 700;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+.connection-item h3 {
+  color: var(--nexten-dark);
+  margin-bottom: 1rem;
+  padding-right: 2.5rem;
+}
+
+.connection-item p {
+  color: var(--nexten-text);
+  margin-bottom: 0;
+}
+
+/* Animations pour le concept des 10 connexions */
+.connection-dot {
+  width: 10px;
+  height: 10px;
+  background: linear-gradient(135deg, var(--nexten-primary) 0%, var(--nexten-secondary) 100%);
+  border-radius: 50%;
+  display: inline-block;
+  margin: 0 3px;
+}
+
+.connection-line {
+  height: 2px;
+  background: linear-gradient(90deg, var(--nexten-primary), var(--nexten-secondary));
+  position: relative;
+  overflow: hidden;
+}
+
+.connection-line::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+  animation: shimmer 2s infinite;
+}
+
+/* Section spéciale pour la mise en valeur du concept "10 connexions" */
+.ten-strategy-section {
+  background-color: #f5f7fa;
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%236366f1' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+  padding: 5rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.ten-strategy-section::before,
+.ten-strategy-section::after {
+  content: '';
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--nexten-primary) 0%, var(--nexten-secondary) 100%);
+  opacity: 0.05;
+  z-index: 0;
+}
+
+.ten-strategy-section::before {
+  top: -100px;
+  right: -100px;
+}
+
+.ten-strategy-section::after {
+  bottom: -100px;
+  left: -100px;
+}
+
+.ten-strategy-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* Badges pour les statistiques */
+.ten-badge {
+  display: inline-flex;
+  align-items: center;
+  background-color: rgba(99, 102, 241, 0.1);
+  color: var(--nexten-primary);
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  font-weight: 500;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+}
+
+.ten-badge i {
+  margin-right: 0.5rem;
+}
+
+/* Circuit graphique pour l'illustration des connexions */
+.connection-circuit {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  margin: 3rem 0;
+}
+
+.circuit-node {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: white;
+  border: 2px solid var(--nexten-primary);
+  border-radius: 50%;
+  z-index: 2;
+}
+
+.circuit-line {
+  position: absolute;
+  height: 2px;
+  background: linear-gradient(90deg, var(--nexten-primary), var(--nexten-secondary));
+  z-index: 1;
+  transform-origin: left center;
+}
+
+.circuit-pulse {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: white;
+  border-radius: 50%;
+  z-index: 3;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
+  animation: circuit-pulse 3s linear infinite;
+}
+
+/* Animations */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+  70% {
+    transform: scale(1.2);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes shimmer {
+  100% {
+    left: 100%;
+  }
+}
+
+@keyframes circuit-pulse {
+  0% {
+    opacity: 1;
+    transform: scale(0.8) translateX(0);
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.2) translateX(calc(100vw - 50px));
+  }
+}
+
+/* Adaptations pour le mode sombre */
+body.dark-mode .connection-item {
+  background-color: var(--dark-surface, #1F2937);
+  border-color: var(--nexten-primary);
+}
+
+body.dark-mode .ten-strategy-section {
+  background-color: #111827;
+}
+
+body.dark-mode .ten-badge {
+  background-color: rgba(99, 102, 241, 0.2);
+}
+
+/* Media queries pour la responsivité */
+@media (max-width: 768px) {
+  .ten-connections {
+    grid-template-columns: 1fr;
+  }
+  
+  .connection-circuit {
+    height: 200px;
+  }
+}
