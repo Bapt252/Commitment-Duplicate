@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 50">
+  <!-- Logo texte "nex" -->
+  <text x="10" y="32" font-family="Inter, sans-serif" font-size="28" font-weight="400" fill="#FFFFFF">
+    nex
+  </text>
+  
+  <!-- Logo texte "ten" -->
+  <text x="72" y="32" font-family="Inter, sans-serif" font-size="28" font-weight="400" fill="#A78BFA">
+    ten
+  </text>
+  
+  <!-- Badge "10" -->
+  <circle cx="132" cy="20" r="12" fill="#A78BFA"/>
+  <text x="132" y="26" font-family="Inter, sans-serif" font-size="12" font-weight="500" fill="#FFFFFF" text-anchor="middle">
+    10
+  </text>
+</svg>
