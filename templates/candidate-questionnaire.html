@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questionnaire de préférences - Nexten</title>
+    <link rel="stylesheet" href="../styles/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&libraries=places&callback=initAutocomplete" defer></script>
+    <style>
+        /* Styles spécifiques pour le questionnaire */
+        .form-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .form-steps::before {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--gray);
+            z-index: 1;
+        }
+        
+        .form-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .step-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+            border: 2px solid var(--gray);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+        
+        .form-step.active .step-circle {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        
+        .form-step.completed .step-circle {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+        
+        .step-label {
+            font-size: 0.85rem;
+            color: var(--text);
+            text-align: center;
+        }
+        
+        .form-step.active .step-label {
+            color: var(--primary);
+            font-weight: 500;
+        }
+        
+        .form-step-content {
+            display: none;
+        }
+        
+        .form-step-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--gray);
+            border-radius: var(--radius);
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.2);
+        }
+        
+        .tags-input-container {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 0.5rem;
+            border: 1px solid var(--gray);
+            border-radius: var(--radius);
+            gap: 0.5rem;
+            min-height: 50px;
+            background-color: white;
+        }
+        
+        .tags-input-container:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.2);
+        }
+        
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.5rem;
+            background-color: rgba(108, 99, 255, 0.1);
+            color: var(--primary);
+            border-radius: 30px;
+            font-size: 0.9rem;
+        }
+        
+        .tag .remove-tag {
+            cursor: pointer;
+            margin-left: 0.3rem;
+            font-size: 1.1rem;
+        }
+        
+        .tags-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            padding: 0.5rem 0;
+            min-width: 150px;
+        }
+        
+        .info-card {
+            padding: 1rem;
+            background-color: rgba(108, 99, 255, 0.1);
+            border-left: 3px solid var(--primary);
+            border-radius: var(--radius);
+            margin-bottom: 1.5rem;
+        }
+        
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .checkbox-container input[type="checkbox"] {
+            margin-right: 0.5rem;
+            width: 18px;
+            height: 18px;
+        }
+        
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+        
+        .step-description {
+            color: var(--text);
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><i class="fas fa-briefcase"></i> Nexten</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="post-job.html">Publier une offre</a></li>
+                    <li><a href="candidate-upload.html" class="active">Espace candidat</a></li>
+                    <li><a href="recruiter-dashboard.html">Espace recruteur</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section style="padding: 4rem 0; background-color: var(--gray);">
+        <div class="container">
+            <h2 style="font-size: 2rem; font-weight: 700; color: var(--dark); margin-bottom: 1rem; position: relative; display: inline-block;">
+                Questionnaire de préférences
+                <span style="content: ''; position: absolute; left: 0; bottom: -10px; width: 40%; height: 3px; background: var(--primary); border-radius: 10px; display: block;"></span>
+            </h2>
+            <p style="color: var(--text); font-size: 1.1rem; margin-bottom: 2.5rem;">Dites-nous ce que vous recherchez pour nous permettre de trouver les meilleures opportunités.</p>
+            
+            <div class="form-card">
+                <div class="progress-steps">
+                    <div class="step completed">
+                        <div class="step-circle"><i class="fas fa-check"></i></div>
+                        <div class="step-text">Upload CV</div>
+                    </div>
+                    <div class="step active">
+                        <div class="step-circle">2</div>
+                        <div class="step-text">Questionnaire</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-circle">3</div>
+                        <div class="step-text">Matching</div>
+                    </div>
+                </div>
+                
+                <!-- Formulaire par étapes -->
+                <div id="questionnaireForm">
+                    <!-- Étapes du formulaire -->
+                    <div class="form-steps">
+                        <div class="form-step active" data-step="1">
+                            <div class="step-circle">1</div>
+                            <div class="step-label">Préférences<br>professionnelles</div>
+                        </div>
+                        <div class="form-step" data-step="2">
+                            <div class="step-circle">2</div>
+                            <div class="step-label">Compétences<br>et qualifications</div>
+                        </div>
+                        <div class="form-step" data-step="3">
+                            <div class="step-circle">3</div>
+                            <div class="step-label">Disponibilité</div>
+                        </div>
+                        <div class="form-step" data-step="4">
+                            <div class="step-circle">4</div>
+                            <div class="step-label">Informations<br>complémentaires</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Message d'infos pré-remplies si CV téléchargé -->
+                    <div id="prefilled-message" class="info-card" style="display: none;">
+                        <div style="display: flex; align-items: flex-start;">
+                            <i class="fas fa-info-circle" style="color: var(--primary); margin-right: 0.8rem; margin-top: 0.2rem;"></i>
+                            <div>
+                                <h4 style="font-weight: 600; margin-bottom: 0.5rem; color: var(--dark);">
+                                    Informations pré-remplies depuis votre CV
+                                </h4>
+                                <p style="color: var(--text);">
+                                    Certains champs ont été automatiquement remplis avec les informations extraites de votre CV. 
+                                    Vous pouvez les modifier si nécessaire.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Étape 1: Préférences professionnelles -->
+                    <div class="form-step-content active" id="step-1">
+                        <h3 class="form-section-title">Préférences professionnelles</h3>
+                        <p class="step-description">Parlez-nous de vos attentes pour votre prochain poste</p>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="preferredRole">Poste recherché</label>
+                            <input type="text" id="preferredRole" class="form-control" placeholder="Ex: Développeur Front-end, Product Manager...">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="contractType">Type de contrat</label>
+                            <select id="contractType" class="form-control">
+                                <option value="">Sélectionner...</option>
+                                <option value="CDI">CDI</option>
+                                <option value="CDD">CDD</option>
+                                <option value="Freelance">Freelance</option>
+                                <option value="Stage">Stage</option>
+                                <option value="Alternance">Alternance</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="location">Localisation souhaitée</label>
+                            <input type="text" id="location" class="form-control" placeholder="Ex: Paris, Bordeaux, Lyon...">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="remotePreference">Préférence de travail</label>
+                            <select id="remotePreference" class="form-control">
+                                <option value="">Sélectionner...</option>
+                                <option value="Sur site">Sur site</option>
+                                <option value="Hybride">Hybride</option>
+                                <option value="100% télétravail">100% télétravail</option>
+                                <option value="Peu importe">Peu importe</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="salaryExpectation">Prétentions salariales (K€)</label>
+                            <input type="text" id="salaryExpectation" class="form-control" placeholder="Ex: 45, 50-60...">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="startDate">Date de disponibilité</label>
+                            <input type="date" id="startDate" class="form-control">
+                        </div>
+                    </div>
+                    
+                    <!-- Étape 2: Compétences et qualifications -->
+                    <div class="form-step-content" id="step-2">
+                        <h3 class="form-section-title">Compétences et qualifications</h3>
+                        <p class="step-description">Précisez vos compétences techniques et non techniques</p>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="technicalSkills">Compétences techniques</label>
+                            <div class="tags-input-container" id="technicalSkills-container">
+                                <input type="text" class="tags-input" id="technicalSkills-input" placeholder="Saisir et appuyer sur Entrée...">
+                            </div>
+                            <small style="display: block; margin-top: 0.3rem; color: var(--text);">Appuyez sur Entrée ou virgule pour ajouter</small>
+                        </div>
+
+                        <div id="skills-levels-container" style="margin-top: 1rem; margin-bottom: 1.5rem; border: 1px solid #e2e8f0; border-radius: var(--radius); padding: 1rem;">
+                            <h4 style="font-weight: 600; margin-bottom: 0.8rem; color: var(--dark);">Niveau de maîtrise des compétences</h4>
+                            <p style="color: var(--text); font-size: 0.95rem; margin-bottom: 1rem;">Pour les compétences que vous venez d'ajouter, indiquez votre niveau de maîtrise.</p>
+                            <div id="skill-levels" class="skill-levels-container">
+                                <!-- Les niveaux de compétences seront ajoutés ici dynamiquement -->
+                                <div class="info-card" style="background-color: #f8fafc; padding: 0.8rem; margin-bottom: 0.5rem;">
+                                    <p style="color: var(--text); font-size: 0.9rem; font-style: italic;">Les compétences ajoutées apparaîtront ici pour évaluation.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="softSkills">Soft skills</label>
+                            <div class="info-card" style="margin-bottom: 0.8rem;">
+                                <div style="display: flex; align-items: flex-start;">
+                                    <i class="fas fa-lightbulb" style="color: var(--primary); margin-right: 0.8rem; margin-top: 0.2rem;"></i>
+                                    <div>
+                                        <p style="color: var(--text); font-size: 0.9rem;">
+                                            Les soft skills sont essentiels pour le matching avec les entreprises. Sélectionnez ceux qui vous correspondent le mieux.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="soft-skills-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.8rem; margin-bottom: 1rem;">
+                                <div class="soft-skill-item" style="display: flex; align-items: center;">
+                                    <input type="checkbox" id="soft-skill-1" class="soft-skill-checkbox" value="Communication" style="margin-right: 0.5rem;">
+                                    <label for="soft-skill-1" style="font-size: 0.95rem; color: var(--dark);">Communication</label>
+                                </div>
+                                <div class="soft-skill-item" style="display: flex; align-items: center;">
+                                    <input type="checkbox" id="soft-skill-2" class="soft-skill-checkbox" value="Travail d'équipe" style="margin-right: 0.5rem;">
+                                    <label for="soft-skill-2" style="font-size: 0.95rem; color: var(--dark);">Travail d'équipe</label>
+                                </div>
+                                <div class="soft-skill-item" style="display: flex; align-items: center;">
+                                    <input type="checkbox" id="soft-skill-3" class="soft-skill-checkbox" value="Résolution de problèmes" style="margin-right: 0.5rem;">
+                                    <label for="soft-skill-3" style="font-size: 0.95rem; color: var(--dark);">Résolution de problèmes</label>
+                                </div>
+                                <div class="soft-skill-item" style="display: flex; align-items: center;">
+                                    <input type="checkbox" id="soft-skill-4" class="soft-skill-checkbox" value="Adaptabilité" style="margin-right: 0.5rem;">
+                                    <label for="soft-skill-4" style="font-size: 0.95rem; color: var(--dark);">Adaptabilité</label>
+                                </div>
+                                <div class="soft-skill-item" style="display: flex; align-items: center;">
+                                    <input type="checkbox" id="soft-skill-5" class="soft-skill-checkbox" value="Créativité" style="margin-right: 0.5rem;">
+                                    <label for="soft-skill-5" style="font-size: 0.95rem; color: var(--dark);">Créativité</label>
+                                </div>
+                                <div class="soft-skill-item" style="display: flex; align-items: center;">
+                                    <input type="checkbox" id="soft-skill-6" class="soft-skill-checkbox" value="Leadership" style="margin-right: 0.5rem;">
+                                    <label for="soft-skill-6" style="font-size: 0.95rem; color: var(--dark);">Leadership</label>
+                                </div>
+                                <div class="soft-skill-item" style="display: flex; align-items: center;">
+                                    <input type="checkbox" id="soft-skill-7" class="soft-skill-checkbox" value="Gestion du temps" style="margin-right: 0.5rem;">
+                                    <label for="soft-skill-7" style="font-size: 0.95rem; color: var(--dark);">Gestion du temps</label>
+                                </div>
+                                <div class="soft-skill-item" style="display: flex; align-items: center;">
+                                    <input type="checkbox" id="soft-skill-8" class="soft-skill-checkbox" value="Pensée critique" style="margin-right: 0.5rem;">
+                                    <label for="soft-skill-8" style="font-size: 0.95rem; color: var(--dark);">Pensée critique</label>
+                                </div>
+                                <div class="soft-skill-item" style="display: flex; align-items: center;">
+                                    <input type="checkbox" id="soft-skill-9" class="soft-skill-checkbox" value="Empathie" style="margin-right: 0.5rem;">
+                                    <label for="soft-skill-9" style="font-size: 0.95rem; color: var(--dark);">Empathie</label>
+                                </div>
+                                <div class="soft-skill-item" style="display: flex; align-items: center;">
+                                    <input type="checkbox" id="soft-skill-10" class="soft-skill-checkbox" value="Autonomie" style="margin-right: 0.5rem;">
+                                    <label for="soft-skill-10" style="font-size: 0.95rem; color: var(--dark);">Autonomie</label>
+                                </div>
+                            </div>
+                            <div class="tags-input-container" id="softSkills-container">
+                                <input type="text" class="tags-input" id="softSkills-input" placeholder="Ajouter d'autres soft skills...">
+                            </div>
+                            <small style="display: block; margin-top: 0.3rem; color: var(--text);">Appuyez sur Entrée ou virgule pour ajouter des soft skills personnalisés</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="languages">Langues parlées</label>
+                            <div class="tags-input-container" id="languages-container">
+                                <input type="text" class="tags-input" id="languages-input" placeholder="Saisir et appuyer sur Entrée...">
+                            </div>
+                            <small style="display: block; margin-top: 0.3rem; color: var(--text);">Appuyez sur Entrée ou virgule pour ajouter</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="certifications">Certifications</label>
+                            <div class="tags-input-container" id="certifications-container">
+                                <input type="text" class="tags-input" id="certifications-input" placeholder="Saisir et appuyer sur Entrée...">
+                            </div>
+                            <small style="display: block; margin-top: 0.3rem; color: var(--text);">Appuyez sur Entrée ou virgule pour ajouter</small>
+                        </div>
+                    </div>
+                    
+                    <!-- Étape 3: Disponibilité -->
+                    <div class="form-step-content" id="step-3">
+                        <h3 class="form-section-title">Disponibilité</h3>
+                        <p class="step-description">Informations sur votre disponibilité</p>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="currentlyEmployed">Êtes-vous actuellement en poste ?</label>
+                            <select id="currentlyEmployed" class="form-control">
+                                <option value="">Sélectionner...</option>
+                                <option value="oui">Oui</option>
+                                <option value="non">Non</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Section conditionnelle pour les candidats en poste -->
+                        <div id="employed-section" style="display: none;">
+                            <div class="form-group">
+                                <label class="form-label" for="jobSearchReason">Pourquoi êtes-vous de nouveau à l'écoute ?</label>
+                                <select id="jobSearchReason" class="form-control">
+                                    <option value="">Sélectionner...</option>
+                                    <option value="plus_epanouissement">Je ne m'épanouis plus, je souhaite découvrir de nouvelles choses</option>
+                                    <option value="perspectives">Manque de perspectives d'évolutions</option>
+                                    <option value="remuneration">Rémunération trop faible</option>
+                                    <option value="distance">Poste trop loin de mon domicile</option>
+                                    <option value="flexibilite">Manque de flexibilité (pas de TT, RTT)</option>
+                                    <option value="probleme_interne">Problème en interne (organisation, management)</option>
+                                    <option value="poste_different">Le poste ne coïncide pas avec le poste proposé initialement</option>
+                                    <option value="pse">PSE</option>
+                                    <option value="pas_communiquer">Je ne souhaite pas communiquer</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="noticePeriod">Combien de temps est votre préavis ?</label>
+                                <select id="noticePeriod" class="form-control">
+                                    <option value="">Sélectionner...</option>
+                                    <option value="aucun">Je n'en ai pas, encore en période d'essai</option>
+                                    <option value="1_mois">1 mois</option>
+                                    <option value="2_mois">2 mois</option>
+                                    <option value="3_mois">3 mois</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="noticeNegotiable">Le préavis est-il négociable ?</label>
+                                <select id="noticeNegotiable" class="form-control">
+                                    <option value="">Sélectionner...</option>
+                                    <option value="oui">Oui</option>
+                                    <option value="non">Non</option>
+                                    <option value="ne_sais_pas">Je ne sais pas</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- Section conditionnelle pour les candidats sans emploi -->
+                        <div id="unemployed-section" style="display: none;">
+                            <div class="form-group">
+                                <label class="form-label" for="jobEndReason">Pourquoi votre dernier contrat s'est arrêté ?</label>
+                                <select id="jobEndReason" class="form-control">
+                                    <option value="">Sélectionner...</option>
+                                    <option value="plus_epanouissement">Je ne m'épanouis plus, je souhaite découvrir de nouvelles choses</option>
+                                    <option value="perspectives">Manque de perspectives d'évolutions</option>
+                                    <option value="remuneration">Rémunération trop faible</option>
+                                    <option value="distance">Poste trop loin de mon domicile</option>
+                                    <option value="flexibilite">Manque de flexibilité (pas de TT, RTT)</option>
+                                    <option value="probleme_interne">Problème en interne (organisation, management)</option>
+                                    <option value="poste_different">Le poste ne coïncide pas avec le poste proposé initialement</option>
+                                    <option value="pse">PSE</option>
+                                    <option value="pas_communiquer">Je ne souhaite pas communiquer</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- Section commune aux deux parcours -->
+                        <div class="form-group">
+                            <label class="form-label" for="recruitmentStatus">Où en êtes-vous dans vos process de recrutement ?</label>
+                            <select id="recruitmentStatus" class="form-control">
+                                <option value="">Sélectionner...</option>
+                                <option value="pas_piste">Je n'ai pas encore de piste</option>
+                                <option value="entretiens">J'avance sur différents entretiens</option>
+                                <option value="processus_final">Je suis en processus final</option>
+                                <option value="propositions">On m'a fait des propositions</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="interviewAvailability">Disponibilité pour entretiens</label>
+                            <input type="text" id="interviewAvailability" class="form-control" placeholder="Ex: En semaine après 18h, le mardi toute la journée...">
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="checkbox-container">
+                                <input type="checkbox" id="relocateWilling">
+                                <label class="form-label" for="relocateWilling" style="margin-bottom: 0;">Êtes-vous prêt à déménager ?</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Étape 4: Informations complémentaires -->
+                    <div class="form-step-content" id="step-4">
+                        <h3 class="form-section-title">Informations complémentaires</h3>
+                        <p class="step-description">Partagez avec nous ce qui vous motive</p>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="motivation">Qu'est-ce qui vous motive dans votre recherche ?</label>
+                            <textarea id="motivation" class="form-control" rows="4" placeholder="Décrivez vos motivations pour changer de poste ou entreprise..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="strengths">Vos points forts</label>
+                            <textarea id="strengths" class="form-control" rows="4" placeholder="Décrivez vos principales qualités et atouts..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="challenges">Un défi professionnel que vous avez relevé</label>
+                            <textarea id="challenges" class="form-control" rows="4" placeholder="Décrivez un challenge professionnel significatif..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="additionalInfo">Informations complémentaires</label>
+                            <textarea id="additionalInfo" class="form-control" rows="4" placeholder="Toute autre information que vous souhaitez partager..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <h4 style="font-weight: 600; margin-bottom: 1rem; color: var(--dark);">Quels critères sont les plus importants pour vous ?</h4>
+                            <p style="color: var(--text); font-size: 0.95rem; margin-bottom: 1rem;">Classez les critères suivants par ordre d'importance (1 étant le plus important).</p>
+                            
+                            <div class="priority-container" style="border: 1px solid #e2e8f0; border-radius: var(--radius); padding: 1rem; margin-bottom: 1.5rem;">
+                                <div class="priority-item" style="display: flex; align-items: center; margin-bottom: 0.8rem; padding-bottom: 0.8rem; border-bottom: 1px solid #f1f5f9;">
+                                    <select class="form-control priority-select" style="width: 80px; margin-right: 1rem;">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select>
+                                    <span style="font-weight: 500; color: var(--dark);">Salaire et avantages</span>
+                                </div>
+                                <div class="priority-item" style="display: flex; align-items: center; margin-bottom: 0.8rem; padding-bottom: 0.8rem; border-bottom: 1px solid #f1f5f9;">
+                                    <select class="form-control priority-select" style="width: 80px; margin-right: 1rem;">
+                                        <option value="1">1</option>
+                                        <option value="2" selected>2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select>
+                                    <span style="font-weight: 500; color: var(--dark);">Localisation et mode de travail</span>
+                                </div>
+                                <div class="priority-item" style="display: flex; align-items: center; margin-bottom: 0.8rem; padding-bottom: 0.8rem; border-bottom: 1px solid #f1f5f9;">
+                                    <select class="form-control priority-select" style="width: 80px; margin-right: 1rem;">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3" selected>3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select>
+                                    <span style="font-weight: 500; color: var(--dark);">Missions et responsabilités</span>
+                                </div>
+                                <div class="priority-item" style="display: flex; align-items: center; margin-bottom: 0.8rem; padding-bottom: 0.8rem; border-bottom: 1px solid #f1f5f9;">
+                                    <select class="form-control priority-select" style="width: 80px; margin-right: 1rem;">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4" selected>4</option>
+                                        <option value="5">5</option>
+                                    </select>
+                                    <span style="font-weight: 500; color: var(--dark);">Culture d'entreprise et valeurs</span>
+                                </div>
+                                <div class="priority-item" style="display: flex; align-items: center;">
+                                    <select class="form-control priority-select" style="width: 80px; margin-right: 1rem;">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5" selected>5</option>
+                                    </select>
+                                    <span style="font-weight: 500; color: var(--dark);">Perspectives d'évolution</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Boutons de navigation -->
+                    <div class="navigation-buttons">
+                        <button id="prevBtn" class="btn btn-secondary" disabled>
+                            <i class="fas fa-arrow-left" style="margin-right: 0.5rem;"></i> Précédent
+                        </button>
+                        <button id="nextBtn" class="btn btn-primary">
+                            Suivant <i class="fas fa-arrow-right" style="margin-left: 0.5rem;"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>© 2025 Nexten - Tous droits réservés</p>
+        </div>
+    </footer>
+
+    <script>
+        // Fonction pour initialiser l'autocomplete Google Maps Places
+        function initAutocomplete() {
+            // Autocomplete pour le champ de localisation souhaitée
+            const locationInput = document.getElementById('location');
+            if (locationInput) {
+                const autocomplete = new google.maps.places.Autocomplete(locationInput, {
+                    types: ['(cities)'],
+                    componentRestrictions: { country: ['fr'] }  // Limiter aux villes françaises
+                });
+                
+                // Enregistrer les détails de localisation lorsqu'une ville est sélectionnée
+                autocomplete.addListener('place_changed', function() {
+                    const place = autocomplete.getPlace();
+                    if (!place.geometry) {
+                        // L'utilisateur a appuyé sur entrée sans sélectionner de suggestion
+                        return;
+                    }
+                    
+                    // Sauvegarder les coordonnées et l'adresse formatée pour une utilisation ultérieure
+                    const formattedAddress = place.formatted_address;
+                    const lat = place.geometry.location.lat();
+                    const lng = place.geometry.location.lng();
+                    
+                    // Stocker les données de géolocalisation dans des attributs de données
+                    locationInput.dataset.formattedAddress = formattedAddress;
+                    locationInput.dataset.lat = lat;
+                    locationInput.dataset.lng = lng;
+                    
+                    console.log('Localisation sélectionnée:', formattedAddress);
+                    console.log('Coordonnées:', lat, lng);
+                });
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Référence aux éléments du formulaire
+            const formSteps = document.querySelectorAll('.form-step');
+            const formContents = document.querySelectorAll('.form-step-content');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            // Référence aux champs de formulaire
+            const preferredRoleInput = document.getElementById('preferredRole');
+            const locationInput = document.getElementById('location');
+            const prefilledMessage = document.getElementById('prefilled-message');
+            
+            // Initialiser les niveaux de compétences
+            setupSkillLevels();
+            
+            let currentStep = 1;
+            const totalSteps = formSteps.length;
+            
+            // Récupérer les données du candidat depuis localStorage
+            const savedData = localStorage.getItem('candidateData');
+            let candidateData = null;
+            
+            if (savedData) {
+                candidateData = JSON.parse(savedData);
+                
+                // Afficher le message de pré-remplissage si des données ont été extraites du CV
+                if (candidateData.parsedFromCV) {
+                    prefilledMessage.style.display = 'block';
+                    
+                    // Pré-remplir les champs avec les données extraites
+                    if (candidateData.experience && candidateData.experience.title) {
+                        preferredRoleInput.value = candidateData.experience.title;
+                    }
+                    
+                    if (candidateData.personalInfo && candidateData.personalInfo.location) {
+                        locationInput.value = candidateData.personalInfo.location;
+                    }
+                    
+                    // Pré-remplir les compétences techniques
+                    if (candidateData.skills && candidateData.skills.length > 0) {
+                        setTimeout(() => {
+                            candidateData.skills.forEach(skill => {
+                                if (skill !== "Compétences non détectées") {
+                                    addTag('technicalSkills', skill);
+                                }
+                            });
+                        }, 500);
+                    }
+                }
+            }
+            
+            // Fonctions pour la navigation entre les étapes
+            function goToStep(step) {
+                // Masquer l'étape actuelle et afficher la nouvelle
+                document.querySelector(`.form-step-content.active`).classList.remove('active');
+                document.querySelector(`#step-${step}`).classList.add('active');
+                
+                // Mettre à jour l'état des étapes dans l'indicateur de progression
+                formSteps.forEach((formStep, index) => {
+                    const stepNum = index + 1;
+                    
+                    formStep.classList.remove('active', 'completed');
+                    
+                    if (stepNum === step) {
+                        formStep.classList.add('active');
+                    } else if (stepNum < step) {
+                        formStep.classList.add('completed');
+                        formStep.querySelector('.step-circle').innerHTML = '<i class="fas fa-check"></i>';
+                    } else {
+                        formStep.querySelector('.step-circle').textContent = stepNum;
+                    }
+                });
+                
+                // Mettre à jour l'état des boutons
+                prevBtn.disabled = step === 1;
+                
+                if (step === totalSteps) {
+                    nextBtn.textContent = 'Soumettre';
+                    nextBtn.innerHTML = 'Soumettre <i class="fas fa-check" style="margin-left: 0.5rem;"></i>';
+                } else {
+                    nextBtn.textContent = 'Suivant';
+                    nextBtn.innerHTML = 'Suivant <i class="fas fa-arrow-right" style="margin-left: 0.5rem;"></i>';
+                }
+                
+                // Faire défiler vers le haut
+                window.scrollTo(0, 0);
+                
+                // Mettre à jour l'étape courante
+                currentStep = step;
+            }
+            
+            // Gestion des événements pour les boutons de navigation
+            prevBtn.addEventListener('click', function() {
+                if (currentStep > 1) {
+                    goToStep(currentStep - 1);
+                }
+            });
+            
+            nextBtn.addEventListener('click', function() {
+                if (currentStep < totalSteps) {
+                    // Collecter et sauvegarder les données du formulaire
+                    saveFormData();
+                    
+                    // Passer à l'étape suivante
+                    goToStep(currentStep + 1);
+                } else {
+                    // C'est la dernière étape, soumettre le formulaire
+                    submitForm();
+                }
+            });
+            
+            // Fonctions pour les champs de tags
+            function setupTagsInput(fieldId) {
+                const container = document.getElementById(`${fieldId}-container`);
+                const input = document.getElementById(`${fieldId}-input`);
+                
+                input.addEventListener('keydown', function(e) {
+                    if ((e.key === 'Enter' || e.key === ',') && this.value.trim()) {
+                        e.preventDefault();
+                        addTag(fieldId, this.value.trim());
+                        this.value = '';
+                    }
+                });
+            }
+            
+            function addTag(fieldId, text) {
+                const container = document.getElementById(`${fieldId}-container`);
+                
+                // Vérifier si le tag existe déjà
+                const existingTags = container.querySelectorAll('.tag');
+                for (let i = 0; i < existingTags.length; i++) {
+                    if (existingTags[i].getAttribute('data-value').toLowerCase() === text.toLowerCase()) {
+                        return; // Le tag existe déjà, ne pas l'ajouter
+                    }
+                }
+                
+                const tag = document.createElement('div');
+                tag.className = 'tag';
+                tag.setAttribute('data-value', text);
+                tag.innerHTML = text + ' <span class="remove-tag">&times;</span>';
+                
+                tag.querySelector('.remove-tag').addEventListener('click', function() {
+                    container.removeChild(tag);
+                });
+                
+                container.insertBefore(tag, document.getElementById(`${fieldId}-input`));
+            }
+            
+            // Configurer les champs de tags
+            setupTagsInput('technicalSkills');
+            setupTagsInput('softSkills');
+            setupTagsInput('languages');
+            setupTagsInput('certifications');
+            
+            // Fonction pour gérer l'ajout/la modification des niveaux de compétence
+            function setupSkillLevels() {
+                const technicalSkillsContainer = document.getElementById('technicalSkills-container');
+                const skillLevelsContainer = document.getElementById('skill-levels');
+                
+                // Observer les modifications dans le conteneur de compétences
+                const observer = new MutationObserver(function(mutations) {
+                    updateSkillLevelsDisplay();
+                });
+                
+                observer.observe(technicalSkillsContainer, { childList: true, subtree: true });
+                
+                function updateSkillLevelsDisplay() {
+                    // Effacer le contenu précédent
+                    skillLevelsContainer.innerHTML = '';
+                    
+                    // Récupérer toutes les compétences
+                    const skills = getTagsValues('technicalSkills');
+                    
+                    if (skills.length === 0) {
+                        // Afficher un message si aucune compétence n'est ajoutée
+                        skillLevelsContainer.innerHTML = `
+                            <div class="info-card" style="background-color: #f8fafc; padding: 0.8rem; margin-bottom: 0.5rem;">
+                                <p style="color: var(--text); font-size: 0.9rem; font-style: italic;">Les compétences ajoutées apparaîtront ici pour évaluation.</p>
+                            </div>
+                        `;
+                        return;
+                    }
+                    
+                    // Créer un élément pour chaque compétence
+                    skills.forEach(skill => {
+                        const skillId = 'skill-level-' + skill.replace(/\s+/g, '-').toLowerCase();
+                        
+                        const skillItem = document.createElement('div');
+                        skillItem.className = 'skill-level-item';
+                        skillItem.style.display = 'flex';
+                        skillItem.style.alignItems = 'center';
+                        skillItem.style.justifyContent = 'space-between';
+                        skillItem.style.padding = '0.8rem';
+                        skillItem.style.marginBottom = '0.8rem';
+                        skillItem.style.backgroundColor = '#f8fafc';
+                        skillItem.style.borderRadius = 'var(--radius)';
+                        
+                        skillItem.innerHTML = `
+                            <div style="font-weight: 500; color: var(--dark);">${skill}</div>
+                            <div style="display: flex; align-items: center;">
+                                <select id="${skillId}" class="form-control skill-level-select" data-skill="${skill}" style="width: 140px;">
+                                    <option value="débutant">Débutant</option>
+                                    <option value="intermédiaire">Intermédiaire</option>
+                                    <option value="avancé">Avancé</option>
+                                    <option value="expert">Expert</option>
+                                </select>
+                            </div>
+                        `;
+                        
+                        skillLevelsContainer.appendChild(skillItem);
+                    });
+                }
+            }
+            
+            // Fonction pour récupérer les soft skills sélectionnés
+            function getSelectedSoftSkills() {
+                const checkboxes = document.querySelectorAll('.soft-skill-checkbox:checked');
+                const softSkills = Array.from(checkboxes).map(cb => cb.value);
+                
+                // Ajouter également les soft skills personnalisés
+                const customSoftSkills = getTagsValues('softSkills');
+                return [...softSkills, ...customSoftSkills];
+            }
+            
+            // Fonction pour obtenir les priorités
+            function getPriorities() {
+                const priorityItems = document.querySelectorAll('.priority-item');
+                const priorities = {};
+                
+                priorityItems.forEach(item => {
+                    const select = item.querySelector('.priority-select');
+                    const label = item.querySelector('span').textContent;
+                    priorities[label] = parseInt(select.value, 10);
+                });
+                
+                return priorities;
+            }
+
+            // Fonction pour afficher/masquer les sections conditionnelles en fonction du statut d'emploi
+            function toggleEmploymentSections() {
+                const currentlyEmployed = document.getElementById('currentlyEmployed');
+                const employedSection = document.getElementById('employed-section');
+                const unemployedSection = document.getElementById('unemployed-section');
+                
+                if (currentlyEmployed) {
+                    currentlyEmployed.addEventListener('change', function() {
+                        if (this.value === 'oui') {
+                            employedSection.style.display = 'block';
+                            unemployedSection.style.display = 'none';
+                        } else if (this.value === 'non') {
+                            employedSection.style.display = 'none';
+                            unemployedSection.style.display = 'block';
+                        } else {
+                            employedSection.style.display = 'none';
+                            unemployedSection.style.display = 'none';
+                        }
+                    });
+                }
+            }
+            
+            // Initialiser le toggle des sections d'emploi
+            toggleEmploymentSections();
+            
+            // Fonction pour collecter les données du formulaire
+            function getFormData() {
+                // Récupérer les informations de localisation
+                const locationInput = document.getElementById('location');
+                const locationValue = locationInput.value;
+                const formattedAddress = locationInput.dataset.formattedAddress || locationValue;
+                const lat = locationInput.dataset.lat;
+                const lng = locationInput.dataset.lng;
+                
+                // Récupérer les niveaux de compétences
+                const skillLevels = {};
+                document.querySelectorAll('.skill-level-select').forEach(select => {
+                    const skill = select.getAttribute('data-skill');
+                    skillLevels[skill] = select.value;
+                });
+                
+                // Récupérer les soft skills (checkboxes + tags)
+                const softSkills = getSelectedSoftSkills();
+                
+                // Récupérer les priorités
+                const priorities = getPriorities();
+                
+                // Récupérer le statut d'emploi actuel
+                const currentlyEmployed = document.getElementById('currentlyEmployed').value;
+                
+                // Construire les informations de disponibilité en fonction du statut d'emploi
+                const availabilityData = {
+                    interviewAvailability: document.getElementById('interviewAvailability').value,
+                    relocateWilling: document.getElementById('relocateWilling').checked,
+                    currentlyEmployed: currentlyEmployed,
+                    recruitmentStatus: document.getElementById('recruitmentStatus').value
+                };
+                
+                // Ajouter les informations spécifiques au statut d'emploi
+                if (currentlyEmployed === 'oui') {
+                    availabilityData.jobSearchReason = document.getElementById('jobSearchReason').value;
+                    availabilityData.noticePeriod = document.getElementById('noticePeriod').value;
+                    availabilityData.noticeNegotiable = document.getElementById('noticeNegotiable').value;
+                } else if (currentlyEmployed === 'non') {
+                    availabilityData.jobEndReason = document.getElementById('jobEndReason').value;
+                }
+                
+                // Récupérer les valeurs des champs de l'étape actuelle
+                const formData = {
+                    jobPreferences: {
+                        preferredRole: document.getElementById('preferredRole').value,
+                        contractType: document.getElementById('contractType').value,
+                        location: locationValue,
+                        formattedLocation: formattedAddress,
+                        locationCoordinates: lat && lng ? { lat: parseFloat(lat), lng: parseFloat(lng) } : null,
+                        remotePreference: document.getElementById('remotePreference').value,
+                        salaryExpectation: document.getElementById('salaryExpectation').value,
+                        startDate: document.getElementById('startDate').value
+                    },
+                    skills: {
+                        technicalSkills: getTagsValues('technicalSkills'),
+                        technicalSkillLevels: skillLevels,
+                        softSkills: softSkills,
+                        languages: getTagsValues('languages'),
+                        certifications: getTagsValues('certifications')
+                    },
+                    availability: availabilityData,
+                    additional: {
+                        motivation: document.getElementById('motivation').value,
+                        strengths: document.getElementById('strengths').value,
+                        challenges: document.getElementById('challenges').value,
+                        additionalInfo: document.getElementById('additionalInfo').value,
+                        priorities: priorities
+                    }
+                };
+                
+                return formData;
+            }
+            
+            // Fonction pour obtenir les valeurs des tags
+            function getTagsValues(fieldId) {
+                const container = document.getElementById(`${fieldId}-container`);
+                const tags = container.querySelectorAll('.tag');
+                return Array.from(tags).map(tag => tag.getAttribute('data-value'));
+            }
+            
+            // Fonction pour sauvegarder les données du formulaire
+            function saveFormData() {
+                const formData = getFormData();
+                
+                // Récupérer les données existantes ou créer un nouvel objet
+                let savedData = localStorage.getItem('candidateData');
+                let candidateData = savedData ? JSON.parse(savedData) : {};
+                
+                // Mettre à jour les données du questionnaire
+                candidateData.questionnaire = formData;
+                
+                // Sauvegarder les données mises à jour
+                localStorage.setItem('candidateData', JSON.stringify(candidateData));
+            }
+            
+            // Fonction pour soumettre le formulaire
+            function submitForm() {
+                // Sauvegarder les données finales
+                saveFormData();
+                
+                // Récupérer toutes les données
+                let candidateData = JSON.parse(localStorage.getItem('candidateData'));
+                
+                // Marquer le questionnaire comme complété
+                candidateData.questionnaireCompleted = true;
+                candidateData.timestamp = new Date().toISOString();
+                
+                // Essayer d'utiliser le parser avancé si disponible
+                try {
+                    // Appel à l'API de parsing (avec fallback en cas d'échec)
+                    fetch('http://localhost:3000/api/process-candidate', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(candidateData),
+                        // Timeout après 3 secondes pour éviter de bloquer le processus
+                        signal: AbortSignal.timeout(3000)
+                    })
+                    .then(response => response.json())
+                    .then(parsedData => {
+                        console.log('Données analysées par le parser avancé:', parsedData);
+                        
+                        // Conserver les données originales et ajouter les données parsées
+                        candidateData.parsedData = parsedData.parsedData;
+                        candidateData.dataQuality = parsedData.parsedData.metadata.dataQuality;
+                        candidateData.matchingTags = parsedData.parsedData.tags;
+                        
+                        // Sauvegarder les données enrichies
+                        localStorage.setItem('candidateData', JSON.stringify(candidateData));
+                        
+                        // Rediriger vers la page de confirmation
+                        window.location.href = 'candidate-dashboard.html';
+                    })
+                    .catch(error => {
+                        console.warn('Erreur avec le parser avancé, utilisation du parser standard:', error);
+                        // Continuer avec le parser standard en cas d'erreur
+                        continueParsing(candidateData);
+                    });
+                } catch (error) {
+                    console.warn('Le parser avancé n\'est pas disponible:', error);
+                    // Continuer avec le parser standard
+                    continueParsing(candidateData);
+                }
+            }
+            
+            // Fonction pour continuer le traitement avec le parser standard
+            function continueParsing(candidateData) {
+                // Sauvegarder l'état final avec le parser standard
+                localStorage.setItem('candidateData', JSON.stringify(candidateData));
+                
+                // Rediriger vers la page de confirmation
+                window.location.href = 'candidate-dashboard.html';
+            }
+        });
+    </script>
+</body>
+</html>
