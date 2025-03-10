@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Nexten - Plateforme de recrutement simplifiée utilisant l'intelligence artificielle pour connecter candidats et recruteurs">
-    <title>Nexten - Plateforme de recrutement simplifiée</title>
+    <meta name="description" content="Nexten - Plateforme de recrutement innovante basée sur 10 connexions stratégiques entre candidats et recruteurs">
+    <title>Nexten - 10 connexions stratégiques pour votre recrutement</title>
     
     <!-- CSS -->
     <link rel="stylesheet" href="../static/styles/modern.css">
+    <link rel="stylesheet" href="../static/styles/additional.css">
+    <link rel="stylesheet" href="../static/styles/nexten-theme.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
@@ -22,18 +24,7 @@
         <div class="container">
             <h1>
                 <a href="index.html" aria-label="Accueil Nexten">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 50" style="height: 40px; margin-right: 5px;">
-                      <defs>
-                        <linearGradient id="logo-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                          <stop offset="0%" stop-color="#6366F1" />
-                          <stop offset="100%" stop-color="#8B5CF6" />
-                        </linearGradient>
-                      </defs>
-                      <path d="M20,10 L30,10 L30,40 L20,40 L20,25 L10,40 L0,40 L0,10 L10,10 L10,25 Z" fill="url(#logo-gradient)"/>
-                      <text x="35" y="32" font-family="Inter, Arial, sans-serif" font-weight="bold" font-size="24" fill="#374151">exten</text>
-                      <circle cx="180" cy="15" r="12" fill="url(#logo-gradient)" opacity="0.2"/>
-                      <text x="173" y="20" font-family="Inter, Arial, sans-serif" font-weight="bold" font-size="12" fill="#6366F1">10</text>
-                    </svg>
+                    <img src="../static/images/nexten-logo.svg" alt="Nexten - 10 connexions stratégiques" height="50">
                 </a>
             </h1>
             
@@ -63,9 +54,10 @@
         <div class="hero-decoration hero-decoration-2"></div>
         
         <div class="container">
-            <h2>L'intelligence artificielle au service du recrutement</h2>
+            <h2>L'intelligence artificielle au service de <span class="ten-accent">10</span> connexions stratégiques</h2>
             <p class="hero-subtitle">
                 Notre approche unique : 10 offres ciblées pour les candidats, 10 candidats qualifiés pour les recruteurs.
+                Un recrutement plus rapide, plus précis et plus humain.
             </p>
             <div class="search-bar">
                 <input type="text" id="search-input" placeholder="Rechercher par titre, entreprise ou compétence..." aria-label="Champ de recherche">
@@ -92,7 +84,7 @@
             <h2 class="section-title">Une approche inédite</h2>
             <p class="section-subtitle">
                 Notre plateforme change complètement la façon dont vous cherchez un emploi ou recrutez des talents.
-                Découvrez comment notre solution TOP 10 révolutionne le recrutement.
+                Découvrez comment notre solution TOP <span class="ten-accent">10</span> révolutionne le recrutement.
             </p>
             
             <div class="user-types-container">
@@ -124,6 +116,9 @@
             </div>
         </div>
     </section>
+
+    <!-- Cette section sera automatiquement injectée par notre script nexten-concept.js -->
+    <!-- Section des 10 connexions stratégiques -->
 
     <section class="features">
         <div class="container">
@@ -235,16 +230,7 @@
             <div class="footer-content">
                 <div>
                     <div class="footer-logo">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 50" style="height: 30px; margin-right: 5px;">
-                          <defs>
-                            <linearGradient id="footer-logo-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                              <stop offset="0%" stop-color="#6366F1" />
-                              <stop offset="100%" stop-color="#8B5CF6" />
-                            </linearGradient>
-                          </defs>
-                          <path d="M20,10 L30,10 L30,40 L20,40 L20,25 L10,40 L0,40 L0,10 L10,10 L10,25 Z" fill="url(#footer-logo-gradient)"/>
-                        </svg>
-                        Nexten
+                        <img src="../static/images/nexten-logo.svg" alt="Nexten - 10 connexions stratégiques" height="40">
                     </div>
                     <p class="footer-description">Notre plateforme utilise l'intelligence artificielle pour révolutionner le processus de recrutement, offrant des correspondances personnalisées pour les candidats et les recruteurs.</p>
                     <div class="footer-social">
@@ -260,7 +246,7 @@
                     <ul class="footer-links">
                         <li><a href="index.html"><i class="fas fa-chevron-right"></i> Accueil</a></li>
                         <li><a href="post-job.html"><i class="fas fa-chevron-right"></i> Publier une offre</a></li>
-                        <li><a href="candidate-upload.html"><i class="fas fa-chevron-right"></i> Télécharger CV</a></li>
+                        <li><a href="candidate-upload.html"><i class="fas fa-chevron-right"></i> Espace candidat</a></li>
                         <li><a href="about.html"><i class="fas fa-chevron-right"></i> À propos</a></li>
                         <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
                     </ul>
@@ -272,14 +258,6 @@
                         <p><i class="fas fa-map-marker-alt"></i> 123 Avenue de l'Innovation, 75001 Paris</p>
                         <p><i class="fas fa-phone"></i> +33 1 23 45 67 89</p>
                         <p><i class="fas fa-envelope"></i> contact@nexten.fr</p>
-                    </div>
-                    
-                    <div class="footer-newsletter">
-                        <p>Restez informé de nos dernières actualités</p>
-                        <form class="newsletter-form">
-                            <input type="email" placeholder="Votre email" aria-label="Votre adresse email">
-                            <button type="submit" aria-label="S'abonner à la newsletter"><i class="fas fa-paper-plane"></i></button>
-                        </form>
                     </div>
                 </div>
             </div>
@@ -299,7 +277,7 @@
     <script src="../static/services/dataService.js"></script>
     <script src="../static/services/app.js"></script>
     <script src="../static/services/uiEffects.js"></script>
-    <script src="../static/components/header.js"></script>
-    <script src="../static/components/footer.js"></script>
+    <script src="../static/services/notifications.js"></script>
+    <script src="../static/services/nexten-concept.js"></script>
 </body>
 </html>
