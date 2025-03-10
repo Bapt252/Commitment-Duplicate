@@ -84,7 +84,7 @@ function loadJobProposals() {
             contractType: "CDI",
             salary: "40K€ - 50K€",
             startDate: "01/04/2025",
-            matchPercentage: 85,
+            matchPercentage: 65,
             commuteTime: "30 min"
         },
         {
@@ -218,6 +218,15 @@ function renderJobProposals() {
     });
 }
 
+// Fonction pour rediriger vers la page des propositions après le questionnaire
+function redirectToProposals(userType) {
+    if (userType === 'candidate') {
+        window.location.href = '../templates/candidate-jobs-proposals.html';
+    } else if (userType === 'recruiter') {
+        window.location.href = '../templates/recruiter-candidates-proposals.html';
+    }
+}
+
 // Initialisation au chargement de la page
 document.addEventListener('DOMContentLoaded', function() {
     // Déterminer quelle page est actuellement chargée
@@ -244,5 +253,28 @@ document.addEventListener('DOMContentLoaded', function() {
         renderJobProposals();
     } else if (currentPage === 'recruiter-proposals') {
         renderCandidateProposals();
+    }
+    
+    // Écouteurs pour les formulaires de questionnaire
+    const candidateForm = document.getElementById('candidate-form');
+    if (candidateForm) {
+        candidateForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Simuler un traitement des données
+            setTimeout(() => {
+                redirectToProposals('candidate');
+            }, 1000);
+        });
+    }
+    
+    const recruiterForm = document.getElementById('recruiter-form');
+    if (recruiterForm) {
+        recruiterForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Simuler un traitement des données
+            setTimeout(() => {
+                redirectToProposals('recruiter');
+            }, 1000);
+        });
     }
 });
