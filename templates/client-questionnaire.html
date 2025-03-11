@@ -1056,6 +1056,14 @@
             const successModal = document.getElementById('success-modal');
             const goToMatchesBtn = document.getElementById('go-to-matches');
             
+            // Ajout de l'écouteur d'événement pour la redirection directe vers le dashboard recruteur
+            document.getElementById('recruitment-need-no').addEventListener('change', function() {
+                if (this.checked) {
+                    // Redirection vers le dashboard recruteur
+                    window.location.href = 'recruiter-dashboard.html';
+                }
+            });
+            
             // Étapes du formulaire
             const steps = document.querySelectorAll('.form-step');
             let currentStep = 0;
