@@ -1150,12 +1150,12 @@
                     const submitButton = form.querySelector('button[type="submit"]');
                     if (submitButton) {
                         submitButton.disabled = true;
-                        submitButton.innerHTML = '<span class="loading-spinner"></span> Création de votre compte...';
+                        submitButton.innerHTML = '<span class="loading-spinner"></span> Traitement en cours...';
                     }
                     
                     // Rediriger vers la page des correspondances
                     setTimeout(() => {
-                        window.location.href = 'candidate-dashboard.html';
+                        window.location.href = 'candidate-matching.html';
                     }, 2500);
                 });
             }
