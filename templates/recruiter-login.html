@@ -150,6 +150,33 @@
                 order: 1;
             }
         }
+        
+        /* Style pour l'animation de chargement */
+        .btn-loading {
+            position: relative;
+            pointer-events: none;
+            background-color: #5e72eb !important;
+            color: white !important;
+        }
+        
+        .btn-loading:after {
+            content: '';
+            display: block;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            border-top-color: transparent;
+            position: absolute;
+            top: calc(50% - 10px);
+            right: 25px;
+            animation: spin 0.8s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
@@ -178,7 +205,6 @@
                     <li><a href="index.html">Accueil</a></li>
                     <li><a href="post-job.html">Publier une offre</a></li>
                     <li><a href="candidate-upload.html">Espace candidat</a></li>
-                    <li><a href="recruiter-dashboard.html" class="active">Espace recruteur</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </nav>
@@ -196,7 +222,7 @@
                     <h1>Connexion recruteur</h1>
                     <p class="hero-subtitle">Accédez à votre espace personnel pour découvrir vos 10 meilleurs candidats.</p>
                     
-                    <form action="recruiter-dashboard.html" method="get">
+                    <form id="login-form">
                         <div class="form-group">
                             <label for="email">Email professionnel</label>
                             <input type="email" id="email" name="email" required>
@@ -216,7 +242,7 @@
                             <a href="#">Mot de passe oublié ?</a>
                         </div>
                         
-                        <button type="submit" class="btn btn-primary" style="width: 100%;">Connexion</button>
+                        <button type="submit" id="login-button" class="btn btn-primary" style="width: 100%;">Connexion</button>
                     </form>
                     
                     <div class="social-login">
@@ -281,6 +307,7 @@
     </footer>
 
     <!-- JavaScript -->
+    <script src="../static/services/dataService.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Menu mobile toggle
@@ -291,6 +318,48 @@
                 menuToggle.addEventListener('click', function() {
                     nav.classList.toggle('active');
                     this.classList.toggle('active');
+                });
+            }
+            
+            // Nouvelle logique de validation du formulaire pour le mode démo
+            const loginForm = document.getElementById('login-form');
+            const loginButton = document.getElementById('login-button');
+            const emailInput = document.getElementById('email');
+            
+            if (loginForm) {
+                loginForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Afficher l'animation de chargement
+                    loginButton.classList.add('btn-loading');
+                    loginButton.textContent = 'Connexion...';
+                    
+                    // Récupérer les valeurs
+                    const email = emailInput.value;
+                    
+                    // Simuler un délai de traitement
+                    setTimeout(() => {
+                        // MODIFICATION: Accepter tous les emails et mots de passe en mode démo
+                        // Stocker un utilisateur fictif dans le localStorage
+                        const mockUser = {
+                            id: 888,
+                            type: 'recruiter',
+                            name: 'Recruteur Demo',
+                            email: email
+                        };
+                        
+                        localStorage.setItem('currentUser', JSON.stringify(mockUser));
+                        
+                        // Ajouter une animation avant la redirection
+                        loginButton.textContent = 'Connecté!';
+                        loginButton.classList.remove('btn-loading');
+                        loginButton.classList.add('success');
+                        
+                        setTimeout(() => {
+                            // Redirection vers le dashboard recruteur
+                            window.location.href = "recruiter-dashboard.html";
+                        }, 500);
+                    }, 1000);
                 });
             }
         });
