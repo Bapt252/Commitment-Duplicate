@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nexten - Opportunités candidat">
+    <title>Nexten - Mes opportunités sélectionnées</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../static/styles/nexten-modern.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/styles/dashboard.css">
+    <link rel="stylesheet" href="../static/styles/dashboard-new.css">
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../static/images/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <!-- Notification bar -->
+    <div class="notification-bar">
+        <i class="fas fa-bell"></i> Votre recrutement change, votre approche aussi : découvrez notre approche TOP <span class="ten-badge">10</span>
+    </div>
+
+    <!-- Lien d'accessibilité pour sauter au contenu principal -->
+    <a href="#main-content" class="skip-to-content">Aller au contenu principal</a>
+
+    <header>
+        <div class="container">
+            <div class="logo">
+                nex<span>ten</span><div class="logo-badge">10</div>
+            </div>
+            
+            <button class="menu-toggle" aria-label="Menu principal">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="candidate-dashboard-new.html" class="active">Espace candidat</a></li>
+                    <li><a href="company-login.html">Espace entreprise</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container main-container" id="main-content">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb fade-in">
+            <a href="candidate-dashboard-new.html"><i class="fas fa-home"></i> Tableau de bord</a> &gt; 
+            <span>Mes opportunités sélectionnées</span>
+        </div>
+        
+        <!-- Section Mes opportunités selectionnées -->
+        <div class="candidate-dashboard-section fade-in">
+            <h2 class="section-heading">Mes opportunités sélectionnées</h2>
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <div>
+                    <span class="filter-badge active"><i class="fas fa-filter"></i> Tous</span>
+                    <span class="filter-badge"><i class="fas fa-spinner"></i> En cours</span>
+                    <span class="filter-badge"><i class="fas fa-check"></i> Terminés</span>
+                </div>
+                <div>
+                    <select class="form-control form-control-sm" style="padding: 5px 10px; border-radius: 4px; border: 1px solid var(--cream-dark);">
+                        <option>Trier par : Date</option>
+                        <option>Trier par : Entreprise</option>
+                        <option>Trier par : Avancement</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="opportunities-container">
+                <!-- Opportunity 1 -->
+                <div class="opportunity-row fade-in">
+                    <div class="opportunity-company">
+                        <div class="logo-placeholder"></div>
+                        <div class="company-details">
+                            <h3 class="company-name">Entreprise Alpha</h3>
+                            <h4 class="job-title">Chef de Projet Digital</h4>
+                            <p class="small text-muted">Rémunération: 42K-48K</p>
+                        </div>
+                        <div style="margin-left: auto;">
+                            <span class="job-match">90%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="recruitment-pipeline">
+                        <div class="pipeline-status">
+                            <span class="status-label"><i class="fas fa-info-circle"></i> Statut: Entretien présentiel</span>
+                            <span class="travel-time"><i class="fas fa-map-marker-alt"></i> Temps de trajet: <a href="#" class="map-link">25 min (voir sur Maps)</a></span>
+                        </div>
+                        
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" style="width: 70%;"></div>
+                        </div>
+                        
+                        <div class="pipeline-stages">
+                            <div class="stage active">
+                                <div class="stage-box">
+                                    <i class="fas fa-check-circle"></i><br>
+                                    En cours de validation
+                                </div>
+                            </div>
+                            <div class="stage active">
+                                <div class="stage-box">
+                                    <i class="fas fa-check-circle"></i><br>
+                                    Call prise de contact
+                                </div>
+                            </div>
+                            <div class="stage active">
+                                <div class="stage-box">
+                                    <i class="fas fa-check-circle"></i><br>
+                                    Entretien visio
+                                </div>
+                            </div>
+                            <div class="stage current">
+                                <div class="stage-box">
+                                    <i class="fas fa-circle"></i><br>
+                                    Entretien Présentiel
+                                    <div class="interviewer">
+                                        Prévu avec Jean-François LEBOEUF<br>
+                                        Directeur Administratif et Financier<br>
+                                        <small>28 Mars, 14h00</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="stage">
+                                <div class="stage-box">
+                                    <i class="far fa-circle"></i><br>
+                                    Acceptation
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="opportunity-actions">
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <button class="btn btn-primary"><i class="fas fa-comment-dots"></i> Poser une question</button>
+                            <button class="btn btn-outline-danger"><i class="fas fa-times-circle"></i> Annuler ma candidature</button>
+                            <button class="btn btn-outline"><i class="fas fa-calendar-alt"></i> Modifier le rendez-vous</button>
+                        </div>
+                        <div class="action-arrows" style="margin-top: 15px;">
+                            <div class="action-buttons" style="display: flex; align-items: center; gap: 10px;">
+                                <button class="btn btn-outline"><i class="fas fa-envelope"></i> Messagerie</button>
+                                <div class="reason-field">
+                                    <span>Note personnelle: </span>
+                                    <input type="text" class="form-control form-control-sm" placeholder="Ajouter un rappel..." style="min-width: 250px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Opportunity 2 (similar structure, different data) -->
+                <div class="opportunity-row fade-in">
+                    <div class="opportunity-company">
+                        <div class="logo-placeholder"></div>
+                        <div class="company-details">
+                            <h3 class="company-name">Entreprise Beta</h3>
+                            <h4 class="job-title">Business Developer</h4>
+                            <p class="small text-muted">Rémunération: 38K-45K</p>
+                        </div>
+                        <div style="margin-left: auto;">
+                            <span class="job-match">85%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="recruitment-pipeline">
+                        <div class="pipeline-status">
+                            <span class="status-label"><i class="fas fa-info-circle"></i> Statut: Entretien visio</span>
+                            <span class="travel-time"><i class="fas fa-map-marker-alt"></i> Temps de trajet: <a href="#" class="map-link">35 min (voir sur Maps)</a></span>
+                        </div>
+                        
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" style="width: 50%;"></div>
+                        </div>
+                        
+                        <div class="pipeline-stages">
+                            <div class="stage active">
+                                <div class="stage-box">
+                                    <i class="fas fa-check-circle"></i><br>
+                                    En cours de validation
+                                </div>
+                            </div>
+                            <div class="stage active">
+                                <div class="stage-box">
+                                    <i class="fas fa-check-circle"></i><br>
+                                    Call prise de contact
+                                </div>
+                            </div>
+                            <div class="stage current">
+                                <div class="stage-box">
+                                    <i class="fas fa-circle"></i><br>
+                                    Entretien visio
+                                    <div class="interviewer">
+                                        Prévu avec Marie LAROCHON<br>
+                                        Directrice RH<br>
+                                        <small>25 Mars, 10h30</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="stage">
+                                <div class="stage-box">
+                                    <i class="far fa-circle"></i><br>
+                                    Entretien Présentiel
+                                </div>
+                            </div>
+                            <div class="stage">
+                                <div class="stage-box">
+                                    <i class="far fa-circle"></i><br>
+                                    Acceptation
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="opportunity-actions">
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <button class="btn btn-primary"><i class="fas fa-comment-dots"></i> Poser une question</button>
+                            <button class="btn btn-outline-danger"><i class="fas fa-times-circle"></i> Annuler ma candidature</button>
+                            <button class="btn btn-outline"><i class="fas fa-calendar-alt"></i> Modifier le rendez-vous</button>
+                        </div>
+                        <div class="action-arrows" style="margin-top: 15px;">
+                            <div class="action-buttons" style="display: flex; align-items: center; gap: 10px;">
+                                <button class="btn btn-outline"><i class="fas fa-envelope"></i> Messagerie</button>
+                                <div class="reason-field">
+                                    <span>Note personnelle: </span>
+                                    <input type="text" class="form-control form-control-sm" placeholder="Ajouter un rappel..." style="min-width: 250px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Opportunity 3 (in progress) -->
+                <div class="opportunity-row fade-in">
+                    <div class="opportunity-company">
+                        <div class="logo-placeholder"></div>
+                        <div class="company-details">
+                            <h3 class="company-name">Entreprise Gamma</h3>
+                            <h4 class="job-title">Product Owner</h4>
+                            <p class="small text-muted">Rémunération: 45K-52K</p>
+                        </div>
+                        <div style="margin-left: auto;">
+                            <span class="job-match">95%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="recruitment-pipeline">
+                        <div class="pipeline-status">
+                            <span class="status-label"><i class="fas fa-info-circle"></i> Statut: En cours de validation</span>
+                            <span class="travel-time"><i class="fas fa-map-marker-alt"></i> Temps de trajet: <a href="#" class="map-link">20 min (voir sur Maps)</a></span>
+                        </div>
+                        
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" style="width: 20%;"></div>
+                        </div>
+                        
+                        <div class="pipeline-stages">
+                            <div class="stage current">
+                                <div class="stage-box">
+                                    <i class="fas fa-circle"></i><br>
+                                    En cours de validation
+                                </div>
+                            </div>
+                            <div class="stage">
+                                <div class="stage-box">
+                                    <i class="far fa-circle"></i><br>
+                                    Call prise de contact
+                                </div>
+                            </div>
+                            <div class="stage">
+                                <div class="stage-box">
+                                    <i class="far fa-circle"></i><br>
+                                    Entretien visio
+                                </div>
+                            </div>
+                            <div class="stage">
+                                <div class="stage-box">
+                                    <i class="far fa-circle"></i><br>
+                                    Entretien Présentiel
+                                </div>
+                            </div>
+                            <div class="stage">
+                                <div class="stage-box">
+                                    <i class="far fa-circle"></i><br>
+                                    Acceptation
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="opportunity-actions">
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <button class="btn btn-primary"><i class="fas fa-comment-dots"></i> Poser une question</button>
+                            <button class="btn btn-outline-danger"><i class="fas fa-times-circle"></i> Annuler ma candidature</button>
+                        </div>
+                        <div class="action-arrows" style="margin-top: 15px;">
+                            <div class="action-buttons" style="display: flex; align-items: center; gap: 10px;">
+                                <button class="btn btn-outline"><i class="fas fa-envelope"></i> Messagerie</button>
+                                <div class="reason-field">
+                                    <span>Note personnelle: </span>
+                                    <input type="text" class="form-control form-control-sm" placeholder="Ajouter un rappel..." style="min-width: 250px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <h4 class="footer-heading">Nexten</h4>
+                    <p class="footer-description">Notre plateforme utilise l'intelligence artificielle pour révolutionner le processus de recrutement, offrant 10 correspondances personnalisées pour les candidats et les recruteurs.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="footer-heading">Navigation</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Accueil</a></li>
+                        <li><a href="candidate-dashboard-new.html"><i class="fas fa-chevron-right"></i> Espace candidat</a></li>
+                        <li><a href="company-login.html"><i class="fas fa-chevron-right"></i> Espace entreprise</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> À propos</a></li>
+                        <li><a href="#contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="footer-heading">Contact</h4>
+                    <div class="footer-contact">
+                        <p><i class="fas fa-map-marker-alt"></i> 123 Avenue de l'Innovation, 75001 Paris</p>
+                        <p><i class="fas fa-phone"></i> +33 1 23 45 67 89</p>
+                        <p><i class="fas fa-envelope"></i> contact@nexten.fr</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Nexten - Tous droits réservés | <a href="#">Politique de confidentialité</a> | <a href="#">Conditions d'utilisation</a></p>
+            </div>
+        </div>
+        
+        <!-- Bouton de retour en haut -->
+        <button id="scroll-to-top" class="scroll-to-top" aria-label="Retour en haut">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Menu mobile toggle
+            const menuToggle = document.querySelector('.menu-toggle');
+            const nav = document.querySelector('nav');
+            
+            if (menuToggle && nav) {
+                menuToggle.addEventListener('click', function() {
+                    nav.classList.toggle('active');
+                    this.classList.toggle('active');
+                });
+            }
+            
+            // Animation au défilement
+            const animatedElements = document.querySelectorAll('.fade-in');
+            
+            function checkIfInView() {
+                const windowHeight = window.innerHeight;
+                const windowTop = window.scrollY;
+                const windowBottom = windowTop + windowHeight;
+                
+                animatedElements.forEach(function(element) {
+                    const elementTop = element.getBoundingClientRect().top + windowTop;
+                    const elementBottom = elementTop + element.offsetHeight;
+                    
+                    // Si l'élément est visible dans la fenêtre
+                    if (elementBottom > windowTop && elementTop < windowBottom) {
+                        element.classList.add('visible');
+                    }
+                });
+            }
+            
+            // Vérifier au chargement de la page
+            checkIfInView();
+            
+            // Vérifier lors du défilement
+            window.addEventListener('scroll', checkIfInView);
+            
+            // Bouton de retour en haut
+            const scrollToTopButton = document.getElementById('scroll-to-top');
+            
+            if (scrollToTopButton) {
+                window.addEventListener('scroll', function() {
+                    if (window.scrollY > 500) {
+                        scrollToTopButton.classList.add('visible');
+                    } else {
+                        scrollToTopButton.classList.remove('visible');
+                    }
+                });
+                
+                scrollToTopButton.addEventListener('click', function() {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+            
+            // Interaction avec les filtres
+            const filterBadges = document.querySelectorAll('.filter-badge');
+            
+            filterBadges.forEach(badge => {
+                badge.addEventListener('click', function() {
+                    // Dans chaque groupe de filtres, désactiver tous les autres
+                    const parentElement = this.parentElement;
+                    parentElement.querySelectorAll('.filter-badge').forEach(b => {
+                        b.classList.remove('active');
+                    });
+                    
+                    // Activer le filtre cliqué
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
