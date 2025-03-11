@@ -449,6 +449,74 @@
                 padding: 0.8rem;
             }
         }
+        
+        /* Highlighted question */
+        .highlighted-question {
+            background-color: var(--primary-lighter);
+            border-radius: 10px;
+            padding: 1.5rem;
+            border-left: 4px solid var(--primary);
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(108, 99, 255, 0.1);
+        }
+        
+        .highlighted-question h4 {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        /* Success modal */
+        .success-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-smooth);
+        }
+        
+        .success-modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transform: translateY(20px);
+            transition: transform 0.3s ease-out;
+        }
+        
+        .success-modal.show .modal-content {
+            transform: translateY(0);
+        }
+        
+        .success-icon {
+            font-size: 4rem;
+            color: var(--success);
+            margin-bottom: 1.5rem;
+        }
+        
+        .modal-actions {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
     </style>
 </head>
 <body>
@@ -478,13 +546,13 @@
         <div class="container">
             <div style="text-align: center; margin-bottom: 3rem;">
                 <span class="badge badge-ai" style="padding: 0.6rem 1rem; border-radius: 20px; background: linear-gradient(135deg, var(--primary) 0%, #9f94ff 100%); color: white; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 2px 5px rgba(108, 99, 255, 0.3);">
-                    <i class="fas fa-building"></i> Profil Entreprise
+                    <i class="fas fa-building"></i> Création de compte entreprise
                 </span>
                 <h2 style="font-size: 2.2rem; font-weight: 700; color: var(--dark); margin-top: 1.2rem; margin-bottom: 0.8rem;">
                     Questionnaire Client
                 </h2>
                 <p style="color: #64748b; font-size: 1.1rem; max-width: 700px; margin: 0 auto; line-height: 1.6;">
-                    Aidez-nous à mieux connaître votre entreprise et vos besoins en recrutement pour vous proposer les meilleurs candidats.
+                    Créez votre profil entreprise et précisez vos besoins en recrutement pour accéder à notre plateforme.
                 </p>
             </div>
 
@@ -492,7 +560,7 @@
                 <div class="progress-steps">
                     <div class="step active" data-step="1">
                         <div class="step-circle">1</div>
-                        <div class="step-text">Votre structure</div>
+                        <div class="step-text">Informations entreprise</div>
                     </div>
                     <div class="step" data-step="2">
                         <div class="step-circle">2</div>
@@ -512,7 +580,7 @@
                     <!-- Étape 1: Informations sur la structure -->
                     <div class="form-step" id="step-1">
                         <h3 style="font-size: 1.5rem; margin-bottom: 1.8rem; color: #1e293b; font-weight: 600;">
-                            Informations sur votre structure
+                            Informations sur votre entreprise
                         </h3>
                         
                         <div class="form-group">
@@ -576,10 +644,8 @@
                             <div class="validation-message" id="company-size-validation"></div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="recruitment-need" class="form-label">
-                                Avez-vous un poste sur lequel vous souhaitez recruter ? <span class="required-star">*</span>
-                            </label>
+                        <div class="highlighted-question">
+                            <h4><i class="fas fa-question-circle" style="margin-right: 0.5rem;"></i> Avez-vous un poste sur lequel vous souhaitez recruter ?</h4>
                             <div class="radio-options">
                                 <div class="radio-option">
                                     <input type="radio" id="recruitment-need-yes" name="recruitment-need" value="yes" required>
@@ -605,7 +671,7 @@
                                 <i class="fas fa-info-circle" style="color: #0ea5e9; margin-right: 1rem; margin-top: 0.2rem; font-size: 1.2rem;"></i>
                                 <div>
                                     <p style="color: #64748b; line-height: 1.6; margin: 0;">
-                                        Ces informations nous permettront de mieux comprendre vos besoins et de vous proposer des candidats qui correspondent à vos attentes.
+                                        Ces informations nous permettront de comprendre vos besoins immédiats en recrutement.
                                     </p>
                                 </div>
                             </div>
@@ -948,6 +1014,22 @@
             </div>
         </div>
     </section>
+    
+    <!-- Modal de succès -->
+    <div class="success-modal" id="success-modal">
+        <div class="modal-content">
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3>Votre profil a été créé avec succès !</h3>
+            <p>Nous avons bien enregistré vos informations. Vous allez être redirigé vers votre tableau de bord.</p>
+            <div class="modal-actions">
+                <button id="go-to-dashboard" class="btn btn-primary">
+                    Accéder au tableau de bord
+                </button>
+            </div>
+        </div>
+    </div>
 
     <footer class="site-footer">
         <div class="container">
@@ -971,6 +1053,8 @@
             const prevButton = document.getElementById('prev-button');
             const nextButton = document.getElementById('next-button');
             const progressBar = document.querySelector('.progress-bar');
+            const successModal = document.getElementById('success-modal');
+            const goToDashboardBtn = document.getElementById('go-to-dashboard');
             
             // Étapes du formulaire
             const steps = document.querySelectorAll('.form-step');
@@ -1115,11 +1199,18 @@
                         isValid = false;
                     }
                     
-                    // Si "Non" est sélectionné pour le recrutement, passer directement à la soumission du formulaire
-                    if (document.getElementById('recruitment-need-no').checked) {
-                        // Simulation de soumission
-                        submitForm();
-                        return false; // Empêcher la navigation vers l'étape suivante
+                    // Si "Non" est sélectionné pour le recrutement, créer le profil et rediriger vers le dashboard
+                    if (document.getElementById('recruitment-need-no').checked && isValid) {
+                        // Vérifier si tous les champs obligatoires sont remplis
+                        if (
+                            document.getElementById('company-name').value.trim() &&
+                            document.getElementById('company-address').value.trim() &&
+                            document.getElementById('company-size').value.trim()
+                        ) {
+                            // Créer le profil et rediriger vers le dashboard recruteur
+                            submitProfileOnly();
+                            return false;
+                        }
                     }
                 }
                 
@@ -1254,7 +1345,7 @@
                 if (currentStep === steps.length - 1) {
                     // Si on est à la dernière étape, soumettre le formulaire
                     if (validateStep(currentStep)) {
-                        submitForm();
+                        submitCompletedForm();
                     }
                 } else if (validateStep(currentStep)) {
                     currentStep++;
@@ -1270,8 +1361,8 @@
                 }
             });
             
-            // Soumission du formulaire
-            function submitForm() {
+            // Soumission du formulaire complet (avec poste)
+            function submitCompletedForm() {
                 // Désactiver les boutons de navigation
                 nextButton.disabled = true;
                 prevButton.disabled = true;
@@ -1279,12 +1370,33 @@
                 // Animation du bouton de soumission
                 nextButton.innerHTML = '<span class="loading-spinner"></span> Traitement en cours...';
                 
-                // Simulation de soumission (à remplacer par l'envoi réel du formulaire)
+                // Simulation de soumission
                 setTimeout(() => {
-                    // Rediriger vers la page de succès ou afficher un message
-                    window.location.href = 'recruiter-dashboard.html';
+                    // Afficher une modal de succès puis rediriger
+                    successModal.classList.add('show');
                 }, 2000);
             }
+            
+            // Soumission du profil uniquement (sans poste)
+            function submitProfileOnly() {
+                // Désactiver les boutons de navigation
+                nextButton.disabled = true;
+                prevButton.disabled = true;
+                
+                // Animation du bouton suivant
+                nextButton.innerHTML = '<span class="loading-spinner"></span> Création du profil...';
+                
+                // Simulation de création de profil
+                setTimeout(() => {
+                    // Afficher une modal de succès puis rediriger
+                    successModal.classList.add('show');
+                }, 2000);
+            }
+            
+            // Redirection depuis la modal
+            goToDashboardBtn.addEventListener('click', function() {
+                window.location.href = 'recruiter-dashboard.html';
+            });
             
             // Initialisation des options cliquables
             document.querySelectorAll('.radio-option, .checkbox-option').forEach(option => {
