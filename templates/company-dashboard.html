@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nexten - Tableau de bord entreprise">
+    <title>Nexten - Tableau de bord entreprise</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../static/styles/nexten-modern.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../static/images/favicon.ico" type="image/x-icon">
+</head>
+<body class="dashboard-body">
+    <!-- Notification bar -->
+    <div class="notification-bar">
+        <span id="notification-message">Bienvenue sur votre tableau de bord entreprise</span>
+        <button class="close-notification"><i class="fas fa-times"></i></button>
+    </div>
+
+    <!-- Lien d'accessibilité pour sauter au contenu principal -->
+    <a href="#main-content" class="skip-to-content">Aller au contenu principal</a>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                nex<span>ten</span><div class="logo-badge">10</div>
+            </div>
+            <button class="sidebar-toggle" aria-label="Toggle Sidebar">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <ul>
+                <li class="active">
+                    <a href="company-dashboard.html">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Tableau de bord</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="post-job.html">
+                        <i class="fas fa-plus-circle"></i>
+                        <span>Publier une offre</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="recruiter-candidate-selection.html">
+                        <i class="fas fa-user-check"></i>
+                        <span>Nos candidats</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="recruiter-matches.html">
+                        <i class="fas fa-handshake"></i>
+                        <span>Matchings</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="scheduler.html">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Entretiens</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" id="company-settings-link">
+                        <i class="fas fa-cog"></i>
+                        <span>Paramètres</span>
+                    </a>
+                </li>
+                <li class="sidebar-bottom">
+                    <a href="#" id="logout-link">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Déconnexion</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main content -->
+    <main class="dashboard-main" id="main-content">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-left">
+                <h1>Tableau de bord</h1>
+                <p class="breadcrumb">Accueil > Tableau de bord</p>
+            </div>
+            <div class="header-right">
+                <div class="search-container">
+                    <input type="text" placeholder="Rechercher..." aria-label="Rechercher">
+                    <button aria-label="Rechercher"><i class="fas fa-search"></i></button>
+                </div>
+                <div class="user-menu">
+                    <div class="notifications">
+                        <button class="icon-button" aria-label="Notifications">
+                            <i class="fas fa-bell"></i>
+                            <span class="badge">3</span>
+                        </button>
+                    </div>
+                    <div class="messages">
+                        <button class="icon-button" aria-label="Messages">
+                            <i class="fas fa-envelope"></i>
+                            <span class="badge">5</span>
+                        </button>
+                    </div>
+                    <div class="user-profile">
+                        <button class="user-profile-button" id="user-menu-trigger">
+                            <img src="../static/images/company-placeholder.png" alt="Photo de profil" class="avatar">
+                            <span class="user-name">InnovTech</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="user-dropdown">
+                            <ul>
+                                <li><a href="#"><i class="fas fa-user"></i> Mon profil</a></li>
+                                <li><a href="#"><i class="fas fa-cog"></i> Paramètres</a></li>
+                                <li><a href="#"><i class="fas fa-question-circle"></i> Aide</a></li>
+                                <li><a href="#" id="logout-button"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard content -->
+        <div class="dashboard-content">
+            <!-- Analytics cards -->
+            <section class="analytics-section">
+                <div class="analytics-grid">
+                    <div class="analytics-card">
+                        <div class="analytics-icon purple">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="analytics-data">
+                            <h3>8</h3>
+                            <p>Candidats correspondants</p>
+                        </div>
+                        <div class="analytics-change positive">
+                            <i class="fas fa-arrow-up"></i> 25%
+                        </div>
+                    </div>
+                    
+                    <div class="analytics-card">
+                        <div class="analytics-icon blue">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <div class="analytics-data">
+                            <h3>4</h3>
+                            <p>Offres d'emploi actives</p>
+                        </div>
+                        <div class="analytics-change positive">
+                            <i class="fas fa-arrow-up"></i> 10%
+                        </div>
+                    </div>
+                    
+                    <div class="analytics-card">
+                        <div class="analytics-icon green">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <div class="analytics-data">
+                            <h3>12</h3>
+                            <p>Entretiens programmés</p>
+                        </div>
+                        <div class="analytics-change positive">
+                            <i class="fas fa-arrow-up"></i> 15%
+                        </div>
+                    </div>
+                    
+                    <div class="analytics-card">
+                        <div class="analytics-icon orange">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="analytics-data">
+                            <h3>87%</h3>
+                            <p>Taux de matching</p>
+                        </div>
+                        <div class="analytics-change positive">
+                            <i class="fas fa-arrow-up"></i> 5%
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Main dashboard sections -->
+            <section class="dashboard-grid">
+                <!-- Recent candidate matches -->
+                <div class="dashboard-card candidates-card">
+                    <div class="card-header">
+                        <h2>Candidats correspondants</h2>
+                        <a href="recruiter-candidate-selection.html" class="card-link">Voir tout <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="card-content">
+                        <div class="candidates-list" id="matching-candidates">
+                            <!-- Les candidats seront chargés ici via JavaScript -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Active jobs -->
+                <div class="dashboard-card jobs-card">
+                    <div class="card-header">
+                        <h2>Offres d'emploi actives</h2>
+                        <a href="post-job.html" class="card-link">Publier une offre <i class="fas fa-plus"></i></a>
+                    </div>
+                    <div class="card-content">
+                        <div class="jobs-list" id="active-jobs">
+                            <!-- Les offres d'emploi seront chargées ici via JavaScript -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Upcoming interviews -->
+                <div class="dashboard-card interviews-card">
+                    <div class="card-header">
+                        <h2>Prochains entretiens</h2>
+                        <a href="scheduler.html" class="card-link">Calendrier <i class="fas fa-calendar"></i></a>
+                    </div>
+                    <div class="card-content">
+                        <div class="interviews-list">
+                            <div class="interview-item">
+                                <div class="interview-date">
+                                    <div class="date-day">15</div>
+                                    <div class="date-month">Mars</div>
+                                </div>
+                                <div class="interview-info">
+                                    <h3>Entretien avec Marie Dubois</h3>
+                                    <p>Développeur Full-Stack</p>
+                                    <div class="interview-time">
+                                        <i class="fas fa-clock"></i> 10:30 - 11:30
+                                    </div>
+                                </div>
+                                <div class="interview-actions">
+                                    <button class="btn-icon" aria-label="Détails"><i class="fas fa-eye"></i></button>
+                                    <button class="btn-icon" aria-label="Modifier"><i class="fas fa-edit"></i></button>
+                                </div>
+                            </div>
+                            <div class="interview-item">
+                                <div class="interview-date">
+                                    <div class="date-day">16</div>
+                                    <div class="date-month">Mars</div>
+                                </div>
+                                <div class="interview-info">
+                                    <h3>Entretien avec Thomas Martin</h3>
+                                    <p>Designer UX/UI</p>
+                                    <div class="interview-time">
+                                        <i class="fas fa-clock"></i> 14:00 - 15:00
+                                    </div>
+                                </div>
+                                <div class="interview-actions">
+                                    <button class="btn-icon" aria-label="Détails"><i class="fas fa-eye"></i></button>
+                                    <button class="btn-icon" aria-label="Modifier"><i class="fas fa-edit"></i></button>
+                                </div>
+                            </div>
+                            <div class="interview-item">
+                                <div class="interview-date">
+                                    <div class="date-day">18</div>
+                                    <div class="date-month">Mars</div>
+                                </div>
+                                <div class="interview-info">
+                                    <h3>Entretien avec Julie Petit</h3>
+                                    <p>Chef de projet Marketing</p>
+                                    <div class="interview-time">
+                                        <i class="fas fa-clock"></i> 11:00 - 12:00
+                                    </div>
+                                </div>
+                                <div class="interview-actions">
+                                    <button class="btn-icon" aria-label="Détails"><i class="fas fa-eye"></i></button>
+                                    <button class="btn-icon" aria-label="Modifier"><i class="fas fa-edit"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Recruiting progress -->
+                <div class="dashboard-card progress-card">
+                    <div class="card-header">
+                        <h2>Avancement du recrutement</h2>
+                        <a href="#" class="card-link">Détails <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="card-content">
+                        <div class="progress-stats">
+                            <div class="progress-item">
+                                <div class="progress-info">
+                                    <h3>Développeur Full-Stack</h3>
+                                    <span>75%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 75%;"></div>
+                                </div>
+                                <div class="progress-stage">
+                                    <span>Entretiens en cours</span>
+                                </div>
+                            </div>
+                            <div class="progress-item">
+                                <div class="progress-info">
+                                    <h3>Designer UX/UI</h3>
+                                    <span>50%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 50%;"></div>
+                                </div>
+                                <div class="progress-stage">
+                                    <span>Sélection des candidats</span>
+                                </div>
+                            </div>
+                            <div class="progress-item">
+                                <div class="progress-info">
+                                    <h3>Chargé de Marketing</h3>
+                                    <span>90%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 90%;"></div>
+                                </div>
+                                <div class="progress-stage">
+                                    <span>Proposition d'embauche</span>
+                                </div>
+                            </div>
+                            <div class="progress-item">
+                                <div class="progress-info">
+                                    <h3>Lead Developer</h3>
+                                    <span>30%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 30%;"></div>
+                                </div>
+                                <div class="progress-stage">
+                                    <span>Recherche en cours</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- JavaScript -->
+    <script src="../static/services/dataService.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Vérifier si l'utilisateur est connecté en tant qu'entreprise
+            const currentUser = dataService.getCurrentUser();
+            if (!currentUser || currentUser.type !== 'company') {
+                window.location.href = "company-login.html";
+                return;
+            }
+            
+            // Fermer la notification
+            const closeNotification = document.querySelector('.close-notification');
+            if (closeNotification) {
+                closeNotification.addEventListener('click', function() {
+                    document.querySelector('.notification-bar').style.display = 'none';
+                });
+            }
+            
+            // Toggle sidebar
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            if (sidebarToggle) {
+                sidebarToggle.addEventListener('click', function() {
+                    document.querySelector('.sidebar').classList.toggle('collapsed');
+                    document.querySelector('.dashboard-main').classList.toggle('expanded');
+                });
+            }
+            
+            // User dropdown
+            const userMenuTrigger = document.getElementById('user-menu-trigger');
+            if (userMenuTrigger) {
+                userMenuTrigger.addEventListener('click', function() {
+                    document.querySelector('.user-dropdown').classList.toggle('active');
+                });
+                
+                // Fermer le dropdown quand on clique en dehors
+                document.addEventListener('click', function(event) {
+                    if (!event.target.closest('.user-profile')) {
+                        document.querySelector('.user-dropdown').classList.remove('active');
+                    }
+                });
+            }
+            
+            // Déconnexion
+            const logoutButton = document.getElementById('logout-button');
+            const logoutLink = document.getElementById('logout-link');
+            
+            function handleLogout() {
+                dataService.logout();
+                window.location.href = "company-login.html";
+            }
+            
+            if (logoutButton) logoutButton.addEventListener('click', handleLogout);
+            if (logoutLink) logoutLink.addEventListener('click', handleLogout);
+            
+            // Charger les candidats correspondants
+            loadMatchingCandidates();
+            
+            // Charger les offres d'emploi actives
+            loadActiveJobs();
+        });
+        
+        /**
+         * Charge les candidats correspondants depuis le service de données
+         */
+        function loadMatchingCandidates() {
+            const currentUser = dataService.getCurrentUser();
+            if (!currentUser) return;
+            
+            const matchingCandidates = dataService.getMatchesForCompany(currentUser.id);
+            const candidatesContainer = document.getElementById('matching-candidates');
+            
+            if (!candidatesContainer) return;
+            
+            if (matchingCandidates.length === 0) {
+                candidatesContainer.innerHTML = '<p class="no-data">Aucun candidat correspondant pour le moment.</p>';
+                return;
+            }
+            
+            // Afficher les 5 premiers candidats
+            const candidatesToShow = matchingCandidates.slice(0, 5);
+            
+            candidatesContainer.innerHTML = candidatesToShow.map(match => `
+                <div class="candidate-item">
+                    <div class="candidate-info">
+                        <div class="candidate-name">
+                            <h3>${match.candidate.name}</h3>
+                            <span class="candidate-title">${match.candidate.title || 'Candidat'}</span>
+                        </div>
+                        <div class="match-score ${getMatchScoreClass(match.score)}">
+                            <span>${Math.round(match.score)}%</span>
+                        </div>
+                    </div>
+                    <div class="candidate-skills">
+                        ${match.candidate.skills ? match.candidate.skills.slice(0, 3).map(skill => `
+                            <span class="skill-tag">${skill}</span>
+                        `).join('') : ''}
+                    </div>
+                    <div class="candidate-actions">
+                        <button class="btn btn-sm">Voir profil</button>
+                        <button class="btn btn-primary btn-sm">Contacter</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        /**
+         * Charge les offres d'emploi actives depuis le service de données
+         */
+        function loadActiveJobs() {
+            const currentUser = dataService.getCurrentUser();
+            if (!currentUser) return;
+            
+            const users = JSON.parse(localStorage.getItem('users'));
+            const company = users.find(u => u.id === currentUser.id);
+            
+            if (!company || !company.jobIds) return;
+            
+            const jobsContainer = document.getElementById('active-jobs');
+            
+            if (!jobsContainer) return;
+            
+            if (company.jobIds.length === 0) {
+                jobsContainer.innerHTML = '<p class="no-data">Aucune offre d\'emploi active pour le moment.</p>';
+                return;
+            }
+            
+            const jobPromises = company.jobIds.map(jobId => {
+                const job = dataService.getJobById(jobId);
+                const applications = dataService.getJobApplications(jobId);
+                return { ...job, applicationsCount: applications.length };
+            });
+            
+            jobsContainer.innerHTML = jobPromises.map(job => `
+                <div class="job-item">
+                    <div class="job-header">
+                        <h3>${job.title}</h3>
+                        <span class="job-status active">Active</span>
+                    </div>
+                    <div class="job-meta">
+                        <span><i class="fas fa-map-marker-alt"></i> ${job.location}</span>
+                        <span><i class="fas fa-user"></i> ${job.applicationsCount || 0} candidats</span>
+                        <span><i class="fas fa-calendar-alt"></i> Publiée le ${new Date(job.createdAt).toLocaleDateString()}</span>
+                    </div>
+                    <div class="job-actions">
+                        <button class="btn btn-sm">Modifier</button>
+                        <button class="btn btn-primary btn-sm">Voir candidats</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        /**
+         * Retourne une classe CSS en fonction du score de matching
+         * @param {number} score 
+         * @returns {string} Classe CSS
+         */
+        function getMatchScoreClass(score) {
+            if (score >= 80) return 'high';
+            if (score >= 60) return 'medium';
+            return 'low';
+        }
+    </script>
+</body>
+</html>
