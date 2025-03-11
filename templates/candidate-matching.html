@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propositions de Postes - Commitment</title>
+    <link rel="stylesheet" href="../static/styles/modern.css">
+    <link rel="stylesheet" href="../static/styles/styles.css">
+    <link rel="stylesheet" href="../static/styles/additional.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --success: #10B981;
+            --danger: #EF4444;
+            --warning: #F59E0B;
+            --primary-light: rgba(108, 99, 255, 0.1);
+            --primary-lighter: rgba(108, 99, 255, 0.05);
+            --success-light: rgba(16, 185, 129, 0.1);
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            scroll-behavior: smooth;
+            background-color: #f8fafc;
+        }
+
+        .matching-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .matching-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            background-color: #FCD34D;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .matching-header h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1F2937;
+            margin-bottom: 1rem;
+        }
+
+        .matching-header p {
+            color: #4B5563;
+            font-size: 1.1rem;
+        }
+
+        .job-card {
+            background-color: white;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+            transition: var(--transition-smooth);
+            border: 1px solid #E5E7EB;
+        }
+
+        .job-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .job-card-header {
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .job-title-company {
+            display: flex;
+            align-items: center;
+            flex: 1;
+        }
+
+        .company-logo {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-right: 1rem;
+            background-color: #F3F4F6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #6366F1;
+        }
+
+        .job-title-info h3 {
+            margin: 0 0 0.3rem 0;
+            font-size: 1.25rem;
+            color: #1F2937;
+        }
+
+        .job-description {
+            color: #4B5563;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .job-match {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding-left: 1.5rem;
+        }
+
+        .match-percentage {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #1F2937;
+            background-color: #F3F4F6;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.8rem;
+        }
+
+        .match-indicators {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .indicator {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .indicator.success {
+            background-color: var(--success);
+        }
+
+        .indicator.danger {
+            background-color: var(--danger);
+        }
+
+        .job-card-body {
+            padding: 1.5rem;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .job-info-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-label {
+            font-size: 0.8rem;
+            color: #6B7280;
+            margin-bottom: 0.3rem;
+        }
+
+        .info-value {
+            color: #1F2937;
+            font-weight: 500;
+        }
+
+        .link-style {
+            color: #6366F1;
+            font-size: 0.85rem;
+            text-decoration: none;
+        }
+
+        .link-style:hover {
+            text-decoration: underline;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+            gap: 0.5rem;
+        }
+
+        .pagination-btn {
+            border: 1px solid #E5E7EB;
+            background-color: white;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .pagination-btn:hover {
+            background-color: #F3F4F6;
+        }
+
+        .pagination-btn.active {
+            background-color: #6366F1;
+            color: white;
+            border-color: #6366F1;
+        }
+
+        @media (max-width: 768px) {
+            .job-card-header {
+                flex-direction: column;
+            }
+
+            .job-match {
+                flex-direction: row;
+                padding-left: 0;
+                margin-top: 1rem;
+                justify-content: space-between;
+                width: 100%;
+            }
+
+            .job-card-body {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .job-card-body {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Progress steps from questionnaire */
+        .progress-steps {
+            margin-bottom: 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .progress-steps::before {
+            content: '';
+            position: absolute;
+            top: 16px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: #e2e8f0;
+            z-index: 0;
+        }
+
+        .progress-steps .step {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
+
+        .step-circle {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background-color: #f1f5f9;
+            border: 2px solid #e2e8f0;
+            color: #64748b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            transition: var(--transition-smooth);
+            z-index: 1;
+        }
+
+        .step.active .step-circle {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            color: white;
+            box-shadow: 0 0 0 4px rgba(108, 99, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        .step.completed .step-circle {
+            background-color: var(--success);
+            border-color: var(--success);
+            color: white;
+        }
+
+        .step-text {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #64748b;
+            transition: var(--transition-smooth);
+        }
+
+        .step.active .step-text {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .step.completed .step-text {
+            color: var(--success);
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <img src="../static/images/logo.svg" alt="Commitment Logo">
+            </a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="candidate-dashboard.html">Tableau de bord</a></li>
+                    <li><a href="candidate-upload.html">Mon CV</a></li>
+                    <li><a href="candidate-matches.html" class="active">Correspondances</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <a href="candidate-dashboard.html" class="user-profile">
+                    <i class="fas fa-user-circle"></i>
+                    <span>Mon profil</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <section style="padding: 6rem 0 4rem 0; background-color: #f8fafc;">
+        <div class="container">
+            <div style="max-width: 900px; margin: 0 auto; padding: 0 1rem;">
+                <div class="progress-steps">
+                    <div class="step completed" data-step="1">
+                        <div class="step-circle"><i class="fas fa-check"></i></div>
+                        <div class="step-text">Création du compte</div>
+                    </div>
+                    <div class="step completed" data-step="2">
+                        <div class="step-circle"><i class="fas fa-check"></i></div>
+                        <div class="step-text">Questionnaire</div>
+                    </div>
+                    <div class="step active" data-step="3">
+                        <div class="step-circle">3</div>
+                        <div class="step-text">Matching</div>
+                    </div>
+                </div>
+
+                <div class="matching-header">
+                    <h2>PROPOSITION DE POSTE : Limité à 10</h2>
+                    <p>En fonction de votre profil et de vos préférences, nous avons sélectionné les 10 postes qui correspondent le mieux à vos attentes.</p>
+                </div>
+
+                <!-- Job Cards Container -->
+                <div class="job-cards-container">
+                    <!-- Job Card 1 -->
+                    <div class="job-card">
+                        <div class="job-card-header">
+                            <div class="job-title-company">
+                                <div class="company-logo">
+                                    <span>E</span>
+                                </div>
+                                <div class="job-title-info">
+                                    <h3>Job Title</h3>
+                                    <p class="job-description">Descriptif de poste (appui et elle s'agrandit)</p>
+                                </div>
+                            </div>
+                            <div class="job-match">
+                                <div class="match-percentage">90%</div>
+                                <div class="match-indicators">
+                                    <div class="indicator success">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                    <div class="indicator danger">
+                                        <i class="fas fa-times"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="job-card-body">
+                            <div class="job-info-item">
+                                <span class="info-label">Entreprise</span>
+                                <span class="info-value">Entreprise</span>
+                                <a href="#" class="link-style">Lien qui redirige à la page créer</a>
+                            </div>
+                            <div class="job-info-item">
+                                <span class="info-label">Contrat</span>
+                                <span class="info-value">CDI CDD Intérim</span>
+                            </div>
+                            <div class="job-info-item">
+                                <span class="info-label">Temps de trajet</span>
+                                <span class="info-value">exact</span>
+                                <a href="#" class="link-style">Lien qui redirige sur maps</a>
+                            </div>
+                            <div class="job-info-item">
+                                <span class="info-label">Rémunération</span>
+                                <span class="info-value">fourchette transmise par la structure</span>
+                            </div>
+                            <div class="job-info-item">
+                                <span class="info-label">Date prévue de la prise de poste</span>
+                                <span class="info-value">01/04/2025</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Job Card 2 -->
+                    <div class="job-card">
+                        <div class="job-card-header">
+                            <div class="job-title-company">
+                                <div class="company-logo">
+                                    <span>E</span>
+                                </div>
+                                <div class="job-title-info">
+                                    <h3>Job Title</h3>
+                                    <p class="job-description">Descriptif de poste (appui et elle s'agrandit)</p>
+                                </div>
+                            </div>
+                            <div class="job-match">
+                                <div class="match-percentage">65%</div>
+                                <div class="match-indicators">
+                                    <div class="indicator success">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                    <div class="indicator danger">
+                                        <i class="fas fa-times"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="job-card-body">
+                            <div class="job-info-item">
+                                <span class="info-label">Entreprise</span>
+                                <span class="info-value">Entreprise</span>
+                                <a href="#" class="link-style">Lien qui redirige à la page créer</a>
+                            </div>
+                            <div class="job-info-item">
+                                <span class="info-label">Contrat</span>
+                                <span class="info-value">CDI CDD Intérim</span>
+                            </div>
+                            <div class="job-info-item">
+                                <span class="info-label">Temps de trajet</span>
+                                <span class="info-value">exact</span>
+                                <a href="#" class="link-style">Lien qui redirige sur maps</a>
+                            </div>
+                            <div class="job-info-item">
+                                <span class="info-label">Rémunération</span>
+                                <span class="info-value">fourchette transmise par la structure</span>
+                            </div>
+                            <div class="job-info-item">
+                                <span class="info-label">Date prévue de la prise de poste</span>
+                                <span class="info-value">15/05/2025</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Job Card 3 -->
+                    <div class="job-card">
+                        <div class="job-card-header">
+                            <div class="job-title-company">
+                                <div class="company-logo">
+                                    <span>E</span>
+                                </div>
+                                <div class="job-title-info">
+                                    <h3>Job Title</h3>
+                                    <p class="job-description">Descriptif de poste (appui et elle s'agrandit)</p>
+                                </div>
+                            </div>
+                            <div class="job-match">
+                                <div class="match-percentage">70%</div>
+                                <div class="match-indicators">
+                                    <div class="indicator success">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                    <div class="indicator danger">
+                                        <i class="fas fa-times"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="job-card-body">
+                            <div class="job-info-item">
+                                <span class="info-label">Entreprise</span>
+                                <span class="info-value">Entreprise</span>
+                                <a href="#" class="link-style">Lien qui redirige à la page créer</a>
+                            </div>
+                            <div class="job-info-item">
+                                <span class="info-label">Contrat</span>
+                                <span class="info-value">CDI CDD Intérim</span>
+                            </div>
+                            <div class="job-info-item">
+                                <span class="info-label">Temps de trajet</span>
+                                <span class="info-value">exact</span>
+                                <a href="#" class="link-style">Lien qui redirige sur maps</a>
+                            </div>
+                            <div class="job-info-item">
+                                <span class="info-label">Rémunération</span>
+                                <span class="info-value">fourchette transmise par la structure</span>
+                            </div>
+                            <div class="job-info-item">
+                                <span class="info-label">Date prévue de la prise de poste</span>
+                                <span class="info-value">20/04/2025</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Job Card 4 -->
+                    <div class="job-card">
+                        <div class="job-card-header">
+                            <div class="job-title-company">
+                                <div class="company-logo">
+                                    <span>E</span>
+                                </div>
+                                <div class="job-title-info">
+                                    <h3>Job Title</h3>
+                                    <p class="job-description">Descriptif de poste (appui et elle s'agrandit)</p>
+                                </div>
+                            </div>
+                            <div class="job-match">
+                                <div class="match-percentage">65%</div>
+                                <div class="match-indicators">
+                                    <div class="indicator success">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                    <div class="indicator danger">
+                                        <i class="fas fa-times"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="job-card-body">
+                            <div class="job-info-item">
+                                <span class="info-label">Entreprise</span>
+                                <span class="info-value">Entreprise</span>
+                                <a href="#" class="link-style">Lien qui redirige à la page créer</a>
+                            </div>
+                            <div class="job-info-item">
+                                <span class="info-label">Contrat</span>
+                                <span class="info-value">CDI CDD Intérim</span>
+                            </div>
+                            <div class="job-info-item">
+                                <span class="info-label">Temps de trajet</span>
+                                <span class="info-value">exact</span>
+                                <a href="#" class="link-style">Lien qui redirige sur maps</a>
+                            </div>
+                            <div class="job-info-item">
+                                <span class="info-label">Rémunération</span>
+                                <span class="info-value">fourchette transmise par la structure</span>
+                            </div>
+                            <div class="job-info-item">
+                                <span class="info-label">Date prévue de la prise de poste</span>
+                                <span class="info-value">01/06/2025</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination">
+                    <button class="pagination-btn active">1</button>
+                    <button class="pagination-btn">2</button>
+                    <button class="pagination-btn">3</button>
+                    <button class="pagination-btn">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="../static/images/logo.svg" alt="Commitment Logo">
+                </div>
+                <!-- Footer content -->
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Commitment. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Ajout de la fonctionnalité de pagination
+            const paginationBtns = document.querySelectorAll('.pagination-btn');
+            
+            paginationBtns.forEach((btn, index) => {
+                btn.addEventListener('click', function() {
+                    document.querySelector('.pagination-btn.active').classList.remove('active');
+                    this.classList.add('active');
+                    
+                    // Ici, vous pouvez ajouter la logique pour charger d'autres jobs
+                    // selon la page sélectionnée
+                });
+            });
+
+            // Ajout de la fonctionnalité d'expansion de la description
+            const jobDescriptions = document.querySelectorAll('.job-description');
+            
+            jobDescriptions.forEach(desc => {
+                desc.addEventListener('click', function() {
+                    this.classList.toggle('expanded');
+                    if (this.classList.contains('expanded')) {
+                        this.style.whiteSpace = 'normal';
+                        this.style.overflow = 'visible';
+                        this.style.textOverflow = 'unset';
+                        this.style.cursor = 'auto';
+                    } else {
+                        this.style.whiteSpace = 'nowrap';
+                        this.style.overflow = 'hidden';
+                        this.style.textOverflow = 'ellipsis';
+                        this.style.cursor = 'pointer';
+                    }
+                });
+                
+                // Initialisation des descriptions avec l'ellipse
+                desc.style.whiteSpace = 'nowrap';
+                desc.style.overflow = 'hidden';
+                desc.style.textOverflow = 'ellipsis';
+                desc.style.cursor = 'pointer';
+            });
+        });
+    </script>
+</body>
+</html>
