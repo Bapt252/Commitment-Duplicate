@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="../static/styles/modern.css">
     <link rel="stylesheet" href="../static/styles/styles.css">
     <link rel="stylesheet" href="../static/styles/additional.css">
-    <link rel="stylesheet" href="../static/styles/proposals.css">
     
     <!-- Google Fonts - Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,6 +17,619 @@
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #4361EE;
+            --primary-light: rgba(67, 97, 238, 0.1);
+            --success: #10B981;
+            --success-light: rgba(16, 185, 129, 0.1);
+            --warning: #F59E0B;
+            --warning-light: rgba(245, 158, 11, 0.1);
+            --danger: #EF4444;
+            --background: #F8FAFC;
+            --text-dark: #1E293B;
+            --text-light: #64748B;
+            --border: #E2E8F0;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --card-shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        
+        /* Progress steps enhanced */
+        .progress-container {
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            padding: 2rem 1rem 0;
+        }
+        
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-bottom: 3rem;
+        }
+        
+        .progress-steps::before {
+            content: '';
+            position: absolute;
+            top: 16px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: var(--border);
+            z-index: 0;
+        }
+        
+        .progress-steps .step {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
+        
+        .step-circle {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background-color: white;
+            border: 2px solid var(--border);
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            transition: var(--transition);
+            z-index: 1;
+        }
+        
+        .step.active .step-circle {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            color: white;
+            box-shadow: 0 0 0 4px rgba(67, 97, 238, 0.2);
+            transform: scale(1.1);
+        }
+        
+        .step.completed .step-circle {
+            background-color: var(--success);
+            border-color: var(--success);
+            color: white;
+        }
+        
+        .step-text {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+        
+        .step.active .step-text {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .step.completed .step-text {
+            color: var(--success);
+        }
+        
+        /* Header section */
+        .proposal-header-section {
+            max-width: 900px;
+            margin: 0 auto 2rem;
+            text-align: center;
+            padding: 2rem 1rem;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .proposal-header-section h1 {
+            margin: 0 0 1rem;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+        
+        .proposal-header-section p {
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Job description section */
+        .job-description {
+            max-width: 900px;
+            margin: 0 auto 2rem;
+            padding: 1.5rem;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .job-description h2 {
+            display: flex;
+            align-items: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+        
+        .job-description h2 i {
+            color: var(--primary);
+            margin-right: 0.75rem;
+        }
+        
+        .job-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .job-detail {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .job-detail-label {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-light);
+            margin-bottom: 0.25rem;
+        }
+        
+        .job-detail-value {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        
+        /* Candidates grid */
+        .candidate-grid-container {
+            max-width: 900px;
+            margin: 0 auto 3rem;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .candidate-grid-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .candidate-grid-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+        }
+        
+        .candidate-grid-title i {
+            color: var(--primary);
+            margin-right: 0.75rem;
+        }
+        
+        .candidate-grid-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .filter-button, .sort-button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background-color: white;
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .filter-button:hover, .sort-button:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        
+        .candidate-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .candidate-card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            background-color: white;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+            transition: var(--transition);
+            height: 100%;
+        }
+        
+        .candidate-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-shadow-hover);
+            border-color: var(--primary);
+        }
+        
+        .candidate-header {
+            position: relative;
+            padding: 1.25rem 1rem;
+            background-color: var(--primary-light);
+        }
+        
+        .match-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--text-dark);
+            border: 2px solid var(--primary);
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .match-badge:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .candidate-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: var(--text-dark);
+        }
+        
+        .candidate-title {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 0.75rem;
+        }
+        
+        .candidate-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .candidate-tag {
+            padding: 0.25rem 0.75rem;
+            background-color: white;
+            color: var(--primary);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .candidate-body {
+            padding: 1.25rem 1rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        
+        .candidate-info {
+            margin-bottom: 1rem;
+        }
+        
+        .candidate-info-label {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-light);
+            margin-bottom: 0.25rem;
+        }
+        
+        .candidate-info-value {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+        
+        .candidate-footer {
+            display: flex;
+            padding: 1rem;
+            border-top: 1px solid var(--border);
+            gap: 0.5rem;
+            margin-top: auto;
+        }
+        
+        .candidate-action {
+            flex: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .candidate-action.primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .candidate-action.secondary {
+            background-color: var(--primary-light);
+            color: var(--primary);
+        }
+        
+        .candidate-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Pagination */
+        .pagination {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+        
+        .pagination-item {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .pagination-item:hover:not(.active) {
+            background-color: #E2E8F0;
+        }
+        
+        .pagination-item.active {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        /* Bottom actions */
+        .bottom-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            max-width: 900px;
+            margin: 0 auto 4rem;
+            padding: 0 1rem;
+        }
+        
+        .bottom-button {
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+        
+        .bottom-button.primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .bottom-button.secondary {
+            background-color: white;
+            color: var(--text-dark);
+            border: 1px solid var(--border);
+        }
+        
+        .bottom-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--card-shadow);
+        }
+        
+        /* Percentages Modal */
+        .percentage-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .percentage-modal.show {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .percentage-modal-content {
+            width: 90%;
+            max-width: 600px;
+            background-color: white;
+            border-radius: 12px;
+            padding: 0;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+        
+        .percentage-modal.show .percentage-modal-content {
+            transform: scale(1);
+        }
+        
+        .percentage-modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.25rem 1.5rem;
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .percentage-modal-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .percentage-modal-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .percentage-modal-close:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .percentage-modal-body {
+            padding: 1.5rem;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        
+        .percentage-modal-body p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .percentage-modal-body h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin: 1.5rem 0 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .percentage-modal-body h3::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 1em;
+            background-color: var(--primary);
+            margin-right: 0.75rem;
+            border-radius: 2px;
+        }
+        
+        .criteria-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .criteria-list li {
+            position: relative;
+            padding: 0.5rem 0 0.5rem 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .criteria-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0.75rem;
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .candidate-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .job-details {
+                grid-template-columns: 1fr;
+            }
+            
+            .candidate-grid-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .candidate-grid-actions {
+                width: 100%;
+            }
+            
+            .filter-button, .sort-button {
+                flex: 1;
+                justify-content: center;
+            }
+            
+            .bottom-actions {
+                flex-direction: column;
+            }
+            
+            .bottom-button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
 </head>
 <body data-page="recruiter-proposals">
     <!-- Header -->
@@ -45,7 +657,7 @@
 
     <!-- Main Content -->
     <main class="site-main">
-        <div class="container">
+        <div class="progress-container">
             <div class="progress-steps">
                 <div class="step completed">
                     <div class="step-circle"><i class="fas fa-check"></i></div>
@@ -62,24 +674,68 @@
             </div>
         </div>
         
-        <div class="proposals-container">
-            <div class="proposals-header">
-                <h1>PROPOSITION DE candidat : Limité à 10</h1>
-                <p>D'après votre questionnaire, voici les candidats qui correspondent le mieux à votre recherche.</p>
+        <div class="proposal-header-section fade-in">
+            <h1>Découvrez vos candidats recommandés</h1>
+            <p>Notre algorithme a analysé votre offre et votre questionnaire pour vous proposer les 10 meilleurs profils correspondant à vos critères.</p>
+        </div>
+        
+        <div class="job-description fade-in">
+            <h2><i class="fas fa-briefcase"></i> Récapitulatif de votre offre</h2>
+            <div class="job-details">
+                <div class="job-detail">
+                    <span class="job-detail-label">Intitulé</span>
+                    <span class="job-detail-value">Développeur Full Stack</span>
+                </div>
+                <div class="job-detail">
+                    <span class="job-detail-label">Type de contrat</span>
+                    <span class="job-detail-value">CDI</span>
+                </div>
+                <div class="job-detail">
+                    <span class="job-detail-label">Rémunération</span>
+                    <span class="job-detail-value">45K€ - 55K€</span>
+                </div>
+                <div class="job-detail">
+                    <span class="job-detail-label">Localisation</span>
+                    <span class="job-detail-value">Paris</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="candidate-grid-container fade-in">
+            <div class="candidate-grid-header">
+                <div class="candidate-grid-title">
+                    <i class="fas fa-user-check"></i> Vos 10 candidats recommandés
+                </div>
+                <div class="candidate-grid-actions">
+                    <button class="filter-button">
+                        <i class="fas fa-filter"></i> Filtrer
+                    </button>
+                    <button class="sort-button">
+                        <i class="fas fa-sort"></i> Trier
+                    </button>
+                </div>
             </div>
             
-            <div class="proposals-grid">
-                <!-- Les propositions seront chargées dynamiquement via JS -->
+            <div class="candidate-grid" id="candidate-grid">
+                <!-- Les candidats seront chargés ici via JavaScript -->
             </div>
             
-            <div class="proposals-actions">
-                <a href="recruiter-dashboard.html" class="btn-proposal btn-secondary">
-                    Retour au tableau de bord
-                </a>
-                <a href="recruiter-matches.html" class="btn-proposal btn-primary">
-                    Voir mes correspondances
-                </a>
+            <div class="pagination">
+                <div class="pagination-item"><i class="fas fa-chevron-left"></i></div>
+                <div class="pagination-item active">1</div>
+                <div class="pagination-item">2</div>
+                <div class="pagination-item">3</div>
+                <div class="pagination-item"><i class="fas fa-chevron-right"></i></div>
             </div>
+        </div>
+        
+        <div class="bottom-actions">
+            <a href="recruiter-dashboard.html" class="bottom-button secondary">
+                <i class="fas fa-arrow-left"></i> Retour au tableau de bord
+            </a>
+            <a href="recruiter-matches.html" class="bottom-button primary">
+                Voir mes correspondances <i class="fas fa-arrow-right"></i>
+            </a>
         </div>
     </main>
 
@@ -138,38 +794,193 @@
     <div id="percentage-modal" class="percentage-modal">
         <div class="percentage-modal-content">
             <div class="percentage-modal-header">
-                <h2 class="percentage-modal-title">Le boutton pourcentage pour les deux parties</h2>
+                <h2 class="percentage-modal-title">Explication du score de compatibilité</h2>
                 <button class="percentage-modal-close">&times;</button>
             </div>
             <div class="percentage-modal-body">
-                <p>Le pourcentage a pour vocation d'expliquer la raison de cette comptabilisation. En cliquant dessus, une explication détaillée basée sur l'algorithme justifie ce scoring.</p>
+                <p>Le pourcentage indique le niveau de compatibilité entre le candidat et votre offre. Notre algorithme analyse de nombreux critères pour calculer ce score.</p>
                 
-                <h3>CANDIDAT</h3>
-                <ul class="criteria-list">
-                    <li>Proximité géographique</li>
-                    <li>Secteur d'activité si présélectionner par le candidat</li>
-                    <li>Environnement de travail : (open space, bureau)</li>
-                    <li>Environnement spé : Groupe, PME, Start Up etc</li>
-                    <li>Perspective d'évolution</li>
-                    <li>Flexibilité</li>
-                    <li>Descriptif de poste !</li>
-                </ul>
-                
-                <h3>ENTREPRISE</h3>
+                <h3>Critères pris en compte</h3>
                 <ul class="criteria-list">
                     <li>Proximité géographique du candidat</li>
-                    <li>Déjà travaillé dans le secteur (si pré requis)</li>
-                    <li>Rémunération</li>
-                    <li>À la recherche d'un environnement spé : Groupe, PME, Start Up etc</li>
-                    <li>Prise de poste possible</li>
-                    <li>Soft skills ou pré requis (compétences managérial, etc)</li>
-                    <li>Langues</li>
+                    <li>Expérience dans votre secteur d'activité</li>
+                    <li>Adéquation avec la rémunération proposée</li>
+                    <li>Préférence pour la taille d'entreprise (Groupe, PME, Startup)</li>
+                    <li>Disponibilité et délai de prise de poste</li>
+                    <li>Correspondance des compétences techniques requises</li>
+                    <li>Correspondance des soft skills nécessaires</li>
+                    <li>Maîtrise des langues demandées</li>
+                </ul>
+                
+                <h3>Comment interpréter ce score</h3>
+                <ul class="criteria-list">
+                    <li>90-100% : Correspondance exceptionnelle sur presque tous les critères</li>
+                    <li>80-89% : Très bonne correspondance, quelques différences mineures</li>
+                    <li>70-79% : Bonne correspondance, peut nécessiter quelques compromis</li>
+                    <li>Moins de 70% : Correspondance moyenne, des écarts notables sur certains critères</li>
                 </ul>
             </div>
         </div>
     </div>
 
     <!-- Scripts -->
-    <script src="../static/services/proposals.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Simulation des données de candidats
+            const candidates = [
+                {
+                    id: 1,
+                    name: "Jean D.",
+                    title: "Développeur Full Stack",
+                    tags: ["JavaScript", "React", "Node.js"],
+                    jobType: "CDI, CDD, Intérim",
+                    salary: "45K€ - 55K€",
+                    availability: "Immédiate",
+                    matchPercentage: 90,
+                    commuteTime: "25 min"
+                },
+                {
+                    id: 2,
+                    name: "Sophie M.",
+                    title: "UX/UI Designer",
+                    tags: ["Figma", "Adobe XD", "Sketch"],
+                    jobType: "CDI, CDD",
+                    salary: "40K€ - 50K€",
+                    availability: "Dans 1 mois",
+                    matchPercentage: 85,
+                    commuteTime: "30 min"
+                },
+                {
+                    id: 3,
+                    name: "Thomas B.",
+                    title: "Product Manager",
+                    tags: ["Agile", "Scrum", "JIRA"],
+                    jobType: "CDI uniquement",
+                    salary: "50K€ - 60K€",
+                    availability: "Dans 2 mois",
+                    matchPercentage: 78,
+                    commuteTime: "35 min"
+                },
+                {
+                    id: 4,
+                    name: "Julie L.",
+                    title: "Data Analyst",
+                    tags: ["Python", "SQL", "Tableau"],
+                    jobType: "CDI, CDD",
+                    salary: "42K€ - 52K€",
+                    availability: "Immédiate",
+                    matchPercentage: 75,
+                    commuteTime: "20 min"
+                },
+                {
+                    id: 5,
+                    name: "Maxime R.",
+                    title: "Développeur Backend",
+                    tags: ["Java", "Spring", "MySQL"],
+                    jobType: "CDI, Freelance",
+                    salary: "48K€ - 58K€",
+                    availability: "Dans 1 mois",
+                    matchPercentage: 72,
+                    commuteTime: "40 min"
+                },
+                {
+                    id: 6,
+                    name: "Emma P.",
+                    title: "Frontend Developer",
+                    tags: ["HTML/CSS", "Vue.js", "Sass"],
+                    jobType: "CDI, CDD",
+                    salary: "43K€ - 53K€",
+                    availability: "Immédiate",
+                    matchPercentage: 70,
+                    commuteTime: "15 min"
+                }
+            ];
+            
+            // Fonction pour rendre les cartes de candidat
+            function renderCandidateCards() {
+                const container = document.getElementById('candidate-grid');
+                if (!container) return;
+                
+                container.innerHTML = '';
+                
+                candidates.forEach(candidate => {
+                    const card = document.createElement('div');
+                    card.className = 'candidate-card';
+                    
+                    let tagsHTML = '';
+                    candidate.tags.forEach(tag => {
+                        tagsHTML += `<span class="candidate-tag">${tag}</span>`;
+                    });
+                    
+                    card.innerHTML = `
+                        <div class="candidate-header">
+                            <div class="match-badge" onclick="openPercentageModal()">${candidate.matchPercentage}%</div>
+                            <h3 class="candidate-name">${candidate.name}</h3>
+                            <div class="candidate-title">${candidate.title}</div>
+                            <div class="candidate-tags">
+                                ${tagsHTML}
+                            </div>
+                        </div>
+                        <div class="candidate-body">
+                            <div class="candidate-info">
+                                <div class="candidate-info-label">Recherche</div>
+                                <div class="candidate-info-value">${candidate.jobType}</div>
+                            </div>
+                            <div class="candidate-info">
+                                <div class="candidate-info-label">Rémunération souhaitée</div>
+                                <div class="candidate-info-value">${candidate.salary}</div>
+                            </div>
+                            <div class="candidate-info">
+                                <div class="candidate-info-label">Disponibilité</div>
+                                <div class="candidate-info-value">${candidate.availability}</div>
+                            </div>
+                            <div class="candidate-info">
+                                <div class="candidate-info-label">Temps de trajet</div>
+                                <div class="candidate-info-value">${candidate.commuteTime}</div>
+                            </div>
+                        </div>
+                        <div class="candidate-footer">
+                            <div class="candidate-action secondary">
+                                <i class="fas fa-file-alt"></i> Voir CV
+                            </div>
+                            <div class="candidate-action primary">
+                                <i class="fas fa-envelope"></i> Contacter
+                            </div>
+                        </div>
+                    `;
+                    
+                    container.appendChild(card);
+                });
+            }
+            
+            // Initialisation de la page
+            renderCandidateCards();
+            
+            // Gestion de la modal
+            window.openPercentageModal = function() {
+                const modal = document.getElementById('percentage-modal');
+                if (modal) modal.classList.add('show');
+            };
+            
+            // Fermeture de la modal
+            const closeModalBtn = document.querySelector('.percentage-modal-close');
+            if (closeModalBtn) {
+                closeModalBtn.addEventListener('click', function() {
+                    const modal = document.getElementById('percentage-modal');
+                    if (modal) modal.classList.remove('show');
+                });
+            }
+            
+            // Fermeture en cliquant en dehors
+            const modal = document.getElementById('percentage-modal');
+            if (modal) {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) {
+                        modal.classList.remove('show');
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>
