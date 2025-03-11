@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Nexten - Centre de ressources">
+    <meta name="description" content="Nexten - Centre de ressources candidat">
     <title>Nexten - Centre de ressources</title>
     
     <!-- CSS -->
@@ -12,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../static/styles/dashboard.css">
     <link rel="stylesheet" href="../static/styles/dashboard-new.css">
+    <link rel="stylesheet" href="../static/styles/nav-improvement.css">
     
     <!-- Favicon -->
     <link rel="shortcut icon" href="../static/images/favicon.ico" type="image/x-icon">
@@ -55,151 +56,95 @@
         
         <!-- Section Centre de ressources -->
         <div class="candidate-dashboard-section fade-in">
-            <h2 class="section-heading">Centre de Ressources & Préparation aux Entretiens</h2>
-            <p>Accédez à des informations précieuses sur les entreprises avec lesquelles vous êtes en processus et des conseils personnalisés pour réussir vos entretiens.</p>
+            <h2 class="section-heading">Centre de ressources & préparation aux entretiens</h2>
+            <p class="section-description">Accédez à des informations précieuses sur les entreprises avec lesquelles vous êtes en processus et des conseils personnalisés pour réussir vos entretiens.</p>
             
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="resource-block">
-                        <h3 class="resource-title"><i class="fas fa-building"></i> Entreprises actives dans votre processus</h3>
-                        <div class="resource-companies">
-                            <div class="resource-company">
-                                <div class="logo-placeholder"></div>
-                                <div class="company-info">
-                                    <h4 class="company-name">Entreprise Alpha</h4>
-                                    <p class="job-title">Chef de Projet Digital</p>
+            <div class="resources-container" style="display: flex; gap: 30px; margin-top: 30px;">
+                <div style="flex: 1; min-width: 250px;">
+                    <h3 style="display: flex; align-items: center;"><i class="fas fa-building" style="margin-right: 10px; color: var(--purple);"></i> Entreprises actives dans votre processus</h3>
+                    
+                    <!-- Liste des entreprises -->
+                    <div class="company-list">
+                        <div class="company-card" style="background-color: white; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); padding: 15px; margin-bottom: 15px;">
+                            <div style="display: flex; align-items: center;">
+                                <div class="logo-placeholder" style="width: 60px; height: 60px; background-color: #f0f0f0; border-radius: 8px; margin-right: 15px;"></div>
+                                <div>
+                                    <h4 style="margin: 0;">Entreprise Alpha</h4>
+                                    <p style="margin: 5px 0 0 0; font-size: 0.9rem;">Chef de Projet Digital</p>
                                 </div>
-                                <div class="call-to-action">
-                                    <span>Voir le profil</span>
-                                    <span class="arrow"><i class="fas fa-arrow-right"></i></span>
-                                </div>
-                            </div>
-                            
-                            <div class="resource-company">
-                                <div class="logo-placeholder"></div>
-                                <div class="company-info">
-                                    <h4 class="company-name">Entreprise Beta</h4>
-                                    <p class="job-title">Business Developer</p>
-                                </div>
-                                <div class="call-to-action">
-                                    <span>Voir le profil</span>
-                                    <span class="arrow"><i class="fas fa-arrow-right"></i></span>
-                                </div>
-                            </div>
-
-                            <div class="resource-company">
-                                <div class="logo-placeholder"></div>
-                                <div class="company-info">
-                                    <h4 class="company-name">Entreprise Gamma</h4>
-                                    <p class="job-title">Product Owner</p>
-                                </div>
-                                <div class="call-to-action">
-                                    <span>Voir le profil</span>
-                                    <span class="arrow"><i class="fas fa-arrow-right"></i></span>
-                                </div>
+                                <a href="#profile-alpha" class="btn btn-sm btn-outline" style="margin-left: auto;">Voir le profil <i class="fas fa-arrow-right"></i></a>
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="resource-block">
-                        <h3 class="resource-title"><i class="fas fa-comments"></i> Préparation aux entretiens</h3>
-                        <ul class="interview-tips">
-                            <li>
-                                <strong><i class="fas fa-video"></i> Conseils pour une visio-conférence</strong>
-                                <p>Assurez-vous d'avoir une bonne connexion internet et un environnement calme. Testez votre matériel avant l'entretien. Habillez-vous professionnellement et maintenez le contact visuel avec la caméra.</p>
-                                <a href="#" class="resource-link">Voir tous les conseils</a>
-                            </li>
-                            <li>
-                                <strong><i class="fas fa-user-tie"></i> Conseils pour un entretien présentiel</strong>
-                                <p>Prévoyez le temps de trajet et arrivez 10-15 minutes en avance. Apportez des copies de votre CV et prenez des notes. Renseignez-vous sur l'entreprise et préparez des questions pertinentes.</p>
-                                <a href="#" class="resource-link">Voir tous les conseils</a>
-                            </li>
-                            <li>
-                                <strong><i class="fas fa-phone"></i> Conseils pour un entretien téléphonique</strong>
-                                <p>Choisissez un environnement calme avec une bonne réception. Préparez vos notes à l'avance et tenez-les à portée de main. Parlez clairement et souriez (cela s'entend dans votre voix).</p>
-                                <a href="#" class="resource-link">Voir tous les conseils</a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="resource-block">
-                        <h3 class="resource-title"><i class="fas fa-question-circle"></i> Questions fréquentes en entretien</h3>
-                        <div class="faq-list">
-                            <div class="faq-item">
-                                <h4><i class="fas fa-caret-right"></i> Parlez-moi de vous</h4>
-                                <div class="faq-content">
-                                    <p>Cette question classique d'ouverture est votre chance de faire une bonne première impression. Structurez votre réponse en trois temps : votre parcours professionnel, vos compétences clés et vos aspirations. Concentrez-vous sur les aspects pertinents pour le poste visé.</p>
-                                    <p class="faq-example">Exemple de structure : <em>"J'ai plus de 5 ans d'expérience dans le marketing digital, avec une expertise particulière en acquisition et en analyse de données. J'ai notamment contribué à augmenter le trafic web de 45% dans mon poste actuel. Je recherche maintenant un rôle où je pourrais approfondir mes compétences en stratégie marketing globale..."</em></p>
+                        
+                        <div class="company-card" style="background-color: white; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); padding: 15px; margin-bottom: 15px;">
+                            <div style="display: flex; align-items: center;">
+                                <div class="logo-placeholder" style="width: 60px; height: 60px; background-color: #f0f0f0; border-radius: 8px; margin-right: 15px;"></div>
+                                <div>
+                                    <h4 style="margin: 0;">Entreprise Beta</h4>
+                                    <p style="margin: 5px 0 0 0; font-size: 0.9rem;">Business Developer</p>
                                 </div>
+                                <a href="#" class="btn btn-sm btn-outline" style="margin-left: auto;">Voir le profil <i class="fas fa-arrow-right"></i></a>
                             </div>
-                            <div class="faq-item">
-                                <h4><i class="fas fa-caret-right"></i> Quels sont vos points forts et vos points faibles ?</h4>
-                                <div class="faq-content">
-                                    <p>Pour les points forts, choisissez 2-3 qualités qui correspondent aux besoins du poste. Pour les points faibles, mentionnez une compétence non essentielle au poste que vous cherchez à améliorer, et expliquez les mesures que vous prenez pour progresser.</p>
+                        </div>
+                        
+                        <div class="company-card" style="background-color: white; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); padding: 15px; margin-bottom: 15px;">
+                            <div style="display: flex; align-items: center;">
+                                <div class="logo-placeholder" style="width: 60px; height: 60px; background-color: #f0f0f0; border-radius: 8px; margin-right: 15px;"></div>
+                                <div>
+                                    <h4 style="margin: 0;">Entreprise Gamma</h4>
+                                    <p style="margin: 5px 0 0 0; font-size: 0.9rem;">Product Owner</p>
                                 </div>
-                            </div>
-                            <div class="faq-item">
-                                <h4><i class="fas fa-caret-right"></i> Pourquoi voulez-vous travailler pour notre entreprise ?</h4>
-                                <div class="faq-content">
-                                    <p>Démontrez que vous avez fait vos recherches sur l'entreprise. Mentionnez des aspects spécifiques qui vous attirent, comme sa culture, ses produits, sa mission ou ses valeurs, et expliquez comment ils s'alignent avec vos propres objectifs et valeurs.</p>
-                                </div>
+                                <a href="#" class="btn btn-sm btn-outline" style="margin-left: auto;">Voir le profil <i class="fas fa-arrow-right"></i></a>
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                <div class="col-md-6">
-                    <div class="company-profile">
-                        <div class="company-header">
-                            <div class="logo-placeholder large"></div>
-                            <div class="company-headline">
-                                <h3 class="company-name">Entreprise Alpha</h3>
-                                <p class="company-website"><i class="fas fa-globe"></i> Site internet : www.entreprisealpha.fr</p>
-                                <p class="company-address"><i class="fas fa-map-marker-alt"></i> 25 rue de l'Innovation, 75008 Paris</p>
+                <div style="flex: 2;" id="profile-alpha">
+                    <div class="company-profile" style="background-color: white; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); padding: 20px;">
+                        <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                            <div class="logo-placeholder" style="width: 80px; height: 80px; background-color: #f0f0f0; border-radius: 8px; margin-right: 20px;"></div>
+                            <h3 style="margin: 0;">Entreprise Alpha</h3>
+                        </div>
+                        
+                        <div class="company-details">
+                            <p><i class="fas fa-globe" style="color: var(--purple); width: 20px;"></i> Site internet : <a href="#" class="color-link">www.entreprisealpha.fr</a></p>
+                            <p><i class="fas fa-map-marker-alt" style="color: var(--purple); width: 20px;"></i> 25 rue de l'Innovation, 75008 Paris</p>
+                            <p><i class="fas fa-users" style="color: var(--purple); width: 20px;"></i> Taille : 50-250 employés</p>
+                            <p><i class="fas fa-industry" style="color: var(--purple); width: 20px;"></i> Secteur : Marketing Digital</p>
+                        </div>
+                        
+                        <div class="company-description" style="margin-top: 20px;">
+                            <h4 style="display: flex; align-items: center;"><i class="fas fa-info-circle" style="margin-right: 10px; color: var(--purple);"></i> Qui sont-ils :</h4>
+                            <p>Entreprise Alpha est un leader dans le secteur du digital marketing avec plus de 200 employés en France et en Europe. Fondée en 2010, elle a connu une croissance exponentielle et compte aujourd'hui parmi les références dans son domaine.</p>
+                        </div>
+                        
+                        <div class="company-culture" style="margin-top: 20px;">
+                            <h4 style="display: flex; align-items: center;"><i class="fas fa-star" style="margin-right: 10px; color: var(--purple);"></i> Culture d'entreprise :</h4>
+                            <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;">
+                                <span style="background-color: rgba(103, 58, 183, 0.1); color: var(--purple); padding: 5px 10px; border-radius: 20px; font-size: 0.9rem;">Innovation</span>
+                                <span style="background-color: rgba(103, 58, 183, 0.1); color: var(--purple); padding: 5px 10px; border-radius: 20px; font-size: 0.9rem;">Flexibilité</span>
+                                <span style="background-color: rgba(103, 58, 183, 0.1); color: var(--purple); padding: 5px 10px; border-radius: 20px; font-size: 0.9rem;">Travail d'équipe</span>
+                                <span style="background-color: rgba(103, 58, 183, 0.1); color: var(--purple); padding: 5px 10px; border-radius: 20px; font-size: 0.9rem;">Impact social</span>
+                                <span style="background-color: rgba(103, 58, 183, 0.1); color: var(--purple); padding: 5px 10px; border-radius: 20px; font-size: 0.9rem;">Développement personnel</span>
                             </div>
                         </div>
                         
-                        <div class="company-section">
-                            <h4 class="section-title"><i class="fas fa-info-circle"></i> Qui sont-ils :</h4>
-                            <p>Entreprise Alpha est un leader dans le secteur du digital marketing avec plus de 200 employés en France et en Europe. Fondée en 2010, elle a connu une croissance rapide grâce à des solutions innovantes.</p>
-                        </div>
-                        
-                        <div class="company-section">
-                            <h4 class="section-title"><i class="fas fa-users"></i> Environnement de travail et équipe</h4>
-                            <p>Culture startup dynamique avec une organisation en mode projet. L'équipe est composée de professionnels expérimentés et de jeunes talents. Ambiance collaborative et environnement de travail flexible.</p>
-                        </div>
-                        
-                        <div class="company-section">
-                            <h4 class="section-title"><i class="fas fa-search"></i> Ce qu'ils recherchent</h4>
-                            <p><strong>Soft Skills</strong> : Autonomie, leadership, capacité d'analyse, communication</p>
-                            <p><strong>Valeurs</strong> : Innovation, excellence, collaboration, intégrité</p>
-                        </div>
-                        
-                        <div class="company-section">
-                            <h4 class="section-title"><i class="fas fa-question-circle"></i> Pourquoi recrutent-ils ?</h4>
-                            <p>Création de poste suite à une croissance de 35% du chiffre d'affaires en 2024. Développement de nouvelles offres de services et besoin de renforcer l'équipe managériale.</p>
-                        </div>
-                        
-                        <div class="company-section">
-                            <h4 class="section-title"><i class="fas fa-handshake"></i> Qui allez-vous rencontrer ?</h4>
-                            <div class="interviewer-info">
-                                <p class="interviewer-name"><i class="fas fa-user"></i> Jean-François LEBOEUF</p>
-                                <p class="interviewer-title">Directeur Administratif et Financier</p>
-                                <a href="#" class="linkedin-profile"><i class="fab fa-linkedin"></i> Voir son profil LinkedIn</a>
-                            </div>
-                            <div class="interviewer-info">
-                                <p class="interviewer-name"><i class="fas fa-user"></i> Carine LE MARCHAND</p>
-                                <p class="interviewer-title">Directrice des Ressources Humaines</p>
-                                <a href="#" class="linkedin-profile"><i class="fab fa-linkedin"></i> Voir son profil LinkedIn</a>
-                            </div>
-                        </div>
-                        
-                        <div class="company-section">
-                            <h4 class="section-title"><i class="fas fa-thumbs-up"></i> Pourquoi ce poste vous correspond</h4>
-                            <p>Entreprise Alpha est spécialisée dans le secteur du digital marketing, domaine où vous avez 5 ans d'expérience. Le poste offre des perspectives d'évolution avec une dimension internationale.</p>
-                            <p>La rémunération proposée (42K-48K) correspond à vos attentes et le poste est situé à seulement 25 minutes de chez vous.</p>
-                            <p>Vos compétences en gestion de projet et votre expérience dans le pilotage de campagnes marketing font de vous un candidat idéal.</p>
-                            <div class="job-match large" style="margin: 20px auto;">90%</div>
+                        <div class="interview-preparation" style="margin-top: 30px; background-color: #f9f9f9; padding: 20px; border-radius: 8px;">
+                            <h4 style="display: flex; align-items: center; margin-top: 0;"><i class="fas fa-lightbulb" style="margin-right: 10px; color: var(--purple);"></i> Conseils pour votre entretien :</h4>
+                            <ul style="padding-left: 20px;">
+                                <li><strong>Préparez des exemples concrets</strong> de projets marketing digital que vous avez menés et leurs résultats quantifiables</li>
+                                <li><strong>Renseignez-vous sur leurs clients principaux</strong> et familiarisez-vous avec leurs campagnes récentes</li>
+                                <li><strong>Préparez-vous à des questions techniques</strong> sur les outils d'analyse et les stratégies de SEO</li>
+                                <li><strong>Soyez prêt à discuter</strong> de votre vision du marketing digital dans les 5 prochaines années</li>
+                            </ul>
+                            <p style="margin-top: 15px;"><strong>Questions fréquemment posées :</strong></p>
+                            <ul style="padding-left: 20px;">
+                                <li>Comment gérez-vous les projets avec des délais serrés ?</li>
+                                <li>Pouvez-vous nous parler d'une campagne marketing qui n'a pas fonctionné et ce que vous en avez appris ?</li>
+                                <li>Comment restez-vous à jour avec les tendances et les algorithmes en constante évolution ?</li>
+                                <li>Quelle est votre approche pour mesurer le ROI des campagnes digitales ?</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -311,141 +256,9 @@
                     });
                 });
             }
-            
-            // Ouvrir/fermer les questions FAQ
-            const faqItems = document.querySelectorAll('.faq-item h4');
-            
-            faqItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    const parent = this.parentElement;
-                    parent.classList.toggle('active');
-                    
-                    const icon = this.querySelector('i');
-                    if (parent.classList.contains('active')) {
-                        icon.classList.remove('fa-caret-right');
-                        icon.classList.add('fa-caret-down');
-                    } else {
-                        icon.classList.remove('fa-caret-down');
-                        icon.classList.add('fa-caret-right');
-                    }
-                });
-            });
         });
     </script>
-    
-    <style>
-        /* Styles spécifiques à cette page */
-        .resource-block {
-            background-color: var(--white);
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-        
-        .resource-title {
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-        }
-        
-        .resource-companies {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        
-        .interview-tips {
-            list-style-type: none;
-            padding: 0;
-        }
-        
-        .interview-tips li {
-            margin-bottom: 15px;
-            padding: 15px;
-            background-color: var(--cream);
-            border-radius: 8px;
-        }
-        
-        .interview-tips strong {
-            display: block;
-            margin-bottom: 10px;
-            color: var(--purple);
-        }
-        
-        .interview-tips p {
-            margin-bottom: 10px;
-        }
-        
-        .resource-link {
-            color: var(--purple);
-            font-weight: 500;
-            display: inline-block;
-            margin-top: 5px;
-        }
-        
-        .faq-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        
-        .faq-item {
-            border: 1px solid var(--cream-dark);
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        
-        .faq-item h4 {
-            margin: 0;
-            padding: 15px;
-            background-color: var(--cream);
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-        }
-        
-        .faq-item h4 i {
-            margin-right: 10px;
-            color: var(--purple);
-        }
-        
-        .faq-content {
-            padding: 0 15px;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
-        
-        .faq-item.active .faq-content {
-            padding: 15px;
-            max-height: 500px;
-        }
-        
-        .faq-example {
-            font-size: 0.9rem;
-            padding: 10px;
-            background-color: var(--cream);
-            border-radius: 6px;
-        }
-        
-        .row {
-            display: flex;
-            flex-wrap: wrap;
-            margin: 0 -10px;
-        }
-        
-        .col-md-6 {
-            width: 50%;
-            padding: 0 10px;
-        }
-        
-        @media (max-width: 768px) {
-            .col-md-6 {
-                width: 100%;
-            }
-        }
-    </style>
+    <!-- Script d'amélioration de la navigation -->
+    <script src="../static/services/nav-enhancement.js"></script>
 </body>
 </html>

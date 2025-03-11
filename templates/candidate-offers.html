@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Nexten - Offres reçues">
+    <meta name="description" content="Nexten - Offres reçues candidat">
     <title>Nexten - Mes offres reçues</title>
     
     <!-- CSS -->
@@ -12,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../static/styles/dashboard.css">
     <link rel="stylesheet" href="../static/styles/dashboard-new.css">
+    <link rel="stylesheet" href="../static/styles/nav-improvement.css">
     
     <!-- Favicon -->
     <link rel="shortcut icon" href="../static/images/favicon.ico" type="image/x-icon">
@@ -67,185 +68,136 @@
                     <select class="form-control form-control-sm" style="padding: 5px 10px; border-radius: 4px; border: 1px solid var(--cream-dark);">
                         <option>Trier par : Pertinence</option>
                         <option>Trier par : Date</option>
-                        <option>Trier par : Salaire</option>
+                        <option>Trier par : Matching</option>
                     </select>
                 </div>
             </div>
             
-            <div class="offers-container">
-                <!-- Offer 1 -->
-                <div class="job-offer fade-in">
-                    <div class="job-header">
-                        <h3 class="job-title">Directeur Marketing Digital</h3>
-                        <div class="job-match">
-                            <span class="match-percentage">92%</span>
+            <!-- Offre 1 -->
+            <div class="job-offer fade-in">
+                <div class="job-header">
+                    <h3 class="job-title">Directeur Marketing Digital</h3>
+                    <div class="job-match">92%</div>
+                </div>
+                
+                <p class="job-description">Poste à responsabilité pour piloter la stratégie marketing digital d'une scale-up en forte croissance. <a href="#" class="color-link">Voir plus</a></p>
+                
+                <div class="company-info">
+                    <div class="logo-placeholder"></div>
+                    <div class="company-details">
+                        <h4 class="company-name">TechScale <a href="#" class="small-link">Voir l'entreprise</a></h4>
+                        <div class="job-details">
+                            <p><i class="fas fa-file-contract"></i> Contrat : CDI</p>
+                            <p><i class="fas fa-euro-sign"></i> Rémunération : 45K-55K</p>
                         </div>
                     </div>
-                    <p class="job-description">
-                        Poste à responsabilité pour piloter la stratégie marketing digital d'une scale-up en forte croissance.
-                        <a href="#" style="color: var(--purple); font-size: 0.9rem;">Voir plus</a>
-                    </p>
-                    
-                    <div class="job-company">
-                        <div class="logo-placeholder small"></div>
-                        <span class="company-name">TechScale</span>
-                        <a href="#" class="company-link">Voir l'entreprise</a>
+                </div>
+                
+                <div class="offer-actions">
+                    <div class="answer-buttons">
+                        <button class="action-button accept"><i class="fas fa-check-circle"></i></button>
+                        <button class="action-button decline"><i class="fas fa-times-circle"></i></button>
                     </div>
                     
-                    <div class="job-details">
-                        <p class="contract-type"><i class="fas fa-file-contract"></i> Contrat : CDI</p>
-                        <p class="job-salary"><i class="fas fa-money-bill-wave"></i> Rémunération : 45K-55K</p>
-                    </div>
-                    
-                    <div class="job-footer">
-                        <div class="job-actions">
-                            <button class="btn btn-sm btn-success circular"><i class="fas fa-check"></i></button>
-                            <button class="btn btn-sm btn-danger circular"><i class="fas fa-times"></i></button>
-                        </div>
-                        <div class="job-rating">
+                    <div class="job-rating">
+                        <div class="stars">
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star-half-alt"></i>
                         </div>
-                        <div class="job-commute">
-                            <span><i class="fas fa-walking"></i> Temps de trajet: 22 min</span>
-                            <a href="#" class="map-link">Voir sur Maps</a>
+                        
+                        <div class="job-meta">
+                            <span><i class="fas fa-walking"></i> Temps de trajet: 22 min <a href="#" class="small-link">Voir sur Maps</a></span>
+                            <span><i class="fas fa-calendar-day"></i> Prise de poste: Avril 2025</span>
                         </div>
-                        <p class="job-start-date"><i class="fas fa-calendar-alt"></i> Prise de poste: Avril 2025</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Offre 2 -->
+            <div class="job-offer fade-in">
+                <div class="job-header">
+                    <h3 class="job-title">Lead Developer Frontend</h3>
+                    <div class="job-match">88%</div>
+                </div>
+                
+                <p class="job-description">Rejoignez notre équipe en tant que Lead Frontend pour diriger le développement de notre plateforme SaaS. <a href="#" class="color-link">Voir plus</a></p>
+                
+                <div class="company-info">
+                    <div class="logo-placeholder"></div>
+                    <div class="company-details">
+                        <h4 class="company-name">SaaSify <a href="#" class="small-link">Voir l'entreprise</a></h4>
+                        <div class="job-details">
+                            <p><i class="fas fa-file-contract"></i> Contrat : CDI</p>
+                            <p><i class="fas fa-euro-sign"></i> Rémunération : 50K-60K</p>
+                        </div>
                     </div>
                 </div>
                 
-                <!-- Offer 2 -->
-                <div class="job-offer fade-in">
-                    <div class="job-header">
-                        <h3 class="job-title">Responsable Communication</h3>
-                        <div class="job-match">
-                            <span class="match-percentage">88%</span>
-                        </div>
-                    </div>
-                    <p class="job-description">
-                        Gérer l'ensemble de la stratégie de communication pour une entreprise leader dans son secteur.
-                        <a href="#" style="color: var(--purple); font-size: 0.9rem;">Voir plus</a>
-                    </p>
-                    
-                    <div class="job-company">
-                        <div class="logo-placeholder small"></div>
-                        <span class="company-name">MediaPlus</span>
-                        <a href="#" class="company-link">Voir l'entreprise</a>
+                <div class="offer-actions">
+                    <div class="answer-buttons">
+                        <button class="action-button accept"><i class="fas fa-check-circle"></i></button>
+                        <button class="action-button decline"><i class="fas fa-times-circle"></i></button>
                     </div>
                     
-                    <div class="job-details">
-                        <p class="contract-type"><i class="fas fa-file-contract"></i> Contrat : CDI</p>
-                        <p class="job-salary"><i class="fas fa-money-bill-wave"></i> Rémunération : 42K-48K</p>
-                    </div>
-                    
-                    <div class="job-footer">
-                        <div class="job-actions">
-                            <button class="btn btn-sm btn-success circular"><i class="fas fa-check"></i></button>
-                            <button class="btn btn-sm btn-danger circular"><i class="fas fa-times"></i></button>
-                        </div>
-                        <div class="job-rating">
+                    <div class="job-rating">
+                        <div class="stars">
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="far fa-star"></i>
                         </div>
-                        <div class="job-commute">
-                            <span><i class="fas fa-walking"></i> Temps de trajet: 30 min</span>
-                            <a href="#" class="map-link">Voir sur Maps</a>
+                        
+                        <div class="job-meta">
+                            <span><i class="fas fa-walking"></i> Temps de trajet: 35 min <a href="#" class="small-link">Voir sur Maps</a></span>
+                            <span><i class="fas fa-calendar-day"></i> Prise de poste: Mai 2025</span>
                         </div>
-                        <p class="job-start-date"><i class="fas fa-calendar-alt"></i> Prise de poste: Mai 2025</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Offre 3 -->
+            <div class="job-offer fade-in">
+                <div class="job-header">
+                    <h3 class="job-title">UX/UI Designer Senior</h3>
+                    <div class="job-match">85%</div>
+                </div>
+                
+                <p class="job-description">Créez des expériences utilisateur exceptionnelles pour notre suite d'applications mobiles et web. <a href="#" class="color-link">Voir plus</a></p>
+                
+                <div class="company-info">
+                    <div class="logo-placeholder"></div>
+                    <div class="company-details">
+                        <h4 class="company-name">DesignHub <a href="#" class="small-link">Voir l'entreprise</a></h4>
+                        <div class="job-details">
+                            <p><i class="fas fa-file-contract"></i> Contrat : CDI</p>
+                            <p><i class="fas fa-euro-sign"></i> Rémunération : 40K-48K</p>
+                        </div>
                     </div>
                 </div>
                 
-                <!-- Offer 3 -->
-                <div class="job-offer fade-in">
-                    <div class="job-header">
-                        <h3 class="job-title">Chef de Produit Marketing</h3>
-                        <div class="job-match">
-                            <span class="match-percentage">85%</span>
-                        </div>
-                    </div>
-                    <p class="job-description">
-                        Définir et mettre en œuvre la stratégie produit pour une gamme de services innovants.
-                        <a href="#" style="color: var(--purple); font-size: 0.9rem;">Voir plus</a>
-                    </p>
-                    
-                    <div class="job-company">
-                        <div class="logo-placeholder small"></div>
-                        <span class="company-name">InnoGroup</span>
-                        <a href="#" class="company-link">Voir l'entreprise</a>
+                <div class="offer-actions">
+                    <div class="answer-buttons">
+                        <button class="action-button accept"><i class="fas fa-check-circle"></i></button>
+                        <button class="action-button decline"><i class="fas fa-times-circle"></i></button>
                     </div>
                     
-                    <div class="job-details">
-                        <p class="contract-type"><i class="fas fa-file-contract"></i> Contrat : CDI</p>
-                        <p class="job-salary"><i class="fas fa-money-bill-wave"></i> Rémunération : 40K-50K</p>
-                    </div>
-                    
-                    <div class="job-footer">
-                        <div class="job-actions">
-                            <button class="btn btn-sm btn-success circular"><i class="fas fa-check"></i></button>
-                            <button class="btn btn-sm btn-danger circular"><i class="fas fa-times"></i></button>
-                        </div>
-                        <div class="job-rating">
+                    <div class="job-rating">
+                        <div class="stars">
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
                             <i class="far fa-star"></i>
                         </div>
-                        <div class="job-commute">
-                            <span><i class="fas fa-walking"></i> Temps de trajet: 15 min</span>
-                            <a href="#" class="map-link">Voir sur Maps</a>
+                        
+                        <div class="job-meta">
+                            <span><i class="fas fa-walking"></i> Temps de trajet: 18 min <a href="#" class="small-link">Voir sur Maps</a></span>
+                            <span><i class="fas fa-calendar-day"></i> Prise de poste: Immédiate</span>
                         </div>
-                        <p class="job-start-date"><i class="fas fa-calendar-alt"></i> Prise de poste: Juin 2025</p>
-                    </div>
-                </div>
-                
-                <!-- Offer 4 -->
-                <div class="job-offer fade-in">
-                    <div class="job-header">
-                        <h3 class="job-title">Responsable Acquisition Digital</h3>
-                        <div class="job-match">
-                            <span class="match-percentage">90%</span>
-                        </div>
-                    </div>
-                    <p class="job-description">
-                        Piloter et optimiser les stratégies d'acquisition de clients via les canaux digitaux.
-                        <a href="#" style="color: var(--purple); font-size: 0.9rem;">Voir plus</a>
-                    </p>
-                    
-                    <div class="job-company">
-                        <div class="logo-placeholder small"></div>
-                        <span class="company-name">DigitalGrowth</span>
-                        <a href="#" class="company-link">Voir l'entreprise</a>
-                    </div>
-                    
-                    <div class="job-details">
-                        <p class="contract-type"><i class="fas fa-file-contract"></i> Contrat : CDI</p>
-                        <p class="job-salary"><i class="fas fa-money-bill-wave"></i> Rémunération : 45K-52K</p>
-                    </div>
-                    
-                    <div class="job-footer">
-                        <div class="job-actions">
-                            <button class="btn btn-sm btn-success circular"><i class="fas fa-check"></i></button>
-                            <button class="btn btn-sm btn-danger circular"><i class="fas fa-times"></i></button>
-                        </div>
-                        <div class="job-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <div class="job-commute">
-                            <span><i class="fas fa-walking"></i> Temps de trajet: 25 min</span>
-                            <a href="#" class="map-link">Voir sur Maps</a>
-                        </div>
-                        <p class="job-start-date"><i class="fas fa-calendar-alt"></i> Prise de poste: Mai 2025</p>
                     </div>
                 </div>
             </div>
@@ -374,5 +326,7 @@
             });
         });
     </script>
+    <!-- Script d'amélioration de la navigation -->
+    <script src="../static/services/nav-enhancement.js"></script>
 </body>
 </html>

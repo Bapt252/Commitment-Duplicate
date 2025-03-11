@@ -12,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../static/styles/dashboard.css">
     <link rel="stylesheet" href="../static/styles/dashboard-new.css">
+    <link rel="stylesheet" href="../static/styles/nav-improvement.css">
     
     <!-- Favicon -->
     <link rel="shortcut icon" href="../static/images/favicon.ico" type="image/x-icon">
@@ -56,193 +57,143 @@
         <!-- Section Postuler en un clic -->
         <div class="candidate-dashboard-section fade-in">
             <h2 class="section-heading">Postuler en un clic</h2>
+            
             <p class="section-description">Découvrez de nouvelles opportunités correspondant à votre profil et postulez instantanément.</p>
             
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
                 <div>
                     <span class="filter-badge active"><i class="fas fa-filter"></i> Toutes</span>
-                    <span class="filter-badge"><i class="fas fa-star"></i> Top 3</span>
-                    <span class="filter-badge"><i class="fas fa-map-marker-alt"></i> &lt; 30min</span>
+                    <span class="filter-badge"><i class="fas fa-trophy"></i> Top 3</span>
+                    <span class="filter-badge"><i class="fas fa-clock"></i> &lt; 30min</span>
                 </div>
                 <div>
                     <select class="form-control form-control-sm" style="padding: 5px 10px; border-radius: 4px; border: 1px solid var(--cream-dark);">
                         <option>Proximité</option>
-                        <option>Salaire</option>
-                        <option>Match</option>
+                        <option>Matching</option>
+                        <option>Date</option>
                     </select>
                 </div>
             </div>
             
-            <div class="offers-container">
-                <!-- One-click Apply Offer 1 -->
-                <div class="job-offer fade-in">
+            <!-- Liste des opportunités -->
+            <div class="quick-apply-opportunities">
+                <!-- Opportunité 1 -->
+                <div class="quick-apply-card fade-in">
                     <div class="job-header">
                         <h3 class="job-title">Growth Manager</h3>
-                        <div class="job-match">
-                            <span class="match-percentage">94%</span>
-                        </div>
-                    </div>
-                    <p class="job-description">
-                        Piloter la croissance d'une start-up innovante dans le secteur de la foodtech.
-                        <a href="#" style="color: var(--purple); font-size: 0.9rem;">Voir plus</a>
-                    </p>
-                    
-                    <div class="job-company">
-                        <div class="logo-placeholder small"></div>
-                        <span class="company-name">FoodTech+</span>
-                        <a href="#" class="company-link">Voir l'entreprise</a>
+                        <div class="job-match">94%</div>
                     </div>
                     
-                    <div class="job-details">
-                        <p class="contract-type"><i class="fas fa-file-contract"></i> Contrat : CDI</p>
-                        <p class="job-salary"><i class="fas fa-money-bill-wave"></i> Rémunération : 40K-48K</p>
+                    <p class="job-description">Piloter la croissance d'une start-up innovante dans le secteur de la foodtech. <a href="#" class="color-link">Voir plus</a></p>
+                    
+                    <div class="company-info">
+                        <div class="logo-placeholder"></div>
+                        <div class="company-details">
+                            <h4 class="company-name">FoodTech+ <a href="#" class="small-link">Voir l'entreprise</a></h4>
+                            <div class="job-details">
+                                <p><i class="fas fa-file-contract"></i> Contrat : CDI</p>
+                                <p><i class="fas fa-euro-sign"></i> Rémunération : 40K-48K</p>
+                            </div>
+                        </div>
                     </div>
                     
-                    <div class="job-footer">
-                        <div class="job-actions">
-                            <button class="btn btn-primary btn-sm">Postuler en 1 clic</button>
-                        </div>
-                        <div class="job-rating">
+                    <div class="job-rating">
+                        <div class="stars">
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                         </div>
-                        <div class="job-commute">
-                            <span><i class="fas fa-walking"></i> Temps de trajet: 15 min</span>
-                            <a href="#" class="map-link">Voir sur Maps</a>
+                        
+                        <div class="job-meta">
+                            <span><i class="fas fa-walking"></i> Temps de trajet: 15 min <a href="#" class="small-link">Voir sur Maps</a></span>
+                            <span><i class="fas fa-calendar-day"></i> Prise de poste: Immédiate</span>
                         </div>
-                        <p class="job-start-date"><i class="fas fa-calendar-alt"></i> Prise de poste: Immédiate</p>
+                    </div>
+                    
+                    <div class="apply-button-container">
+                        <button class="btn btn-primary btn-lg btn-block">Postuler en 1 clic</button>
                     </div>
                 </div>
                 
-                <!-- One-click Apply Offer 2 -->
-                <div class="job-offer fade-in">
+                <!-- Opportunité 2 -->
+                <div class="quick-apply-card fade-in">
                     <div class="job-header">
-                        <h3 class="job-title">Chef de Projet Digital</h3>
-                        <div class="job-match">
-                            <span class="match-percentage">91%</span>
+                        <h3 class="job-title">Product Manager</h3>
+                        <div class="job-match">91%</div>
+                    </div>
+                    
+                    <p class="job-description">Définir et piloter la roadmap produit d'une application B2B en pleine croissance. <a href="#" class="color-link">Voir plus</a></p>
+                    
+                    <div class="company-info">
+                        <div class="logo-placeholder"></div>
+                        <div class="company-details">
+                            <h4 class="company-name">ProductLab <a href="#" class="small-link">Voir l'entreprise</a></h4>
+                            <div class="job-details">
+                                <p><i class="fas fa-file-contract"></i> Contrat : CDI</p>
+                                <p><i class="fas fa-euro-sign"></i> Rémunération : 45K-55K</p>
+                            </div>
                         </div>
                     </div>
-                    <p class="job-description">
-                        Gérer des projets digitaux d'envergure pour de grands comptes internationaux.
-                        <a href="#" style="color: var(--purple); font-size: 0.9rem;">Voir plus</a>
-                    </p>
                     
-                    <div class="job-company">
-                        <div class="logo-placeholder small"></div>
-                        <span class="company-name">DigitalWave</span>
-                        <a href="#" class="company-link">Voir l'entreprise</a>
-                    </div>
-                    
-                    <div class="job-details">
-                        <p class="contract-type"><i class="fas fa-file-contract"></i> Contrat : CDI</p>
-                        <p class="job-salary"><i class="fas fa-money-bill-wave"></i> Rémunération : 43K-47K</p>
-                    </div>
-                    
-                    <div class="job-footer">
-                        <div class="job-actions">
-                            <button class="btn btn-primary btn-sm">Postuler en 1 clic</button>
-                        </div>
-                        <div class="job-rating">
+                    <div class="job-rating">
+                        <div class="stars">
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star-half-alt"></i>
                         </div>
-                        <div class="job-commute">
-                            <span><i class="fas fa-walking"></i> Temps de trajet: 25 min</span>
-                            <a href="#" class="map-link">Voir sur Maps</a>
+                        
+                        <div class="job-meta">
+                            <span><i class="fas fa-walking"></i> Temps de trajet: 25 min <a href="#" class="small-link">Voir sur Maps</a></span>
+                            <span><i class="fas fa-calendar-day"></i> Prise de poste: Mai 2025</span>
                         </div>
-                        <p class="job-start-date"><i class="fas fa-calendar-alt"></i> Prise de poste: Avril 2025</p>
+                    </div>
+                    
+                    <div class="apply-button-container">
+                        <button class="btn btn-primary btn-lg btn-block">Postuler en 1 clic</button>
                     </div>
                 </div>
                 
-                <!-- One-click Apply Offer 3 -->
-                <div class="job-offer fade-in">
+                <!-- Opportunité 3 -->
+                <div class="quick-apply-card fade-in">
                     <div class="job-header">
-                        <h3 class="job-title">Responsable Marketing</h3>
-                        <div class="job-match">
-                            <span class="match-percentage">89%</span>
+                        <h3 class="job-title">Marketing Manager</h3>
+                        <div class="job-match">89%</div>
+                    </div>
+                    
+                    <p class="job-description">Élaborer et mettre en œuvre des stratégies marketing pour une entreprise en expansion. <a href="#" class="color-link">Voir plus</a></p>
+                    
+                    <div class="company-info">
+                        <div class="logo-placeholder"></div>
+                        <div class="company-details">
+                            <h4 class="company-name">MarketBoost <a href="#" class="small-link">Voir l'entreprise</a></h4>
+                            <div class="job-details">
+                                <p><i class="fas fa-file-contract"></i> Contrat : CDI</p>
+                                <p><i class="fas fa-euro-sign"></i> Rémunération : 42K-50K</p>
+                            </div>
                         </div>
                     </div>
-                    <p class="job-description">
-                        Développer et mettre en œuvre la stratégie marketing pour une entreprise en pleine expansion.
-                        <a href="#" style="color: var(--purple); font-size: 0.9rem;">Voir plus</a>
-                    </p>
                     
-                    <div class="job-company">
-                        <div class="logo-placeholder small"></div>
-                        <span class="company-name">MarketLeaders</span>
-                        <a href="#" class="company-link">Voir l'entreprise</a>
-                    </div>
-                    
-                    <div class="job-details">
-                        <p class="contract-type"><i class="fas fa-file-contract"></i> Contrat : CDI</p>
-                        <p class="job-salary"><i class="fas fa-money-bill-wave"></i> Rémunération : 42K-50K</p>
-                    </div>
-                    
-                    <div class="job-footer">
-                        <div class="job-actions">
-                            <button class="btn btn-primary btn-sm">Postuler en 1 clic</button>
-                        </div>
-                        <div class="job-rating">
+                    <div class="job-rating">
+                        <div class="stars">
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="far fa-star"></i>
                         </div>
-                        <div class="job-commute">
-                            <span><i class="fas fa-walking"></i> Temps de trajet: 35 min</span>
-                            <a href="#" class="map-link">Voir sur Maps</a>
+                        
+                        <div class="job-meta">
+                            <span><i class="fas fa-walking"></i> Temps de trajet: 30 min <a href="#" class="small-link">Voir sur Maps</a></span>
+                            <span><i class="fas fa-calendar-day"></i> Prise de poste: Avril 2025</span>
                         </div>
-                        <p class="job-start-date"><i class="fas fa-calendar-alt"></i> Prise de poste: Mai 2025</p>
-                    </div>
-                </div>
-                
-                <!-- One-click Apply Offer 4 -->
-                <div class="job-offer fade-in">
-                    <div class="job-header">
-                        <h3 class="job-title">Social Media Manager</h3>
-                        <div class="job-match">
-                            <span class="match-percentage">87%</span>
-                        </div>
-                    </div>
-                    <p class="job-description">
-                        Définir et déployer la stratégie social media pour une marque internationale.
-                        <a href="#" style="color: var(--purple); font-size: 0.9rem;">Voir plus</a>
-                    </p>
-                    
-                    <div class="job-company">
-                        <div class="logo-placeholder small"></div>
-                        <span class="company-name">SocialHub</span>
-                        <a href="#" class="company-link">Voir l'entreprise</a>
                     </div>
                     
-                    <div class="job-details">
-                        <p class="contract-type"><i class="fas fa-file-contract"></i> Contrat : CDI</p>
-                        <p class="job-salary"><i class="fas fa-money-bill-wave"></i> Rémunération : 38K-45K</p>
-                    </div>
-                    
-                    <div class="job-footer">
-                        <div class="job-actions">
-                            <button class="btn btn-primary btn-sm">Postuler en 1 clic</button>
-                        </div>
-                        <div class="job-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="far fa-star"></i>
-                        </div>
-                        <div class="job-commute">
-                            <span><i class="fas fa-walking"></i> Temps de trajet: 20 min</span>
-                            <a href="#" class="map-link">Voir sur Maps</a>
-                        </div>
-                        <p class="job-start-date"><i class="fas fa-calendar-alt"></i> Prise de poste: Avril 2025</p>
+                    <div class="apply-button-container">
+                        <button class="btn btn-primary btn-lg btn-block">Postuler en 1 clic</button>
                     </div>
                 </div>
             </div>
@@ -371,5 +322,7 @@
             });
         });
     </script>
+    <!-- Script d'amélioration de la navigation -->
+    <script src="../static/services/nav-enhancement.js"></script>
 </body>
 </html>

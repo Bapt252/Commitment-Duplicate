@@ -12,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../static/styles/dashboard.css">
     <link rel="stylesheet" href="../static/styles/dashboard-new.css">
+    <link rel="stylesheet" href="../static/styles/nav-improvement.css">
     
     <!-- Favicon -->
     <link rel="shortcut icon" href="../static/images/favicon.ico" type="image/x-icon">
@@ -57,151 +58,111 @@
         <div class="candidate-dashboard-section fade-in">
             <h2 class="section-heading">Travailler mon CV</h2>
             
-            <div class="cv-container">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; background-color: var(--white); padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
-                    <div>
-                        <h3 style="margin: 0; font-size: 1.2rem;">Optimisez votre CV pour augmenter vos chances</h3>
-                        <p style="margin: 0; font-size: 0.9rem; color: var(--gray);">Notre outil d'IA analyse votre CV et vous aide à le rendre plus attractif pour les recruteurs.</p>
-                    </div>
-                    <div>
-                        <button class="btn btn-primary"><i class="fas fa-cloud-upload-alt"></i> Mettre à jour mon CV</button>
+            <div class="cv-optimization-container" style="background-color: var(--yellow-light); padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                <div style="padding: 20px; background-color: white; border-radius: 8px;">
+                    <h3 style="margin-top: 0;">Optimisez votre CV pour augmenter vos chances</h3>
+                    <p>Notre outil d'IA analyse votre CV et vous aide à le rendre plus attractif pour les recruteurs.</p>
+                    <div style="text-align: right;">
+                        <button class="btn btn-primary" style="background-color: var(--purple);"><i class="fas fa-cloud-upload-alt"></i> Mettre à jour mon CV</button>
                     </div>
                 </div>
                 
-                <div class="cv-summary" style="background-color: var(--white); padding: 15px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                <div style="padding: 20px; margin-top: 20px; background-color: white; border-radius: 8px;">
                     <h3 style="margin-top: 0;">Analyse de votre CV</h3>
-                    <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 20px;">
+                    
+                    <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 15px;">
                         <div style="flex: 1; min-width: 200px;">
                             <div style="display: flex; align-items: center; margin-bottom: 10px;">
-                                <div style="width: 40px; height: 40px; background-color: var(--purple); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; margin-right: 10px;">
-                                    <i class="fas fa-check"></i>
+                                <div style="width: 40px; height: 40px; background-color: var(--purple); border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-right: 15px;">
+                                    <i class="fas fa-check" style="color: white;"></i>
                                 </div>
                                 <div>
-                                    <h4 style="margin: 0; font-size: 0.9rem;">Score de lisibilité</h4>
-                                    <div style="width: 150px; height: 6px; background-color: var(--cream-dark); border-radius: 3px; margin-top: 5px;">
-                                        <div style="width: 85%; height: 6px; background-color: var(--purple); border-radius: 3px;"></div>
+                                    <h4 style="margin: 0;">Score de lisibilité</h4>
+                                    <div class="progress-bar-container" style="height: 10px; background-color: #eee; border-radius: 5px; margin-top: 5px;">
+                                        <div class="progress-bar" style="width: 70%; height: 100%; border-radius: 5px; background-color: var(--purple);"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        
                         <div style="flex: 1; min-width: 200px;">
                             <div style="display: flex; align-items: center; margin-bottom: 10px;">
-                                <div style="width: 40px; height: 40px; background-color: var(--purple); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; margin-right: 10px;">
-                                    <i class="fas fa-medal"></i>
+                                <div style="width: 40px; height: 40px; background-color: var(--purple); border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-right: 15px;">
+                                    <i class="fas fa-tag" style="color: white;"></i>
                                 </div>
                                 <div>
-                                    <h4 style="margin: 0; font-size: 0.9rem;">Mots-clés pertinents</h4>
-                                    <div style="width: 150px; height: 6px; background-color: var(--cream-dark); border-radius: 3px; margin-top: 5px;">
-                                        <div style="width: 75%; height: 6px; background-color: var(--purple); border-radius: 3px;"></div>
+                                    <h4 style="margin: 0;">Mots-clés pertinents</h4>
+                                    <div class="progress-bar-container" style="height: 10px; background-color: #eee; border-radius: 5px; margin-top: 5px;">
+                                        <div class="progress-bar" style="width: 60%; height: 100%; border-radius: 5px; background-color: var(--purple);"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        
                         <div style="flex: 1; min-width: 200px;">
                             <div style="display: flex; align-items: center; margin-bottom: 10px;">
-                                <div style="width: 40px; height: 40px; background-color: var(--purple); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; margin-right: 10px;">
-                                    <i class="fas fa-chart-line"></i>
+                                <div style="width: 40px; height: 40px; background-color: var(--purple); border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-right: 15px;">
+                                    <i class="fas fa-chart-line" style="color: white;"></i>
                                 </div>
                                 <div>
-                                    <h4 style="margin: 0; font-size: 0.9rem;">Impact des réalisations</h4>
-                                    <div style="width: 150px; height: 6px; background-color: var(--cream-dark); border-radius: 3px; margin-top: 5px;">
-                                        <div style="width: 60%; height: 6px; background-color: var(--purple); border-radius: 3px;"></div>
+                                    <h4 style="margin: 0;">Impact des réalisations</h4>
+                                    <div class="progress-bar-container" style="height: 10px; background-color: #eee; border-radius: 5px; margin-top: 5px;">
+                                        <div class="progress-bar" style="width: 50%; height: 100%; border-radius: 5px; background-color: var(--purple);"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
-                    <div style="background-color: var(--cream); padding: 10px 15px; border-radius: 6px; margin-bottom: 15px;">
-                        <h4 style="margin-top: 0; font-size: 1rem;"><i class="fas fa-lightbulb" style="color: var(--purple);"></i> Conseils d'amélioration</h4>
-                        <ul style="padding-left: 20px; margin-bottom: 0;">
+                    <div style="margin-top: 30px; padding: 15px; background-color: #f9f9f9; border-radius: 8px;">
+                        <h4 style="margin-top: 0; color: var(--purple);"><i class="fas fa-lightbulb"></i> Conseils d'amélioration</h4>
+                        <ul style="padding-left: 20px;">
                             <li>Ajoutez des résultats quantifiables à vos expériences professionnelles</li>
                             <li>Incluez des mots-clés du secteur marketing digital pour augmenter votre visibilité</li>
-                            <li>Utilisez des verbes d'action pour dynamiser vos descriptions</li>
+                            <li>Faites ressortir davantage vos compétences techniques spécifiques</li>
+                            <li>Réduisez la longueur de certaines descriptions pour améliorer la lisibilité</li>
                         </ul>
                     </div>
                 </div>
+            </div>
+            
+            <!-- Suggestions basées sur l'IA -->
+            <div class="cv-suggestions fade-in" style="margin-top: 30px;">
+                <h3>Suggestions d'amélioration personnalisées par IA</h3>
                 
-                <div class="cv-form">
-                    <div class="cv-section">
-                        <h3 class="cv-section-title"><i class="fas fa-briefcase"></i> Expérience professionnelle</h3>
-                        <div class="cv-fields">
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label>Date du poste</label>
-                                    <input type="text" class="form-control" value="Janvier 2022 - Présent">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label>Intitulé de poste</label>
-                                    <input type="text" class="form-control" value="Responsable Marketing Digital">
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label>Entreprise</label>
-                                    <input type="text" class="form-control" value="MarketingPro">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label>Secteur d'activité</label>
-                                    <input type="text" class="form-control" value="Agence Marketing">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Missions :</label>
-                                <textarea class="form-control" rows="3">- Gestion d'une équipe de 5 personnes
-- Élaboration et mise en œuvre de la stratégie marketing digital
-- Pilotage de campagnes Google Ads et Facebook avec un budget de 500K€ annuel
-- Augmentation du trafic web de 45% et conversion de +25%</textarea>
-                            </div>
-                            <div class="form-group">
-                                <label>Langue étrangère utilisée :</label>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="language" id="language-yes" value="OUI" checked>
-                                    <label class="form-check-label" for="language-yes">OUI</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="language" id="language-no" value="NON">
-                                    <label class="form-check-label" for="language-no">NON</label>
-                                </div>
-                            </div>
-                            <div class="form-group language-details">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="written" value="Écrit" checked>
-                                    <label class="form-check-label" for="written">Écrit</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="oral" value="Oral" checked>
-                                    <label class="form-check-label" for="oral">Oral</label>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Logiciels utilisés</label>
-                                <input type="text" class="form-control" value="Google Analytics, SEMrush, Ahrefs, Hubspot, Photoshop">
-                            </div>
+                <div style="background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 20px;">
+                    <h4 style="margin-top: 0;">Expérience professionnelle : Chef de projet marketing digital</h4>
+                    <div style="display: flex; gap: 20px;">
+                        <div style="flex: 1; background-color: #f9f9f9; padding: 15px; border-radius: 8px;">
+                            <h5 style="margin-top: 0; color: var(--gray);">Version actuelle :</h5>
+                            <p>Chef de projet marketing digital chez XYZ. Responsable des campagnes digitales et de la stratégie de contenu. Gestion des réseaux sociaux et de l'acquisition de trafic.</p>
+                        </div>
+                        <div style="flex: 1; background-color: #f0f8ff; padding: 15px; border-radius: 8px; border-left: 3px solid var(--purple);">
+                            <h5 style="margin-top: 0; color: var(--purple);">Version optimisée :</h5>
+                            <p>Chef de projet marketing digital chez XYZ. <span style="background-color: rgba(103, 58, 183, 0.1); padding: 0 3px;">Pilotage de campagnes ayant généré +45% de trafic qualifié et un ROI de 320%</span>. Élaboration et exécution de la stratégie éditoriale cross-canal avec <span style="background-color: rgba(103, 58, 183, 0.1); padding: 0 3px;">une croissance organique de 15K abonnés en 6 mois</span>.</p>
                         </div>
                     </div>
-                    
-                    <div class="cv-section">
-                        <h3 class="cv-section-title"><i class="fas fa-graduation-cap"></i> Certificat / diplôme</h3>
-                        <div class="cv-fields">
-                            <div class="form-group">
-                                <label>Intitulé du certificat/diplôme</label>
-                                <input type="text" class="form-control" value="Master en Marketing Digital">
-                            </div>
-                            <div class="form-group">
-                                <label>Année d'obtention</label>
-                                <input type="text" class="form-control" value="2021">
-                            </div>
-                            <div class="form-group">
-                                <label>Établissement</label>
-                                <input type="text" class="form-control" value="École de Commerce XYZ">
-                            </div>
+                    <div style="text-align: right; margin-top: 10px;">
+                        <button class="btn btn-sm btn-outline">Ignorer</button>
+                        <button class="btn btn-sm btn-primary">Appliquer</button>
+                    </div>
+                </div>
+                
+                <div style="background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 20px;">
+                    <h4 style="margin-top: 0;">Compétences techniques</h4>
+                    <div style="display: flex; gap: 20px;">
+                        <div style="flex: 1; background-color: #f9f9f9; padding: 15px; border-radius: 8px;">
+                            <h5 style="margin-top: 0; color: var(--gray);">Version actuelle :</h5>
+                            <p>Marketing digital, SEO, Réseaux sociaux, Google Analytics, Photoshop</p>
+                        </div>
+                        <div style="flex: 1; background-color: #f0f8ff; padding: 15px; border-radius: 8px; border-left: 3px solid var(--purple);">
+                            <h5 style="margin-top: 0; color: var(--purple);">Version optimisée :</h5>
+                            <p>Marketing digital, <span style="background-color: rgba(103, 58, 183, 0.1); padding: 0 3px;">SEO/SEA (Google Ads)</span>, <span style="background-color: rgba(103, 58, 183, 0.1); padding: 0 3px;">Growth Hacking</span>, Réseaux sociaux (stratégie organique et paid), <span style="background-color: rgba(103, 58, 183, 0.1); padding: 0 3px;">Analytics (Data Studio, GA4)</span>, Suite Adobe CC</p>
                         </div>
                     </div>
-                    
-                    <div class="form-group text-center mt-4">
-                        <button class="btn btn-primary"><i class="fas fa-file-pdf"></i> Générer mon CV</button>
-                        <button class="btn btn-outline"><i class="fas fa-plus-circle"></i> Ajouter une expérience</button>
+                    <div style="text-align: right; margin-top: 10px;">
+                        <button class="btn btn-sm btn-outline">Ignorer</button>
+                        <button class="btn btn-sm btn-primary">Appliquer</button>
                     </div>
                 </div>
             </div>
@@ -314,5 +275,7 @@
             }
         });
     </script>
+    <!-- Script d'amélioration de la navigation -->
+    <script src="../static/services/nav-enhancement.js"></script>
 </body>
 </html>

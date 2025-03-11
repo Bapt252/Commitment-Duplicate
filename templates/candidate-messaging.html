@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Nexten - Messagerie">
+    <meta name="description" content="Nexten - Messagerie candidat">
     <title>Nexten - Messagerie</title>
     
     <!-- CSS -->
@@ -12,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../static/styles/dashboard.css">
     <link rel="stylesheet" href="../static/styles/dashboard-new.css">
+    <link rel="stylesheet" href="../static/styles/nav-improvement.css">
     
     <!-- Favicon -->
     <link rel="shortcut icon" href="../static/images/favicon.ico" type="image/x-icon">
@@ -56,130 +57,40 @@
         <!-- Section Messagerie -->
         <div class="candidate-dashboard-section fade-in">
             <h2 class="section-heading">Messagerie</h2>
-            <p class="messagerie-description">Échangez directement avec les recruteurs et restez informé de l'avancement de vos candidatures.</p>
+            <p class="section-description">Échangez directement avec les recruteurs et restez informé de l'avancement de vos candidatures.</p>
             
-            <div class="messaging-container">
-                <div class="messaging-sidebar">
-                    <div class="messaging-filters">
-                        <button class="btn btn-sm btn-outline-secondary active"><i class="fas fa-inbox"></i> Tous</button>
-                        <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-spinner"></i> En cours</button>
-                        <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-check-circle"></i> Répondus</button>
-                        <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-star"></i> Favoris</button>
-                    </div>
-                    
-                    <!-- Conversation list -->
-                    <div class="conversation-list">
-                        <!-- Conversation 1 -->
-                        <div class="conversation-item active">
-                            <div class="logo-placeholder"></div>
-                            <div class="conversation-details">
-                                <div class="conversation-header">
-                                    <h5 class="company-name">Entreprise Alpha</h5>
-                                    <span class="conversation-status">Entretien présentiel</span>
-                                </div>
-                                <p class="job-title">Chef de Projet Digital</p>
-                                <p class="conversation-date">Dernier message : 26/02/2025</p>
-                            </div>
+            <!-- Onglets de messagerie -->
+            <div class="messaging-tabs" style="margin-bottom: 20px;">
+                <button class="messaging-tab active"><i class="fas fa-inbox"></i> Tous</button>
+                <button class="messaging-tab"><i class="fas fa-spinner"></i> En cours</button>
+                <button class="messaging-tab"><i class="fas fa-check-circle"></i> Répondus</button>
+                <button class="messaging-tab"><i class="fas fa-star"></i> Favoris</button>
+            </div>
+            
+            <div class="messaging-container" style="background-color: white; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); overflow: hidden;">
+                <!-- Conversation 1 -->
+                <div class="conversation-row fade-in" style="padding: 15px; border-bottom: 1px solid #eee; display: flex; align-items: center;">
+                    <div class="logo-placeholder" style="width: 50px; height: 50px; background-color: #f0f0f0; border-radius: 25px; margin-right: 15px;"></div>
+                    <div style="flex-grow: 1;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <h4 style="margin: 0;">Entreprise Alpha</h4>
+                            <span style="color: var(--purple); font-weight: 500; font-size: 0.8rem; background-color: rgba(103, 58, 183, 0.1); padding: 2px 8px; border-radius: 4px;">Entretien présentiel</span>
                         </div>
-                        
-                        <!-- Conversation 2 -->
-                        <div class="conversation-item">
-                            <div class="logo-placeholder"></div>
-                            <div class="conversation-details">
-                                <div class="conversation-header">
-                                    <h5 class="company-name">Entreprise Beta</h5>
-                                    <span class="conversation-offer">Offre reçue</span>
-                                </div>
-                                <p class="job-title">Business Developer</p>
-                                <p class="conversation-status">Actif</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Conversation 3 -->
-                        <div class="conversation-item">
-                            <div class="logo-placeholder"></div>
-                            <div class="conversation-details">
-                                <div class="conversation-header">
-                                    <h5 class="company-name">Entreprise Gamma</h5>
-                                </div>
-                                <p class="job-title">Product Owner</p>
-                                <p class="conversation-status">Actif</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Conversation 4 -->
-                        <div class="conversation-item">
-                            <div class="logo-placeholder"></div>
-                            <div class="conversation-details">
-                                <div class="conversation-header">
-                                    <h5 class="company-name">Entreprise Delta</h5>
-                                </div>
-                                <p class="job-title">UX Designer</p>
-                                <p class="conversation-status">Inactif</p>
-                            </div>
-                        </div>
+                        <h5 style="margin: 3px 0; font-weight: 500;">Chef de Projet Digital</h5>
+                        <p style="margin: 0; font-size: 0.9rem; color: var(--gray);">Dernier message : 26/02/2025</p>
                     </div>
                 </div>
                 
-                <div class="messaging-content">
-                    <div class="chat-header">
-                        <h3 class="company-name">Entreprise Alpha</h3>
-                        <div class="contact-person">
-                            <p>Corentin MELON - Directeur des Ressources Humaines</p>
+                <!-- Conversation 2 -->
+                <div class="conversation-row fade-in" style="padding: 15px; border-bottom: 1px solid #eee; display: flex; align-items: center;">
+                    <div class="logo-placeholder" style="width: 50px; height: 50px; background-color: #f0f0f0; border-radius: 25px; margin-right: 15px;"></div>
+                    <div style="flex-grow: 1;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <h4 style="margin: 0;">Entreprise Beta</h4>
+                            <span style="color: #2196F3; font-weight: 500; font-size: 0.8rem; background-color: rgba(33, 150, 243, 0.1); padding: 2px 8px; border-radius: 4px;">Offre reçue</span>
                         </div>
-                    </div>
-                    
-                    <div class="chat-messages">
-                        <div class="message recruiter">
-                            <div class="message-initials">CM</div>
-                            <div class="message-bubble">
-                                <p>Bonjour, suite à l'étude de votre profil, nous sommes très intéressés par votre candidature pour le poste de Chef de Projet Digital.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="message candidate">
-                            <div class="message-bubble">
-                                <p>Bonjour M. MELON, je vous remercie pour votre intérêt. Je suis également très intéressé par cette opportunité chez Entreprise Alpha.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="message recruiter">
-                            <div class="message-initials">CM</div>
-                            <div class="message-bubble">
-                                <p>Excellent ! Seriez-vous disponible pour un premier échange téléphonique la semaine prochaine ? Nous pourrions discuter plus en détail du poste et de vos attentes.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="message candidate">
-                            <div class="message-bubble">
-                                <p>Avec plaisir. Je suis disponible mardi ou jeudi après-midi, entre 14h et 17h. Est-ce que cela vous conviendrait ?</p>
-                            </div>
-                        </div>
-                        
-                        <div class="message recruiter">
-                            <div class="message-initials">CM</div>
-                            <div class="message-bubble">
-                                <p>Parfait, disons mardi à 15h00. Je vous appellerai au numéro indiqué dans votre profil. Passez un excellent week-end !</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="chat-input">
-                        <textarea class="form-control mb-2" rows="3" placeholder="Tapez votre message ici..."></textarea>
-                        <div class="suggested-responses">
-                            <span class="suggestion-chip"><i class="fas fa-robot"></i> Merci pour ces informations, je serai présent au rendez-vous.</span>
-                            <span class="suggestion-chip"><i class="fas fa-robot"></i> Pouvez-vous m'en dire plus sur l'équipe ?</span>
-                            <div class="attachment-icon">
-                                <i class="fas fa-paperclip"></i>
-                            </div>
-                        </div>
-                        
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
-                            <div class="attachment-options">
-                                <span style="font-size: 0.8rem; color: var(--gray);"><i class="fas fa-file-alt"></i> Vous pouvez joindre : CV personnalisé, lettre de recommandation, certifications</span>
-                            </div>
-                            <button class="btn btn-primary"><i class="fas fa-paper-plane"></i> Envoyer</button>
-                        </div>
+                        <h5 style="margin: 3px 0; font-weight: 500;">Business Developer</h5>
+                        <p style="margin: 0; font-size: 0.9rem; color: var(--gray);">Actif</p>
                     </div>
                 </div>
             </div>
@@ -291,198 +202,23 @@
                 });
             }
             
-            // Gestion des suggestions de réponse
-            const suggestedResponses = document.querySelectorAll('.suggestion-chip');
-            const messageTextarea = document.querySelector('.chat-input textarea');
+            // Interaction avec les onglets de messagerie
+            const messagingTabs = document.querySelectorAll('.messaging-tab');
             
-            suggestedResponses.forEach(response => {
-                response.addEventListener('click', function() {
-                    const text = this.textContent.replace('🤖', '').trim();
-                    messageTextarea.value = text;
-                });
-            });
-            
-            // Gérer les clics sur les conversations
-            const conversationItems = document.querySelectorAll('.conversation-item');
-            
-            conversationItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    // Désactiver toutes les conversations
-                    conversationItems.forEach(conv => {
-                        conv.classList.remove('active');
+            messagingTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Désactiver tous les onglets
+                    messagingTabs.forEach(t => {
+                        t.classList.remove('active');
                     });
                     
-                    // Activer la conversation cliquée
+                    // Activer l'onglet cliqué
                     this.classList.add('active');
                 });
             });
         });
     </script>
-    
-    <style>
-        /* Styles spécifiques pour la messagerie */
-        .messaging-container {
-            display: flex;
-            background-color: var(--white);
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-        
-        .messaging-sidebar {
-            width: 30%;
-            background-color: var(--cream);
-            padding: 15px;
-            border-right: 1px solid var(--cream-dark);
-        }
-        
-        .messaging-filters {
-            margin-bottom: 15px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-        }
-        
-        .conversation-list {
-            overflow-y: auto;
-            max-height: 500px;
-        }
-        
-        .messaging-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            min-height: 600px;
-        }
-        
-        .chat-header {
-            padding: 15px;
-            background-color: var(--cream);
-            border-bottom: 1px solid var(--cream-dark);
-        }
-        
-        .chat-header h3 {
-            margin: 0;
-            margin-bottom: 5px;
-        }
-        
-        .contact-person p {
-            margin: 0;
-            font-size: 14px;
-            color: var(--gray);
-        }
-        
-        .chat-messages {
-            flex: 1;
-            padding: 15px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        
-        .message {
-            display: flex;
-            max-width: 80%;
-        }
-        
-        .message.recruiter {
-            align-self: flex-start;
-        }
-        
-        .message.candidate {
-            align-self: flex-end;
-            flex-direction: row-reverse;
-        }
-        
-        .message-initials {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background-color: var(--cream);
-            border-radius: 50%;
-            margin-right: 10px;
-            font-size: 14px;
-            font-weight: 600;
-        }
-        
-        .message-bubble {
-            background-color: var(--cream);
-            padding: 10px 15px;
-            border-radius: 18px;
-        }
-        
-        .message.recruiter .message-bubble {
-            background-color: var(--purple);
-            color: white;
-            border-top-left-radius: 0;
-        }
-        
-        .message.candidate .message-bubble {
-            background-color: var(--cream-dark);
-            border-top-right-radius: 0;
-        }
-        
-        .message-bubble p {
-            margin: 0;
-        }
-        
-        .chat-input {
-            padding: 15px;
-            border-top: 1px solid var(--cream-dark);
-        }
-        
-        .suggested-responses {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin: 10px 0;
-        }
-        
-        .suggestion-chip {
-            padding: 6px 12px;
-            background-color: var(--cream);
-            border-radius: 16px;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        .suggestion-chip:hover {
-            background-color: var(--purple);
-            color: var(--white);
-        }
-        
-        .attachment-icon {
-            margin-left: auto;
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: var(--cream);
-            border-radius: 50%;
-            cursor: pointer;
-        }
-        
-        /* Responsive pour la messagerie */
-        @media (max-width: 992px) {
-            .messaging-container {
-                flex-direction: column;
-            }
-            
-            .messaging-sidebar {
-                width: 100%;
-                border-right: none;
-                border-bottom: 1px solid var(--cream-dark);
-            }
-            
-            .messaging-content {
-                min-height: 400px;
-            }
-        }
-    </style>
+    <!-- Script d'amélioration de la navigation -->
+    <script src="../static/services/nav-enhancement.js"></script>
 </body>
 </html>
