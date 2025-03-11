@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nexten - Messagerie">
+    <title>Nexten - Messagerie</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../static/styles/nexten-modern.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/styles/dashboard.css">
+    <link rel="stylesheet" href="../static/styles/dashboard-new.css">
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../static/images/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <!-- Notification bar -->
+    <div class="notification-bar">
+        <i class="fas fa-bell"></i> Votre recrutement change, votre approche aussi : découvrez notre approche TOP <span class="ten-badge">10</span>
+    </div>
+
+    <!-- Lien d'accessibilité pour sauter au contenu principal -->
+    <a href="#main-content" class="skip-to-content">Aller au contenu principal</a>
+
+    <header>
+        <div class="container">
+            <div class="logo">
+                nex<span>ten</span><div class="logo-badge">10</div>
+            </div>
+            
+            <button class="menu-toggle" aria-label="Menu principal">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="candidate-dashboard-new.html" class="active">Espace candidat</a></li>
+                    <li><a href="company-login.html">Espace entreprise</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container main-container" id="main-content">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb fade-in">
+            <a href="candidate-dashboard-new.html"><i class="fas fa-home"></i> Tableau de bord</a> &gt; 
+            <span>Messagerie</span>
+        </div>
+        
+        <!-- Section Messagerie -->
+        <div class="candidate-dashboard-section fade-in">
+            <h2 class="section-heading">Messagerie</h2>
+            <p class="messagerie-description">Échangez directement avec les recruteurs et restez informé de l'avancement de vos candidatures.</p>
+            
+            <div class="messaging-container">
+                <div class="messaging-sidebar">
+                    <div class="messaging-filters">
+                        <button class="btn btn-sm btn-outline-secondary active"><i class="fas fa-inbox"></i> Tous</button>
+                        <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-spinner"></i> En cours</button>
+                        <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-check-circle"></i> Répondus</button>
+                        <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-star"></i> Favoris</button>
+                    </div>
+                    
+                    <!-- Conversation list -->
+                    <div class="conversation-list">
+                        <!-- Conversation 1 -->
+                        <div class="conversation-item active">
+                            <div class="logo-placeholder"></div>
+                            <div class="conversation-details">
+                                <div class="conversation-header">
+                                    <h5 class="company-name">Entreprise Alpha</h5>
+                                    <span class="conversation-status">Entretien présentiel</span>
+                                </div>
+                                <p class="job-title">Chef de Projet Digital</p>
+                                <p class="conversation-date">Dernier message : 26/02/2025</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Conversation 2 -->
+                        <div class="conversation-item">
+                            <div class="logo-placeholder"></div>
+                            <div class="conversation-details">
+                                <div class="conversation-header">
+                                    <h5 class="company-name">Entreprise Beta</h5>
+                                    <span class="conversation-offer">Offre reçue</span>
+                                </div>
+                                <p class="job-title">Business Developer</p>
+                                <p class="conversation-status">Actif</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Conversation 3 -->
+                        <div class="conversation-item">
+                            <div class="logo-placeholder"></div>
+                            <div class="conversation-details">
+                                <div class="conversation-header">
+                                    <h5 class="company-name">Entreprise Gamma</h5>
+                                </div>
+                                <p class="job-title">Product Owner</p>
+                                <p class="conversation-status">Actif</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Conversation 4 -->
+                        <div class="conversation-item">
+                            <div class="logo-placeholder"></div>
+                            <div class="conversation-details">
+                                <div class="conversation-header">
+                                    <h5 class="company-name">Entreprise Delta</h5>
+                                </div>
+                                <p class="job-title">UX Designer</p>
+                                <p class="conversation-status">Inactif</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="messaging-content">
+                    <div class="chat-header">
+                        <h3 class="company-name">Entreprise Alpha</h3>
+                        <div class="contact-person">
+                            <p>Corentin MELON - Directeur des Ressources Humaines</p>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-messages">
+                        <div class="message recruiter">
+                            <div class="message-initials">CM</div>
+                            <div class="message-bubble">
+                                <p>Bonjour, suite à l'étude de votre profil, nous sommes très intéressés par votre candidature pour le poste de Chef de Projet Digital.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message candidate">
+                            <div class="message-bubble">
+                                <p>Bonjour M. MELON, je vous remercie pour votre intérêt. Je suis également très intéressé par cette opportunité chez Entreprise Alpha.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message recruiter">
+                            <div class="message-initials">CM</div>
+                            <div class="message-bubble">
+                                <p>Excellent ! Seriez-vous disponible pour un premier échange téléphonique la semaine prochaine ? Nous pourrions discuter plus en détail du poste et de vos attentes.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message candidate">
+                            <div class="message-bubble">
+                                <p>Avec plaisir. Je suis disponible mardi ou jeudi après-midi, entre 14h et 17h. Est-ce que cela vous conviendrait ?</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message recruiter">
+                            <div class="message-initials">CM</div>
+                            <div class="message-bubble">
+                                <p>Parfait, disons mardi à 15h00. Je vous appellerai au numéro indiqué dans votre profil. Passez un excellent week-end !</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-input">
+                        <textarea class="form-control mb-2" rows="3" placeholder="Tapez votre message ici..."></textarea>
+                        <div class="suggested-responses">
+                            <span class="suggestion-chip"><i class="fas fa-robot"></i> Merci pour ces informations, je serai présent au rendez-vous.</span>
+                            <span class="suggestion-chip"><i class="fas fa-robot"></i> Pouvez-vous m'en dire plus sur l'équipe ?</span>
+                            <div class="attachment-icon">
+                                <i class="fas fa-paperclip"></i>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+                            <div class="attachment-options">
+                                <span style="font-size: 0.8rem; color: var(--gray);"><i class="fas fa-file-alt"></i> Vous pouvez joindre : CV personnalisé, lettre de recommandation, certifications</span>
+                            </div>
+                            <button class="btn btn-primary"><i class="fas fa-paper-plane"></i> Envoyer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <h4 class="footer-heading">Nexten</h4>
+                    <p class="footer-description">Notre plateforme utilise l'intelligence artificielle pour révolutionner le processus de recrutement, offrant 10 correspondances personnalisées pour les candidats et les recruteurs.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="footer-heading">Navigation</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Accueil</a></li>
+                        <li><a href="candidate-dashboard-new.html"><i class="fas fa-chevron-right"></i> Espace candidat</a></li>
+                        <li><a href="company-login.html"><i class="fas fa-chevron-right"></i> Espace entreprise</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> À propos</a></li>
+                        <li><a href="#contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="footer-heading">Contact</h4>
+                    <div class="footer-contact">
+                        <p><i class="fas fa-map-marker-alt"></i> 123 Avenue de l'Innovation, 75001 Paris</p>
+                        <p><i class="fas fa-phone"></i> +33 1 23 45 67 89</p>
+                        <p><i class="fas fa-envelope"></i> contact@nexten.fr</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Nexten - Tous droits réservés | <a href="#">Politique de confidentialité</a> | <a href="#">Conditions d'utilisation</a></p>
+            </div>
+        </div>
+        
+        <!-- Bouton de retour en haut -->
+        <button id="scroll-to-top" class="scroll-to-top" aria-label="Retour en haut">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Menu mobile toggle
+            const menuToggle = document.querySelector('.menu-toggle');
+            const nav = document.querySelector('nav');
+            
+            if (menuToggle && nav) {
+                menuToggle.addEventListener('click', function() {
+                    nav.classList.toggle('active');
+                    this.classList.toggle('active');
+                });
+            }
+            
+            // Animation au défilement
+            const animatedElements = document.querySelectorAll('.fade-in');
+            
+            function checkIfInView() {
+                const windowHeight = window.innerHeight;
+                const windowTop = window.scrollY;
+                const windowBottom = windowTop + windowHeight;
+                
+                animatedElements.forEach(function(element) {
+                    const elementTop = element.getBoundingClientRect().top + windowTop;
+                    const elementBottom = elementTop + element.offsetHeight;
+                    
+                    // Si l'élément est visible dans la fenêtre
+                    if (elementBottom > windowTop && elementTop < windowBottom) {
+                        element.classList.add('visible');
+                    }
+                });
+            }
+            
+            // Vérifier au chargement de la page
+            checkIfInView();
+            
+            // Vérifier lors du défilement
+            window.addEventListener('scroll', checkIfInView);
+            
+            // Bouton de retour en haut
+            const scrollToTopButton = document.getElementById('scroll-to-top');
+            
+            if (scrollToTopButton) {
+                window.addEventListener('scroll', function() {
+                    if (window.scrollY > 500) {
+                        scrollToTopButton.classList.add('visible');
+                    } else {
+                        scrollToTopButton.classList.remove('visible');
+                    }
+                });
+                
+                scrollToTopButton.addEventListener('click', function() {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+            
+            // Gestion des suggestions de réponse
+            const suggestedResponses = document.querySelectorAll('.suggestion-chip');
+            const messageTextarea = document.querySelector('.chat-input textarea');
+            
+            suggestedResponses.forEach(response => {
+                response.addEventListener('click', function() {
+                    const text = this.textContent.replace('🤖', '').trim();
+                    messageTextarea.value = text;
+                });
+            });
+            
+            // Gérer les clics sur les conversations
+            const conversationItems = document.querySelectorAll('.conversation-item');
+            
+            conversationItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // Désactiver toutes les conversations
+                    conversationItems.forEach(conv => {
+                        conv.classList.remove('active');
+                    });
+                    
+                    // Activer la conversation cliquée
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
+    
+    <style>
+        /* Styles spécifiques pour la messagerie */
+        .messaging-container {
+            display: flex;
+            background-color: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .messaging-sidebar {
+            width: 30%;
+            background-color: var(--cream);
+            padding: 15px;
+            border-right: 1px solid var(--cream-dark);
+        }
+        
+        .messaging-filters {
+            margin-bottom: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        
+        .conversation-list {
+            overflow-y: auto;
+            max-height: 500px;
+        }
+        
+        .messaging-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 600px;
+        }
+        
+        .chat-header {
+            padding: 15px;
+            background-color: var(--cream);
+            border-bottom: 1px solid var(--cream-dark);
+        }
+        
+        .chat-header h3 {
+            margin: 0;
+            margin-bottom: 5px;
+        }
+        
+        .contact-person p {
+            margin: 0;
+            font-size: 14px;
+            color: var(--gray);
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .message {
+            display: flex;
+            max-width: 80%;
+        }
+        
+        .message.recruiter {
+            align-self: flex-start;
+        }
+        
+        .message.candidate {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+        
+        .message-initials {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: var(--cream);
+            border-radius: 50%;
+            margin-right: 10px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .message-bubble {
+            background-color: var(--cream);
+            padding: 10px 15px;
+            border-radius: 18px;
+        }
+        
+        .message.recruiter .message-bubble {
+            background-color: var(--purple);
+            color: white;
+            border-top-left-radius: 0;
+        }
+        
+        .message.candidate .message-bubble {
+            background-color: var(--cream-dark);
+            border-top-right-radius: 0;
+        }
+        
+        .message-bubble p {
+            margin: 0;
+        }
+        
+        .chat-input {
+            padding: 15px;
+            border-top: 1px solid var(--cream-dark);
+        }
+        
+        .suggested-responses {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 10px 0;
+        }
+        
+        .suggestion-chip {
+            padding: 6px 12px;
+            background-color: var(--cream);
+            border-radius: 16px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .suggestion-chip:hover {
+            background-color: var(--purple);
+            color: var(--white);
+        }
+        
+        .attachment-icon {
+            margin-left: auto;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--cream);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        /* Responsive pour la messagerie */
+        @media (max-width: 992px) {
+            .messaging-container {
+                flex-direction: column;
+            }
+            
+            .messaging-sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid var(--cream-dark);
+            }
+            
+            .messaging-content {
+                min-height: 400px;
+            }
+        }
+    </style>
+</body>
+</html>
