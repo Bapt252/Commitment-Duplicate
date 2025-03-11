@@ -69,7 +69,7 @@ class DataService {
             ]));
         }
 
-        // Initialiser les utilisateurs (candidats et recruteurs)
+        // Initialiser les utilisateurs (candidats, recruteurs et entreprises)
         if (!localStorage.getItem('users')) {
             localStorage.setItem('users', JSON.stringify([
                 {
@@ -95,6 +95,24 @@ class DataService {
                     industry: 'Tech',
                     location: 'Paris',
                     jobIds: [1]
+                },
+                {
+                    id: 3,
+                    type: 'company',
+                    email: 'entreprise@example.com',
+                    password: 'password123', // Dans une vraie application, utiliser bcrypt
+                    name: 'InnovTech',
+                    industry: 'Technologies',
+                    size: '50-200',
+                    location: 'Paris',
+                    description: 'Entreprise innovante dans le domaine des technologies',
+                    jobIds: [4],
+                    recruitingNeeds: {
+                        positions: ['Développeur', 'Designer', 'Chef de projet'],
+                        skills: ['JavaScript', 'React', 'UI/UX', 'Gestion de projet'],
+                        departments: ['Tech', 'Design', 'Marketing']
+                    },
+                    profileCompleted: true
                 }
             ]));
         }
@@ -114,7 +132,7 @@ class DataService {
      * Authentifie un utilisateur
      * @param {string} email 
      * @param {string} password 
-     * @param {string} userType - 'candidate' ou 'recruiter'
+     * @param {string} userType - 'candidate', 'recruiter', ou 'company'
      * @returns {Object|null} Utilisateur authentifié ou null
      */
     login(email, password, userType) {
@@ -228,17 +246,17 @@ class DataService {
         jobs.push(newJob);
         localStorage.setItem('jobs', JSON.stringify(jobs));
         
-        // Ajouter l'ID du job au recruteur
+        // Ajouter l'ID du job au recruteur ou à l'entreprise
         const currentUser = this.getCurrentUser();
-        if (currentUser && currentUser.type === 'recruiter') {
+        if (currentUser && (currentUser.type === 'recruiter' || currentUser.type === 'company')) {
             const users = JSON.parse(localStorage.getItem('users'));
-            const recruiterIndex = users.findIndex(u => u.id === currentUser.id);
+            const userIndex = users.findIndex(u => u.id === currentUser.id);
             
-            if (recruiterIndex !== -1) {
-                if (!users[recruiterIndex].jobIds) {
-                    users[recruiterIndex].jobIds = [];
+            if (userIndex !== -1) {
+                if (!users[userIndex].jobIds) {
+                    users[userIndex].jobIds = [];
                 }
-                users[recruiterIndex].jobIds.push(newJob.id);
+                users[userIndex].jobIds.push(newJob.id);
                 localStorage.setItem('users', JSON.stringify(users));
             }
         }
@@ -331,6 +349,25 @@ class DataService {
     saveCandidateProfile(candidateId, profileData) {
         const users = JSON.parse(localStorage.getItem('users'));
         const userIndex = users.findIndex(u => u.id === candidateId);
+        
+        if (userIndex !== -1) {
+            users[userIndex] = { ...users[userIndex], ...profileData, profileCompleted: true };
+            localStorage.setItem('users', JSON.stringify(users));
+            return users[userIndex];
+        }
+        
+        return null;
+    }
+
+    /**
+     * Sauvegarde le profil d'une entreprise
+     * @param {number} companyId 
+     * @param {Object} profileData 
+     * @returns {Object} Profil mis à jour
+     */
+    saveCompanyProfile(companyId, profileData) {
+        const users = JSON.parse(localStorage.getItem('users'));
+        const userIndex = users.findIndex(u => u.id === companyId && u.type === 'company');
         
         if (userIndex !== -1) {
             users[userIndex] = { ...users[userIndex], ...profileData, profileCompleted: true };
@@ -459,6 +496,84 @@ class DataService {
             // Limiter à 10 correspondances
             matches = matches.slice(0, 10);
         }
+        
+        // Si pas assez de correspondances, ajouter des candidats aléatoires
+        if (matches.length < 10) {
+            const remainingCandidates = candidates.filter(candidate => 
+                !matches.some(match => match.candidateId === candidate.id)
+            );
+            
+            const randomCandidates = this.getRandomElements(remainingCandidates, 10 - matches.length);
+            
+            randomCandidates.forEach(candidate => {
+                matches.push({
+                    candidateId: candidate.id,
+                    score: Math.floor(Math.random() * 50) + 30, // Score aléatoire entre 30 et 80
+                    candidate: {
+                        id: candidate.id,
+                        name: candidate.name,
+                        title: candidate.title,
+                        skills: candidate.skills,
+                        experience: candidate.experience,
+                        location: candidate.location
+                    }
+                });
+            });
+        }
+        
+        return matches;
+    }
+
+    /**
+     * Génère des matchings aléatoires pour une entreprise
+     * Cette fonction simule un algorithme de matching intelligent
+     * @param {number} companyId 
+     * @returns {Array} Liste des candidats correspondants
+     */
+    getMatchesForCompany(companyId) {
+        const users = JSON.parse(localStorage.getItem('users'));
+        const company = users.find(u => u.id === companyId && u.type === 'company');
+        const candidates = users.filter(u => u.type === 'candidate');
+        
+        if (!company || !company.recruitingNeeds) return [];
+        
+        // Algorithme de matching simple basé sur les compétences
+        let matches = [];
+        
+        candidates.forEach(candidate => {
+            if (candidate.skills && candidate.skills.length > 0 && company.recruitingNeeds.skills) {
+                // Calculer un score de correspondance basé sur les compétences
+                const matchingSkills = candidate.skills.filter(skill => 
+                    company.recruitingNeeds.skills.some(req => 
+                        skill.toLowerCase().includes(req.toLowerCase()) || 
+                        req.toLowerCase().includes(skill.toLowerCase())
+                    )
+                );
+                
+                const score = matchingSkills.length / company.recruitingNeeds.skills.length;
+                
+                if (score > 0.2) { // Seuil minimal de correspondance
+                    matches.push({
+                        candidateId: candidate.id,
+                        score: score * 100,
+                        candidate: {
+                            id: candidate.id,
+                            name: candidate.name,
+                            title: candidate.title,
+                            skills: candidate.skills,
+                            experience: candidate.experience,
+                            location: candidate.location
+                        }
+                    });
+                }
+            }
+        });
+        
+        // Trier par score de correspondance
+        matches.sort((a, b) => b.score - a.score);
+        
+        // Limiter à 10 correspondances
+        matches = matches.slice(0, 10);
         
         // Si pas assez de correspondances, ajouter des candidats aléatoires
         if (matches.length < 10) {
