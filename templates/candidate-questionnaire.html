@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questionnaire Candidat - Commitment</title>
+    <link rel="stylesheet" href="../static/styles/modern.css">
+    <link rel="stylesheet" href="../static/styles/styles.css">
+    <link rel="stylesheet" href="../static/styles/additional.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Styles spécifiques pour le questionnaire */
+        .radio-option, .checkbox-option {
+            display: flex;
+            align-items: flex-start;
+            padding: 0.8rem 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: var(--radius);
+            margin-bottom: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .radio-option:hover, .checkbox-option:hover {
+            background-color: rgba(108, 99, 255, 0.05);
+            border-color: var(--primary);
+        }
+
+        .radio-option.selected, .checkbox-option.selected {
+            background-color: rgba(108, 99, 255, 0.1);
+            border: 2px solid var(--primary);
+        }
+
+        .radio-option input[type="radio"], .checkbox-option input[type="checkbox"] {
+            margin-right: 0.8rem;
+            margin-top: 0.25rem;
+        }
+
+        .option-label {
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .form-progress {
+            height: 6px;
+            background-color: #e2e8f0;
+            border-radius: 3px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <img src="../static/images/logo.svg" alt="Commitment Logo">
+            </a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="candidate-dashboard.html">Tableau de bord</a></li>
+                    <li><a href="candidate-upload.html">Mon CV</a></li>
+                    <li><a href="candidate-matches.html">Correspondances</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <a href="candidate-dashboard.html" class="user-profile">
+                    <i class="fas fa-user-circle"></i>
+                    <span>Mon profil</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <section style="padding: 4rem 0; background-color: var(--gray);">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <span class="badge badge-ai">
+                    <i class="fas fa-robot"></i> Propulsé par l'IA
+                </span>
+                <h2 style="font-size: 2.2rem; font-weight: 700; color: var(--dark); margin-top: 1rem; margin-bottom: 0.5rem;">
+                    Questionnaire Candidat
+                </h2>
+                <p style="color: var(--text); font-size: 1.1rem; max-width: 700px; margin: 0 auto;">
+                    Aidez-nous à mieux vous connaître pour vous proposer les 10 meilleures opportunités correspondant à votre profil.
+                </p>
+            </div>
+
+            <div class="card" style="max-width: 900px; margin: 0 auto; padding: 2.5rem;">
+                <div class="progress-steps">
+                    <div class="step completed">
+                        <div class="step-circle"><i class="fas fa-check"></i></div>
+                        <div class="step-text">Création du compte</div>
+                    </div>
+                    <div class="step active">
+                        <div class="step-circle">2</div>
+                        <div class="step-text">Questionnaire</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-circle">3</div>
+                        <div class="step-text">Matching</div>
+                    </div>
+                </div>
+
+                <div class="form-progress">
+                    <div class="progress-bar" style="width: 0%"></div>
+                </div>
+
+                <form id="candidate-form">
+                    <!-- Étape 1: Informations personnelles -->
+                    <div class="form-step" id="step-1">
+                        <h3 style="font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--dark);">Informations personnelles</h3>
+                        
+                        <div class="form-group">
+                            <label for="full-name" class="form-label">Nom complet <span style="color: var(--primary);">*</span></label>
+                            <input type="text" id="full-name" name="full-name" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email <span style="color: var(--primary);">*</span></label>
+                            <input type="email" id="email" name="email" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone" class="form-label">Téléphone</label>
+                            <input type="tel" id="phone" name="phone" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="linkedin" class="form-label">Profil LinkedIn (optionnel)</label>
+                            <input type="url" id="linkedin" name="linkedin" class="form-control" placeholder="https://linkedin.com/in/votre-profil">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="current-job" class="form-label">Poste actuel</label>
+                            <input type="text" id="current-job" name="current-job" class="form-control">
+                        </div>
+                    </div>
+
+                    <!-- Étape 2: Expérience et compétences -->
+                    <div class="form-step" id="step-2" style="display: none;">
+                        <h3 style="font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--dark);">Expérience et compétences</h3>
+
+                        <div class="form-group">
+                            <label for="experience" class="form-label">Expérience professionnelle <span style="color: var(--primary);">*</span></label>
+                            <select id="experience" name="experience" class="form-control" required>
+                                <option value="">Sélectionnez</option>
+                                <option value="junior">Moins de 2 ans</option>
+                                <option value="intermediate">2 à 5 ans</option>
+                                <option value="senior">5 à 10 ans</option>
+                                <option value="expert">Plus de 10 ans</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Domaines d'expertise <span style="color: var(--primary);">*</span></label>
+                            <div class="checkbox-options">
+                                <div class="checkbox-option">
+                                    <input type="checkbox" id="domain-tech" name="domains" value="Technologie">
+                                    <label for="domain-tech" class="option-label">Technologie & Développement</label>
+                                </div>
+                                <div class="checkbox-option">
+                                    <input type="checkbox" id="domain-marketing" name="domains" value="Marketing">
+                                    <label for="domain-marketing" class="option-label">Marketing & Communication</label>
+                                </div>
+                                <div class="checkbox-option">
+                                    <input type="checkbox" id="domain-sales" name="domains" value="Ventes">
+                                    <label for="domain-sales" class="option-label">Ventes & Business Development</label>
+                                </div>
+                                <div class="checkbox-option">
+                                    <input type="checkbox" id="domain-finance" name="domains" value="Finance">
+                                    <label for="domain-finance" class="option-label">Finance & Comptabilité</label>
+                                </div>
+                                <div class="checkbox-option">
+                                    <input type="checkbox" id="domain-hr" name="domains" value="RH">
+                                    <label for="domain-hr" class="option-label">Ressources Humaines</label>
+                                </div>
+                                <div class="checkbox-option">
+                                    <input type="checkbox" id="domain-operations" name="domains" value="Opérations">
+                                    <label for="domain-operations" class="option-label">Opérations & Logistique</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="skills" class="form-label">Principales compétences <span style="color: var(--primary);">*</span></label>
+                            <textarea id="skills" name="skills" class="form-control" rows="3" placeholder="Entrez vos principales compétences séparées par des virgules" required></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Étape 3: Préférences professionnelles -->
+                    <div class="form-step" id="step-3" style="display: none;">
+                        <h3 style="font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--dark);">Préférences professionnelles</h3>
+
+                        <div class="form-group">
+                            <label class="form-label">Type de contrat recherché <span style="color: var(--primary);">*</span></label>
+                            <div class="checkbox-options">
+                                <div class="checkbox-option">
+                                    <input type="checkbox" id="contract-cdi" name="contract-type" value="CDI">
+                                    <label for="contract-cdi" class="option-label">CDI</label>
+                                </div>
+                                <div class="checkbox-option">
+                                    <input type="checkbox" id="contract-cdd" name="contract-type" value="CDD">
+                                    <label for="contract-cdd" class="option-label">CDD</label>
+                                </div>
+                                <div class="checkbox-option">
+                                    <input type="checkbox" id="contract-interim" name="contract-type" value="Intérim">
+                                    <label for="contract-interim" class="option-label">Intérim</label>
+                                </div>
+                                <div class="checkbox-option">
+                                    <input type="checkbox" id="contract-freelance" name="contract-type" value="Freelance">
+                                    <label for="contract-freelance" class="option-label">Freelance</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Mode de travail préféré <span style="color: var(--primary);">*</span></label>
+                            <div class="radio-options">
+                                <div class="radio-option">
+                                    <input type="radio" id="work-remote" name="work-mode" value="Télétravail">
+                                    <label for="work-remote" class="option-label">Télétravail complet</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" id="work-hybrid" name="work-mode" value="Hybride">
+                                    <label for="work-hybrid" class="option-label">Hybride (bureau et télétravail)</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" id="work-office" name="work-mode" value="Présentiel">
+                                    <label for="work-office" class="option-label">Présentiel (100% au bureau)</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="salary" class="form-label">Prétentions salariales annuelles (k€) <span style="color: var(--primary);">*</span></label>
+                            <input type="text" id="salary" name="salary" class="form-control" placeholder="Ex: 45-50" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="location" class="form-label">Localisation souhaitée <span style="color: var(--primary);">*</span></label>
+                            <input type="text" id="location" name="location" class="form-control" placeholder="Ex: Paris, Lyon, Bordeaux..." required>
+                        </div>
+                    </div>
+
+                    <!-- Étape finale: CV et confirmation -->
+                    <div class="form-step" id="step-4" style="display: none;">
+                        <div style="text-align: center; margin-bottom: 2rem;">
+                            <i class="fas fa-file-upload" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                            <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--dark);">Téléchargez votre CV</h3>
+                            <p style="color: var(--text); margin-bottom: 2rem;">Notre IA analysera votre CV pour vous proposer les meilleures opportunités. Formats acceptés : PDF, DOCX, DOC.</p>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="file-upload-area">
+                                <input type="file" id="cv-upload" name="cv-upload" class="hidden-file-input" accept=".pdf,.docx,.doc">
+                                <label for="cv-upload" class="file-upload-label">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <span>Glissez votre CV ici ou cliquez pour parcourir</span>
+                                </label>
+                                <div id="file-info" class="file-info" style="display: none;">
+                                    <div class="file-preview">
+                                        <i class="fas fa-file-alt"></i>
+                                        <span class="file-name">Nom du fichier</span>
+                                    </div>
+                                    <button type="button" class="btn btn-text remove-file">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="info-card" style="background-color: rgba(16, 185, 129, 0.1); border-left-color: var(--success); margin-bottom: 2rem;">
+                            <div style="display: flex; align-items: flex-start;">
+                                <i class="fas fa-lightbulb" style="color: var(--success); margin-right: 0.8rem; margin-top: 0.2rem;"></i>
+                                <div>
+                                    <h4 style="font-weight: 600; margin-bottom: 0.5rem; color: var(--dark);">
+                                        Intelligence artificielle en action
+                                    </h4>
+                                    <p style="color: var(--text);">
+                                        Notre IA va combiner les informations de votre CV avec vos préférences pour vous présenter 10 offres parfaitement adaptées à votre profil.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
+                            Créer mon compte <i class="fas fa-arrow-right" style="margin-left: 0.8rem;"></i>
+                        </button>
+                    </div>
+
+                    <!-- Navigation des étapes -->
+                    <div class="navigation-buttons" id="form-navigation">
+                        <button type="button" id="prev-button" class="btn btn-secondary" disabled>
+                            <i class="fas fa-arrow-left" style="margin-right: 0.5rem;"></i> Précédent
+                        </button>
+                        <button type="button" id="next-button" class="btn btn-primary">
+                            Suivant <i class="fas fa-arrow-right" style="margin-left: 0.5rem;"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="../static/images/logo.svg" alt="Commitment Logo">
+                </div>
+                <!-- Footer content -->
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Commitment. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script JS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Éléments du formulaire
+            const form = document.getElementById('candidate-form');
+            const prevButton = document.getElementById('prev-button');
+            const nextButton = document.getElementById('next-button');
+            const progressBar = document.querySelector('.progress-bar');
+            
+            // Étapes du formulaire
+            const steps = document.querySelectorAll('.form-step');
+            let currentStep = 0;
+            
+            // Mise à jour de la progression
+            function updateProgressBar() {
+                const progress = ((currentStep + 1) / steps.length) * 100;
+                progressBar.style.width = progress + '%';
+            }
+            
+            // Affichage de l'étape actuelle
+            function showStep(stepIndex) {
+                steps.forEach((step, index) => {
+                    step.style.display = index === stepIndex ? 'block' : 'none';
+                });
+                
+                // Mise à jour des boutons de navigation
+                prevButton.disabled = stepIndex === 0;
+                
+                if (stepIndex === steps.length - 1) {
+                    nextButton.style.display = 'none';
+                } else {
+                    nextButton.style.display = 'block';
+                }
+                
+                updateProgressBar();
+            }
+            
+            // Navigation vers l'étape suivante
+            nextButton.addEventListener('click', function() {
+                if (currentStep < steps.length - 1) {
+                    currentStep++;
+                    showStep(currentStep);
+                }
+            });
+            
+            // Navigation vers l'étape précédente
+            prevButton.addEventListener('click', function() {
+                if (currentStep > 0) {
+                    currentStep--;
+                    showStep(currentStep);
+                }
+            });
+            
+            // Gestion du téléchargement de fichier
+            const fileInput = document.getElementById('cv-upload');
+            const fileInfo = document.getElementById('file-info');
+            const fileName = document.querySelector('.file-name');
+            const removeFileBtn = document.querySelector('.remove-file');
+            
+            if (fileInput && fileInfo && fileName && removeFileBtn) {
+                fileInput.addEventListener('change', function(e) {
+                    if (this.files && this.files[0]) {
+                        fileName.textContent = this.files[0].name;
+                        fileInfo.style.display = 'flex';
+                    }
+                });
+                
+                removeFileBtn.addEventListener('click', function() {
+                    fileInput.value = '';
+                    fileInfo.style.display = 'none';
+                });
+            }
+            
+            // Soumission du formulaire
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Animer le bouton de soumission
+                    const submitButton = form.querySelector('button[type="submit"]');
+                    if (submitButton) {
+                        submitButton.disabled = true;
+                        submitButton.innerHTML = '<span class="loading-spinner"></span> Traitement...';
+                    }
+                    
+                    // Rediriger vers la page des correspondances
+                    setTimeout(() => {
+                        window.location.href = 'candidate-dashboard.html';
+                    }, 2000);
+                });
+            }
+            
+            // Initialisation des options cliquables
+            document.querySelectorAll('.radio-option, .checkbox-option').forEach(option => {
+                option.addEventListener('click', function(e) {
+                    const input = this.querySelector('input');
+                    if (e.target !== input) {
+                        if (input.type === 'radio') {
+                            input.checked = true;
+                            // Mettre à jour l'apparence des autres radios
+                            const name = input.getAttribute('name');
+                            document.querySelectorAll(`input[name="${name}"]`).forEach(radio => {
+                                radio.closest('.radio-option').classList.toggle('selected', radio.checked);
+                            });
+                        } else {
+                            input.checked = !input.checked;
+                            this.classList.toggle('selected', input.checked);
+                        }
+                    }
+                });
+            });
+            
+            // Initialisation de la première étape
+            showStep(currentStep);
+        });
+    </script>
+</body>
+</html>
