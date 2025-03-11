@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nexten - Postuler en un clic">
+    <title>Nexten - Postuler en un clic</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../static/styles/nexten-modern.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/styles/dashboard.css">
+    <link rel="stylesheet" href="../static/styles/dashboard-new.css">
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../static/images/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <!-- Notification bar -->
+    <div class="notification-bar">
+        <i class="fas fa-bell"></i> Votre recrutement change, votre approche aussi : découvrez notre approche TOP <span class="ten-badge">10</span>
+    </div>
+
+    <!-- Lien d'accessibilité pour sauter au contenu principal -->
+    <a href="#main-content" class="skip-to-content">Aller au contenu principal</a>
+
+    <header>
+        <div class="container">
+            <div class="logo">
+                nex<span>ten</span><div class="logo-badge">10</div>
+            </div>
+            
+            <button class="menu-toggle" aria-label="Menu principal">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="candidate-dashboard-new.html" class="active">Espace candidat</a></li>
+                    <li><a href="company-login.html">Espace entreprise</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container main-container" id="main-content">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb fade-in">
+            <a href="candidate-dashboard-new.html"><i class="fas fa-home"></i> Tableau de bord</a> &gt; 
+            <span>Postuler en un clic</span>
+        </div>
+        
+        <!-- Section Postuler en un clic -->
+        <div class="candidate-dashboard-section fade-in">
+            <h2 class="section-heading">Postuler en un clic</h2>
+            <p class="section-description">Découvrez de nouvelles opportunités correspondant à votre profil et postulez instantanément.</p>
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <div>
+                    <span class="filter-badge active"><i class="fas fa-filter"></i> Toutes</span>
+                    <span class="filter-badge"><i class="fas fa-star"></i> Top 3</span>
+                    <span class="filter-badge"><i class="fas fa-map-marker-alt"></i> &lt; 30min</span>
+                </div>
+                <div>
+                    <select class="form-control form-control-sm" style="padding: 5px 10px; border-radius: 4px; border: 1px solid var(--cream-dark);">
+                        <option>Proximité</option>
+                        <option>Salaire</option>
+                        <option>Match</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="offers-container">
+                <!-- One-click Apply Offer 1 -->
+                <div class="job-offer fade-in">
+                    <div class="job-header">
+                        <h3 class="job-title">Growth Manager</h3>
+                        <div class="job-match">
+                            <span class="match-percentage">94%</span>
+                        </div>
+                    </div>
+                    <p class="job-description">
+                        Piloter la croissance d'une start-up innovante dans le secteur de la foodtech.
+                        <a href="#" style="color: var(--purple); font-size: 0.9rem;">Voir plus</a>
+                    </p>
+                    
+                    <div class="job-company">
+                        <div class="logo-placeholder small"></div>
+                        <span class="company-name">FoodTech+</span>
+                        <a href="#" class="company-link">Voir l'entreprise</a>
+                    </div>
+                    
+                    <div class="job-details">
+                        <p class="contract-type"><i class="fas fa-file-contract"></i> Contrat : CDI</p>
+                        <p class="job-salary"><i class="fas fa-money-bill-wave"></i> Rémunération : 40K-48K</p>
+                    </div>
+                    
+                    <div class="job-footer">
+                        <div class="job-actions">
+                            <button class="btn btn-primary btn-sm">Postuler en 1 clic</button>
+                        </div>
+                        <div class="job-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="job-commute">
+                            <span><i class="fas fa-walking"></i> Temps de trajet: 15 min</span>
+                            <a href="#" class="map-link">Voir sur Maps</a>
+                        </div>
+                        <p class="job-start-date"><i class="fas fa-calendar-alt"></i> Prise de poste: Immédiate</p>
+                    </div>
+                </div>
+                
+                <!-- One-click Apply Offer 2 -->
+                <div class="job-offer fade-in">
+                    <div class="job-header">
+                        <h3 class="job-title">Chef de Projet Digital</h3>
+                        <div class="job-match">
+                            <span class="match-percentage">91%</span>
+                        </div>
+                    </div>
+                    <p class="job-description">
+                        Gérer des projets digitaux d'envergure pour de grands comptes internationaux.
+                        <a href="#" style="color: var(--purple); font-size: 0.9rem;">Voir plus</a>
+                    </p>
+                    
+                    <div class="job-company">
+                        <div class="logo-placeholder small"></div>
+                        <span class="company-name">DigitalWave</span>
+                        <a href="#" class="company-link">Voir l'entreprise</a>
+                    </div>
+                    
+                    <div class="job-details">
+                        <p class="contract-type"><i class="fas fa-file-contract"></i> Contrat : CDI</p>
+                        <p class="job-salary"><i class="fas fa-money-bill-wave"></i> Rémunération : 43K-47K</p>
+                    </div>
+                    
+                    <div class="job-footer">
+                        <div class="job-actions">
+                            <button class="btn btn-primary btn-sm">Postuler en 1 clic</button>
+                        </div>
+                        <div class="job-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <div class="job-commute">
+                            <span><i class="fas fa-walking"></i> Temps de trajet: 25 min</span>
+                            <a href="#" class="map-link">Voir sur Maps</a>
+                        </div>
+                        <p class="job-start-date"><i class="fas fa-calendar-alt"></i> Prise de poste: Avril 2025</p>
+                    </div>
+                </div>
+                
+                <!-- One-click Apply Offer 3 -->
+                <div class="job-offer fade-in">
+                    <div class="job-header">
+                        <h3 class="job-title">Responsable Marketing</h3>
+                        <div class="job-match">
+                            <span class="match-percentage">89%</span>
+                        </div>
+                    </div>
+                    <p class="job-description">
+                        Développer et mettre en œuvre la stratégie marketing pour une entreprise en pleine expansion.
+                        <a href="#" style="color: var(--purple); font-size: 0.9rem;">Voir plus</a>
+                    </p>
+                    
+                    <div class="job-company">
+                        <div class="logo-placeholder small"></div>
+                        <span class="company-name">MarketLeaders</span>
+                        <a href="#" class="company-link">Voir l'entreprise</a>
+                    </div>
+                    
+                    <div class="job-details">
+                        <p class="contract-type"><i class="fas fa-file-contract"></i> Contrat : CDI</p>
+                        <p class="job-salary"><i class="fas fa-money-bill-wave"></i> Rémunération : 42K-50K</p>
+                    </div>
+                    
+                    <div class="job-footer">
+                        <div class="job-actions">
+                            <button class="btn btn-primary btn-sm">Postuler en 1 clic</button>
+                        </div>
+                        <div class="job-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                        <div class="job-commute">
+                            <span><i class="fas fa-walking"></i> Temps de trajet: 35 min</span>
+                            <a href="#" class="map-link">Voir sur Maps</a>
+                        </div>
+                        <p class="job-start-date"><i class="fas fa-calendar-alt"></i> Prise de poste: Mai 2025</p>
+                    </div>
+                </div>
+                
+                <!-- One-click Apply Offer 4 -->
+                <div class="job-offer fade-in">
+                    <div class="job-header">
+                        <h3 class="job-title">Social Media Manager</h3>
+                        <div class="job-match">
+                            <span class="match-percentage">87%</span>
+                        </div>
+                    </div>
+                    <p class="job-description">
+                        Définir et déployer la stratégie social media pour une marque internationale.
+                        <a href="#" style="color: var(--purple); font-size: 0.9rem;">Voir plus</a>
+                    </p>
+                    
+                    <div class="job-company">
+                        <div class="logo-placeholder small"></div>
+                        <span class="company-name">SocialHub</span>
+                        <a href="#" class="company-link">Voir l'entreprise</a>
+                    </div>
+                    
+                    <div class="job-details">
+                        <p class="contract-type"><i class="fas fa-file-contract"></i> Contrat : CDI</p>
+                        <p class="job-salary"><i class="fas fa-money-bill-wave"></i> Rémunération : 38K-45K</p>
+                    </div>
+                    
+                    <div class="job-footer">
+                        <div class="job-actions">
+                            <button class="btn btn-primary btn-sm">Postuler en 1 clic</button>
+                        </div>
+                        <div class="job-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                        <div class="job-commute">
+                            <span><i class="fas fa-walking"></i> Temps de trajet: 20 min</span>
+                            <a href="#" class="map-link">Voir sur Maps</a>
+                        </div>
+                        <p class="job-start-date"><i class="fas fa-calendar-alt"></i> Prise de poste: Avril 2025</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <h4 class="footer-heading">Nexten</h4>
+                    <p class="footer-description">Notre plateforme utilise l'intelligence artificielle pour révolutionner le processus de recrutement, offrant 10 correspondances personnalisées pour les candidats et les recruteurs.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="footer-heading">Navigation</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Accueil</a></li>
+                        <li><a href="candidate-dashboard-new.html"><i class="fas fa-chevron-right"></i> Espace candidat</a></li>
+                        <li><a href="company-login.html"><i class="fas fa-chevron-right"></i> Espace entreprise</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> À propos</a></li>
+                        <li><a href="#contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="footer-heading">Contact</h4>
+                    <div class="footer-contact">
+                        <p><i class="fas fa-map-marker-alt"></i> 123 Avenue de l'Innovation, 75001 Paris</p>
+                        <p><i class="fas fa-phone"></i> +33 1 23 45 67 89</p>
+                        <p><i class="fas fa-envelope"></i> contact@nexten.fr</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Nexten - Tous droits réservés | <a href="#">Politique de confidentialité</a> | <a href="#">Conditions d'utilisation</a></p>
+            </div>
+        </div>
+        
+        <!-- Bouton de retour en haut -->
+        <button id="scroll-to-top" class="scroll-to-top" aria-label="Retour en haut">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Menu mobile toggle
+            const menuToggle = document.querySelector('.menu-toggle');
+            const nav = document.querySelector('nav');
+            
+            if (menuToggle && nav) {
+                menuToggle.addEventListener('click', function() {
+                    nav.classList.toggle('active');
+                    this.classList.toggle('active');
+                });
+            }
+            
+            // Animation au défilement
+            const animatedElements = document.querySelectorAll('.fade-in');
+            
+            function checkIfInView() {
+                const windowHeight = window.innerHeight;
+                const windowTop = window.scrollY;
+                const windowBottom = windowTop + windowHeight;
+                
+                animatedElements.forEach(function(element) {
+                    const elementTop = element.getBoundingClientRect().top + windowTop;
+                    const elementBottom = elementTop + element.offsetHeight;
+                    
+                    // Si l'élément est visible dans la fenêtre
+                    if (elementBottom > windowTop && elementTop < windowBottom) {
+                        element.classList.add('visible');
+                    }
+                });
+            }
+            
+            // Vérifier au chargement de la page
+            checkIfInView();
+            
+            // Vérifier lors du défilement
+            window.addEventListener('scroll', checkIfInView);
+            
+            // Bouton de retour en haut
+            const scrollToTopButton = document.getElementById('scroll-to-top');
+            
+            if (scrollToTopButton) {
+                window.addEventListener('scroll', function() {
+                    if (window.scrollY > 500) {
+                        scrollToTopButton.classList.add('visible');
+                    } else {
+                        scrollToTopButton.classList.remove('visible');
+                    }
+                });
+                
+                scrollToTopButton.addEventListener('click', function() {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+            
+            // Interaction avec les filtres
+            const filterBadges = document.querySelectorAll('.filter-badge');
+            
+            filterBadges.forEach(badge => {
+                badge.addEventListener('click', function() {
+                    // Dans chaque groupe de filtres, désactiver tous les autres
+                    const parentElement = this.parentElement;
+                    parentElement.querySelectorAll('.filter-badge').forEach(b => {
+                        b.classList.remove('active');
+                    });
+                    
+                    // Activer le filtre cliqué
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
