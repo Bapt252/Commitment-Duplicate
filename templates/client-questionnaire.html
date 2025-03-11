@@ -1022,10 +1022,10 @@
                 <i class="fas fa-check-circle"></i>
             </div>
             <h3>Votre profil a été créé avec succès !</h3>
-            <p>Nous avons bien enregistré vos informations. Vous allez être redirigé vers votre tableau de bord.</p>
+            <p>Nous avons bien enregistré vos informations. Notre IA analyse actuellement les données pour trouver les meilleurs candidats correspondant à votre recherche.</p>
             <div class="modal-actions">
-                <button id="go-to-dashboard" class="btn btn-primary">
-                    Accéder au tableau de bord
+                <button id="go-to-matches" class="btn btn-primary">
+                    Voir les candidats recommandés
                 </button>
             </div>
         </div>
@@ -1054,7 +1054,7 @@
             const nextButton = document.getElementById('next-button');
             const progressBar = document.querySelector('.progress-bar');
             const successModal = document.getElementById('success-modal');
-            const goToDashboardBtn = document.getElementById('go-to-dashboard');
+            const goToMatchesBtn = document.getElementById('go-to-matches');
             
             // Étapes du formulaire
             const steps = document.querySelectorAll('.form-step');
@@ -1393,9 +1393,9 @@
                 }, 2000);
             }
             
-            // Redirection depuis la modal
-            goToDashboardBtn.addEventListener('click', function() {
-                window.location.href = 'recruiter-dashboard.html';
+            // Redirection depuis la modal vers la page de propositions de candidats
+            goToMatchesBtn.addEventListener('click', function() {
+                window.location.href = 'recruiter-candidates-proposals.html';
             });
             
             // Initialisation des options cliquables
