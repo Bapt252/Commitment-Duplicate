@@ -1,0 +1,2082 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nexten - Propositions de postes personnalisées">
+    <title>Propositions de Postes - Nexten</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../static/styles/nexten-modern.css">
+    <link rel="stylesheet" href="../static/styles/modern.css">
+    <link rel="stylesheet" href="../static/styles/styles.css">
+    <link rel="stylesheet" href="../static/styles/additional.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../static/images/favicon.ico" type="image/x-icon">
+    
+    <style>
+        :root {
+            --primary: #6C63FF;
+            --primary-dark: #4A45B0;
+            --primary-light: rgba(108, 99, 255, 0.1);
+            --primary-lighter: rgba(108, 99, 255, 0.05);
+            --success: #10B981;
+            --danger: #EF4444;
+            --warning: #F59E0B;
+            --success-light: rgba(16, 185, 129, 0.1);
+            --danger-light: rgba(239, 68, 68, 0.1);
+            --warning-light: rgba(245, 158, 11, 0.1);
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bounce: all 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+            background-color: #f8fafc;
+            color: #1F2937;
+        }
+
+        .matching-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .matching-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary-lighter) 100%);
+            padding: 2.5rem 2rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(108, 99, 255, 0.1);
+            transform: translateY(0);
+            transition: var(--transition-smooth);
+            position: relative;
+            border: 1px solid rgba(108, 99, 255, 0.2);
+        }
+
+        .matching-header h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #1F2937;
+            margin-bottom: 1.2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .matching-header .ten-accent {
+            color: var(--primary);
+            font-weight: 900;
+        }
+
+        .matching-header p {
+            color: #4B5563;
+            font-size: 1.15rem;
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            line-height: 1.6;
+        }
+
+        .filters-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            align-items: center;
+            background-color: white;
+            padding: 1.2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .filter-control {
+            position: relative;
+            min-width: 180px;
+        }
+
+        .filter-label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #6B7280;
+            margin-bottom: 0.4rem;
+        }
+
+        .filter-select {
+            width: 100%;
+            padding: 0.7rem 1rem;
+            border-radius: 8px;
+            border: 1.5px solid #E5E7EB;
+            background-color: white;
+            font-size: 0.95rem;
+            color: #1F2937;
+            appearance: none;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%236B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 0.7rem center;
+            background-size: 1em;
+            transition: var(--transition-smooth);
+        }
+
+        .filter-select:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1);
+        }
+
+        .search-input {
+            flex-grow: 1;
+            position: relative;
+        }
+
+        .search-input input {
+            width: 100%;
+            padding: 0.7rem 1rem 0.7rem 2.5rem;
+            border-radius: 8px;
+            border: 1.5px solid #E5E7EB;
+            background-color: white;
+            font-size: 0.95rem;
+            color: #1F2937;
+            transition: var(--transition-smooth);
+        }
+
+        .search-input input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1);
+        }
+
+        .search-input i {
+            position: absolute;
+            left: 0.8rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9CA3AF;
+            font-size: 1rem;
+        }
+
+        .job-card {
+            background-color: white;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: var(--transition-bounce);
+            border: 1px solid #E5E7EB;
+            transform: translateY(0);
+        }
+
+        .job-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary-light);
+        }
+
+        .job-card-header {
+            padding: 1.8rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 1px solid #E5E7EB;
+            position: relative;
+        }
+
+        .job-card-header:after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary) 0%, #9f94ff 100%);
+            transition: var(--transition-smooth);
+        }
+
+        .job-card:hover .job-card-header:after {
+            width: 100%;
+        }
+
+        .job-title-company {
+            display: flex;
+            align-items: center;
+            flex: 1;
+        }
+
+        .company-logo {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-right: 1.2rem;
+            background-color: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: var(--primary);
+            transition: var(--transition-smooth);
+            box-shadow: 0 4px 6px rgba(108, 99, 255, 0.1);
+        }
+
+        .job-card:hover .company-logo {
+            box-shadow: 0 8px 15px rgba(108, 99, 255, 0.15);
+            transform: scale(1.05);
+        }
+
+        .job-title-info h3 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.4rem;
+            color: #1F2937;
+            font-weight: 700;
+            transition: var(--transition-smooth);
+        }
+
+        .job-card:hover .job-title-info h3 {
+            color: var(--primary);
+        }
+
+        .job-description {
+            color: #6B7280;
+            font-size: 0.95rem;
+            margin: 0;
+            line-height: 1.5;
+            max-height: 3em;
+            overflow: hidden;
+            transition: var(--transition-smooth);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .job-description.expanded {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .job-description:not(.expanded)::after {
+            content: "...";
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            padding-left: 0.5rem;
+            background: linear-gradient(to right, transparent, white 40%);
+            width: 3rem;
+        }
+
+        .job-match {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding-left: 1.5rem;
+        }
+
+        .match-percentage {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #1F2937;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.8rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: var(--transition-bounce);
+            position: relative;
+            background: white;
+            border: 2px solid var(--primary-light);
+        }
+
+        .match-percentage::before {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            border-radius: 50%;
+            border: 3px solid #E5E7EB;
+            border-top-color: var(--primary);
+            border-right-color: var(--primary);
+            transform: rotate(45deg);
+        }
+
+        .job-card:hover .match-percentage {
+            transform: scale(1.1);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .match-indicators {
+            display: flex;
+            gap: 0.7rem;
+        }
+
+        .indicator {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: var(--transition-smooth);
+        }
+
+        .indicator.success {
+            background-color: var(--success);
+        }
+
+        .indicator.danger {
+            background-color: var(--danger);
+        }
+
+        .job-card:hover .indicator {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .job-card-body {
+            padding: 1.8rem;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            font-size: 0.95rem;
+            background-color: #F9FAFB;
+            transition: var(--transition-smooth);
+        }
+
+        .job-info-item {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transition: var(--transition-smooth);
+        }
+
+        .job-info-item:hover {
+            transform: translateY(-3px);
+        }
+
+        .info-label {
+            font-size: 0.85rem;
+            color: #6B7280;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .info-label i {
+            color: var(--primary);
+            font-size: 0.9rem;
+        }
+
+        .info-value {
+            color: #1F2937;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .contract-badges {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 0.2rem;
+        }
+
+        .contract-badge {
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.3rem 0.7rem;
+            border-radius: 20px;
+            background-color: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .link-style {
+            color: var(--primary);
+            font-size: 0.85rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: var(--transition-smooth);
+            margin-top: 0.3rem;
+        }
+
+        .link-style:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+
+        .link-style i {
+            font-size: 0.8rem;
+        }
+
+        .job-actions {
+            padding: 1rem 1.8rem;
+            background-color: white;
+            border-top: 1px solid #E5E7EB;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .save-job {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: none;
+            border: none;
+            padding: 0.5rem 0.8rem;
+            color: #6B7280;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: var(--transition-smooth);
+        }
+
+        .save-job:hover {
+            background-color: #F3F4F6;
+            color: #1F2937;
+        }
+
+        .save-job.saved {
+            color: var(--primary);
+        }
+
+        .save-job i {
+            font-size: 1.1rem;
+        }
+
+        .apply-btn {
+            padding: 0.6rem 1.2rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition-smooth);
+        }
+
+        .apply-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(108, 99, 255, 0.2);
+        }
+
+        .apply-btn:active {
+            transform: translateY(0);
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding: 1rem 1.2rem;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .results-count {
+            font-size: 0.95rem;
+            color: #6B7280;
+        }
+
+        .results-count span {
+            font-weight: 600;
+            color: #1F2937;
+        }
+
+        .sort-options {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .sort-label {
+            font-size: 0.95rem;
+            color: #6B7280;
+        }
+
+        .sort-select {
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            border: 1px solid #E5E7EB;
+            font-size: 0.9rem;
+            color: #1F2937;
+            appearance: none;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%236B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 0.5rem center;
+            background-size: 0.8em;
+            padding-right: 2rem;
+        }
+
+        .match-high {
+            color: var(--success);
+            font-weight: 700;
+        }
+
+        .match-medium {
+            color: var(--warning);
+            font-weight: 700;
+        }
+
+        .match-low {
+            color: var(--danger);
+            font-weight: 700;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin: 3rem 0 2rem;
+            gap: 0.5rem;
+        }
+
+        .pagination-btn {
+            border: 1px solid #E5E7EB;
+            background-color: white;
+            padding: 0.7rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .pagination-btn:hover {
+            background-color: #F3F4F6;
+            border-color: #D1D5DB;
+        }
+
+        .pagination-btn.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 2px 5px rgba(108, 99, 255, 0.2);
+        }
+
+        /* Progress steps from questionnaire */
+        .progress-steps {
+            margin-bottom: 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .progress-steps::before {
+            content: '';
+            position: absolute;
+            top: 16px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: #e2e8f0;
+            z-index: 0;
+        }
+
+        .progress-steps .step {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
+
+        .step-circle {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background-color: #f1f5f9;
+            border: 2px solid #e2e8f0;
+            color: #64748b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            transition: var(--transition-smooth);
+            z-index: 1;
+        }
+
+        .step.active .step-circle {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            color: white;
+            box-shadow: 0 0 0 4px rgba(108, 99, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        .step.completed .step-circle {
+            background-color: var(--success);
+            border-color: var(--success);
+            color: white;
+        }
+
+        .step-text {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #64748b;
+            transition: var(--transition-smooth);
+        }
+
+        .step.active .step-text {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .step.completed .step-text {
+            color: var(--success);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-in {
+            animation: fadeIn 0.5s forwards;
+            opacity: 0;
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            width: 150px;
+            background-color: #1F2937;
+            color: white;
+            text-align: center;
+            border-radius: 6px;
+            padding: 0.5rem;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.8rem;
+            font-weight: normal;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .tooltip .tooltip-text::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #1F2937 transparent transparent transparent;
+        }
+
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Actions area */
+        .actions-area {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .selected-count {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .selected-count-badge {
+            background-color: var(--primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .selected-count-text {
+            font-size: 1rem;
+            color: #4B5563;
+        }
+
+        .selected-count-text strong {
+            color: #1F2937;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        .btn-outline {
+            padding: 0.6rem 1.2rem;
+            background-color: white;
+            color: var(--primary);
+            border: 1.5px solid var(--primary);
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition-smooth);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            padding: 0.6rem 1.2rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition-smooth);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(108, 99, 255, 0.2);
+        }
+
+        .btn-primary:active, .btn-outline:active {
+            transform: translateY(0);
+        }
+
+        /* Loading */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .loading-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--primary-light);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s infinite linear;
+            margin-bottom: 1rem;
+        }
+
+        .loading-text {
+            font-size: 1rem;
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .job-card-header {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .job-match {
+                flex-direction: row;
+                padding-left: 0;
+                justify-content: space-between;
+                width: 100%;
+            }
+
+            .job-card-body {
+                grid-template-columns: 1fr 1fr;
+                gap: 1.2rem;
+            }
+
+            .filters-section {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filter-control, .search-input {
+                width: 100%;
+            }
+
+            .stats-bar {
+                flex-direction: column;
+                gap: 0.8rem;
+                align-items: flex-start;
+            }
+
+            .actions-area {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: center;
+                text-align: center;
+            }
+
+            .action-buttons {
+                width: 100%;
+            }
+
+            .action-buttons .btn-outline, 
+            .action-buttons .btn-primary {
+                flex: 1;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .job-card-body {
+                grid-template-columns: 1fr;
+            }
+
+            .job-actions {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: stretch;
+            }
+
+            .apply-btn, .save-job {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .progress-steps .step-text {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Notification for successful selection */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--success);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            transform: translateX(120%);
+            transition: transform 0.3s ease-out;
+            z-index: 1000;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification i {
+            font-size: 1.2rem;
+        }
+
+        .notification-message {
+            font-weight: 500;
+        }
+
+        /* Header styling from index page */
+        .notification-bar {
+            background-color: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 0.6rem 1rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .notification-bar .ten-badge {
+            display: inline-block;
+            background-color: white;
+            color: var(--primary);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            line-height: 20px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.7rem;
+            margin-left: 4px;
+            vertical-align: middle;
+        }
+
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #1F2937;
+            position: relative;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .logo-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--primary);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            font-size: 0.7rem;
+            font-weight: 700;
+            position: relative;
+            top: -8px;
+            margin-left: 2px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 2rem;
+        }
+
+        nav ul li a {
+            color: #4B5563;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: color 0.2s;
+            position: relative;
+        }
+
+        nav ul li a:hover, nav ul li a.active {
+            color: var(--primary);
+        }
+
+        nav ul li a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary);
+            border-radius: 2px;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #4B5563;
+            cursor: pointer;
+        }
+
+        footer {
+            background-color: #1F2937;
+            color: #E5E7EB;
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-heading {
+            color: white;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .footer-description {
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            color: #D1D5DB;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .footer-social a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: background-color 0.2s;
+        }
+
+        .footer-social a:hover {
+            background-color: var(--primary);
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #D1D5DB;
+            text-decoration: none;
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-links a i {
+            font-size: 0.8rem;
+        }
+
+        .footer-contact p {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .footer-contact i {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 2rem;
+            text-align: center;
+            color: #9CA3AF;
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom a {
+            color: #D1D5DB;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-bottom a:hover {
+            color: white;
+        }
+
+        .scroll-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+            z-index: 99;
+        }
+
+        .scroll-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-to-top:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Checkbox styling */
+        .job-card {
+            position: relative;
+        }
+
+        .job-select {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            z-index: 10;
+        }
+
+        .job-select input[type="checkbox"] {
+            width: 0;
+            height: 0;
+            position: absolute;
+            opacity: 0;
+        }
+
+        .job-select .checkbox-custom {
+            display: inline-block;
+            width: 25px;
+            height: 25px;
+            border: 2px solid #E5E7EB;
+            border-radius: 6px;
+            background-color: white;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s;
+        }
+
+        .job-select input[type="checkbox"]:checked + .checkbox-custom {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .job-select input[type="checkbox"]:checked + .checkbox-custom::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 14px;
+        }
+
+        .job-select .checkbox-custom:hover {
+            border-color: var(--primary);
+        }
+
+        .job-select input[type="checkbox"]:focus + .checkbox-custom {
+            box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            nav {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: white;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+                padding: 1rem;
+                display: none;
+            }
+            
+            nav.active {
+                display: block;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="loading-spinner"></div>
+        <p class="loading-text">Chargement en cours...</p>
+    </div>
+
+    <div class="notification" id="selection-notification">
+        <i class="fas fa-check-circle"></i>
+        <span class="notification-message">Votre sélection a été enregistrée avec succès!</span>
+    </div>
+
+    <!-- Notification bar -->
+    <div class="notification-bar">
+        <i class="fas fa-bell"></i> Votre recrutement change, votre approche aussi : découvrez notre approche TOP <span class="ten-badge">10</span>
+    </div>
+
+    <!-- Lien d'accessibilité pour sauter au contenu principal -->
+    <a href="#main-content" class="skip-to-content">Aller au contenu principal</a>
+
+    <header>
+        <div class="container">
+            <a href="index.html" class="logo">
+                nex<span>ten</span><div class="logo-badge">10</div>
+            </a>
+            
+            <button class="menu-toggle" aria-label="Menu principal">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="candidate-dashboard.html">Espace candidat</a></li>
+                    <li><a href="company-login.html">Espace entreprise</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section style="padding: 6rem 0 4rem 0; background-color: #f8fafc;" id="main-content">
+        <div class="container">
+            <div class="matching-container">
+                <div class="progress-steps">
+                    <div class="step completed" data-step="1">
+                        <div class="step-circle"><i class="fas fa-check"></i></div>
+                        <div class="step-text">Création du compte</div>
+                    </div>
+                    <div class="step completed" data-step="2">
+                        <div class="step-circle"><i class="fas fa-check"></i></div>
+                        <div class="step-text">Questionnaire</div>
+                    </div>
+                    <div class="step active" data-step="3">
+                        <div class="step-circle">3</div>
+                        <div class="step-text">Matching</div>
+                    </div>
+                    <div class="step" data-step="4">
+                        <div class="step-circle">4</div>
+                        <div class="step-text">Tableau de bord</div>
+                    </div>
+                </div>
+
+                <div class="matching-header">
+                    <h2>PROPOSITION DE POSTES : <span class="ten-accent">TOP 10</span></h2>
+                    <p>En fonction de votre profil et de vos préférences, nous avons sélectionné les 10 postes qui correspondent le mieux à vos attentes. Choisissez les postes qui vous intéressent pour accéder à votre tableau de bord personnalisé.</p>
+                </div>
+
+                <!-- Filters Section -->
+                <div class="filters-section">
+                    <div class="search-input">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Rechercher par titre, entreprise ou compétence..." id="search-input">
+                    </div>
+                    
+                    <div class="filter-control">
+                        <label class="filter-label">Type de contrat</label>
+                        <select class="filter-select" id="contract-filter">
+                            <option value="all">Tous les contrats</option>
+                            <option value="cdi">CDI</option>
+                            <option value="cdd">CDD</option>
+                            <option value="interim">Intérim</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-control">
+                        <label class="filter-label">Niveau de matching</label>
+                        <select class="filter-select" id="matching-filter">
+                            <option value="all">Tous les niveaux</option>
+                            <option value="high">Élevé (80-100%)</option>
+                            <option value="medium">Moyen (60-80%)</option>
+                            <option value="low">Faible (0-60%)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Stats Bar -->
+                <div class="stats-bar">
+                    <div class="results-count">
+                        <span>10</span> résultats trouvés
+                    </div>
+                    <div class="sort-options">
+                        <span class="sort-label">Trier par:</span>
+                        <select class="sort-select" id="sort-options">
+                            <option value="matching">% de correspondance</option>
+                            <option value="date">Date de prise de poste</option>
+                            <option value="company">Entreprise</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Job Cards Container -->
+                <div class="job-cards-container">
+                    <!-- Job Card 1 -->
+                    <div class="job-card animate-in" style="animation-delay: 0.1s;">
+                        <div class="job-select">
+                            <input type="checkbox" id="job-1" data-job-id="1">
+                            <label for="job-1" class="checkbox-custom"></label>
+                        </div>
+                        <div class="job-card-header">
+                            <div class="job-title-company">
+                                <div class="company-logo">
+                                    <span>T</span>
+                                </div>
+                                <div class="job-title-info">
+                                    <h3>Développeur Front-End Senior</h3>
+                                    <p class="job-description">Nous recherchons un développeur Front-End expérimenté pour renforcer notre équipe technique en pleine croissance. Vous serez en charge de concevoir et développer des interfaces utilisateur modernes et responsives pour nos produits SaaS. Vous travaillerez en étroite collaboration avec les designers UX/UI et les développeurs back-end pour créer des expériences utilisateur exceptionnelles.</p>
+                                </div>
+                            </div>
+                            <div class="job-match">
+                                <div class="match-percentage">
+                                    <span class="match-high">92%</span>
+                                </div>
+                                <div class="match-indicators">
+                                    <div class="indicator success tooltip">
+                                        <i class="fas fa-check"></i>
+                                        <span class="tooltip-text">Compétences techniques</span>
+                                    </div>
+                                    <div class="indicator success tooltip">
+                                        <i class="fas fa-check"></i>
+                                        <span class="tooltip-text">Zone géographique</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="job-card-body">
+                            <div class="job-info-item">
+                                <span class="info-label"><i class="fas fa-building"></i> Entreprise</span>
+                                <span class="info-value">TechVision</span>
+                                <a href="#" class="link-style">Voir le profil <i class="fas fa-external-link-alt"></i></a>
+                            </div>
+                            <div class="job-info-item">
+                                <span class="info-label"><i class="fas fa-file-contract"></i> Contrat</span>
+                                <div class="contract-badges">
+                                    <span class="contract-badge">CDI</span>
+                                </div>
+                            </div>
+                            <div class="job-info-item">
+                                <span class="info-label"><i class="fas fa-map-marker-alt"></i> Temps de trajet</span>
+                                <span class="info-value">25 min</span>
+                                <a href="#" class="link-style">Voir sur Maps <i class="fas fa-map"></i></a>
+                            </div>
+                            <div class="job-info-item">
+                                <span class="info-label"><i class="fas fa-euro-sign"></i> Rémunération</span>
+                                <span class="info-value">45K€ - 55K€</span>
+                            </div>
+                            <div class="job-info-item">
+                                <span class="info-label"><i class="fas fa-calendar-alt"></i> Date de prise de poste</span>
+                                <span class="info-value">01/05/2025</span>
+                            </div>
+                            <div class="job-info-item">
+                                <span class="info-label"><i class="fas fa-briefcase"></i> Expérience requise</span>
+                                <span class="info-value">3-5 ans</span>
+                            </div>
+                        </div>
+                        <div class="job-actions">
+                            <button class="save-job" data-job-id="1">
+                                <i class="far fa-bookmark"></i>
+                                <span>Sauvegarder</span>
+                            </button>
+                            <button class="apply-btn">
+                                <i class="fas fa-paper-plane"></i>
+                                Voir les détails
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Job Card 2 -->
+                    <div class="job-card animate-in" style="animation-delay: 0.2s;">
+                        <div class="job-select">
+                            <input type="checkbox" id="job-2" data-job-id="2">
+                            <label for="job-2" class="checkbox-custom"></label>
+                        </div>
+                        <div class="job-card-header">
+                            <div class="job-title-company">
+                                <div class="company-logo">
+                                    <span>I</span>
+                                </div>
+                                <div class="job-title-info">
+                                    <h3>Développeur Full-Stack</h3>
+                                    <p class="job-description">Notre entreprise cherche un développeur Full-Stack talentueux pour participer au développement de notre plateforme innovante. Vous travaillerez sur l'ensemble de notre stack technique, du front-end au back-end, et vous aurez l'opportunité de contribuer à la conception de nouvelles fonctionnalités et à l'amélioration de l'architecture existante.</p>
+                                </div>
+                            </div>
+                            <div class="job-match">
+                                <div class="match-percentage">
+                                    <span class="match-high">88%</span>
+                                </div>
+                                <div class="match-indicators">
+                                    <div class="indicator success tooltip">
+                                        <i class="fas fa-check"></i>
+                                        <span class="tooltip-text">Environnement dynamique</span>
+                                    </div>
+                                    <div class="indicator danger tooltip">
+                                        <i class="fas fa-times"></i>
+                                        <span class="tooltip-text">Déplacements occasionnels</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="job-card-body">
+                            <div class="job-info-item">
+                                <span class="info-label"><i class="fas fa-building"></i> Entreprise</span>
+                                <span class="info-value">InnovateTech</span>
+                                <a href="#" class="link-style">Voir le profil <i class="fas fa-external-link-alt"></i></a>
+                            </div>
+                            <div class="job-info-item">
+                                <span class="info-label"><i class="fas fa-file-contract"></i> Contrat</span>
+                                <div class="contract-badges">
+                                    <span class="contract-badge">CDI</span>
+                                    <span class="contract-badge">CDD</span>
+                                </div>
+                            </div>
+                            <div class="job-info-item">
+                                <span class="info-label"><i class="fas fa-map-marker-alt"></i> Temps de trajet</span>
+                                <span class="info-value">35 min</span>
+                                <a href="#" class="link-style">Voir sur Maps <i class="fas fa-map"></i></a>
+                            </div>
+                            <div class="job-info-item">
+                                <span class="info-label"><i class="fas fa-euro-sign"></i> Rémunération</span>
+                                <span class="info-value">42K€ - 48K€</span>
+                            </div>
+                            <div class="job-info-item">
+                                <span class="info-label"><i class="fas fa-calendar-alt"></i> Date de prise de poste</span>
+                                <span class="info-value">15/04/2025</span>
+                            </div>
+                            <div class="job-info-item">
+                                <span class="info-label"><i class="fas fa-briefcase"></i> Expérience requise</span>
+                                <span class="info-value">2-4 ans</span>
+                            </div>
+                        </div>
+                        <div class="job-actions">
+                            <button class="save-job" data-job-id="2">
+                                <i class="far fa-bookmark"></i>
+                                <span>Sauvegarder</span>
+                            </button>
+                            <button class="apply-btn">
+                                <i class="fas fa-paper-plane"></i>
+                                Voir les détails
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Job Card 3 -->
+                    <div class="job-card animate-in" style="animation-delay: 0.3s;">
+                        <div class="job-select">
+                            <input type="checkbox" id="job-3" data-job-id="3">
+                            <label for="job-3" class="checkbox-custom"></label>
+                        </div>
+                        <div class="job-card-header">
+                            <div class="job-title-company">
+                                <div class="company-logo">
+                                    <span>D</span>
+                                </div>
+                                <div class="job-title-info">
+                                    <h3>Développeur Back-End</h3>
+                                    <p class="job-description">Data Solutions recherche un développeur Back-End pour renforcer son équipe tech. Vous serez chargé de concevoir et développer des APIs performantes, maintenir l'infrastructure cloud et optimiser les performances de nos bases de données. Vous participerez également à la conception de l'architecture technique de nos nouvelles solutions.</p>
+                                </div>
+                            </div>
+                            <div class="job-match">
+                                <div class="match-percentage">
+                                    <span class="match-high">85%</span>
+                                </div>
+                                <div class="match-indicators">
+                                    <div class="indicator success tooltip">
+                                        <i class="fas fa-check"></i>
+                                        <span class="tooltip-text">Télétravail possible</span>
+                                    </div>
+                                    <div class="indicator success tooltip">
+                                        <i class="fas fa-check"></i>
+                                        <span class="tooltip-text">Stack technique</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="job-card-body">
+                            <div class="job-info-item">
+                                <span class="info-label"><i class="fas fa-building"></i> Entreprise</span>
+                                <span class="info-value">Data Solutions</span>
+                                <a href="#" class="link-style">Voir le profil <i class="fas fa-external-link-alt"></i></a>
+                            </div>
+                            <div class="job-info-item">
+                                <span class="info-label"><i class="fas fa-file-contract"></i> Contrat</span>
+                                <div class="contract-badges">
+                                    <span class="contract-badge">CDI</span>
+                                </div>
+                            </div>
+                            <div class="job-info-item">
+                                <span class="info-label"><i class="fas fa-map-marker-alt"></i> Temps de trajet</span>
+                                <span class="info-value">40 min</span>
+                                <a href="#" class="link-style">Voir sur Maps <i class="fas fa-map"></i></a>
+                            </div>
+                            <div class="job-info-item">
+                                <span class="info-label"><i class="fas fa-euro-sign"></i> Rémunération</span>
+                                <span class="info-value">40K€ - 50K€</span>
+                            </div>
+                            <div class="job-info-item">
+                                <span class="info-label"><i class="fas fa-calendar-alt"></i> Date de prise de poste</span>
+                                <span class="info-value">01/06/2025</span>
+                            </div>
+                            <div class="job-info-item">
+                                <span class="info-label"><i class="fas fa-briefcase"></i> Expérience requise</span>
+                                <span class="info-value">2-5 ans</span>
+                            </div>
+                        </div>
+                        <div class="job-actions">
+                            <button class="save-job" data-job-id="3">
+                                <i class="far fa-bookmark"></i>
+                                <span>Sauvegarder</span>
+                            </button>
+                            <button class="apply-btn">
+                                <i class="fas fa-paper-plane"></i>
+                                Voir les détails
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Job Card 4 -->
+                    <div class="job-card animate-in" style="animation-delay: 0.4s;">
+                        <div class="job-select">
+                            <input type="checkbox" id="job-4" data-job-id="4">
+                            <label for="job-4" class="checkbox-custom"></label>
+                        </div>
+                        <div class="job-card-header">
+                            <div class="job-title-company">
+                                <div class="company-logo">
+                                    <span>C</span>
+                                </div>
+                                <div class="job-title-info">
+                                    <h3>Développeur Mobile React Native</h3>
+                                    <p class="job-description">Cloud Mobile recherche un développeur React Native pour concevoir et développer des applications mobiles performantes et innovantes. Vous rejoindrez une équipe dynamique et travaillerez sur des projets variés pour des clients prestigieux. Une expérience sur des projets d'applications mobiles React Native est indispensable.</p>
+                                </div>
+                            </div>
+                            <div class="job-match">
+                                <div class="match-percentage">
+                                    <span class="match-medium">78%</span>
+                                </div>
+                                <div class="match-indicators">
+                                    <div class="indicator success tooltip">
+                                        <i class="fas fa-check"></i>
+                                        <span class="tooltip-text">Salaire attractif</span>
+                                    </div>
+                                    <div class="indicator danger tooltip">
+                                        <i class="fas fa-times"></i>
+                                        <span class="tooltip-text">Compétences spécifiques</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="job-card-body">
+                            <div class="job-info-item">
+                                <span class="info-label"><i class="fas fa-building"></i> Entreprise</span>
+                                <span class="info-value">Cloud Mobile</span>
+                                <a href="#" class="link-style">Voir le profil <i class="fas fa-external-link-alt"></i></a>
+                            </div>
+                            <div class="job-info-item">
+                                <span class="info-label"><i class="fas fa-file-contract"></i> Contrat</span>
+                                <div class="contract-badges">
+                                    <span class="contract-badge">CDI</span>
+                                    <span class="contract-badge">CDD</span>
+                                </div>
+                            </div>
+                            <div class="job-info-item">
+                                <span class="info-label"><i class="fas fa-map-marker-alt"></i> Temps de trajet</span>
+                                <span class="info-value">30 min</span>
+                                <a href="#" class="link-style">Voir sur Maps <i class="fas fa-map"></i></a>
+                            </div>
+                            <div class="job-info-item">
+                                <span class="info-label"><i class="fas fa-euro-sign"></i> Rémunération</span>
+                                <span class="info-value">45K€ - 52K€</span>
+                            </div>
+                            <div class="job-info-item">
+                                <span class="info-label"><i class="fas fa-calendar-alt"></i> Date de prise de poste</span>
+                                <span class="info-value">15/05/2025</span>
+                            </div>
+                            <div class="job-info-item">
+                                <span class="info-label"><i class="fas fa-briefcase"></i> Expérience requise</span>
+                                <span class="info-value">3-6 ans</span>
+                            </div>
+                        </div>
+                        <div class="job-actions">
+                            <button class="save-job" data-job-id="4">
+                                <i class="far fa-bookmark"></i>
+                                <span>Sauvegarder</span>
+                            </button>
+                            <button class="apply-btn">
+                                <i class="fas fa-paper-plane"></i>
+                                Voir les détails
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions area -->
+                <div class="actions-area">
+                    <div class="selected-count">
+                        <div class="selected-count-badge" id="selected-count">0</div>
+                        <div class="selected-count-text"><strong id="selected-text">Aucun poste</strong> sélectionné</div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn-outline" id="clear-selection">
+                            <i class="fas fa-undo"></i>
+                            Effacer la sélection
+                        </button>
+                        <button class="btn-primary" id="confirm-selection">
+                            <i class="fas fa-check"></i>
+                            Valider ma sélection
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination">
+                    <button class="pagination-btn active">1</button>
+                    <button class="pagination-btn">2</button>
+                    <button class="pagination-btn">3</button>
+                    <button class="pagination-btn">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <h4 class="footer-heading">Nexten</h4>
+                    <p class="footer-description">Notre plateforme utilise l'intelligence artificielle pour révolutionner le processus de recrutement, offrant 10 correspondances personnalisées pour les candidats et les recruteurs.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="footer-heading">Navigation</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Accueil</a></li>
+                        <li><a href="candidate-dashboard.html"><i class="fas fa-chevron-right"></i> Espace candidat</a></li>
+                        <li><a href="company-login.html"><i class="fas fa-chevron-right"></i> Espace entreprise</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> À propos</a></li>
+                        <li><a href="#contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="footer-heading">Contact</h4>
+                    <div class="footer-contact">
+                        <p><i class="fas fa-map-marker-alt"></i> 123 Avenue de l'Innovation, 75001 Paris</p>
+                        <p><i class="fas fa-phone"></i> +33 1 23 45 67 89</p>
+                        <p><i class="fas fa-envelope"></i> contact@nexten.fr</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Nexten - Tous droits réservés | <a href="#">Politique de confidentialité</a> | <a href="#">Conditions d'utilisation</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bouton de retour en haut -->
+    <button id="scroll-to-top" class="scroll-to-top" aria-label="Retour en haut">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Afficher le loader
+            const showLoader = () => {
+                document.getElementById('loading-overlay').classList.add('show');
+            };
+
+            // Masquer le loader
+            const hideLoader = () => {
+                document.getElementById('loading-overlay').classList.remove('show');
+            };
+
+            // Fonctionnalité d'expansion de la description
+            const jobDescriptions = document.querySelectorAll('.job-description');
+            
+            jobDescriptions.forEach(desc => {
+                desc.addEventListener('click', function() {
+                    this.classList.toggle('expanded');
+                });
+            });
+
+            // Fonctionnalité de sauvegarde des jobs
+            const saveButtons = document.querySelectorAll('.save-job');
+            
+            saveButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const jobId = this.getAttribute('data-job-id');
+                    const icon = this.querySelector('i');
+                    const text = this.querySelector('span');
+                    
+                    if (this.classList.contains('saved')) {
+                        this.classList.remove('saved');
+                        icon.classList.remove('fas');
+                        icon.classList.add('far');
+                        text.textContent = 'Sauvegarder';
+                    } else {
+                        this.classList.add('saved');
+                        icon.classList.remove('far');
+                        icon.classList.add('fas');
+                        text.textContent = 'Sauvegardé';
+                    }
+                });
+            });
+
+            // Fonctionnalité de filtrage
+            const searchInput = document.getElementById('search-input');
+            const contractFilter = document.getElementById('contract-filter');
+            const matchingFilter = document.getElementById('matching-filter');
+            const sortOptions = document.getElementById('sort-options');
+            const jobCards = document.querySelectorAll('.job-card');
+            
+            // Fonction de filtrage combiné
+            const applyFilters = () => {
+                const searchTerm = searchInput.value.toLowerCase();
+                const contractValue = contractFilter.value;
+                const matchingValue = matchingFilter.value;
+                
+                showLoader();
+                
+                setTimeout(() => {
+                    jobCards.forEach(card => {
+                        // Recherche texte
+                        const title = card.querySelector('h3').textContent.toLowerCase();
+                        const company = card.querySelector('.info-value').textContent.toLowerCase();
+                        const description = card.querySelector('.job-description').textContent.toLowerCase();
+                        const textMatch = title.includes(searchTerm) || company.includes(searchTerm) || description.includes(searchTerm);
+                        
+                        // Filtre contrat
+                        let contractMatch = true;
+                        if (contractValue !== 'all') {
+                            const contracts = Array.from(card.querySelectorAll('.contract-badge')).map(badge => badge.textContent.toLowerCase());
+                            contractMatch = contracts.includes(contractValue.toLowerCase());
+                        }
+                        
+                        // Filtre matching
+                        let matchingMatch = true;
+                        const matchPercentage = parseInt(card.querySelector('.match-percentage span').textContent);
+                        if (matchingValue === 'high') {
+                            matchingMatch = matchPercentage >= 80;
+                        } else if (matchingValue === 'medium') {
+                            matchingMatch = matchPercentage >= 60 && matchPercentage < 80;
+                        } else if (matchingValue === 'low') {
+                            matchingMatch = matchPercentage < 60;
+                        }
+                        
+                        // Appliquer les filtres combinés
+                        if (textMatch && contractMatch && matchingMatch) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                    
+                    // Mettre à jour le compteur de résultats
+                    const visibleCards = document.querySelectorAll('.job-card[style="display: block"]').length;
+                    document.querySelector('.results-count span').textContent = visibleCards;
+                    
+                    hideLoader();
+                }, 300);
+            };
+            
+            // Attacher les événements
+            searchInput.addEventListener('input', applyFilters);
+            contractFilter.addEventListener('change', applyFilters);
+            matchingFilter.addEventListener('change', applyFilters);
+            
+            // Fonctionnalité de tri
+            sortOptions.addEventListener('change', function() {
+                const sortValue = this.value;
+                const cardsContainer = document.querySelector('.job-cards-container');
+                const cards = Array.from(jobCards);
+                
+                showLoader();
+                
+                setTimeout(() => {
+                    if (sortValue === 'matching') {
+                        cards.sort((a, b) => {
+                            const percentA = parseInt(a.querySelector('.match-percentage span').textContent);
+                            const percentB = parseInt(b.querySelector('.match-percentage span').textContent);
+                            return percentB - percentA;
+                        });
+                    } else if (sortValue === 'date') {
+                        cards.sort((a, b) => {
+                            const dateA = new Date(a.querySelector('.job-info-item:nth-child(5) .info-value').textContent.split('/').reverse().join('-'));
+                            const dateB = new Date(b.querySelector('.job-info-item:nth-child(5) .info-value').textContent.split('/').reverse().join('-'));
+                            return dateA - dateB;
+                        });
+                    } else if (sortValue === 'company') {
+                        cards.sort((a, b) => {
+                            const companyA = a.querySelector('.job-info-item:first-child .info-value').textContent;
+                            const companyB = b.querySelector('.job-info-item:first-child .info-value').textContent;
+                            return companyA.localeCompare(companyB);
+                        });
+                    }
+                    
+                    // Réorganiser les cartes
+                    cards.forEach(card => cardsContainer.appendChild(card));
+                    
+                    hideLoader();
+                }, 300);
+            });
+            
+            // Pagination
+            const paginationBtns = document.querySelectorAll('.pagination-btn');
+            
+            paginationBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    if (!this.classList.contains('active')) {
+                        document.querySelector('.pagination-btn.active').classList.remove('active');
+                        this.classList.add('active');
+                        
+                        showLoader();
+                        
+                        // Simuler un changement de page
+                        setTimeout(() => {
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                            hideLoader();
+                        }, 500);
+                    }
+                });
+            });
+            
+            // Bouton voir détails
+            const applyBtns = document.querySelectorAll('.apply-btn');
+            
+            applyBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const jobCard = this.closest('.job-card');
+                    const checkbox = jobCard.querySelector('input[type="checkbox"]');
+                    checkbox.checked = !checkbox.checked;
+                    updateSelectedCount();
+                });
+            });
+            
+            // Animation au défilement
+            const animateOnScroll = () => {
+                const animateItems = document.querySelectorAll('.animate-in');
+                
+                animateItems.forEach(item => {
+                    const itemPosition = item.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight / 1.2;
+                    
+                    if (itemPosition < screenPosition) {
+                        item.style.animationPlayState = 'running';
+                    }
+                });
+            };
+            
+            window.addEventListener('scroll', animateOnScroll);
+            animateOnScroll(); // Déclencher au chargement
+            
+            // Menu mobile toggle
+            const menuToggle = document.querySelector('.menu-toggle');
+            const nav = document.querySelector('nav');
+            
+            if (menuToggle && nav) {
+                menuToggle.addEventListener('click', function() {
+                    nav.classList.toggle('active');
+                    this.classList.toggle('active');
+                });
+            }
+            
+            // Bouton de retour en haut
+            const scrollToTopButton = document.getElementById('scroll-to-top');
+            
+            if (scrollToTopButton) {
+                window.addEventListener('scroll', function() {
+                    if (window.scrollY > 500) {
+                        scrollToTopButton.classList.add('visible');
+                    } else {
+                        scrollToTopButton.classList.remove('visible');
+                    }
+                });
+                
+                scrollToTopButton.addEventListener('click', function() {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+
+            // Gestion des sélections des postes
+            const checkboxes = document.querySelectorAll('.job-select input[type="checkbox"]');
+            const selectedCount = document.getElementById('selected-count');
+            const selectedText = document.getElementById('selected-text');
+            const clearSelection = document.getElementById('clear-selection');
+            const confirmSelection = document.getElementById('confirm-selection');
+            const notification = document.getElementById('selection-notification');
+
+            function updateSelectedCount() {
+                const checked = document.querySelectorAll('.job-select input[type="checkbox"]:checked');
+                selectedCount.textContent = checked.length;
+                
+                if (checked.length === 0) {
+                    selectedText.textContent = "Aucun poste";
+                } else if (checked.length === 1) {
+                    selectedText.textContent = "1 poste";
+                } else {
+                    selectedText.textContent = `${checked.length} postes`;
+                }
+                
+                if (checked.length > 0) {
+                    confirmSelection.disabled = false;
+                    confirmSelection.style.opacity = "1";
+                    clearSelection.disabled = false;
+                    clearSelection.style.opacity = "1";
+                } else {
+                    confirmSelection.disabled = true;
+                    confirmSelection.style.opacity = "0.6";
+                    clearSelection.disabled = true;
+                    clearSelection.style.opacity = "0.6";
+                }
+            }
+
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', updateSelectedCount);
+            });
+
+            clearSelection.addEventListener('click', function() {
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+                updateSelectedCount();
+            });
+
+            confirmSelection.addEventListener('click', function() {
+                const selectedJobs = [];
+                checkboxes.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        selectedJobs.push(checkbox.getAttribute('data-job-id'));
+                    }
+                });
+                
+                if (selectedJobs.length > 0) {
+                    showLoader();
+                    
+                    // Simulation d'envoi des données
+                    setTimeout(() => {
+                        // Afficher la notification
+                        notification.classList.add('show');
+                        
+                        // Masquer la notification après 3 secondes
+                        setTimeout(() => {
+                            notification.classList.remove('show');
+                            
+                            // Rediriger vers le tableau de bord
+                            setTimeout(() => {
+                                window.location.href = 'candidate-dashboard.html';
+                            }, 500);
+                        }, 2000);
+                        
+                        hideLoader();
+                    }, 1000);
+                }
+            });
+
+            // Initialiser les états des boutons
+            updateSelectedCount();
+            
+            // Masquer le loader initial
+            setTimeout(hideLoader, 300);
+        });
+    </script>
+</body>
+</html>
