@@ -12,6 +12,24 @@
     color: var(--black);
 }
 
+/* Breadcrumb */
+.breadcrumb {
+    margin: 20px 0;
+    padding: 10px;
+    background-color: var(--white);
+    border-radius: 5px;
+    font-size: 0.9rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.breadcrumb a {
+    color: var(--purple);
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
 /* Dashboard Menu Section */
 .dashboard-menu-section {
     margin-top: 30px;
@@ -85,6 +103,31 @@
     padding: 0 8px;
 }
 
+/* Filter badges */
+.filter-badge {
+    cursor: pointer;
+    padding: 5px 10px;
+    background-color: var(--cream);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    transition: all 0.2s;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.filter-badge:hover, .filter-badge.active {
+    background-color: var(--purple);
+    color: var(--white);
+}
+
+/* Opportunities container */
+.opportunities-container {
+    background-color: var(--white) !important;
+    padding: 15px;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
 /* Activity Section */
 .activity-list {
     display: flex;
@@ -145,6 +188,21 @@
 
 .activity-action {
     flex-shrink: 0;
+}
+
+/* Progress bar */
+.progress-bar-container {
+    height: 5px;
+    background-color: var(--cream-dark);
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 10px 0;
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: var(--purple);
+    border-radius: 5px;
 }
 
 /* Responsive */
