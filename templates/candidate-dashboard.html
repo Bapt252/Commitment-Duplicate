@@ -11,257 +11,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../static/styles/dashboard.css">
+    <link rel="stylesheet" href="../static/styles/dashboard-new.css">
+    <link rel="stylesheet" href="../static/styles/nav-improvement.css">
     
     <!-- Favicon -->
     <link rel="shortcut icon" href="../static/images/favicon.ico" type="image/x-icon">
-
-    <style>
-        /* Styles supplémentaires pour améliorer l'UX/UI */
-        .notification-bar {
-            background-color: var(--purple);
-        }
-        
-        .main-container {
-            margin-top: 80px;
-            padding-top: 50px;
-        }
-        
-        .section-heading {
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .section-heading::before {
-            content: "";
-            display: inline-block;
-            width: 8px;
-            height: 20px;
-            background-color: var(--purple);
-        }
-        
-        .profile-container {
-            background-image: linear-gradient(135deg, var(--cream), var(--cream-dark));
-            border: none;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-        
-        .profile-photo {
-            border-radius: 50%;
-            border: 3px solid var(--purple);
-            position: relative;
-            overflow: hidden;
-            background-color: var(--white);
-        }
-        
-        .profile-photo::before {
-            content: "\f007";
-            font-family: "Font Awesome 5 Free";
-            font-weight: 900;
-            font-size: 40px;
-            color: var(--gray-light);
-        }
-        
-        .ten-badge {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 24px;
-            height: 24px;
-            background-color: var(--purple);
-            color: var(--white);
-            border-radius: 50%;
-            font-size: 12px;
-            margin-left: 5px;
-            vertical-align: middle;
-        }
-        
-        .opportunity-row {
-            transition: transform 0.3s ease;
-            border-left: 4px solid transparent;
-        }
-        
-        .opportunity-row:hover {
-            transform: translateY(-3px);
-            border-left: 4px solid var(--purple);
-        }
-        
-        .opportunity-company, .job-company {
-            background-color: var(--cream);
-            padding: 10px;
-            border-radius: 8px;
-        }
-        
-        .stage-box {
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-        
-        .stage.current .stage-box {
-            border: 2px solid var(--purple);
-            background-color: rgba(124, 58, 237, 0.1) !important;
-        }
-        
-        .logo-placeholder {
-            background-color: var(--white);
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .logo-placeholder::before {
-            content: "\f1ad";
-            font-family: "Font Awesome 5 Free";
-            font-weight: 900;
-            font-size: 24px;
-            color: var(--gray-light);
-        }
-        
-        .job-offer {
-            border-left: 4px solid transparent;
-            transition: all 0.3s;
-        }
-        
-        .job-offer:hover {
-            border-left: 4px solid var(--purple);
-        }
-        
-        .job-match {
-            font-weight: 600;
-            background: linear-gradient(135deg, var(--purple-dark), var(--purple));
-        }
-        
-        .btn {
-            border-radius: 4px;
-        }
-        
-        .btn-sm {
-            padding: 6px 12px;
-            font-size: 0.8rem;
-        }
-        
-        .btn-circular {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0;
-        }
-        
-        .message-bubble {
-            border-radius: 12px;
-        }
-        
-        .message.recruiter .message-bubble {
-            border-top-left-radius: 0;
-        }
-        
-        .message.candidate .message-bubble {
-            border-top-right-radius: 0;
-        }
-        
-        .conversation-item {
-            border-radius: 8px;
-            margin-bottom: 8px;
-        }
-        
-        .cv-section {
-            transition: all 0.3s;
-        }
-        
-        .cv-section:hover {
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-        
-        .resource-company, .company-profile {
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            transition: all 0.3s;
-        }
-        
-        /* Animation pour les éléments au scroll */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.8s, transform 0.8s;
-        }
-        
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        /* Ajout de styles pour les filtres interactifs */
-        .filter-badges {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-        
-        .filter-badge {
-            padding: 6px 12px;
-            background-color: var(--cream);
-            border-radius: 20px;
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .filter-badge:hover, .filter-badge.active {
-            background-color: var(--purple);
-            color: var(--white);
-        }
-        
-        /* Style pour la progression dans le processus de recrutement */
-        .progress-bar-container {
-            height: 5px;
-            background-color: var(--cream-dark);
-            border-radius: 5px;
-            overflow: hidden;
-            margin: 10px 0;
-        }
-        
-        .progress-bar {
-            height: 100%;
-            background-color: var(--purple);
-            border-radius: 5px;
-        }
-        
-        /* Améliorations pour le mode mobile */
-        @media (max-width: 768px) {
-            .section-heading {
-                font-size: 1.2rem;
-            }
-            
-            .stage-box {
-                padding: 8px;
-                font-size: 10px;
-            }
-            
-            .pipeline-stages {
-                overflow-x: auto;
-                padding-bottom: 10px;
-            }
-            
-            .messaging-container {
-                flex-direction: column;
-            }
-            
-            .messaging-sidebar {
-                width: 100%;
-            }
-            
-            .messaging-content {
-                height: 500px;
-            }
-        }
-    </style>
 </head>
 <body>
     <!-- Notification bar -->
@@ -296,7 +50,7 @@
     <div class="container main-container" id="main-content">
         <!-- Profil du candidat -->
         <div class="candidate-dashboard-section fade-in">
-            <h2 class="section-heading">Planning de suivi candidat</h2>
+            <h2 class="section-heading">Bienvenue sur votre espace candidat</h2>
             <div class="profile-container">
                 <div class="profile-header">
                     <div class="profile-photo-container">
@@ -330,15 +84,8 @@
                 </div>
 
                 <div class="profile-description">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                        <h3 style="margin: 0; font-size: 1.2rem;">Vue d'ensemble de mes processus de recrutement</h3>
-                        <div style="display: flex; gap: 10px;">
-                            <span class="filter-badge active"><i class="fas fa-filter"></i> Tous</span>
-                            <span class="filter-badge"><i class="fas fa-spinner"></i> En cours</span>
-                            <span class="filter-badge"><i class="fas fa-check"></i> Terminés</span>
-                        </div>
-                    </div>
-                    <p>Suivez en temps réel l'avancement de vos candidatures. Chaque processus est personnalisé selon l'entreprise, et vous pouvez valider les étapes ou arrêter un processus à tout moment.</p>
+                    <h3 style="margin: 0; font-size: 1.2rem;">Vue d'ensemble de mes processus de recrutement</h3>
+                    <p>Suivez en temps réel l'avancement de vos candidatures et accédez à vos ressources depuis votre tableau de bord personnalisé.</p>
                     <div style="display: flex; justify-content: space-between; margin-top: 20px;">
                         <div style="text-align: center;">
                             <span style="font-size: 2rem; font-weight: 500; color: var(--purple);">3</span>
@@ -353,7 +100,7 @@
                             <p style="margin: 0; font-size: 0.9rem;">Offres reçues</p>
                         </div>
                         <div style="text-align: center;">
-                            <span style="font-size: 2rem; font-weight: 500; color: #28a745;">85%</span>
+                            <span style="font-size: 2rem; font-weight: 500; color: var(--purple);">85%</span>
                             <p style="margin: 0; font-size: 0.9rem;">Taux de matching</p>
                         </div>
                     </div>
@@ -361,804 +108,105 @@
             </div>
         </div>
 
-        <!-- Section Mes opportunités selectionnées -->
-        <div class="candidate-dashboard-section mt-5 fade-in">
-            <h2 class="section-heading">Mes opportunités selectionnées</h2>
-            <div class="opportunities-container">
-                <!-- Opportunity 1 -->
-                <div class="opportunity-row fade-in">
-                    <div class="opportunity-company">
-                        <div class="logo-placeholder"></div>
-                        <div class="company-details">
-                            <h3 class="company-name">Entreprise Alpha</h3>
-                            <h4 class="job-title">Chef de Projet Digital</h4>
-                            <p class="small text-muted">Rémunération: 42K-48K</p>
-                        </div>
-                        <div style="margin-left: auto;">
-                            <span class="job-match">90%</span>
-                        </div>
+        <!-- Dashboard Buttons -->
+        <div class="dashboard-menu-section fade-in">
+            <div class="dashboard-menu">
+                <a href="candidate-opportunities.html" class="dashboard-menu-item">
+                    <div class="menu-icon">
+                        <i class="fas fa-briefcase"></i>
                     </div>
-                    
-                    <div class="recruitment-pipeline">
-                        <div class="pipeline-status">
-                            <span class="status-label"><i class="fas fa-info-circle"></i> Statut: Entretien présentiel</span>
-                            <span class="travel-time"><i class="fas fa-map-marker-alt"></i> Temps de trajet: <a href="#" class="map-link">25 min (voir sur Maps)</a></span>
-                        </div>
-                        
-                        <div class="progress-bar-container">
-                            <div class="progress-bar" style="width: 70%;"></div>
-                        </div>
-                        
-                        <div class="pipeline-stages">
-                            <div class="stage active">
-                                <div class="stage-box">
-                                    <i class="fas fa-check-circle"></i><br>
-                                    En cours de validation
-                                </div>
-                            </div>
-                            <div class="stage active">
-                                <div class="stage-box">
-                                    <i class="fas fa-check-circle"></i><br>
-                                    Call prise de contact
-                                </div>
-                            </div>
-                            <div class="stage active">
-                                <div class="stage-box">
-                                    <i class="fas fa-check-circle"></i><br>
-                                    Entretien visio
-                                </div>
-                            </div>
-                            <div class="stage current">
-                                <div class="stage-box">
-                                    <i class="fas fa-circle"></i><br>
-                                    Entretien Présentiel
-                                    <div class="interviewer">
-                                        Prévu avec Jean-François LEBOEUF<br>
-                                        Directeur Administratif et Financier<br>
-                                        <small>28 Mars, 14h00</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="stage">
-                                <div class="stage-box">
-                                    <i class="far fa-circle"></i><br>
-                                    Acceptation
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="opportunity-actions">
-                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                            <button class="btn btn-primary"><i class="fas fa-comment-dots"></i> Poser une question</button>
-                            <button class="btn btn-outline-danger"><i class="fas fa-times-circle"></i> Annuler ma candidature</button>
-                            <button class="btn btn-outline"><i class="fas fa-calendar-alt"></i> Modifier le rendez-vous</button>
-                        </div>
-                        <div class="action-arrows" style="margin-top: 15px;">
-                            <div class="action-buttons" style="display: flex; align-items: center; gap: 10px;">
-                                <button class="btn btn-warning btn-sm"><i class="fas fa-envelope"></i> Messagerie</button>
-                                <div class="reason-field">
-                                    <span>Note personnelle: </span>
-                                    <input type="text" class="form-control form-control-sm" placeholder="Ajouter un rappel..." style="min-width: 250px;">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    <h3>Mes opportunités sélectionnées</h3>
+                    <p>Suivez en temps réel l'avancement de vos processus de recrutement</p>
+                    <div class="menu-badge">3</div>
+                </a>
                 
-                <!-- Opportunity 2 (similar structure, different data) -->
-                <div class="opportunity-row fade-in">
-                    <div class="opportunity-company">
-                        <div class="logo-placeholder"></div>
-                        <div class="company-details">
-                            <h3 class="company-name">Entreprise Beta</h3>
-                            <h4 class="job-title">Business Developer</h4>
-                            <p class="small text-muted">Rémunération: 38K-45K</p>
-                        </div>
-                        <div style="margin-left: auto;">
-                            <span class="job-match">85%</span>
-                        </div>
+                <a href="candidate-offers.html" class="dashboard-menu-item">
+                    <div class="menu-icon">
+                        <i class="fas fa-paper-plane"></i>
                     </div>
-                    
-                    <div class="recruitment-pipeline">
-                        <div class="pipeline-status">
-                            <span class="status-label"><i class="fas fa-info-circle"></i> Statut: Entretien visio</span>
-                            <span class="travel-time"><i class="fas fa-map-marker-alt"></i> Temps de trajet: <a href="#" class="map-link">35 min (voir sur Maps)</a></span>
-                        </div>
-                        
-                        <div class="progress-bar-container">
-                            <div class="progress-bar" style="width: 50%;"></div>
-                        </div>
-                        
-                        <div class="pipeline-stages">
-                            <div class="stage active">
-                                <div class="stage-box">
-                                    <i class="fas fa-check-circle"></i><br>
-                                    En cours de validation
-                                </div>
-                            </div>
-                            <div class="stage active">
-                                <div class="stage-box">
-                                    <i class="fas fa-check-circle"></i><br>
-                                    Call prise de contact
-                                </div>
-                            </div>
-                            <div class="stage current">
-                                <div class="stage-box">
-                                    <i class="fas fa-circle"></i><br>
-                                    Entretien visio
-                                    <div class="interviewer">
-                                        Prévu avec Marie LAROCHON<br>
-                                        Directrice RH<br>
-                                        <small>25 Mars, 10h30</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="stage">
-                                <div class="stage-box">
-                                    <i class="far fa-circle"></i><br>
-                                    Entretien Présentiel
-                                </div>
-                            </div>
-                            <div class="stage">
-                                <div class="stage-box">
-                                    <i class="far fa-circle"></i><br>
-                                    Acceptation
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="opportunity-actions">
-                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                            <button class="btn btn-primary"><i class="fas fa-comment-dots"></i> Poser une question</button>
-                            <button class="btn btn-outline-danger"><i class="fas fa-times-circle"></i> Annuler ma candidature</button>
-                            <button class="btn btn-outline"><i class="fas fa-calendar-alt"></i> Modifier le rendez-vous</button>
-                        </div>
-                        <div class="action-arrows" style="margin-top: 15px;">
-                            <div class="action-buttons" style="display: flex; align-items: center; gap: 10px;">
-                                <button class="btn btn-warning btn-sm"><i class="fas fa-envelope"></i> Messagerie</button>
-                                <div class="reason-field">
-                                    <span>Note personnelle: </span>
-                                    <input type="text" class="form-control form-control-sm" placeholder="Ajouter un rappel..." style="min-width: 250px;">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    <h3>Mes offres reçues</h3>
+                    <p>Consultez et répondez aux offres d'emploi qui vous correspondent</p>
+                    <div class="menu-badge">10</div>
+                </a>
                 
-                <!-- Opportunity 3 (in progress) -->
-                <div class="opportunity-row fade-in">
-                    <div class="opportunity-company">
-                        <div class="logo-placeholder"></div>
-                        <div class="company-details">
-                            <h3 class="company-name">Entreprise Gamma</h3>
-                            <h4 class="job-title">Product Owner</h4>
-                            <p class="small text-muted">Rémunération: 45K-52K</p>
-                        </div>
-                        <div style="margin-left: auto;">
-                            <span class="job-match">95%</span>
-                        </div>
+                <a href="candidate-quick-apply.html" class="dashboard-menu-item">
+                    <div class="menu-icon">
+                        <i class="fas fa-bolt"></i>
                     </div>
-                    
-                    <div class="recruitment-pipeline">
-                        <div class="pipeline-status">
-                            <span class="status-label"><i class="fas fa-info-circle"></i> Statut: En cours de validation</span>
-                            <span class="travel-time"><i class="fas fa-map-marker-alt"></i> Temps de trajet: <a href="#" class="map-link">20 min (voir sur Maps)</a></span>
-                        </div>
-                        
-                        <div class="progress-bar-container">
-                            <div class="progress-bar" style="width: 20%;"></div>
-                        </div>
-                        
-                        <div class="pipeline-stages">
-                            <div class="stage current">
-                                <div class="stage-box">
-                                    <i class="fas fa-circle"></i><br>
-                                    En cours de validation
-                                </div>
-                            </div>
-                            <div class="stage">
-                                <div class="stage-box">
-                                    <i class="far fa-circle"></i><br>
-                                    Call prise de contact
-                                </div>
-                            </div>
-                            <div class="stage">
-                                <div class="stage-box">
-                                    <i class="far fa-circle"></i><br>
-                                    Entretien visio
-                                </div>
-                            </div>
-                            <div class="stage">
-                                <div class="stage-box">
-                                    <i class="far fa-circle"></i><br>
-                                    Entretien Présentiel
-                                </div>
-                            </div>
-                            <div class="stage">
-                                <div class="stage-box">
-                                    <i class="far fa-circle"></i><br>
-                                    Acceptation
-                                </div>
-                            </div>
-                        </div>
+                    <h3>Postuler en un clic</h3>
+                    <p>Découvrez de nouvelles opportunités et postulez instantanément</p>
+                </a>
+                
+                <a href="candidate-cv.html" class="dashboard-menu-item">
+                    <div class="menu-icon">
+                        <i class="fas fa-file-alt"></i>
                     </div>
-                    
-                    <div class="opportunity-actions">
-                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                            <button class="btn btn-primary"><i class="fas fa-comment-dots"></i> Poser une question</button>
-                            <button class="btn btn-outline-danger"><i class="fas fa-times-circle"></i> Annuler ma candidature</button>
-                        </div>
-                        <div class="action-arrows" style="margin-top: 15px;">
-                            <div class="action-buttons" style="display: flex; align-items: center; gap: 10px;">
-                                <button class="btn btn-warning btn-sm"><i class="fas fa-envelope"></i> Messagerie</button>
-                                <div class="reason-field">
-                                    <span>Note personnelle: </span>
-                                    <input type="text" class="form-control form-control-sm" placeholder="Ajouter un rappel..." style="min-width: 250px;">
-                                </div>
-                            </div>
-                        </div>
+                    <h3>Travailler mon CV</h3>
+                    <p>Optimisez votre CV pour augmenter vos chances auprès des recruteurs</p>
+                </a>
+                
+                <a href="candidate-resources.html" class="dashboard-menu-item">
+                    <div class="menu-icon">
+                        <i class="fas fa-graduation-cap"></i>
                     </div>
-                </div>
+                    <h3>Centre de ressources</h3>
+                    <p>Accédez à des conseils et ressources pour vos entretiens</p>
+                </a>
+                
+                <a href="candidate-messaging.html" class="dashboard-menu-item">
+                    <div class="menu-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3>Messagerie</h3>
+                    <p>Échangez directement avec les recruteurs de vos processus</p>
+                    <div class="menu-badge">4</div>
+                </a>
             </div>
         </div>
 
-        <!-- Mes offres reçu & Postuler en un clic -->
-        <div class="row mt-5">
-            <div class="col-md-6">
-                <div class="candidate-dashboard-section h-100 fade-in">
-                    <h2 class="section-heading">Mes offres reçues</h2>
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                        <div>
-                            <span class="filter-badge active"><i class="fas fa-filter"></i> Toutes</span>
-                            <span class="filter-badge"><i class="fas fa-star"></i> Plus de 80%</span>
-                        </div>
-                        <div>
-                            <select class="form-control form-control-sm" style="width: auto; display: inline-block;">
-                                <option>Trier par : Pertinence</option>
-                                <option>Trier par : Date</option>
-                                <option>Trier par : Salaire</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="offers-container">
-                        <!-- Offer 1 -->
-                        <div class="job-offer fade-in">
-                            <div class="job-header">
-                                <h3 class="job-title">Directeur Marketing Digital</h3>
-                                <div class="job-match">
-                                    <span class="match-percentage">92%</span>
-                                </div>
-                            </div>
-                            <p class="job-description">
-                                Poste à responsabilité pour piloter la stratégie marketing digital d'une scale-up en forte croissance.
-                                <a href="#" style="color: var(--purple); font-size: 0.9rem;">Voir plus</a>
-                            </p>
-                            
-                            <div class="job-company">
-                                <div class="logo-placeholder small"></div>
-                                <span class="company-name">TechScale</span>
-                                <a href="#" class="company-link">Voir l'entreprise</a>
-                            </div>
-                            
-                            <div class="job-details">
-                                <p class="contract-type"><i class="fas fa-file-contract"></i> Contrat : CDI</p>
-                                <p class="job-salary"><i class="fas fa-money-bill-wave"></i> Rémunération : 45K-55K</p>
-                            </div>
-                            
-                            <div class="job-footer">
-                                <div class="job-actions">
-                                    <button class="btn btn-sm btn-success circular"><i class="fas fa-check"></i></button>
-                                    <button class="btn btn-sm btn-danger circular"><i class="fas fa-times"></i></button>
-                                </div>
-                                <div class="job-rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
-                                <div class="job-commute">
-                                    <span><i class="fas fa-walking"></i> Temps de trajet: 22 min</span>
-                                    <a href="#" class="map-link">Voir sur Maps</a>
-                                </div>
-                                <p class="job-start-date"><i class="fas fa-calendar-alt"></i> Prise de poste: Avril 2025</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Offer 2 (duplicate structure) -->
-                        <div class="job-offer fade-in">
-                            <div class="job-header">
-                                <h3 class="job-title">Responsable Communication</h3>
-                                <div class="job-match">
-                                    <span class="match-percentage">88%</span>
-                                </div>
-                            </div>
-                            <p class="job-description">
-                                Gérer l'ensemble de la stratégie de communication pour une entreprise leader dans son secteur.
-                                <a href="#" style="color: var(--purple); font-size: 0.9rem;">Voir plus</a>
-                            </p>
-                            
-                            <div class="job-company">
-                                <div class="logo-placeholder small"></div>
-                                <span class="company-name">MediaPlus</span>
-                                <a href="#" class="company-link">Voir l'entreprise</a>
-                            </div>
-                            
-                            <div class="job-details">
-                                <p class="contract-type"><i class="fas fa-file-contract"></i> Contrat : CDI</p>
-                                <p class="job-salary"><i class="fas fa-money-bill-wave"></i> Rémunération : 42K-48K</p>
-                            </div>
-                            
-                            <div class="job-footer">
-                                <div class="job-actions">
-                                    <button class="btn btn-sm btn-success circular"><i class="fas fa-check"></i></button>
-                                    <button class="btn btn-sm btn-danger circular"><i class="fas fa-times"></i></button>
-                                </div>
-                                <div class="job-rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                </div>
-                                <div class="job-commute">
-                                    <span><i class="fas fa-walking"></i> Temps de trajet: 30 min</span>
-                                    <a href="#" class="map-link">Voir sur Maps</a>
-                                </div>
-                                <p class="job-start-date"><i class="fas fa-calendar-alt"></i> Prise de poste: Mai 2025</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-md-6">
-                <div class="candidate-dashboard-section h-100 fade-in">
-                    <h2 class="section-heading">Postuler en un clic</h2>
-                    <p class="section-description">Découvrez de nouvelles opportunités correspondant à votre profil et postulez instantanément.</p>
-                    
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                        <div>
-                            <span class="filter-badge active"><i class="fas fa-filter"></i> Toutes</span>
-                            <span class="filter-badge"><i class="fas fa-star"></i> Top 3</span>
-                        </div>
-                        <div>
-                            <select class="form-control form-control-sm" style="width: auto; display: inline-block;">
-                                <option>Proximité</option>
-                                <option>Salaire</option>
-                                <option>Match</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="offers-container">
-                        <!-- One-click Apply Offer 1 -->
-                        <div class="job-offer fade-in">
-                            <div class="job-header">
-                                <h3 class="job-title">Growth Manager</h3>
-                                <div class="job-match">
-                                    <span class="match-percentage">94%</span>
-                                </div>
-                            </div>
-                            <p class="job-description">
-                                Piloter la croissance d'une start-up innovante dans le secteur de la foodtech.
-                                <a href="#" style="color: var(--purple); font-size: 0.9rem;">Voir plus</a>
-                            </p>
-                            
-                            <div class="job-company">
-                                <div class="logo-placeholder small"></div>
-                                <span class="company-name">FoodTech+</span>
-                                <a href="#" class="company-link">Voir l'entreprise</a>
-                            </div>
-                            
-                            <div class="job-details">
-                                <p class="contract-type"><i class="fas fa-file-contract"></i> Contrat : CDI</p>
-                                <p class="job-salary"><i class="fas fa-money-bill-wave"></i> Rémunération : 40K-48K</p>
-                            </div>
-                            
-                            <div class="job-footer">
-                                <div class="job-actions">
-                                    <button class="btn btn-sm btn-success circular"><i class="fas fa-check"></i></button>
-                                    <button class="btn btn-sm btn-danger circular"><i class="fas fa-times"></i></button>
-                                </div>
-                                <div class="job-rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <div class="job-commute">
-                                    <span><i class="fas fa-walking"></i> Temps de trajet: 15 min</span>
-                                    <a href="#" class="map-link">Voir sur Maps</a>
-                                </div>
-                                <p class="job-start-date"><i class="fas fa-calendar-alt"></i> Prise de poste: Immédiate</p>
-                            </div>
-                        </div>
-                        
-                        <!-- One-click Apply Offer 2 -->
-                        <div class="job-offer fade-in">
-                            <div class="job-header">
-                                <h3 class="job-title">Chef de Projet Digital</h3>
-                                <div class="job-match">
-                                    <span class="match-percentage">91%</span>
-                                </div>
-                            </div>
-                            <p class="job-description">
-                                Gérer des projets digitaux d'envergure pour de grands comptes internationaux.
-                                <a href="#" style="color: var(--purple); font-size: 0.9rem;">Voir plus</a>
-                            </p>
-                            
-                            <div class="job-company">
-                                <div class="logo-placeholder small"></div>
-                                <span class="company-name">DigitalWave</span>
-                                <a href="#" class="company-link">Voir l'entreprise</a>
-                            </div>
-                            
-                            <div class="job-details">
-                                <p class="contract-type"><i class="fas fa-file-contract"></i> Contrat : CDI</p>
-                                <p class="job-salary"><i class="fas fa-money-bill-wave"></i> Rémunération : 43K-47K</p>
-                            </div>
-                            
-                            <div class="job-footer">
-                                <div class="job-actions">
-                                    <button class="btn btn-sm btn-success circular"><i class="fas fa-check"></i></button>
-                                    <button class="btn btn-sm btn-danger circular"><i class="fas fa-times"></i></button>
-                                </div>
-                                <div class="job-rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
-                                <div class="job-commute">
-                                    <span><i class="fas fa-walking"></i> Temps de trajet: 25 min</span>
-                                    <a href="#" class="map-link">Voir sur Maps</a>
-                                </div>
-                                <p class="job-start-date"><i class="fas fa-calendar-alt"></i> Prise de poste: Avril 2025</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Travailler mon CV -->
+        <!-- Recent Activity -->
         <div class="candidate-dashboard-section mt-5 fade-in">
-            <h2 class="section-heading">Travailler mon CV</h2>
-            <div class="cv-container">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; background-color: var(--white); padding: 15px; border-radius: 8px;">
-                    <div>
-                        <h3 style="margin: 0; font-size: 1.2rem;">Optimisez votre CV pour augmenter vos chances</h3>
-                        <p style="margin: 0; font-size: 0.9rem; color: var(--gray);">Notre outil d'IA analyse votre CV et vous aide à le rendre plus attractif pour les recruteurs.</p>
+            <h2 class="section-heading">Activité récente</h2>
+            <div class="activity-list">
+                <div class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-calendar-check"></i>
                     </div>
-                    <div>
-                        <button class="btn btn-primary"><i class="fas fa-cloud-upload-alt"></i> Mettre à jour mon CV</button>
+                    <div class="activity-content">
+                        <h4>Entretien confirmé</h4>
+                        <p>Chef de Projet Digital chez Entreprise Alpha</p>
+                        <p class="activity-date">28 Mars, 14h00</p>
+                    </div>
+                    <div class="activity-action">
+                        <button class="btn btn-sm btn-outline">Voir détails</button>
                     </div>
                 </div>
                 
-                <div class="cv-form">
-                    <div class="cv-section">
-                        <h3 class="cv-section-title"><i class="fas fa-briefcase"></i> Expérience professionnelle</h3>
-                        <div class="cv-fields">
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label>Date du poste</label>
-                                    <input type="text" class="form-control" value="Janvier 2022 - Présent">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label>Intitulé de poste</label>
-                                    <input type="text" class="form-control" value="Responsable Marketing Digital">
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label>Entreprise</label>
-                                    <input type="text" class="form-control" value="MarketingPro">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label>Secteur d'activité</label>
-                                    <input type="text" class="form-control" value="Agence Marketing">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Missions :</label>
-                                <textarea class="form-control" rows="3">- Gestion d'une équipe de 5 personnes
-- Élaboration et mise en œuvre de la stratégie marketing digital
-- Pilotage de campagnes Google Ads et Facebook avec un budget de 500K€ annuel
-- Augmentation du trafic web de 45% et conversion de +25%</textarea>
-                            </div>
-                            <div class="form-group">
-                                <label>Langue étrangère utilisée :</label>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="language" id="language-yes" value="OUI" checked>
-                                    <label class="form-check-label" for="language-yes">OUI</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="language" id="language-no" value="NON">
-                                    <label class="form-check-label" for="language-no">NON</label>
-                                </div>
-                            </div>
-                            <div class="form-group language-details">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="written" value="Écrit" checked>
-                                    <label class="form-check-label" for="written">Écrit</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="oral" value="Oral" checked>
-                                    <label class="form-check-label" for="oral">Oral</label>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Logiciels utilisés</label>
-                                <input type="text" class="form-control" value="Google Analytics, SEMrush, Ahrefs, Hubspot, Photoshop">
-                            </div>
-                        </div>
+                <div class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-envelope"></i>
                     </div>
-                    
-                    <div class="cv-section">
-                        <h3 class="cv-section-title"><i class="fas fa-graduation-cap"></i> Certificat / diplôme</h3>
-                        <div class="cv-fields">
-                            <div class="form-group">
-                                <label>Intitulé du certificat/diplôme</label>
-                                <input type="text" class="form-control" value="Master en Marketing Digital">
-                            </div>
-                            <div class="form-group">
-                                <label>Année d'obtention</label>
-                                <input type="text" class="form-control" value="2021">
-                            </div>
-                            <div class="form-group">
-                                <label>Établissement</label>
-                                <input type="text" class="form-control" value="École de Commerce XYZ">
-                            </div>
-                        </div>
+                    <div class="activity-content">
+                        <h4>Nouveau message</h4>
+                        <p>Business Developer chez Entreprise Beta</p>
+                        <p class="activity-date">Hier à 15:30</p>
                     </div>
-                    
-                    <div class="form-group text-center mt-4">
-                        <button class="btn btn-warning"><i class="fas fa-file-pdf"></i> Générer mon CV</button>
-                        <button class="btn btn-outline"><i class="fas fa-plus-circle"></i> Ajouter une expérience</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Centre de ressources -->
-        <div class="candidate-dashboard-section mt-5 fade-in">
-            <h2 class="section-heading">Centre de Ressources & Préparation aux Entretiens</h2>
-            <p style="margin-bottom: 20px;">Accédez à des informations précieuses sur les entreprises avec lesquelles vous êtes en processus et des conseils personnalisés pour réussir vos entretiens.</p>
-            
-            <div class="row">
-                <div class="col-md-6">
-                    <h3 class="resource-title"><i class="fas fa-building"></i> Entreprises actives dans votre processus</h3>
-                    <div class="resource-companies">
-                        <div class="resource-company">
-                            <div class="logo-placeholder"></div>
-                            <div class="company-info">
-                                <h4 class="company-name">Entreprise Alpha</h4>
-                                <p class="job-title">Chef de Projet Digital</p>
-                            </div>
-                            <div class="call-to-action">
-                                <span>Voir le profil</span>
-                                <span class="arrow"><i class="fas fa-arrow-right"></i></span>
-                            </div>
-                        </div>
-                        
-                        <div class="resource-company">
-                            <div class="logo-placeholder"></div>
-                            <div class="company-info">
-                                <h4 class="company-name">Entreprise Beta</h4>
-                                <p class="job-title">Business Developer</p>
-                            </div>
-                            <div class="call-to-action">
-                                <span>Voir le profil</span>
-                                <span class="arrow"><i class="fas fa-arrow-right"></i></span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <h3 class="resource-title mt-4"><i class="fas fa-comments"></i> Préparation aux entretiens</h3>
-                    <ul class="interview-tips">
-                        <li>
-                            <strong><i class="fas fa-video"></i> Conseils pour une visio-conférence</strong>
-                            <p>Assurez-vous d'avoir une bonne connexion internet et un environnement calme. Testez votre matériel avant l'entretien. Habillez-vous professionnellement et maintenez le contact visuel avec la caméra.</p>
-                            <a href="#" style="color: var(--purple); font-size: 0.9rem;">Voir tous les conseils</a>
-                        </li>
-                        <li>
-                            <strong><i class="fas fa-user-tie"></i> Conseils pour un entretien présentiel</strong>
-                            <p>Prévoyez le temps de trajet et arrivez 10-15 minutes en avance. Apportez des copies de votre CV et prenez des notes. Renseignez-vous sur l'entreprise et préparez des questions pertinentes.</p>
-                            <a href="#" style="color: var(--purple); font-size: 0.9rem;">Voir tous les conseils</a>
-                        </li>
-                    </ul>
-                </div>
-                
-                <div class="col-md-6">
-                    <div class="company-profile">
-                        <div class="company-header">
-                            <div class="logo-placeholder large"></div>
-                            <div class="company-headline">
-                                <h3 class="company-name">Entreprise Alpha</h3>
-                                <p class="company-website"><i class="fas fa-globe"></i> Site internet : www.entreprisealpha.fr</p>
-                                <p class="company-address"><i class="fas fa-map-marker-alt"></i> 25 rue de l'Innovation, 75008 Paris</p>
-                            </div>
-                        </div>
-                        
-                        <div class="company-section">
-                            <h4 class="section-title"><i class="fas fa-info-circle"></i> Qui sont-ils :</h4>
-                            <p>Entreprise Alpha est un leader dans le secteur du digital marketing avec plus de 200 employés en France et en Europe. Fondée en 2010, elle a connu une croissance rapide grâce à des solutions innovantes.</p>
-                        </div>
-                        
-                        <div class="company-section">
-                            <h4 class="section-title"><i class="fas fa-users"></i> Environnement de travail et équipe</h4>
-                            <p>Culture startup dynamique avec une organisation en mode projet. L'équipe est composée de professionnels expérimentés et de jeunes talents. Ambiance collaborative et environnement de travail flexible.</p>
-                        </div>
-                        
-                        <div class="company-section">
-                            <h4 class="section-title"><i class="fas fa-search"></i> Ce qu'ils recherchent</h4>
-                            <p><strong>Soft Skills</strong> : Autonomie, leadership, capacité d'analyse, communication</p>
-                            <p><strong>Valeurs</strong> : Innovation, excellence, collaboration, intégrité</p>
-                        </div>
-                        
-                        <div class="company-section">
-                            <h4 class="section-title"><i class="fas fa-question-circle"></i> Pourquoi recrutent-ils ?</h4>
-                            <p>Création de poste suite à une croissance de 35% du chiffre d'affaires en 2024. Développement de nouvelles offres de services et besoin de renforcer l'équipe managériale.</p>
-                        </div>
-                        
-                        <div class="company-section">
-                            <h4 class="section-title"><i class="fas fa-handshake"></i> Qui allez-vous rencontrer ?</h4>
-                            <div class="interviewer-info">
-                                <p class="interviewer-name"><i class="fas fa-user"></i> Jean-François LEBOEUF</p>
-                                <p class="interviewer-title">Directeur Administratif et Financier</p>
-                                <a href="#" class="linkedin-profile"><i class="fab fa-linkedin"></i> Voir son profil LinkedIn</a>
-                            </div>
-                            <div class="interviewer-info">
-                                <p class="interviewer-name"><i class="fas fa-user"></i> Carine LE MARCHAND</p>
-                                <p class="interviewer-title">Directrice des Ressources Humaines</p>
-                                <a href="#" class="linkedin-profile"><i class="fab fa-linkedin"></i> Voir son profil LinkedIn</a>
-                            </div>
-                        </div>
-                        
-                        <div class="company-section">
-                            <h4 class="section-title"><i class="fas fa-thumbs-up"></i> Pourquoi ce poste vous correspond</h4>
-                            <p>Entreprise Alpha est spécialisée dans le secteur du digital marketing, domaine où vous avez 5 ans d'expérience. Le poste offre des perspectives d'évolution avec une dimension internationale.</p>
-                            <p>La rémunération proposée (42K-48K) correspond à vos attentes et le poste est situé à seulement 25 minutes de chez vous.</p>
-                            <p>Vos compétences en gestion de projet et votre expérience dans le pilotage de campagnes marketing font de vous un candidat idéal.</p>
-                            <div class="job-match large" style="margin: 20px auto;">90%</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Messagerie -->
-        <div class="candidate-dashboard-section mt-5 fade-in">
-            <h2 class="section-heading">Messagerie</h2>
-            <p class="messagerie-description">Échangez directement avec les recruteurs et restez informé de l'avancement de vos candidatures.</p>
-            
-            <div class="messaging-container">
-                <div class="messaging-sidebar">
-                    <div class="messaging-filters">
-                        <button class="btn btn-sm btn-outline-secondary active"><i class="fas fa-inbox"></i> Tous</button>
-                        <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-spinner"></i> En cours</button>
-                        <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-check-circle"></i> Répondus</button>
-                        <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-star"></i> Favoris</button>
-                    </div>
-                    
-                    <!-- Conversation list -->
-                    <div class="conversation-list">
-                        <!-- Conversation 1 -->
-                        <div class="conversation-item active">
-                            <div class="logo-placeholder"></div>
-                            <div class="conversation-details">
-                                <div class="conversation-header">
-                                    <h5 class="company-name">Entreprise Alpha</h5>
-                                    <span class="conversation-status">Entretien présentiel</span>
-                                </div>
-                                <p class="job-title">Chef de Projet Digital</p>
-                                <p class="conversation-date">Dernier message : 26/02/2025</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Conversation 2 -->
-                        <div class="conversation-item">
-                            <div class="logo-placeholder"></div>
-                            <div class="conversation-details">
-                                <div class="conversation-header">
-                                    <h5 class="company-name">Entreprise Beta</h5>
-                                    <span class="conversation-offer">Offre reçue</span>
-                                </div>
-                                <p class="job-title">Business Developer</p>
-                                <p class="conversation-status">Actif</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Conversation 3 -->
-                        <div class="conversation-item">
-                            <div class="logo-placeholder"></div>
-                            <div class="conversation-details">
-                                <div class="conversation-header">
-                                    <h5 class="company-name">Entreprise Gamma</h5>
-                                </div>
-                                <p class="job-title">Product Owner</p>
-                                <p class="conversation-status">Actif</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Conversation 4 -->
-                        <div class="conversation-item">
-                            <div class="logo-placeholder"></div>
-                            <div class="conversation-details">
-                                <div class="conversation-header">
-                                    <h5 class="company-name">Entreprise Delta</h5>
-                                </div>
-                                <p class="job-title">UX Designer</p>
-                                <p class="conversation-status">Inactif</p>
-                            </div>
-                        </div>
+                    <div class="activity-action">
+                        <button class="btn btn-sm btn-outline">Répondre</button>
                     </div>
                 </div>
                 
-                <div class="messaging-content">
-                    <div class="chat-header">
-                        <h3 class="company-name">Entreprise Alpha</h3>
-                        <div class="contact-person">
-                            <p>Corentin MELON - Directeur des Ressources Humaines</p>
-                        </div>
+                <div class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-paper-plane"></i>
                     </div>
-                    
-                    <div class="chat-messages">
-                        <div class="message recruiter">
-                            <div class="message-initials">CM</div>
-                            <div class="message-bubble">
-                                <p>Bonjour, suite à l'étude de votre profil, nous sommes très intéressés par votre candidature pour le poste de Chef de Projet Digital.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="message candidate">
-                            <div class="message-bubble">
-                                <p>Bonjour M. MELON, je vous remercie pour votre intérêt. Je suis également très intéressé par cette opportunité chez Entreprise Alpha.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="message recruiter">
-                            <div class="message-initials">CM</div>
-                            <div class="message-bubble">
-                                <p>Excellent ! Seriez-vous disponible pour un premier échange téléphonique la semaine prochaine ? Nous pourrions discuter plus en détail du poste et de vos attentes.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="message candidate">
-                            <div class="message-bubble">
-                                <p>Avec plaisir. Je suis disponible mardi ou jeudi après-midi, entre 14h et 17h. Est-ce que cela vous conviendrait ?</p>
-                            </div>
-                        </div>
-                        
-                        <div class="message recruiter">
-                            <div class="message-initials">CM</div>
-                            <div class="message-bubble">
-                                <p>Parfait, disons mardi à 15h00. Je vous appellerai au numéro indiqué dans votre profil. Passez un excellent week-end !</p>
-                            </div>
-                        </div>
+                    <div class="activity-content">
+                        <h4>Nouvelle offre reçue</h4>
+                        <p>Growth Manager chez FoodTech+</p>
+                        <p class="activity-date">Il y a 2 jours</p>
                     </div>
-                    
-                    <div class="chat-input">
-                        <textarea class="form-control mb-2" rows="3" placeholder="Tapez votre message ici..."></textarea>
-                        <div class="suggested-responses">
-                            <span class="filter-badge"><i class="fas fa-robot"></i> Merci pour ces informations, je serai présent au rendez-vous.</span>
-                            <span class="filter-badge"><i class="fas fa-robot"></i> Pouvez-vous m'en dire plus sur l'équipe ?</span>
-                            <div class="attachment-icon">
-                                <i class="fas fa-paperclip"></i>
-                            </div>
-                        </div>
-                        
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
-                            <div class="attachment-options">
-                                <span style="font-size: 0.8rem; color: var(--gray);"><i class="fas fa-file-alt"></i> Vous pouvez joindre : CV personnalisé, lettre de recommandation, certifications</span>
-                            </div>
-                            <button class="btn btn-primary"><i class="fas fa-paper-plane"></i> Envoyer</button>
-                        </div>
+                    <div class="activity-action">
+                        <button class="btn btn-sm btn-outline">Voir l'offre</button>
                     </div>
                 </div>
             </div>
@@ -1269,34 +317,9 @@
                     });
                 });
             }
-            
-            // Interaction avec les filtres
-            const filterBadges = document.querySelectorAll('.filter-badge');
-            
-            filterBadges.forEach(badge => {
-                badge.addEventListener('click', function() {
-                    // Dans chaque groupe de filtres, désactiver tous les autres
-                    const parentElement = this.parentElement;
-                    parentElement.querySelectorAll('.filter-badge').forEach(b => {
-                        b.classList.remove('active');
-                    });
-                    
-                    // Activer le filtre cliqué
-                    this.classList.add('active');
-                });
-            });
-            
-            // Gestion des suggestions de réponse
-            const suggestedResponses = document.querySelectorAll('.suggested-responses .filter-badge');
-            const messageTextarea = document.querySelector('.chat-input textarea');
-            
-            suggestedResponses.forEach(response => {
-                response.addEventListener('click', function() {
-                    const text = this.textContent.replace('🤖', '').trim();
-                    messageTextarea.value = text;
-                });
-            });
         });
     </script>
+    <!-- Script d'amélioration de la navigation -->
+    <script src="../static/services/nav-enhancement.js"></script>
 </body>
 </html>
