@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nexten - Tableau de bord recruteur">
+    <title>Nexten - Tableau de bord recruteur</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../static/styles/nexten-modern.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../static/images/favicon.ico" type="image/x-icon">
+    
+    <style>
+        /* Styles spécifiques au tableau de bord */
+        .dashboard-section {
+            padding-top: 100px;
+            padding-bottom: 50px;
+        }
+        
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 30px;
+        }
+        
+        .sidebar {
+            background-color: var(--white);
+            border: 1px solid var(--cream-dark);
+            padding: 30px 0;
+            height: calc(100vh - 150px);
+            position: sticky;
+            top: 100px;
+        }
+        
+        .user-profile {
+            padding: 0 20px 20px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--cream-dark);
+            text-align: center;
+        }
+        
+        .company-logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 5px;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+        
+        .company-name {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        
+        .recruiter-info {
+            font-size: 0.875rem;
+            color: var(--gray);
+            margin-bottom: 5px;
+        }
+        
+        .job-status-info {
+            font-size: 0.8rem;
+            color: var(--black);
+            background-color: var(--cream);
+            padding: 5px 10px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: var(--black);
+            transition: all 0.3s;
+        }
+        
+        .sidebar-menu a:hover {
+            background-color: var(--cream);
+        }
+        
+        .sidebar-menu a.active {
+            background-color: var(--cream);
+            border-left: 3px solid var(--purple);
+            color: var(--purple);
+        }
+        
+        .sidebar-menu i {
+            margin-right: 15px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .main-content {
+            padding-top: 20px;
+        }
+        
+        .welcome-message {
+            margin-bottom: 30px;
+        }
+        
+        .dashboard-card {
+            background-color: var(--white);
+            border: 1px solid var(--cream-dark);
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+        
+        .dashboard-card-title {
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .dashboard-card-title a {
+            font-size: 0.875rem;
+            color: var(--purple);
+            text-transform: none;
+            letter-spacing: normal;
+        }
+        
+        /* Nouveaux styles pour le dashboard recruteur */
+        .create-job-btn {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        
+        .candidate-tabs {
+            border-bottom: 1px solid var(--cream-dark);
+            margin-bottom: 20px;
+            display: flex;
+        }
+        
+        .candidate-tabs button {
+            background: none;
+            border: none;
+            padding: 10px 20px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--gray);
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .candidate-tabs button.active {
+            color: var(--purple);
+        }
+        
+        .candidate-tabs button.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--purple);
+        }
+        
+        .candidate-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .candidate-card {
+            background-color: var(--white);
+            border: 1px solid var(--cream-dark);
+            border-radius: 4px;
+            padding: 15px;
+            transition: all 0.3s;
+        }
+        
+        .candidate-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+        }
+        
+        .candidate-header {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .candidate-name {
+            color: var(--purple);
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        
+        .candidate-position {
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-bottom: 10px;
+        }
+        
+        .candidate-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .candidate-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+        
+        .match-percentage {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--purple);
+            color: var(--white);
+            font-weight: 500;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+        
+        .candidate-status {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--cream-dark);
+            padding-top: 15px;
+            margin-top: 15px;
+        }
+        
+        .candidate-action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .candidate-action-buttons button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--gray);
+        }
+        
+        .candidate-action-buttons button:hover {
+            color: var(--purple);
+        }
+        
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.8rem;
+        }
+        
+        .status-indicator-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--cream-dark);
+        }
+        
+        .status-indicator-dot.active {
+            background-color: #4CAF50;
+        }
+        
+        .status-indicator-dot.pending {
+            background-color: #FFC107;
+        }
+        
+        /* Tableau des candidats */
+        .candidates-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        
+        .candidates-table th {
+            text-align: left;
+            padding: 12px 15px;
+            background-color: var(--cream);
+            border-bottom: 1px solid var(--cream-dark);
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .candidates-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--cream-dark);
+            font-size: 0.9rem;
+        }
+        
+        .candidates-table tr:hover {
+            background-color: var(--cream);
+        }
+        
+        /* Processus de recrutement */
+        .recruitment-process {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .process-step {
+            min-width: 150px;
+            background-color: var(--cream);
+            border-radius: 4px;
+            padding: 15px;
+        }
+        
+        .process-step-title {
+            font-weight: 500;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .process-count {
+            background-color: var(--purple);
+            color: var(--white);
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+        }
+        
+        /* Section organisation */
+        .team-section h3 {
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+        
+        .team-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        
+        .team-table th {
+            text-align: left;
+            padding: 10px;
+            background-color: var(--cream);
+            border-bottom: 1px solid var(--cream-dark);
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .team-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--cream-dark);
+            font-size: 0.9rem;
+        }
+        
+        .add-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            font-size: 1.2rem;
+            color: var(--purple);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Système de messagerie */
+        .messaging-section {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 20px;
+            height: 500px;
+        }
+        
+        .contacts-list {
+            overflow-y: auto;
+            border-right: 1px solid var(--cream-dark);
+            padding-right: 15px;
+        }
+        
+        .contact-item {
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 5px;
+            position: relative;
+        }
+        
+        .contact-item:hover {
+            background-color: var(--cream);
+        }
+        
+        .contact-item.active {
+            background-color: var(--cream);
+        }
+        
+        .contact-name {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        
+        .contact-preview {
+            font-size: 0.8rem;
+            color: var(--gray);
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .unread-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--purple);
+            color: var(--white);
+            font-size: 0.7rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .chat-header {
+            padding: 15px;
+            border-bottom: 1px solid var(--cream-dark);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .chat-contact-name {
+            font-weight: 500;
+        }
+        
+        .chat-messages {
+            flex-grow: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .message {
+            max-width: 70%;
+            padding: 10px 15px;
+            border-radius: 10px;
+            position: relative;
+        }
+        
+        .message-received {
+            background-color: var(--cream);
+            align-self: flex-start;
+            border-bottom-left-radius: 0;
+        }
+        
+        .message-sent {
+            background-color: var(--purple);
+            color: var(--white);
+            align-self: flex-end;
+            border-bottom-right-radius: 0;
+        }
+        
+        .message-time {
+            font-size: 0.7rem;
+            color: var(--gray);
+            margin-top: 5px;
+            text-align: right;
+        }
+        
+        .message-sent .message-time {
+            color: var(--white);
+            opacity: 0.8;
+        }
+        
+        .chat-input-container {
+            padding: 15px;
+            border-top: 1px solid var(--cream-dark);
+            display: flex;
+            gap: 10px;
+        }
+        
+        .chat-input {
+            flex-grow: 1;
+            border: 1px solid var(--cream-dark);
+            border-radius: 20px;
+            padding: 8px 15px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+        }
+        
+        .send-button {
+            width: 40px;
+            height: 40px;
+            background-color: var(--purple);
+            color: var(--white);
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        /* Création de poste */
+        .job-creation-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .form-section {
+            padding: 20px;
+            background-color: var(--cream);
+            border-radius: 4px;
+        }
+        
+        .form-section h4 {
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid var(--cream-dark);
+            border-radius: 4px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+        }
+        
+        .radio-group {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+        
+        .create-process {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .process-card {
+            background-color: var(--white);
+            border: 1px solid var(--cream-dark);
+            border-radius: 4px;
+            padding: 15px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .process-card-title {
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .status-icons {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .status-icon {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+        }
+        
+        .status-icon.green {
+            background-color: #4CAF50;
+        }
+        
+        .status-icon.red {
+            background-color: #F44336;
+        }
+        
+        .process-add {
+            font-size: 1.5rem;
+            color: var(--purple);
+        }
+        
+        /* Couleurs de rémunération */
+        .salary-indicator {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .salary-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        
+        .salary-coherent {
+            background-color: #4CAF50;
+        }
+        
+        .salary-above {
+            background-color: #FFC107;
+        }
+        
+        .salary-far {
+            background-color: #F44336;
+        }
+        
+        .salary-legend {
+            background-color: var(--white);
+            border: 1px solid var(--cream-dark);
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .salary-legend-title {
+            font-weight: 500;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .salary-legend-items {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        @media (max-width: 992px) {
+            .dashboard-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                height: auto;
+                position: static;
+            }
+            
+            .sidebar-menu {
+                display: flex;
+                flex-wrap: wrap;
+            }
+            
+            .sidebar-menu li {
+                flex: 1;
+                min-width: 150px;
+            }
+            
+            .messaging-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .contacts-list {
+                border-right: none;
+                padding-right: 0;
+                border-bottom: 1px solid var(--cream-dark);
+                padding-bottom: 15px;
+                height: 200px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .candidate-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .job-creation-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .create-process {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Notification bar -->
+    <div class="notification-bar">
+        Votre recrutement change, votre approche aussi : découvrez notre diagnostic
+    </div>
+
+    <!-- Lien d'accessibilité pour sauter au contenu principal -->
+    <a href="#main-content" class="skip-to-content">Aller au contenu principal</a>
+
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    nex<span>ten</span><div class="logo-badge">10</div>
+                </a>
+            </div>
+            
+            <button class="menu-toggle" aria-label="Menu principal">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="post-job.html">Publier une offre</a></li>
+                    <li><a href="candidate-upload.html">Espace candidat</a></li>
+                    <li><a href="recruiter-dashboard.html" class="active">Espace recruteur</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="dashboard-section" id="main-content">
+        <div class="container">
+            <div class="dashboard-container">
+                <aside class="sidebar">
+                    <div class="user-profile">
+                        <img src="https://via.placeholder.com/80x80?text=Logo" alt="Logo Entreprise" class="company-logo">
+                        <div class="company-name">Nom de l'Entreprise</div>
+                        <div class="recruiter-info">Prénom et nom du recruteur</div>
+                        <div class="job-status-info">3 postes ouverts • 2 recrutements en cours</div>
+                        <a href="#" class="btn btn-outline" style="width: 100%;">Éditer le profil</a>
+                    </div>
+                    
+                    <ul class="sidebar-menu">
+                        <li><a href="#" class="active"><i class="fas fa-home"></i> Tableau de bord</a></li>
+                        <li><a href="#"><i class="fas fa-plus-circle"></i> Créer un poste</a></li>
+                        <li><a href="#"><i class="fas fa-user-check"></i> Mes sélections</a></li>
+                        <li><a href="#"><i class="fas fa-users"></i> Candidats</a></li>
+                        <li><a href="#"><i class="fas fa-calendar-alt"></i> Planning</a></li>
+                        <li><a href="#"><i class="fas fa-comment-alt"></i> Messagerie</a></li>
+                        <li><a href="#"><i class="fas fa-users-cog"></i> Mon organisation</a></li>
+                        <li><a href="#"><i class="fas fa-cog"></i> Paramètres</a></li>
+                    </ul>
+                    
+                    <div class="logout-button" style="padding: 0 20px; margin-top: 20px;">
+                        <a href="index.html" class="btn btn-outline" style="width: 100%;">Déconnexion</a>
+                    </div>
+                </aside>
+                
+                <div class="main-content">
+                    <div class="welcome-message">
+                        <h1>Bonjour, [Prénom]</h1>
+                        <p>Voici un aperçu de vos recrutements en cours et des candidats correspondant à vos critères.</p>
+                    </div>
+                    
+                    <a href="#" class="btn btn-primary create-job-btn">
+                        <i class="fas fa-plus-circle"></i> Création d'un nouveau poste
+                    </a>
+                    
+                    <div class="dashboard-card">
+                        <h3 class="dashboard-card-title">
+                            Mes sélections de candidats
+                            <a href="#">Voir tout</a>
+                        </h3>
+                        
+                        <div class="candidate-tabs">
+                            <button class="active">Tous</button>
+                            <button>Candidat qui ont postulé</button>
+                            <button>Candidat en un clic</button>
+                        </div>
+                        
+                        <h4>Poste de comptable Général</h4>
+                        
+                        <div class="candidate-list">
+                            <div class="candidate-card">
+                                <div class="match-percentage">90%</div>
+                                <div class="candidate-header">
+                                    <div>
+                                        <div class="candidate-name">Prénom N.</div>
+                                        <div class="candidate-position">Intitulé du profil</div>
+                                        <div class="candidate-meta">
+                                            <div class="candidate-meta-item">
+                                                <i class="fas fa-briefcase"></i> CDI/CDD/Intérim
+                                            </div>
+                                            <div class="candidate-meta-item">
+                                                <i class="fas fa-money-bill-wave"></i> Fourchette transmise
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-outline btn-sm">Voir CV</button>
+                                    </div>
+                                </div>
+                                <div class="candidate-status">
+                                    <div class="status-indicator">
+                                        <div class="status-indicator-dot active"></div>
+                                        Disponible pour une prise de poste
+                                    </div>
+                                    <div class="candidate-action-buttons">
+                                        <button><i class="fas fa-check-circle"></i></button>
+                                        <button><i class="fas fa-times-circle"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="candidate-card">
+                                <div class="match-percentage">90%</div>
+                                <div class="candidate-header">
+                                    <div>
+                                        <div class="candidate-name">Prénom N.</div>
+                                        <div class="candidate-position">Intitulé du profil</div>
+                                        <div class="candidate-meta">
+                                            <div class="candidate-meta-item">
+                                                <i class="fas fa-briefcase"></i> CDI/CDD/Intérim
+                                            </div>
+                                            <div class="candidate-meta-item">
+                                                <i class="fas fa-money-bill-wave"></i> Fourchette transmise
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-outline btn-sm">Voir CV</button>
+                                    </div>
+                                </div>
+                                <div class="candidate-status">
+                                    <div class="status-indicator">
+                                        <div class="status-indicator-dot active"></div>
+                                        Disponible pour une prise de poste
+                                    </div>
+                                    <div class="candidate-action-buttons">
+                                        <button><i class="fas fa-check-circle"></i></button>
+                                        <button><i class="fas fa-times-circle"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h4 style="margin-top: 30px;">Poste d'assistant de direction</h4>
+                        
+                        <div class="candidate-list">
+                            <div class="candidate-card">
+                                <div class="match-percentage">90%</div>
+                                <div class="candidate-header">
+                                    <div>
+                                        <div class="candidate-name">Prénom N.</div>
+                                        <div class="candidate-position">Intitulé du profil</div>
+                                        <div class="candidate-meta">
+                                            <div class="candidate-meta-item">
+                                                <i class="fas fa-briefcase"></i> CDI/CDD/Intérim
+                                            </div>
+                                            <div class="candidate-meta-item">
+                                                <i class="fas fa-money-bill-wave"></i> Fourchette transmise
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-outline btn-sm">Voir CV</button>
+                                    </div>
+                                </div>
+                                <div class="candidate-status">
+                                    <div class="status-indicator">
+                                        <div class="status-indicator-dot active"></div>
+                                        Disponible pour une prise de poste
+                                    </div>
+                                    <div class="candidate-action-buttons">
+                                        <button><i class="fas fa-check-circle"></i></button>
+                                        <button><i class="fas fa-times-circle"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <h3 class="dashboard-card-title">
+                            Mon organisation
+                            <a href="#">Configurer</a>
+                        </h3>
+                        
+                        <div class="team-section">
+                            <h3>Équipe et Contacts</h3>
+                            <table class="team-table">
+                                <thead>
+                                    <tr>
+                                        <th>Prénom</th>
+                                        <th>Nom</th>
+                                        <th>Fonction</th>
+                                        <th>Email</th>
+                                        <th>Téléphone</th>
+                                        <th>Ajouter à un recrutement</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Marie</td>
+                                        <td>DURAND</td>
+                                        <td>Chargée recrutement</td>
+                                        <td>@</td>
+                                        <td>+33</td>
+                                        <td><button class="add-button">+</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Joseph</td>
+                                        <td>EUX</td>
+                                        <td>DAF</td>
+                                        <td>@</td>
+                                        <td>+33</td>
+                                        <td><button class="add-button">+</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            
+                            <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+                                <button class="btn btn-outline">Ajouter un contact</button>
+                                <button class="btn btn-outline">Envoyer une invitation</button>
+                            </div>
+                            
+                            <h3>Gestion des accès</h3>
+                            <p>Qui peut faire quoi ?</p>
+                            <ul style="margin-bottom: 20px;">
+                                <li>Role 1 : Administrateur (gestion complète)</li>
+                                <li>Role 2 : Manager (accès aux recrutements)</li>
+                                <li>Recruteur (accès limité à certaines candidatures)</li>
+                            </ul>
+                            <p>Modification des permissions → Cases à cocher pour définir les accès par utilisateur.</p>
+                            <p>Notification d'ajout → Lorsqu'un membre est ajouté, il reçoit une invitation.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <h3 class="dashboard-card-title">
+                            Messagerie
+                            <a href="#">Voir tout</a>
+                        </h3>
+                        
+                        <div class="candidate-tabs">
+                            <button class="active">Avec candidat</button>
+                            <button>En interne</button>
+                        </div>
+                        
+                        <div class="messaging-section">
+                            <div class="contacts-list">
+                                <div class="contact-item active">
+                                    <div class="contact-name">Jean V.</div>
+                                    <div class="contact-preview">Je suis intéressé par le poste !</div>
+                                    <div class="unread-badge">1</div>
+                                </div>
+                                <div class="contact-item">
+                                    <div class="contact-name">Prénom N.</div>
+                                    <div class="contact-preview">Merci pour votre réponse...</div>
+                                </div>
+                                <div class="contact-item">
+                                    <div class="contact-name">Prénom N.</div>
+                                    <div class="contact-preview">Est-ce que le télétravail est possible...</div>
+                                </div>
+                            </div>
+                            
+                            <div class="chat-container">
+                                <div class="chat-header">
+                                    <div class="chat-contact-name">Jean V.</div>
+                                    <div>
+                                        <button class="btn btn-outline btn-sm">Profil</button>
+                                        <button class="btn btn-outline btn-sm">CV</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="chat-messages">
+                                    <div class="message message-received">
+                                        <div>Bonjour, je suis intéressé par le poste !</div>
+                                        <div class="message-time">10:30</div>
+                                    </div>
+                                    
+                                    <div class="message message-sent">
+                                        <div>Super, vous êtes dispo ?</div>
+                                        <div class="message-time">10:32</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="chat-input-container">
+                                    <input type="text" class="chat-input" placeholder="Écrivez votre message...">
+                                    <button class="send-button">
+                                        <i class="fas fa-paper-plane"></i>
+                                    </button>
+                                </div>
+                                
+                                <div style="padding: 15px; border-top: 1px solid var(--cream-dark);">
+                                    <p>Réponses suggérées via IA</p>
+                                    <button class="btn btn-outline btn-sm" style="margin-top: 10px;">Possibilité d'envoie de fichier</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <h3 class="dashboard-card-title">
+                            Besoin 1 : Comptabilité générale
+                        </h3>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                            <div>
+                                <p><strong>Statut :</strong> Entretien en présentiel</p>
+                            </div>
+                            <div class="salary-indicator">
+                                <span>Rémunération du poste : 45k</span>
+                                <div class="salary-dot salary-coherent"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="salary-legend">
+                            <div class="salary-legend-title">Code couleur</div>
+                            <p style="font-size: 0.9rem; margin-bottom: 10px;">Intégration d'un code couleur par rapport au marché, le but est de dire si la fourchette est cohérente par rapport à ce qu'il demande !</p>
+                            <div class="salary-legend-items">
+                                <div class="salary-indicator">
+                                    <div class="salary-dot salary-coherent"></div>
+                                    <span>Cohérent</span>
+                                </div>
+                                <div class="salary-indicator">
+                                    <div class="salary-dot salary-above"></div>
+                                    <span>Au dessus du marché</span>
+                                </div>
+                                <div class="salary-indicator">
+                                    <div class="salary-dot salary-far"></div>
+                                    <span>Bien au dessus ou en dessous du marché</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="recruitment-process">
+                            <div class="process-step">
+                                <div class="process-step-title">
+                                    En cours de validation
+                                    <span class="process-count">3</span>
+                                </div>
+                                
+                                <div class="candidate-card" style="margin-bottom: 10px;">
+                                    <div class="candidate-name">Prénom N.</div>
+                                    <div class="candidate-position">Intitulé du profil</div>
+                                    <div class="status-icons">
+                                        <div class="status-icon green"></div>
+                                        <div class="status-icon red"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="candidate-card" style="margin-bottom: 10px;">
+                                    <div class="candidate-name">Prénom N.</div>
+                                    <div class="candidate-position">Intitulé du profil</div>
+                                    <div class="status-icons">
+                                        <div class="status-icon green"></div>
+                                        <div class="status-icon red"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="process-step">
+                                <div class="process-step-title">
+                                    Call prise de contact
+                                    <span class="process-count">2</span>
+                                </div>
+                                
+                                <div class="candidate-card" style="margin-bottom: 10px;">
+                                    <div class="candidate-name">Prénom N.</div>
+                                    <div class="candidate-position">Intitulé du profil</div>
+                                    <div class="status-icons">
+                                        <div class="status-icon green"></div>
+                                        <div class="status-icon red"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="process-step">
+                                <div class="process-step-title">
+                                    Entretien visio
+                                    <span class="process-count">1</span>
+                                </div>
+                                
+                                <div class="candidate-card" style="margin-bottom: 10px;">
+                                    <div class="candidate-name">Prénom N.</div>
+                                    <div class="candidate-position">Intitulé du profil</div>
+                                    <div class="status-icons">
+                                        <div class="status-icon green"></div>
+                                        <div class="status-icon red"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="process-step">
+                                <div class="process-step-title">
+                                    Entretien Présentiel
+                                    <span class="process-count">0</span>
+                                </div>
+                                <p style="font-size: 0.9rem;">- Ajouter un membre</p>
+                            </div>
+                            
+                            <div class="process-step">
+                                <div class="process-step-title">
+                                    Acceptation
+                                    <span class="process-count">0</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 20px;">
+                            <button class="btn btn-outline">Poser une question à un candidat</button>
+                            <button class="btn btn-outline">Enlever de la shortlist</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <h4 class="footer-heading">Nexten</h4>
+                    <p class="footer-description">Notre plateforme utilise l'intelligence artificielle pour révolutionner le processus de recrutement, offrant 10 correspondances personnalisées pour les candidats et les recruteurs.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="footer-heading">Navigation</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Accueil</a></li>
+                        <li><a href="post-job.html"><i class="fas fa-chevron-right"></i> Publier une offre</a></li>
+                        <li><a href="candidate-upload.html"><i class="fas fa-chevron-right"></i> Espace candidat</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> À propos</a></li>
+                        <li><a href="#contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="footer-heading">Contact</h4>
+                    <div class="footer-contact">
+                        <p><i class="fas fa-map-marker-alt"></i> 123 Avenue de l'Innovation, 75001 Paris</p>
+                        <p><i class="fas fa-phone"></i> +33 1 23 45 67 89</p>
+                        <p><i class="fas fa-envelope"></i> contact@nexten.fr</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Nexten - Tous droits réservés | <a href="#">Politique de confidentialité</a> | <a href="#">Conditions d'utilisation</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Menu mobile toggle
+            const menuToggle = document.querySelector('.menu-toggle');
+            const nav = document.querySelector('nav');
+            
+            if (menuToggle && nav) {
+                menuToggle.addEventListener('click', function() {
+                    nav.classList.toggle('active');
+                    this.classList.toggle('active');
+                });
+            }
+            
+            // Tabs de candidats
+            const candidateTabs = document.querySelectorAll('.candidate-tabs button');
+            
+            if (candidateTabs.length > 0) {
+                candidateTabs.forEach(tab => {
+                    tab.addEventListener('click', function() {
+                        // Remove active class from all tabs
+                        candidateTabs.forEach(t => t.classList.remove('active'));
+                        // Add active class to clicked tab
+                        this.classList.add('active');
+                        
+                        // Implement tab content switching logic here
+                        // For now, just console log which tab was clicked
+                        console.log('Switched to tab:', this.textContent.trim());
+                    });
+                });
+            }
+            
+            // Add chat message when send button is clicked
+            const sendButton = document.querySelector('.send-button');
+            const chatInput = document.querySelector('.chat-input');
+            const chatMessages = document.querySelector('.chat-messages');
+            
+            if (sendButton && chatInput && chatMessages) {
+                sendButton.addEventListener('click', function() {
+                    const message = chatInput.value.trim();
+                    
+                    if (message) {
+                        // Get current time
+                        const now = new Date();
+                        const hours = now.getHours().toString().padStart(2, '0');
+                        const minutes = now.getMinutes().toString().padStart(2, '0');
+                        const timeString = `${hours}:${minutes}`;
+                        
+                        // Create new message element
+                        const messageElement = document.createElement('div');
+                        messageElement.className = 'message message-sent';
+                        messageElement.innerHTML = `
+                            <div>${message}</div>
+                            <div class="message-time">${timeString}</div>
+                        `;
+                        
+                        // Add message to chat
+                        chatMessages.appendChild(messageElement);
+                        
+                        // Clear input
+                        chatInput.value = '';
+                        
+                        // Scroll to bottom
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
+                    }
+                });
+                
+                // Allow Enter key to send message
+                chatInput.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        sendButton.click();
+                        e.preventDefault();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
