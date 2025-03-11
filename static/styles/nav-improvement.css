@@ -1,0 +1,219 @@
+/* Amélioration de la navigation pour les pages candidat */
+
+/* Style amélioré pour le menu du dashboard */
+.dashboard-menu {
+    transition: all 0.3s ease;
+}
+
+.dashboard-menu-item {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.dashboard-menu-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-menu-item::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background-color: var(--purple);
+    transition: width 0.3s ease;
+}
+
+.dashboard-menu-item:hover::after {
+    width: 100%;
+}
+
+/* Navigation contextuelle entre les pages */
+.contextual-nav {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+    padding: 10px 0;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+}
+
+.previous-page, .next-page, .dashboard-link {
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    color: var(--text-color);
+    transition: all 0.2s ease;
+}
+
+.previous-page:hover, .next-page:hover, .dashboard-link:hover {
+    background-color: rgba(103, 58, 183, 0.1);
+}
+
+.previous-page i, .next-page i, .dashboard-link i {
+    margin: 0 8px;
+}
+
+/* Amélioration du fil d'Ariane */
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px 15px;
+    background-color: rgba(103, 58, 183, 0.05);
+    border-radius: 4px;
+}
+
+.breadcrumb a {
+    text-decoration: none;
+    color: var(--purple);
+    transition: color 0.2s ease;
+}
+
+.breadcrumb a:hover {
+    color: var(--purple-dark);
+    text-decoration: underline;
+}
+
+.breadcrumb i {
+    margin: 0 8px;
+    color: var(--gray);
+    font-size: 0.8rem;
+}
+
+.breadcrumb span {
+    color: var(--text-color);
+}
+
+/* Active page indicator */
+.dashboard-menu-item.active {
+    border-left: 3px solid var(--purple);
+    background-color: rgba(103, 58, 183, 0.05);
+}
+
+/* Transition fluide entre les pages */
+body {
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Tooltips pour les boutons de navigation */
+[data-tooltip] {
+    position: relative;
+}
+
+[data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+    font-size: 0.8rem;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+[data-tooltip]:hover::after {
+    opacity: 1;
+}
+
+/* Progress tracker */
+.progress-tracker {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+    position: relative;
+}
+
+.progress-tracker::before {
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #e0e0e0;
+    z-index: 1;
+}
+
+.progress-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+.step-indicator {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: white;
+    border: 2px solid #e0e0e0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5px;
+    transition: all 0.3s ease;
+}
+
+.progress-step.completed .step-indicator {
+    background-color: var(--purple);
+    border-color: var(--purple);
+    color: white;
+}
+
+.progress-step.active .step-indicator {
+    border-color: var(--purple);
+    color: var(--purple);
+    font-weight: bold;
+}
+
+.step-label {
+    font-size: 0.8rem;
+    text-align: center;
+    color: var(--gray);
+}
+
+.progress-step.completed .step-label,
+.progress-step.active .step-label {
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+/* Mobile responsive improvements */
+@media (max-width: 768px) {
+    .contextual-nav {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .dashboard-link {
+        order: -1;
+        margin-bottom: 10px;
+    }
+    
+    .progress-tracker {
+        overflow-x: auto;
+        padding-bottom: 15px;
+    }
+    
+    .progress-step {
+        min-width: 80px;
+    }
+}
