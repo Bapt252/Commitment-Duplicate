@@ -463,7 +463,6 @@
                     <li><a href="index.html">Accueil</a></li>
                     <li><a href="post-job.html">Publier une offre</a></li>
                     <li><a href="candidate-upload.html">Espace candidat</a></li>
-                    <li><a href="recruiter-dashboard.html">Espace recruteur</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </nav>
@@ -636,7 +635,7 @@
             if (emailInput) animateInput(emailInput);
             if (passwordInput) animateInput(passwordInput);
             
-            // Validation améliorée du formulaire
+            // Nouvelle logique de validation du formulaire pour le mode démo
             const loginForm = document.getElementById('login-form');
             const loginButton = document.getElementById('login-button');
             const errorMessage = document.getElementById('error-message');
@@ -654,37 +653,29 @@
                     
                     // Récupérer les valeurs
                     const email = emailInput.value;
-                    const password = passwordInput.value;
                     
-                    // Simuler un délai de traitement (à retirer en production)
+                    // Simuler un délai de traitement
                     setTimeout(() => {
-                        // Utiliser le service de données pour tenter la connexion
-                        const user = dataService.login(email, password, 'company');
+                        // MODIFICATION: Accepter tous les emails et mots de passe en mode démo
+                        // Stocker un utilisateur fictif dans le localStorage
+                        const mockUser = {
+                            id: 999,
+                            type: 'company',
+                            name: 'Entreprise Demo',
+                            email: email
+                        };
                         
-                        if (user) {
-                            // Ajouter une animation avant la redirection
-                            loginButton.textContent = 'Connecté!';
-                            loginButton.classList.remove('btn-loading');
-                            loginButton.classList.add('success');
-                            
-                            setTimeout(() => {
-                                // Redirection vers le dashboard entreprise
-                                window.location.href = "company-dashboard.html";
-                            }, 500);
-                        } else {
-                            // Afficher le message d'erreur
-                            errorMessage.classList.add('show');
-                            
-                            // Réinitialiser le bouton
-                            loginButton.classList.remove('btn-loading');
-                            loginButton.textContent = 'Se connecter';
-                            
-                            // Secouer le formulaire pour indiquer l'erreur
-                            loginForm.classList.add('shake');
-                            setTimeout(() => {
-                                loginForm.classList.remove('shake');
-                            }, 500);
-                        }
+                        localStorage.setItem('currentUser', JSON.stringify(mockUser));
+                        
+                        // Ajouter une animation avant la redirection
+                        loginButton.textContent = 'Connecté!';
+                        loginButton.classList.remove('btn-loading');
+                        loginButton.classList.add('success');
+                        
+                        setTimeout(() => {
+                            // Redirection vers le dashboard entreprise
+                            window.location.href = "company-dashboard.html";
+                        }, 500);
                     }, 1000);
                 });
             }
