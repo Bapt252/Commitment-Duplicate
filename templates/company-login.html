@@ -15,7 +15,7 @@
     <link rel="shortcut icon" href="../static/images/favicon.ico" type="image/x-icon">
     
     <style>
-        /* Styles supplémentaires pour améliorer l'UI/UX */
+        /* Styles pour la page de connexion améliorée */
         .modern-login-page {
             min-height: calc(100vh - 300px);
             display: flex;
@@ -31,7 +31,7 @@
             position: absolute;
             width: 300px;
             height: 300px;
-            background: rgba(94, 114, 235, 0.1);
+            background: rgba(118, 67, 210, 0.1);
             border-radius: 50%;
             top: -100px;
             right: -100px;
@@ -43,7 +43,7 @@
             position: absolute;
             width: 200px;
             height: 200px;
-            background: rgba(94, 114, 235, 0.05);
+            background: rgba(118, 67, 210, 0.05);
             border-radius: 50%;
             bottom: -70px;
             left: -70px;
@@ -69,7 +69,7 @@
         
         .login-info-section {
             flex: 1;
-            background: linear-gradient(135deg, #5e72eb 0%, #4b59db 100%);
+            background: linear-gradient(135deg, #7642d2 0%, #5e32b0 100%);
             color: white;
             padding: 50px;
             display: flex;
@@ -123,8 +123,8 @@
         
         .form-control:focus {
             background-color: #fff;
-            border-color: #5e72eb;
-            box-shadow: 0 0 0 3px rgba(94, 114, 235, 0.1);
+            border-color: #7642d2;
+            box-shadow: 0 0 0 3px rgba(118, 67, 210, 0.1);
         }
         
         .form-group {
@@ -143,7 +143,7 @@
             position: absolute;
             top: 48px;
             left: 20px;
-            color: #5e72eb;
+            color: #7642d2;
         }
         
         .form-options {
@@ -179,8 +179,8 @@
         }
         
         .custom-checkbox input:checked ~ .checkmark {
-            background-color: #5e72eb;
-            border-color: #5e72eb;
+            background-color: #7642d2;
+            border-color: #7642d2;
         }
         
         .checkmark:after {
@@ -197,7 +197,7 @@
         }
         
         .forgot-link {
-            color: #5e72eb;
+            color: #7642d2;
             text-decoration: none;
             font-weight: 500;
             transition: all 0.2s ease;
@@ -208,7 +208,7 @@
         }
         
         .btn-modern {
-            background: linear-gradient(135deg, #5e72eb 0%, #4b59db 100%);
+            background: linear-gradient(135deg, #7642d2 0%, #5e32b0 100%);
             color: white;
             border: none;
             border-radius: 10px;
@@ -218,22 +218,26 @@
             cursor: pointer;
             transition: all 0.3s ease;
             width: 100%;
-            box-shadow: 0 5px 15px rgba(94, 114, 235, 0.2);
+            box-shadow: 0 5px 15px rgba(118, 67, 210, 0.2);
         }
         
         .btn-modern:hover {
             transform: translateY(-2px);
-            box-shadow: 0 7px 18px rgba(94, 114, 235, 0.3);
+            box-shadow: 0 7px 18px rgba(118, 67, 210, 0.3);
         }
         
         .btn-modern:active {
             transform: translateY(0);
         }
         
+        .btn-modern.success {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+        
         .btn-secondary-modern {
             background: #fff;
-            color: #5e72eb;
-            border: 2px solid #5e72eb;
+            color: #7642d2;
+            border: 2px solid #7642d2;
         }
         
         .divider {
@@ -253,6 +257,21 @@
         .divider span {
             padding: 0 15px;
             font-size: 14px;
+        }
+        
+        .error-message {
+            color: #e53e3e;
+            background-color: #fff5f5;
+            border: 1px solid #fed7d7;
+            border-radius: 5px;
+            padding: 10px 15px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .error-message.show {
+            display: block;
+            animation: fadeIn 0.3s;
         }
         
         .info-title {
@@ -340,24 +359,29 @@
             color: rgba(255, 255, 255, 0.8);
         }
         
-        .error-message {
-            color: #e53e3e;
-            background-color: #fff5f5;
-            border: 1px solid #fed7d7;
-            border-radius: 5px;
-            padding: 10px 15px;
-            margin-bottom: 20px;
-            display: none;
+        /* Animation de chargement */
+        .btn-loading {
+            position: relative;
+            pointer-events: none;
         }
         
-        .error-message.show {
+        .btn-loading:after {
+            content: '';
             display: block;
-            animation: fadeIn 0.3s;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            border-top-color: transparent;
+            position: absolute;
+            top: calc(50% - 10px);
+            right: 25px;
+            animation: spin 0.8s linear infinite;
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
         
         /* Animations */
@@ -376,6 +400,11 @@
         
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
@@ -412,31 +441,6 @@
                 padding: 12px 20px 12px 45px;
             }
         }
-        
-        /* Animation de chargement */
-        .btn-loading {
-            position: relative;
-            pointer-events: none;
-        }
-        
-        .btn-loading:after {
-            content: '';
-            display: block;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            border: 2px solid #fff;
-            border-top-color: transparent;
-            position: absolute;
-            top: calc(50% - 10px);
-            right: 25px;
-            animation: spin 0.8s linear infinite;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
     </style>
 </head>
 <body>
@@ -463,8 +467,8 @@
             <nav>
                 <ul>
                     <li><a href="index.html">Accueil</a></li>
-                    <li><a href="post-job.html">Publier une offre</a></li>
-                    <li><a href="candidate-upload.html">Espace candidat</a></li>
+                    <li><a href="candidate-login.html">Espace candidat</a></li>
+                    <li><a href="company-login.html" class="active">Espace entreprise</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </nav>
@@ -569,8 +573,8 @@
                     <h4 class="footer-heading">Navigation</h4>
                     <ul class="footer-links">
                         <li><a href="index.html"><i class="fas fa-chevron-right"></i> Accueil</a></li>
-                        <li><a href="post-job.html"><i class="fas fa-chevron-right"></i> Publier une offre</a></li>
-                        <li><a href="candidate-upload.html"><i class="fas fa-chevron-right"></i> Espace candidat</a></li>
+                        <li><a href="candidate-login.html"><i class="fas fa-chevron-right"></i> Espace candidat</a></li>
+                        <li><a href="company-login.html"><i class="fas fa-chevron-right"></i> Espace entreprise</a></li>
                         <li><a href="about.html"><i class="fas fa-chevron-right"></i> À propos</a></li>
                         <li><a href="#contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
                     </ul>
@@ -645,9 +649,6 @@
                     
                     // Masquer le message d'erreur
                     errorMessage.classList.remove('show');
-                    
-                    // Récupérer les valeurs
-                    const email = emailInput.value;
                     
                     // Simuler un délai de traitement
                     setTimeout(() => {
