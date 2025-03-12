@@ -7,7 +7,7 @@
     <title>Nexten - 10 connexions stratégiques pour votre recrutement</title>
     
     <!-- CSS -->
-    <link rel="stylesheet" href="../static/styles/nexten-modern.css">
+    <link rel="stylesheet" href="../static/styles/nexten-modern-interactive.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
@@ -45,6 +45,10 @@
     </header>
 
     <section class="hero" id="main-content">
+        <div class="hero-particles">
+            <!-- Les particules seront ajoutées dynamiquement via JavaScript -->
+        </div>
+        
         <div class="container">
             <div class="hero-content">
                 <h1>L'intelligence artificielle au service de <span class="ten-accent">10</span> connexions stratégiques</h1>
@@ -53,17 +57,19 @@
                     Un recrutement plus rapide, plus précis et plus humain.
                 </p>
                 
-                <div class="search-bar">
-                    <input type="text" id="search-input" placeholder="Rechercher par titre, entreprise ou compétence..." aria-label="Champ de recherche">
-                    <select id="category-filter" aria-label="Filtrer par catégorie">
-                        <option value="">Toutes catégories</option>
-                        <option value="tech">Technologie</option>
-                        <option value="marketing">Marketing</option>
-                        <option value="design">Design</option>
-                        <option value="sales">Ventes</option>
-                        <option value="other">Autre</option>
-                    </select>
-                    <button id="search-button"><i class="fas fa-search"></i> Rechercher</button>
+                <div class="search-container">
+                    <div class="search-bar">
+                        <input type="text" id="search-input" placeholder="Rechercher par titre, entreprise ou compétence..." aria-label="Champ de recherche">
+                        <select id="category-filter" aria-label="Filtrer par catégorie">
+                            <option value="">Toutes catégories</option>
+                            <option value="tech">Technologie</option>
+                            <option value="marketing">Marketing</option>
+                            <option value="design">Design</option>
+                            <option value="sales">Ventes</option>
+                            <option value="other">Autre</option>
+                        </select>
+                        <button id="search-button"><i class="fas fa-search"></i> Rechercher</button>
+                    </div>
                 </div>
                 
                 <div class="btn-group">
@@ -271,7 +277,7 @@
                         "Les 10 offres que Nexten m'a recommandées correspondaient parfaitement à mon profil. J'ai trouvé un emploi dans une entreprise qui partage réellement mes valeurs."
                     </p>
                     <div class="testimonial-author">
-                        <img src="../static/images/testimonial-1.jpg" alt="Marie L." class="testimonial-avatar">
+                        <img src="../static/images/testimonial-1.jpg" alt="Marie L." class="testimonial-avatar" onerror="this.src='https://randomuser.me/api/portraits/women/1.jpg'">
                         <div>
                             <strong>Marie L.</strong>
                             <span>Développeuse Full-Stack</span>
@@ -284,7 +290,7 @@
                         "Grâce à Nexten, j'ai reçu 10 profils parfaitement qualifiés en seulement quelques heures. Le candidat que nous avons embauché s'est intégré immédiatement à l'équipe."
                     </p>
                     <div class="testimonial-author">
-                        <img src="../static/images/testimonial-2.jpg" alt="Thomas D." class="testimonial-avatar">
+                        <img src="../static/images/testimonial-2.jpg" alt="Thomas D." class="testimonial-avatar" onerror="this.src='https://randomuser.me/api/portraits/men/1.jpg'">
                         <div>
                             <strong>Thomas D.</strong>
                             <span>Fondateur & CEO</span>
@@ -353,64 +359,6 @@
     </button>
 
     <!-- JavaScript -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Menu mobile toggle
-            const menuToggle = document.querySelector('.menu-toggle');
-            const nav = document.querySelector('nav');
-            
-            if (menuToggle && nav) {
-                menuToggle.addEventListener('click', function() {
-                    nav.classList.toggle('active');
-                    this.classList.toggle('active');
-                });
-            }
-            
-            // Animation au défilement
-            const animatedElements = document.querySelectorAll('.animate-on-scroll');
-            
-            function checkIfInView() {
-                const windowHeight = window.innerHeight;
-                const windowTop = window.scrollY;
-                const windowBottom = windowTop + windowHeight;
-                
-                animatedElements.forEach(function(element) {
-                    const elementTop = element.getBoundingClientRect().top + windowTop;
-                    const elementBottom = elementTop + element.offsetHeight;
-                    
-                    // Si l'élément est visible dans la fenêtre
-                    if (elementBottom > windowTop && elementTop < windowBottom) {
-                        element.classList.add('visible');
-                    }
-                });
-            }
-            
-            // Vérifier au chargement de la page
-            checkIfInView();
-            
-            // Vérifier lors du défilement
-            window.addEventListener('scroll', checkIfInView);
-            
-            // Bouton de retour en haut
-            const scrollToTopButton = document.getElementById('scroll-to-top');
-            
-            if (scrollToTopButton) {
-                window.addEventListener('scroll', function() {
-                    if (window.scrollY > 500) {
-                        scrollToTopButton.classList.add('visible');
-                    } else {
-                        scrollToTopButton.classList.remove('visible');
-                    }
-                });
-                
-                scrollToTopButton.addEventListener('click', function() {
-                    window.scrollTo({
-                        top: 0,
-                        behavior: 'smooth'
-                    });
-                });
-            }
-        });
-    </script>
+    <script src="../static/services/interactions.js"></script>
 </body>
 </html>
