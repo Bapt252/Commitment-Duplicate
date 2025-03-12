@@ -236,27 +236,6 @@
             border: 2px solid #5e72eb;
         }
         
-        .direct-access {
-            margin-top: 20px;
-            padding: 15px 25px;
-            background: #4CAF50;
-            border: none;
-            border-radius: 10px;
-            color: white;
-            font-weight: 600;
-            text-align: center;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.2);
-            transition: all 0.3s ease;
-            width: 100%;
-            display: block;
-        }
-        
-        .direct-access:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 7px 18px rgba(76, 175, 80, 0.3);
-        }
-        
         .divider {
             display: flex;
             align-items: center;
@@ -472,7 +451,9 @@
     <header>
         <div class="container">
             <div class="logo">
-                nex<span>ten</span><div class="logo-badge">10</div>
+                <a href="index.html">
+                    nex<span>ten</span><div class="logo-badge">10</div>
+                </a>
             </div>
             
             <button class="menu-toggle" aria-label="Menu principal">
@@ -500,15 +481,6 @@
                     
                     <div class="error-message" id="error-message">
                         <i class="fas fa-exclamation-circle"></i> Email ou mot de passe incorrect. Veuillez réessayer.
-                    </div>
-                    
-                    <!-- Bouton d'accès direct -->
-                    <a href="company-dashboard.html" class="direct-access fade-in-up">
-                        <i class="fas fa-bolt"></i> Accéder directement au tableau de bord
-                    </a>
-                    
-                    <div class="divider">
-                        <span>ou</span>
                     </div>
                     
                     <form id="login-form" class="slide-in-left">
@@ -626,7 +598,6 @@
     </button>
 
     <!-- JavaScript -->
-    <script src="../static/services/dataService.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Menu mobile toggle
@@ -638,12 +609,6 @@
                     nav.classList.toggle('active');
                     this.classList.toggle('active');
                 });
-            }
-            
-            // Vérifier si l'utilisateur est déjà connecté
-            const currentUser = localStorage.getItem('currentUser');
-            if (currentUser && JSON.parse(currentUser).type === 'company') {
-                window.location.href = 'company-dashboard.html';
             }
             
             // Animation des éléments du formulaire
@@ -665,7 +630,7 @@
             if (emailInput) animateInput(emailInput);
             if (passwordInput) animateInput(passwordInput);
             
-            // Nouvelle logique de validation du formulaire pour le mode démo
+            // Logique de validation du formulaire pour le mode démo
             const loginForm = document.getElementById('login-form');
             const loginButton = document.getElementById('login-button');
             const errorMessage = document.getElementById('error-message');
@@ -686,17 +651,6 @@
                     
                     // Simuler un délai de traitement
                     setTimeout(() => {
-                        // MODIFICATION: Accepter tous les emails et mots de passe en mode démo
-                        // Stocker un utilisateur fictif dans le localStorage
-                        const mockUser = {
-                            id: 999,
-                            type: 'company',
-                            name: 'Entreprise Demo',
-                            email: email
-                        };
-                        
-                        localStorage.setItem('currentUser', JSON.stringify(mockUser));
-                        
                         // Ajouter une animation avant la redirection
                         loginButton.textContent = 'Connecté!';
                         loginButton.classList.remove('btn-loading');
