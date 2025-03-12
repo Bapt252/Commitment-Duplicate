@@ -221,9 +221,11 @@ function renderJobProposals() {
 // Fonction pour rediriger vers la page des propositions après le questionnaire
 function redirectToProposals(userType) {
     if (userType === 'candidate') {
-        window.location.href = '../templates/candidate-jobs-proposals.html';
+        // Correction du chemin de redirection pour GitHub Pages
+        window.location.href = 'candidate-jobs-proposals.html';
     } else if (userType === 'recruiter') {
-        window.location.href = '../templates/recruiter-candidates-proposals.html';
+        // Correction du chemin de redirection pour GitHub Pages
+        window.location.href = 'recruiter-candidates-proposals.html';
     }
 }
 
