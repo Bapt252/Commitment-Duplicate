@@ -8,6 +8,7 @@
     
     <!-- CSS -->
     <link rel="stylesheet" href="../static/styles/nexten-modern-interactive.css">
+    <link rel="stylesheet" href="../static/styles/organization.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
@@ -693,6 +694,14 @@
         .delay-4 { transition-delay: 0.4s; }
         .delay-5 { transition-delay: 0.5s; }
         .delay-6 { transition-delay: 0.6s; }
+
+        /* Toast container pour les notifications */
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1050;
+        }
     </style>
 </head>
 <body>
@@ -750,145 +759,464 @@
     </div>
     
     <main class="main-container" id="main-content">
-        <section class="greeting fade-in">
-            <h2>Tableau de bord 📊</h2>
-            <p>Voici le récapitulatif de vos activités de recrutement</p>
-        </section>
+        <!-- Container pour les notifications -->
+        <div class="toast-container position-fixed bottom-0 end-0 p-3"></div>
         
-        <section class="stats-overview fade-in delay-1">
-            <div class="stat-card">
-                <h3>Vues de vos offres</h3>
-                <div class="stat-value">2,459</div>
-                <div class="stat-description">+18% par rapport au mois dernier</div>
-            </div>
-            <div class="stat-card">
-                <h3>Candidatures reçues</h3>
-                <div class="stat-value">142</div>
-                <div class="stat-description">23 nouvelles cette semaine</div>
-            </div>
-            <div class="stat-card">
-                <h3>Taux de conversion</h3>
-                <div class="stat-value">5.8%</div>
-                <div class="stat-description">Vues vers candidatures</div>
-            </div>
-            <div class="stat-card">
-                <h3>Délai de recrutement</h3>
-                <div class="stat-value">18j</div>
-                <div class="stat-description">-3j par rapport à la moyenne</div>
-            </div>
-        </section>
+        <!-- Onglets principaux du dashboard -->
+        <ul class="nav nav-tabs mb-4 mt-4" id="mainTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Accueil</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="organization-tab" data-bs-toggle="tab" data-bs-target="#organization" type="button" role="tab" aria-controls="organization" aria-selected="false">Organisation</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="recruitments-tab" data-bs-toggle="tab" data-bs-target="#recruitments" type="button" role="tab" aria-controls="recruitments" aria-selected="false">Recrutements</button>
+            </li>
+        </ul>
         
-        <section class="company-stats-section fade-in delay-2">
-            <div class="company-stat-cards">
-                <div class="company-stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-clipboard-list"></i>
+        <!-- Contenu des onglets -->
+        <div class="tab-content" id="mainTabsContent">
+            <!-- Onglet Accueil -->
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <section class="greeting fade-in">
+                    <h2>Tableau de bord 📊</h2>
+                    <p>Voici le récapitulatif de vos activités de recrutement</p>
+                </section>
+                
+                <section class="stats-overview fade-in delay-1">
+                    <div class="stat-card">
+                        <h3>Vues de vos offres</h3>
+                        <div class="stat-value">2,459</div>
+                        <div class="stat-description">+18% par rapport au mois dernier</div>
                     </div>
-                    <div class="stat-info">
-                        <h4>Postes ouverts</h4>
-                        <p>3</p>
+                    <div class="stat-card">
+                        <h3>Candidatures reçues</h3>
+                        <div class="stat-value">142</div>
+                        <div class="stat-description">23 nouvelles cette semaine</div>
                     </div>
-                </div>
-                <div class="company-stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-users"></i>
+                    <div class="stat-card">
+                        <h3>Taux de conversion</h3>
+                        <div class="stat-value">5.8%</div>
+                        <div class="stat-description">Vues vers candidatures</div>
                     </div>
-                    <div class="stat-info">
-                        <h4>Recrutements en cours</h4>
-                        <p>2</p>
+                    <div class="stat-card">
+                        <h3>Délai de recrutement</h3>
+                        <div class="stat-value">18j</div>
+                        <div class="stat-description">-3j par rapport à la moyenne</div>
                     </div>
-                </div>
-                <div class="company-stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-chart-line"></i>
+                </section>
+                
+                <section class="company-stats-section fade-in delay-2">
+                    <div class="company-stat-cards">
+                        <div class="company-stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-clipboard-list"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h4>Postes ouverts</h4>
+                                <p>3</p>
+                            </div>
+                        </div>
+                        <div class="company-stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h4>Recrutements en cours</h4>
+                                <p>2</p>
+                            </div>
+                        </div>
+                        <div class="company-stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h4>Taux de complétion</h4>
+                                <p>68%</p>
+                            </div>
+                        </div>
+                        <div class="company-stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h4>Recrutements finalisés</h4>
+                                <p>14</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="stat-info">
-                        <h4>Taux de complétion</h4>
-                        <p>68%</p>
+                    <button class="edit-profile-btn">
+                        <i class="fas fa-pen"></i>
+                        <span>Éditer le profil</span>
+                    </button>
+                </section>
+                
+                <section class="dashboard-menu">
+                    <!-- 1. Créer un poste -->
+                    <div class="menu-item fade-in delay-1" onclick="window.location.href='post-job.html'">
+                        <div class="notification-badge">Nouveau</div>
+                        <div class="menu-icon">
+                            <i class="fas fa-plus-circle"></i>
+                        </div>
+                        <h3>Créer un poste</h3>
+                        <p>Publiez une nouvelle offre d'emploi et recevez des candidatures ciblées grâce à notre IA</p>
                     </div>
-                </div>
-                <div class="company-stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-check-circle"></i>
+                    
+                    <!-- 2. Mes sélections -->
+                    <div class="menu-item fade-in delay-2">
+                        <div class="notification-badge">5 nouveaux</div>
+                        <div class="menu-icon">
+                            <i class="fas fa-th-large"></i>
+                        </div>
+                        <h3>Mes sélections</h3>
+                        <p>Consultez et gérez vos candidats présélectionnés qui correspondent parfaitement à vos critères</p>
                     </div>
-                    <div class="stat-info">
-                        <h4>Recrutements finalisés</h4>
-                        <p>14</p>
+                    
+                    <!-- 3. Candidats -->
+                    <div class="menu-item fade-in delay-3">
+                        <div class="notification-badge">12 nouveaux</div>
+                        <div class="menu-icon">
+                            <i class="fas fa-user-friends"></i>
+                        </div>
+                        <h3>Candidats</h3>
+                        <p>Explorez les profils des candidats correspondant à vos offres avec analyse des compétences</p>
                     </div>
-                </div>
-            </div>
-            <button class="edit-profile-btn">
-                <i class="fas fa-pen"></i>
-                <span>Éditer le profil</span>
-            </button>
-        </section>
-        
-        <section class="dashboard-menu">
-            <!-- 1. Créer un poste -->
-            <div class="menu-item fade-in delay-1" onclick="window.location.href='post-job.html'">
-                <div class="notification-badge">Nouveau</div>
-                <div class="menu-icon">
-                    <i class="fas fa-plus-circle"></i>
-                </div>
-                <h3>Créer un poste</h3>
-                <p>Publiez une nouvelle offre d'emploi et recevez des candidatures ciblées grâce à notre IA</p>
+                    
+                    <!-- 4. Planning -->
+                    <div class="menu-item fade-in delay-4">
+                        <div class="notification-badge">2 aujourd'hui</div>
+                        <div class="menu-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <h3>Planning</h3>
+                        <p>Organisez vos entretiens et suivez votre calendrier de recrutement en temps réel</p>
+                    </div>
+                    
+                    <!-- 5. Messagerie -->
+                    <div class="menu-item fade-in delay-5">
+                        <div class="notification-badge">3 non lus</div>
+                        <div class="menu-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <h3>Messagerie</h3>
+                        <p>Communiquez avec les candidats et votre équipe de recrutement de manière centralisée</p>
+                    </div>
+                    
+                    <!-- 6. Organisation -->
+                    <div class="menu-item fade-in delay-6" id="organization-menu-item">
+                        <div class="menu-icon">
+                            <i class="fas fa-th"></i>
+                        </div>
+                        <h3>Organisation</h3>
+                        <p>Gérez la structure de votre entreprise, les permissions et les workflows de recrutement</p>
+                    </div>
+                </section>
             </div>
             
-            <!-- 2. Mes sélections -->
-            <div class="menu-item fade-in delay-2">
-                <div class="notification-badge">5 nouveaux</div>
-                <div class="menu-icon">
-                    <i class="fas fa-th-large"></i>
+            <!-- Onglet Organisation -->
+            <div class="tab-pane fade" id="organization" role="tabpanel" aria-labelledby="organization-tab">
+                <div class="organization-section">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Mon organisation</h3>
+                        </div>
+                        <div class="card-body">
+                            <!-- Barre de navigation interne -->
+                            <ul class="nav nav-tabs mb-4 organization-tabs" id="organizationTabs" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="team-tab" data-bs-toggle="tab" data-bs-target="#team" type="button" role="tab" aria-controls="team" aria-selected="true">Équipe et Contacts</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="permissions-tab" data-bs-toggle="tab" data-bs-target="#permissions" type="button" role="tab" aria-controls="permissions" aria-selected="false">Gestion des accès</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" type="button" role="tab" aria-controls="settings" aria-selected="false">Paramètres</button>
+                                </li>
+                            </ul>
+                            
+                            <!-- Contenu des onglets -->
+                            <div class="tab-content" id="organizationTabsContent">
+                                <!-- Onglet Équipe et Contacts -->
+                                <div class="tab-pane fade show active" id="team" role="tabpanel" aria-labelledby="team-tab">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div class="table-responsive">
+                                                <table class="table table-hover contacts-table" id="contactsTable">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Prénom</th>
+                                                            <th>Nom</th>
+                                                            <th>Fonction</th>
+                                                            <th>Email</th>
+                                                            <th>Téléphone</th>
+                                                            <th>Actions</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Marie</td>
+                                                            <td>DURAND</td>
+                                                            <td>Chargée recrutement</td>
+                                                            <td>marie.durand@example.com</td>
+                                                            <td>+33 6 12 34 56 78</td>
+                                                            <td>
+                                                                <div class="dropdown">
+                                                                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                        <i class="fas fa-ellipsis-v"></i>
+                                                                    </button>
+                                                                    <ul class="dropdown-menu">
+                                                                        <li><a class="dropdown-item edit-contact" href="#"><i class="fas fa-edit me-2"></i>Modifier</a></li>
+                                                                        <li><a class="dropdown-item delete-contact" href="#"><i class="fas fa-trash me-2"></i>Supprimer</a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Joseph</td>
+                                                            <td>EUX</td>
+                                                            <td>DAF</td>
+                                                            <td>joseph.eux@example.com</td>
+                                                            <td>+33 6 98 76 54 32</td>
+                                                            <td>
+                                                                <div class="dropdown">
+                                                                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                        <i class="fas fa-ellipsis-v"></i>
+                                                                    </button>
+                                                                    <ul class="dropdown-menu">
+                                                                        <li><a class="dropdown-item edit-contact" href="#"><i class="fas fa-edit me-2"></i>Modifier</a></li>
+                                                                        <li><a class="dropdown-item delete-contact" href="#"><i class="fas fa-trash me-2"></i>Supprimer</a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            
+                                            <div class="alert alert-success contact-added-alert d-none">
+                                                <i class="fas fa-check-circle me-2"></i>Contact ajouté
+                                            </div>
+                                            
+                                            <div class="d-flex mt-3 gap-3">
+                                                <button type="button" class="btn add-contact-btn" data-bs-toggle="modal" data-bs-target="#addContactModal">
+                                                    <i class="fas fa-plus me-2"></i>Ajouter un contact
+                                                </button>
+                                                
+                                                <form id="invitationForm" class="d-flex flex-grow-1">
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">@</span>
+                                                        <input type="email" class="form-control" placeholder="Email" required>
+                                                        <button type="submit" class="btn btn-outline-primary">Envoyer une invitation</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-4">
+                                            <div class="card h-100">
+                                                <div class="card-header bg-light">
+                                                    <h5 class="mb-0">Ajouter à un recrutement</h5>
+                                                    <p class="text-muted small mb-0">(bouton +, liste déroulante)</p>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="recruitment-list">
+                                                        <div class="recruitment-item" data-recruitment-id="1">
+                                                            <span class="recruitment-title">Développeur Full-Stack</span>
+                                                            <button class="assign-to-recruitment btn btn-sm btn-light" data-contact-id="1">
+                                                                <i class="fas fa-plus"></i>
+                                                            </button>
+                                                        </div>
+                                                        <div class="recruitment-item" data-recruitment-id="2">
+                                                            <span class="recruitment-title">Chef de Projet IT</span>
+                                                            <button class="assign-to-recruitment btn btn-sm btn-light" data-contact-id="1">
+                                                                <i class="fas fa-plus"></i>
+                                                            </button>
+                                                        </div>
+                                                        <div class="recruitment-item" data-recruitment-id="3">
+                                                            <span class="recruitment-title">Designer UX/UI</span>
+                                                            <button class="assign-to-recruitment btn btn-sm btn-light" data-contact-id="1">
+                                                                <i class="fas fa-plus"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <button class="btn btn-outline-primary w-100 mt-3">
+                                                        <i class="fas fa-plus me-2"></i>Nouveau recrutement
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Onglet Gestion des accès -->
+                                <div class="tab-pane fade" id="permissions" role="tabpanel" aria-labelledby="permissions-tab">
+                                    <h4 class="mb-4">Gestion des accès → Qui peut faire quoi ?</h4>
+                                    
+                                    <div class="roles-list">
+                                        <div class="role-item">
+                                            <div class="role-header">
+                                                <h5 class="role-name">Role 1 : Administrateur (gestion complète)</h5>
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input role-switch" type="checkbox" id="adminRoleSwitch" data-role="Administrateur" checked>
+                                                </div>
+                                            </div>
+                                            <p class="role-description">Accès complet à toutes les fonctionnalités et à la gestion des utilisateurs</p>
+                                        </div>
+                                        
+                                        <div class="role-item">
+                                            <div class="role-header">
+                                                <h5 class="role-name">Role 2 : Manager (accès aux recrutements)</h5>
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input role-switch" type="checkbox" id="managerRoleSwitch" data-role="Manager" checked>
+                                                </div>
+                                            </div>
+                                            <p class="role-description">Peut gérer les recrutements et voir toutes les candidatures</p>
+                                        </div>
+                                        
+                                        <div class="role-item">
+                                            <div class="role-header">
+                                                <h5 class="role-name">Recruteur (accès limité à certaines candidatures)</h5>
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input role-switch" type="checkbox" id="recruiterRoleSwitch" data-role="Recruteur">
+                                                </div>
+                                            </div>
+                                            <p class="role-description">Accès limité aux candidatures assignées et aux recrutements spécifiques</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="permissions-info">
+                                        <h6><i class="fas fa-cog"></i> Modification des permissions</h6>
+                                        <p>Cases à cocher pour définir les accès par utilisateur. Vous pouvez personnaliser les permissions pour chaque membre de votre équipe.</p>
+                                    </div>
+                                    
+                                    <div class="permissions-info">
+                                        <h6><i class="fas fa-bell"></i> Notification d'ajout</h6>
+                                        <p>Lorsqu'un membre est ajouté, il reçoit une invitation par email pour rejoindre votre organisation.</p>
+                                    </div>
+                                </div>
+                                
+                                <!-- Onglet Paramètres -->
+                                <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+                                    <h4 class="mb-4">Paramètres de l'organisation</h4>
+                                    
+                                    <form id="organizationSettingsForm" class="settings-form">
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <div class="mb-3">
+                                                    <label for="companyName" class="form-label">Nom de l'entreprise</label>
+                                                    <input type="text" class="form-control" id="companyName" value="InnovTech" required>
+                                                </div>
+                                                
+                                                <div class="mb-3">
+                                                    <label for="companyDescription" class="form-label">Description</label>
+                                                    <textarea class="form-control" id="companyDescription" rows="4" placeholder="Décrivez votre entreprise en quelques phrases">Entreprise spécialisée dans l'innovation technologique et le développement de solutions numériques.</textarea>
+                                                </div>
+                                                
+                                                <div class="mb-3">
+                                                    <label for="companyIndustry" class="form-label">Secteur d'activité</label>
+                                                    <select class="form-select" id="companyIndustry">
+                                                        <option selected value="tech">Technologie & Innovation</option>
+                                                        <option value="finance">Finance</option>
+                                                        <option value="health">Santé</option>
+                                                        <option value="education">Éducation</option>
+                                                        <option value="retail">Commerce & Distribution</option>
+                                                        <option value="other">Autre</option>
+                                                    </select>
+                                                </div>
+                                                
+                                                <div class="mb-3">
+                                                    <label for="companyWebsite" class="form-label">Site web</label>
+                                                    <input type="url" class="form-control" id="companyWebsite" placeholder="https://www.exemple.com" value="https://www.innovtech.com">
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-md-4">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Logo de l'entreprise</label>
+                                                    <div class="logo-preview">
+                                                        <img src="https://via.placeholder.com/120x120?text=Logo" alt="Aperçu du logo" id="logoPreview">
+                                                    </div>
+                                                    <input type="file" class="form-control" id="companyLogo" accept="image/*">
+                                                    <div class="form-text">Format recommandé: PNG ou JPG (300x300px)</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <button type="submit" class="btn save-btn mt-4">
+                                            <i class="fas fa-save me-2"></i>Sauvegarder les modifications
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <h3>Mes sélections</h3>
-                <p>Consultez et gérez vos candidats présélectionnés qui correspondent parfaitement à vos critères</p>
             </div>
             
-            <!-- 3. Candidats -->
-            <div class="menu-item fade-in delay-3">
-                <div class="notification-badge">12 nouveaux</div>
-                <div class="menu-icon">
-                    <i class="fas fa-user-friends"></i>
-                </div>
-                <h3>Candidats</h3>
-                <p>Explorez les profils des candidats correspondant à vos offres avec analyse des compétences</p>
+            <!-- Onglet Recrutements -->
+            <div class="tab-pane fade" id="recruitments" role="tabpanel" aria-labelledby="recruitments-tab">
+                <h2>Recrutements</h2>
+                <p>Contenu de l'onglet Recrutements à venir.</p>
             </div>
-            
-            <!-- 4. Planning -->
-            <div class="menu-item fade-in delay-4">
-                <div class="notification-badge">2 aujourd'hui</div>
-                <div class="menu-icon">
-                    <i class="fas fa-calendar-alt"></i>
-                </div>
-                <h3>Planning</h3>
-                <p>Organisez vos entretiens et suivez votre calendrier de recrutement en temps réel</p>
-            </div>
-            
-            <!-- 5. Messagerie -->
-            <div class="menu-item fade-in delay-5">
-                <div class="notification-badge">3 non lus</div>
-                <div class="menu-icon">
-                    <i class="fas fa-comments"></i>
-                </div>
-                <h3>Messagerie</h3>
-                <p>Communiquez avec les candidats et votre équipe de recrutement de manière centralisée</p>
-            </div>
-            
-            <!-- 6. Organisation -->
-            <div class="menu-item fade-in delay-6">
-                <div class="menu-icon">
-                    <i class="fas fa-th"></i>
-                </div>
-                <h3>Organisation</h3>
-                <p>Gérez la structure de votre entreprise, les permissions et les workflows de recrutement</p>
-            </div>
-        </section>
+        </div>
         
         <button class="logout-btn">
             <i class="fas fa-sign-out-alt"></i>
             <span>Déconnexion</span>
         </button>
     </main>
+    
+    <!-- Modal Ajouter un contact -->
+    <div class="modal fade" id="addContactModal" tabindex="-1" aria-labelledby="addContactModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addContactModalLabel">Ajouter un contact</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addContactForm">
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="firstName" class="form-label">Prénom</label>
+                                <input type="text" class="form-control" id="firstName" required>
+                            </div>
+                            <div class="col">
+                                <label for="lastName" class="form-label">Nom</label>
+                                <input type="text" class="form-control" id="lastName" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="function" class="form-label">Fonction</label>
+                            <input type="text" class="form-control" id="function">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Téléphone</label>
+                            <input type="tel" class="form-control" id="phone">
+                        </div>
+                        <div class="mb-3">
+                            <label for="role" class="form-label">Rôle</label>
+                            <select class="form-select" id="role" required>
+                                <option value="" selected disabled>Sélectionner un rôle</option>
+                                <option value="admin">Administrateur</option>
+                                <option value="manager">Manager</option>
+                                <option value="recruiter">Recruteur</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-primary" form="addContactForm">Ajouter</button>
+                </div>
+            </div>
+        </div>
+    </div>
     
     <footer id="contact">
         <div class="container">
@@ -936,6 +1264,10 @@
         <i class="fas fa-arrow-up"></i>
     </button>
     
+    <!-- Bootstrap JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Scripts personnalisés -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Menu mobile toggle
@@ -1042,7 +1374,21 @@
                     });
                 });
             }
+            
+            // Lien entre le menu Organisation et l'onglet Organisation
+            const organizationMenuItem = document.getElementById('organization-menu-item');
+            if (organizationMenuItem) {
+                organizationMenuItem.addEventListener('click', function() {
+                    const organizationTab = document.getElementById('organization-tab');
+                    if (organizationTab) {
+                        organizationTab.click();
+                    }
+                });
+            }
         });
     </script>
+    
+    <!-- Script pour la section Organisation -->
+    <script src="../static/scripts/organization.js"></script>
 </body>
 </html>
