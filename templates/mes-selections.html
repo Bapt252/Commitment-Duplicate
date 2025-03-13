@@ -18,228 +18,1291 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     
     <style>
-        /* Styles spécifiques à la page des sélections */
+        :root {
+            --purple: #7c3aed;
+            --purple-dark: #6025c0;
+            --purple-light: #ddd6fe;
+            --cream: #f9fafb;
+            --white: #ffffff;
+            --dark: #1e293b;
+            --gray: #64748b;
+            --gray-light: #e2e8f0;
+            --green: #22c55e;
+            --green-dark: #16a34a;
+            --green-light: rgba(34, 197, 94, 0.1);
+            --red: #ef4444;
+            --red-dark: #dc2626;
+            --red-light: rgba(239, 68, 68, 0.1);
+            --yellow: #fbbf24;
+            --primary-light: rgba(124, 58, 237, 0.1);
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 0.75rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --spacing-xxl: 3rem;
+            --border-radius-sm: 0.5rem;
+            --border-radius-md: 0.75rem;
+            --border-radius-lg: 1rem;
+            --box-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+            --box-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+            --box-shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+            --transition-fast: 0.2s ease;
+            --transition-normal: 0.3s ease;
+            --transition-slow: 0.5s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
+            font-family: 'Inter', sans-serif;
             background-color: var(--cream);
+            color: var(--dark);
+            line-height: 1.6;
         }
-        
+
+        /* Header styles */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--white);
+            box-shadow: var(--box-shadow-sm);
+            z-index: 1000;
+            transition: all var(--transition-normal);
+        }
+
+        header.scrolled {
+            box-shadow: var(--box-shadow-md);
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem var(--spacing-md);
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--dark);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .logo span {
+            color: var(--purple);
+        }
+
+        .logo-badge {
+            background-color: var(--purple);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            margin-left: 2px;
+        }
+
+        /* Notification bar */
+        .notification-bar {
+            background-color: var(--purple-light);
+            color: var(--purple-dark);
+            text-align: center;
+            padding: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1001;
+            transform: translateY(-100%);
+            animation: slideDown 0.5s ease forwards 0.5s;
+        }
+
+        @keyframes slideDown {
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        .notification-bar i {
+            margin-right: 0.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        nav ul {
+            display: flex;
+            gap: var(--spacing-md);
+            list-style: none;
+        }
+
+        nav a {
+            color: var(--gray);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color var(--transition-fast);
+            padding: 0.5rem 0.75rem;
+            border-radius: var(--border-radius-sm);
+        }
+
+        nav a:hover {
+            color: var(--purple);
+        }
+
+        nav a.active {
+            color: var(--purple);
+            background-color: var(--primary-light);
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--dark);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .skip-to-content {
+            position: absolute;
+            left: -9999px;
+            top: auto;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+        }
+
+        .skip-to-content:focus {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: auto;
+            height: auto;
+            padding: 0.5rem 1rem;
+            background-color: var(--purple);
+            color: white;
+            z-index: 1002;
+            outline: none;
+        }
+
+        /* Main content */
         #main-content {
-            padding-top: 40px;
+            padding-top: 100px;
+            padding-bottom: 60px;
         }
-        
+
         .main-container {
             max-width: 1400px;
             margin: 0 auto;
             padding: 0 var(--spacing-md);
         }
-        
-        /* Section candidats */
-        .selection-section {
-            margin-bottom: var(--spacing-xl);
-        }
-        
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: var(--spacing-md);
-            padding-bottom: var(--spacing-xs);
-            border-bottom: 2px solid var(--purple);
-            display: inline-block;
-        }
-        
-        .poste-title {
-            font-size: 1.2rem;
-            font-weight: 500;
-            margin: var(--spacing-md) 0;
-            display: inline-block;
-            position: relative;
-            padding-left: 1rem;
-        }
-        
-        .poste-title::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            height: 1rem;
-            width: 4px;
-            background-color: var(--purple);
-            border-radius: 2px;
-        }
-        
-        /* Carte de candidat */
-        .candidat-card {
-            background-color: white;
-            border-radius: 12px;
-            padding: var(--spacing-md);
-            margin-bottom: var(--spacing-md);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
-            display: grid;
-            grid-template-columns: 1fr auto;
-            gap: var(--spacing-md);
+
+        /* Company banner with modern style */
+        .company-banner {
+            background: linear-gradient(135deg, var(--purple) 0%, var(--purple-dark) 100%);
+            color: var(--white);
+            padding: var(--spacing-lg) 0;
+            margin-top: 60px;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 5px 25px rgba(124, 58, 237, 0.3);
+            border-radius: var(--border-radius-sm);
         }
-        
-        .candidat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        .candidat-card::after {
+
+        .company-banner::before {
             content: '';
             position: absolute;
-            top: 0;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            transform: rotate(30deg);
+        }
+
+        .company-banner::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
             left: 0;
             width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--purple) 0%, transparent 100%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            height: 5px;
+            background: linear-gradient(90deg, var(--purple-light) 0%, transparent 100%);
+            opacity: 0.5;
         }
-        
-        .candidat-card:hover::after {
-            opacity: 1;
-        }
-        
-        .candidat-info {
+
+        .company-banner-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 2;
         }
-        
-        .candidat-name {
+
+        .company-info {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .company-logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 16px;
+            background-color: var(--white);
+            padding: 10px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-slow) cubic-bezier(0.25, 0.8, 0.25, 1);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .company-logo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .company-logo img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .company-name {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .company-category {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .user-details {
+            text-align: right;
+        }
+
+        .user-fullname {
             font-size: 1.2rem;
             font-weight: 500;
-            color: var(--purple);
             margin-bottom: 5px;
         }
-        
-        .candidat-profile {
+
+        .user-position {
             font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--white);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all var(--transition-normal);
+        }
+
+        .user-avatar:hover {
+            transform: scale(1.05);
+            background-color: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Page title */
+        .page-header {
+            margin: var(--spacing-xl) 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .page-title-container {
+            position: relative;
+        }
+
+        .page-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 0.3rem;
+            position: relative;
+        }
+
+        .page-subtitle {
+            font-size: 1rem;
             color: var(--gray);
-            margin-bottom: 10px;
+            margin-top: 0;
         }
-        
-        .candidat-cv {
-            font-size: 0.9rem;
-            margin-bottom: 10px;
-            font-style: italic;
-        }
-        
-        .candidat-detail {
-            font-size: 0.9rem;
-            margin-bottom: 5px;
-        }
-        
-        .candidat-detail strong {
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background-color: var(--white);
+            border: 1.5px solid var(--gray-light);
+            border-radius: var(--border-radius-md);
+            color: var(--gray);
             font-weight: 500;
+            text-decoration: none;
+            transition: all var(--transition-normal);
+            font-size: 0.95rem;
         }
-        
-        .candidat-actions {
+
+        .back-btn:hover {
+            background-color: var(--cream);
+            transform: translateY(-3px);
+            box-shadow: var(--box-shadow-sm);
+            color: var(--dark);
+        }
+
+        /* Filter and Search */
+        .filter-container {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+            flex-wrap: wrap;
+        }
+
+        .search-bar {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 16px 10px 40px;
+            border: 1.5px solid var(--gray-light);
+            border-radius: var(--border-radius-md);
+            font-size: 0.95rem;
+            transition: all var(--transition-normal);
+            color: var(--dark);
+            background-color: var(--white);
+        }
+
+        .search-input:focus {
+            border-color: var(--purple);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+        }
+
+        .filter-dropdown {
+            position: relative;
+        }
+
+        .filter-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background-color: var(--white);
+            border: 1.5px solid var(--gray-light);
+            border-radius: var(--border-radius-md);
+            color: var(--gray);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            font-size: 0.95rem;
+        }
+
+        .filter-btn:hover {
+            background-color: var(--cream);
+        }
+
+        .filter-dropdown-content {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            min-width: 200px;
+            background-color: var(--white);
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--box-shadow-md);
+            padding: var(--spacing-sm);
+            z-index: 10;
+            margin-top: 5px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all var(--transition-normal);
+        }
+
+        .filter-dropdown-content.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .filter-option {
+            padding: 8px 12px;
+            border-radius: var(--border-radius-sm);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-option:hover {
+            background-color: var(--cream);
+        }
+
+        .filter-option.active {
+            background-color: var(--primary-light);
+            color: var(--purple);
+        }
+
+        .selection-counter {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: var(--primary-light);
+            padding: 6px 12px;
+            border-radius: var(--border-radius-md);
+            color: var(--purple);
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        /* Section titles */
+        .section-container {
+            margin-bottom: var(--spacing-xl);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-container:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-xs);
+            border-bottom: 2px solid var(--gray-light);
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            color: var(--purple);
+        }
+
+        .section-counter {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background-color: var(--primary-light);
+            color: var(--purple);
+            border-radius: 50%;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        .job-title {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin: var(--spacing-md) 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--dark);
+            padding-left: 12px;
+            border-left: 3px solid var(--purple);
+        }
+
+        /* Candidate cards */
+        .candidate-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-md);
+        }
+
+        .candidate-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            box-shadow: var(--box-shadow-sm);
+            transition: all var(--transition-normal);
+            position: relative;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            min-width: 180px;
+            height: 100%;
         }
-        
+
+        .candidate-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--box-shadow-md);
+        }
+
+        .card-header {
+            padding: var(--spacing-md);
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .candidate-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--purple);
+        }
+
+        .candidate-info {
+            flex: 1;
+        }
+
+        .candidate-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 5px;
+            transition: color var(--transition-fast);
+        }
+
+        .candidate-card:hover .candidate-name {
+            color: var(--purple);
+        }
+
+        .candidate-position {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .match-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, var(--purple) 0%, var(--purple-dark) 100%);
+            color: white;
+            padding: 5px 10px;
+            border-radius: var(--border-radius-md);
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 8px rgba(124, 58, 237, 0.2);
+        }
+
+        .card-body {
+            padding: var(--spacing-md);
+            flex: 1;
+        }
+
+        .detail-row {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .detail-icon {
+            color: var(--purple);
+            font-size: 0.95rem;
+            margin-top: 3px;
+        }
+
+        .detail-content {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+
+        .detail-label {
+            font-weight: 500;
+            color: var(--dark);
+            margin-right: 5px;
+        }
+
+        .detail-value {
+            color: var(--gray);
+        }
+
+        .cv-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background-color: var(--primary-light);
+            color: var(--purple);
+            border: none;
+            border-radius: var(--border-radius-sm);
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            margin-top: 5px;
+        }
+
+        .cv-button:hover {
+            background-color: var(--purple);
+            color: white;
+        }
+
+        .maps-link {
+            color: var(--purple);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all var(--transition-fast);
+        }
+
+        .maps-link:hover {
+            color: var(--purple-dark);
+            text-decoration: underline;
+        }
+
+        .star-rating {
+            display: flex;
+            gap: 2px;
+        }
+
+        .star {
+            color: var(--yellow);
+            font-size: 1rem;
+        }
+
+        .star.empty {
+            color: var(--gray-light);
+        }
+
+        .availability {
+            margin-top: 10px;
+            padding: 8px 12px;
+            background-color: var(--green-light);
+            color: var(--green-dark);
+            border-radius: var(--border-radius-sm);
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-footer {
+            padding: var(--spacing-md);
+            border-top: 1px solid var(--gray-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
         .action-buttons {
             display: flex;
             gap: 10px;
-            margin-bottom: 10px;
         }
-        
+
         .action-btn {
-            width: 36px;
-            height: 36px;
+            width: 42px;
+            height: 42px;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 50%;
             border: none;
             color: white;
-            transition: all 0.3s ease;
+            transition: all var(--transition-normal);
             cursor: pointer;
-        }
-        
-        .action-btn.accept {
-            background-color: #22c55e;
-        }
-        
-        .action-btn.accept:hover {
-            background-color: #16a34a;
-            transform: scale(1.1);
-        }
-        
-        .action-btn.reject {
-            background-color: #ef4444;
-        }
-        
-        .action-btn.reject:hover {
-            background-color: #dc2626;
-            transform: scale(1.1);
-        }
-        
-        .match-rate {
             font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 5px;
         }
-        
-        .trajet-info {
-            font-size: 0.85rem;
-            text-align: center;
-            margin-bottom: 10px;
+
+        .action-btn.accept {
+            background-color: var(--green);
         }
-        
-        .maps-link {
-            font-size: 0.8rem;
-            color: var(--purple);
-            text-decoration: underline;
-            margin-bottom: 10px;
-            display: block;
-            text-align: center;
+
+        .action-btn.accept:hover {
+            background-color: var(--green-dark);
+            transform: scale(1.1);
         }
-        
-        .maps-link:hover {
-            color: var(--purple-dark);
+
+        .action-btn.reject {
+            background-color: var(--red);
         }
-        
-        .star-rating {
+
+        .action-btn.reject:hover {
+            background-color: var(--red-dark);
+            transform: scale(1.1);
+        }
+
+        .action-btn.clicked {
+            animation: actionPulse 0.3s ease-out;
+        }
+
+        @keyframes actionPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .action-btn.contact {
+            background-color: var(--purple);
+        }
+
+        .action-btn.contact:hover {
+            background-color: var(--purple-dark);
+            transform: scale(1.1);
+        }
+
+        .more-button {
+            color: var(--gray);
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            font-size: 1.2rem;
+            width: 36px;
+            height: 36px;
             display: flex;
-            gap: 2px;
-            margin-bottom: 10px;
+            align-items: center;
             justify-content: center;
+            border-radius: 50%;
         }
-        
-        .star {
-            color: #fbbf24;
-            font-size: 0.9rem;
+
+        .more-button:hover {
+            background-color: var(--gray-light);
+            color: var(--dark);
         }
-        
-        .disponibilite {
-            font-size: 0.85rem;
+
+        /* Empty state */
+        .empty-state {
             text-align: center;
+            padding: var(--spacing-xl) 0;
+            margin: var(--spacing-xl) 0;
+            background-color: var(--white);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--box-shadow-sm);
+        }
+
+        .empty-icon {
+            font-size: 3rem;
+            color: var(--gray-light);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .empty-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .empty-description {
+            color: var(--gray);
+            margin-bottom: var(--spacing-md);
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .empty-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background-color: var(--purple);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius-md);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+        }
+
+        .empty-action:hover {
+            background-color: var(--purple-dark);
+            transform: translateY(-3px);
+            box-shadow: var(--box-shadow-sm);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: var(--white);
+            padding-top: var(--spacing-xl);
+            margin-top: var(--spacing-xxl);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr;
+            gap: var(--spacing-xl);
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+
+        .footer-heading {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+            color: var(--white);
+        }
+
+        .footer-description {
+            margin-bottom: var(--spacing-md);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+            margin-top: var(--spacing-md);
+        }
+
+        .footer-social a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            transition: all var(--transition-normal);
+        }
+
+        .footer-social a:hover {
+            background-color: var(--purple);
+            transform: translateY(-3px);
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        .footer-contact p {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .footer-contact i {
+            color: var(--purple-light);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding: var(--spacing-md) 0;
+            margin-top: var(--spacing-xl);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .footer-bottom a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+
+        .footer-bottom a:hover {
+            color: var(--white);
+        }
+
+        /* Scroll to top button */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--white);
+            color: var(--purple);
+            border: none;
+            box-shadow: var(--box-shadow-md);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all var(--transition-normal);
+            z-index: 999;
+        }
+
+        .scroll-to-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scroll-to-top:hover {
+            background-color: var(--purple);
+            color: var(--white);
+            transform: translateY(-5px);
+        }
+
+        /* Modal */
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(3px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1100;
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-normal);
+        }
+
+        .modal-backdrop.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            border-radius: var(--border-radius-lg);
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: var(--box-shadow-lg);
+            transform: translateY(20px) scale(0.95);
+            transition: all var(--transition-normal);
+        }
+
+        .modal-backdrop.show .modal-content {
+            transform: translateY(0) scale(1);
+        }
+
+        .modal-header {
+            padding: var(--spacing-md);
+            border-bottom: 1px solid var(--gray-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--gray);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .modal-close:hover {
+            background-color: var(--gray-light);
+            color: var(--dark);
+        }
+
+        .modal-body {
+            padding: var(--spacing-md);
+        }
+
+        .modal-footer {
+            padding: var(--spacing-md);
+            border-top: 1px solid var(--gray-light);
+            display: flex;
+            justify-content: flex-end;
+            gap: var(--spacing-sm);
+        }
+
+        /* CV viewer */
+        .cv-viewer {
+            border: 1px solid var(--gray-light);
+            border-radius: var(--border-radius-md);
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+            background-color: var(--cream);
+        }
+
+        .cv-actions {
+            margin-top: var(--spacing-md);
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+
+        .cv-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background-color: var(--white);
+            border: 1.5px solid var(--gray-light);
+            border-radius: var(--border-radius-sm);
+            color: var(--gray);
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+        }
+
+        .cv-btn:hover {
+            background-color: var(--cream);
+            color: var(--dark);
+        }
+
+        .cv-btn.primary {
+            background-color: var(--purple);
+            color: white;
+            border-color: var(--purple);
+        }
+
+        .cv-btn.primary:hover {
+            background-color: var(--purple-dark);
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+        }
+
+        .tooltip::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--dark);
+            color: var(--white);
+            padding: 5px 10px;
+            border-radius: var(--border-radius-sm);
+            font-size: 0.8rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-fast);
+            z-index: 10;
+        }
+
+        .tooltip:hover::after {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(-5px);
+        }
+
+        /* Responsive design */
+        @media (max-width: 992px) {
+            .company-banner-content {
+                flex-direction: column;
+                gap: var(--spacing-lg);
+            }
+            
+            .user-info {
+                width: 100%;
+                justify-content: flex-start;
+            }
+            
+            .user-details {
+                text-align: left;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .candidate-cards {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
         }
         
-        /* Responsive */
         @media (max-width: 768px) {
-            .candidat-card {
-                grid-template-columns: 1fr;
+            .page-header, .filter-container {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: var(--spacing-md);
             }
-            
-            .candidat-actions {
-                display: flex;
-                flex-direction: row;
-                flex-wrap: wrap;
+
+            .back-btn {
+                width: 100%;
                 justify-content: center;
-                gap: 20px;
+            }
+
+            .search-bar {
+                width: 100%;
+            }
+
+            .filter-dropdown-content {
+                width: 100%;
+                right: auto;
+                left: 0;
+            }
+
+            nav {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background-color: var(--white);
+                transition: left var(--transition-normal);
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                padding-top: var(--spacing-xl);
+                z-index: 999;
+            }
+
+            nav.active {
+                left: 0;
+            }
+
+            nav ul {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            nav li {
+                width: 100%;
+                text-align: center;
+            }
+
+            nav a {
+                display: block;
+                padding: var(--spacing-md);
+                width: 100%;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-lg);
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .company-info {
+                flex-direction: column;
+                align-items: flex-start;
             }
             
-            .action-buttons {
-                margin-bottom: 0;
+            .user-info {
+                flex-direction: column-reverse;
+                align-items: flex-start;
+            }
+
+            .candidate-cards {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -299,198 +1362,719 @@
     </div>
     
     <main class="main-container" id="main-content">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <div>
-                <h2 class="mb-0">Mes Sélections</h2>
-                <p class="text-muted">Visualisez et gérez vos candidats sélectionnés</p>
+        <!-- En-tête de page -->
+        <div class="page-header">
+            <div class="page-title-container">
+                <h1 class="page-title">Mes Sélections</h1>
+                <p class="page-subtitle">Visualisez et gérez vos candidats sélectionnés</p>
             </div>
-            <a href="company-dashboard.html" class="btn btn-outline-secondary">
-                <i class="fas fa-arrow-left me-2"></i> Retour au tableau de bord
+            <a href="company-dashboard.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Retour au tableau de bord
             </a>
         </div>
         
-        <!-- Candidats qui ont postulé -->
-        <section class="selection-section">
-            <h3 class="section-title">Candidat qui ont postulé</h3>
+        <!-- Filtres et recherche -->
+        <div class="filter-container">
+            <div class="search-bar">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-input" placeholder="Rechercher un candidat...">
+            </div>
             
-            <!-- Poste de comptable Général -->
-            <h4 class="poste-title">Poste de comptable Général</h4>
-            
-            <!-- Candidat 1 -->
-            <div class="candidat-card">
-                <div class="candidat-info">
-                    <div class="candidat-name">Prénom N.</div>
-                    <div class="candidat-profile">Intitulé du profil</div>
-                    <div class="candidat-cv">CV : bouton qui permet de faire apparaître le CV</div>
-                    <div class="candidat-detail"><strong>Recherche :</strong> CDI CDD Intérim</div>
-                    <div class="candidat-detail"><strong>Rémunération :</strong> fourchette transmise par le candidat</div>
-                </div>
-                <div class="candidat-actions">
-                    <div class="action-buttons">
-                        <button class="action-btn accept">
-                            <i class="fas fa-check"></i>
-                        </button>
-                        <button class="action-btn reject">
-                            <i class="fas fa-times"></i>
-                        </button>
+            <div class="filter-dropdown">
+                <button class="filter-btn" id="filter-btn">
+                    <i class="fas fa-filter"></i> Filtrer
+                </button>
+                <div class="filter-dropdown-content" id="filter-dropdown">
+                    <div class="filter-option active">
+                        <i class="fas fa-check"></i> Tous les candidats
                     </div>
-                    <div class="match-rate">90%</div>
-                    <div class="trajet-info">Temps de trajet exact</div>
-                    <a href="#" class="maps-link">Lien qui redirige sur maps</a>
-                    <div class="star-rating">
-                        <i class="fas fa-star star"></i>
-                        <i class="fas fa-star star"></i>
-                        <i class="fas fa-star star"></i>
-                        <i class="fas fa-star star"></i>
-                        <i class="fas fa-star star"></i>
+                    <div class="filter-option">
+                        <i class="fas fa-user-plus"></i> Candidatures spontanées
                     </div>
-                    <div class="disponibilite">Disponibilité pour une prise de poste</div>
+                    <div class="filter-option">
+                        <i class="fas fa-clipboard-list"></i> Candidats qui ont postulé
+                    </div>
+                    <div class="filter-option">
+                        <i class="fas fa-star"></i> Favoris
+                    </div>
                 </div>
             </div>
             
-            <!-- Candidat 2 -->
-            <div class="candidat-card">
-                <div class="candidat-info">
-                    <div class="candidat-name">Prénom N.</div>
-                    <div class="candidat-profile">Intitulé du profil</div>
-                    <div class="candidat-cv">CV : bouton qui permet de faire apparaître le CV</div>
-                    <div class="candidat-detail"><strong>Recherche :</strong> CDI CDD Intérim</div>
-                    <div class="candidat-detail"><strong>Rémunération :</strong> fourchette transmise par le candidat</div>
+            <span class="selection-counter">
+                <i class="fas fa-users"></i> 7 candidats
+            </span>
+        </div>
+        
+        <!-- Candidats qui ont postulé -->
+        <section class="section-container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-clipboard-list"></i> Candidats qui ont postulé
+                    <span class="section-counter">3</span>
+                </h2>
+            </div>
+            
+            <!-- Poste de comptable Général -->
+            <h3 class="job-title">
+                <i class="fas fa-briefcase"></i> Poste de comptable Général
+            </h3>
+            
+            <div class="candidate-cards">
+                <!-- Candidat 1 -->
+                <div class="candidate-card">
+                    <div class="card-header">
+                        <div class="candidate-avatar">PN</div>
+                        <div class="candidate-info">
+                            <div class="candidate-name">Prénom N.</div>
+                            <div class="candidate-position">Intitulé du profil</div>
+                        </div>
+                        <div class="match-badge">90%</div>
+                    </div>
+                    
+                    <div class="card-body">
+                        <div class="detail-row">
+                            <i class="fas fa-file-alt detail-icon"></i>
+                            <div class="detail-content">
+                                <button class="cv-button" id="view-cv-btn">
+                                    <i class="fas fa-eye"></i> Voir le CV
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-row">
+                            <i class="fas fa-search detail-icon"></i>
+                            <div class="detail-content">
+                                <span class="detail-label">Recherche :</span>
+                                <span class="detail-value">CDI CDD Intérim</span>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-row">
+                            <i class="fas fa-euro-sign detail-icon"></i>
+                            <div class="detail-content">
+                                <span class="detail-label">Rémunération :</span>
+                                <span class="detail-value">fourchette transmise par le candidat</span>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-row">
+                            <i class="fas fa-route detail-icon"></i>
+                            <div class="detail-content">
+                                <span class="detail-value">Temps de trajet exact</span><br>
+                                <a href="#" class="maps-link">
+                                    <i class="fas fa-map-marker-alt"></i> Voir sur Maps
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-row">
+                            <i class="fas fa-star detail-icon"></i>
+                            <div class="detail-content">
+                                <div class="star-rating">
+                                    <i class="fas fa-star star"></i>
+                                    <i class="fas fa-star star"></i>
+                                    <i class="fas fa-star star"></i>
+                                    <i class="fas fa-star star"></i>
+                                    <i class="fas fa-star star"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="availability">
+                            <i class="fas fa-calendar-check"></i> Disponibilité pour une prise de poste
+                        </div>
+                    </div>
+                    
+                    <div class="card-footer">
+                        <div class="action-buttons">
+                            <button class="action-btn accept" title="Accepter">
+                                <i class="fas fa-check"></i>
+                            </button>
+                            <button class="action-btn reject" title="Rejeter">
+                                <i class="fas fa-times"></i>
+                            </button>
+                            <button class="action-btn contact" title="Contacter">
+                                <i class="fas fa-comment"></i>
+                            </button>
+                        </div>
+                        <button class="more-button" title="Plus d'options">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </button>
+                    </div>
                 </div>
-                <div class="candidat-actions">
-                    <div class="action-buttons">
-                        <button class="action-btn accept">
-                            <i class="fas fa-check"></i>
-                        </button>
-                        <button class="action-btn reject">
-                            <i class="fas fa-times"></i>
+                
+                <!-- Candidat 2 -->
+                <div class="candidate-card">
+                    <div class="card-header">
+                        <div class="candidate-avatar">PN</div>
+                        <div class="candidate-info">
+                            <div class="candidate-name">Prénom N.</div>
+                            <div class="candidate-position">Intitulé du profil</div>
+                        </div>
+                        <div class="match-badge">85%</div>
+                    </div>
+                    
+                    <div class="card-body">
+                        <div class="detail-row">
+                            <i class="fas fa-file-alt detail-icon"></i>
+                            <div class="detail-content">
+                                <button class="cv-button" id="view-cv-btn-2">
+                                    <i class="fas fa-eye"></i> Voir le CV
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-row">
+                            <i class="fas fa-search detail-icon"></i>
+                            <div class="detail-content">
+                                <span class="detail-label">Recherche :</span>
+                                <span class="detail-value">CDI uniquement</span>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-row">
+                            <i class="fas fa-euro-sign detail-icon"></i>
+                            <div class="detail-content">
+                                <span class="detail-label">Rémunération :</span>
+                                <span class="detail-value">fourchette transmise par le candidat</span>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-row">
+                            <i class="fas fa-route detail-icon"></i>
+                            <div class="detail-content">
+                                <span class="detail-value">Temps de trajet exact</span><br>
+                                <a href="#" class="maps-link">
+                                    <i class="fas fa-map-marker-alt"></i> Voir sur Maps
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-row">
+                            <i class="fas fa-star detail-icon"></i>
+                            <div class="detail-content">
+                                <div class="star-rating">
+                                    <i class="fas fa-star star"></i>
+                                    <i class="fas fa-star star"></i>
+                                    <i class="fas fa-star star"></i>
+                                    <i class="fas fa-star star"></i>
+                                    <i class="fas fa-star star empty"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="availability">
+                            <i class="fas fa-calendar-check"></i> Disponibilité pour une prise de poste
+                        </div>
+                    </div>
+                    
+                    <div class="card-footer">
+                        <div class="action-buttons">
+                            <button class="action-btn accept" title="Accepter">
+                                <i class="fas fa-check"></i>
+                            </button>
+                            <button class="action-btn reject" title="Rejeter">
+                                <i class="fas fa-times"></i>
+                            </button>
+                            <button class="action-btn contact" title="Contacter">
+                                <i class="fas fa-comment"></i>
+                            </button>
+                        </div>
+                        <button class="more-button" title="Plus d'options">
+                            <i class="fas fa-ellipsis-v"></i>
                         </button>
                     </div>
-                    <div class="match-rate">90%</div>
-                    <div class="trajet-info">Temps de trajet exact</div>
-                    <a href="#" class="maps-link">Lien qui redirige sur maps</a>
-                    <div class="star-rating">
-                        <i class="fas fa-star star"></i>
-                        <i class="fas fa-star star"></i>
-                        <i class="fas fa-star star"></i>
-                        <i class="fas fa-star star"></i>
-                        <i class="fas fa-star star"></i>
-                    </div>
-                    <div class="disponibilite">Disponibilité pour une prise de poste</div>
                 </div>
             </div>
             
             <!-- Poste d'assistant de direction -->
-            <h4 class="poste-title">Poste d'assistant de direction</h4>
+            <h3 class="job-title">
+                <i class="fas fa-briefcase"></i> Poste d'assistant de direction
+            </h3>
             
-            <!-- Candidat 3 -->
-            <div class="candidat-card">
-                <div class="candidat-info">
-                    <div class="candidat-name">Prénom N.</div>
-                    <div class="candidat-profile">Intitulé du profil</div>
-                    <div class="candidat-cv">CV : bouton qui permet de faire apparaître le CV</div>
-                    <div class="candidat-detail"><strong>Recherche :</strong> CDI CDD Intérim</div>
-                    <div class="candidat-detail"><strong>Rémunération :</strong> fourchette transmise par le candidat</div>
-                </div>
-                <div class="candidat-actions">
-                    <div class="action-buttons">
-                        <button class="action-btn accept">
-                            <i class="fas fa-check"></i>
-                        </button>
-                        <button class="action-btn reject">
-                            <i class="fas fa-times"></i>
+            <div class="candidate-cards">
+                <!-- Candidat 3 -->
+                <div class="candidate-card">
+                    <div class="card-header">
+                        <div class="candidate-avatar">PN</div>
+                        <div class="candidate-info">
+                            <div class="candidate-name">Prénom N.</div>
+                            <div class="candidate-position">Intitulé du profil</div>
+                        </div>
+                        <div class="match-badge">92%</div>
+                    </div>
+                    
+                    <div class="card-body">
+                        <div class="detail-row">
+                            <i class="fas fa-file-alt detail-icon"></i>
+                            <div class="detail-content">
+                                <button class="cv-button" id="view-cv-btn-3">
+                                    <i class="fas fa-eye"></i> Voir le CV
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-row">
+                            <i class="fas fa-search detail-icon"></i>
+                            <div class="detail-content">
+                                <span class="detail-label">Recherche :</span>
+                                <span class="detail-value">CDI CDD Intérim</span>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-row">
+                            <i class="fas fa-euro-sign detail-icon"></i>
+                            <div class="detail-content">
+                                <span class="detail-label">Rémunération :</span>
+                                <span class="detail-value">fourchette transmise par le candidat</span>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-row">
+                            <i class="fas fa-route detail-icon"></i>
+                            <div class="detail-content">
+                                <span class="detail-value">Temps de trajet exact</span><br>
+                                <a href="#" class="maps-link">
+                                    <i class="fas fa-map-marker-alt"></i> Voir sur Maps
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-row">
+                            <i class="fas fa-star detail-icon"></i>
+                            <div class="detail-content">
+                                <div class="star-rating">
+                                    <i class="fas fa-star star"></i>
+                                    <i class="fas fa-star star"></i>
+                                    <i class="fas fa-star star"></i>
+                                    <i class="fas fa-star star"></i>
+                                    <i class="fas fa-star star"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="availability">
+                            <i class="fas fa-calendar-check"></i> Disponibilité pour une prise de poste
+                        </div>
+                    </div>
+                    
+                    <div class="card-footer">
+                        <div class="action-buttons">
+                            <button class="action-btn accept" title="Accepter">
+                                <i class="fas fa-check"></i>
+                            </button>
+                            <button class="action-btn reject" title="Rejeter">
+                                <i class="fas fa-times"></i>
+                            </button>
+                            <button class="action-btn contact" title="Contacter">
+                                <i class="fas fa-comment"></i>
+                            </button>
+                        </div>
+                        <button class="more-button" title="Plus d'options">
+                            <i class="fas fa-ellipsis-v"></i>
                         </button>
                     </div>
-                    <div class="match-rate">90%</div>
-                    <div class="trajet-info">Temps de trajet exact</div>
-                    <a href="#" class="maps-link">Lien qui redirige sur maps</a>
-                    <div class="star-rating">
-                        <i class="fas fa-star star"></i>
-                        <i class="fas fa-star star"></i>
-                        <i class="fas fa-star star"></i>
-                        <i class="fas fa-star star"></i>
-                        <i class="fas fa-star star"></i>
-                    </div>
-                    <div class="disponibilite">Disponibilité pour une prise de poste</div>
                 </div>
             </div>
         </section>
         
         <!-- Candidats en un clic -->
-        <section class="selection-section">
-            <h3 class="section-title">Candidat en un clic</h3>
+        <section class="section-container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-bolt"></i> Candidats en un clic
+                    <span class="section-counter">2</span>
+                </h2>
+            </div>
             
             <!-- Poste de comptable Général -->
-            <h4 class="poste-title">Poste de comptable Général</h4>
+            <h3 class="job-title">
+                <i class="fas fa-briefcase"></i> Poste de comptable Général
+            </h3>
             
-            <!-- Candidat 4 -->
-            <div class="candidat-card">
-                <div class="candidat-info">
-                    <div class="candidat-name">Prénom N.</div>
-                    <div class="candidat-profile">Intitulé du profil</div>
-                    <div class="candidat-cv">CV : bouton qui permet de faire apparaître le CV</div>
-                    <div class="candidat-detail"><strong>Recherche :</strong> CDI CDD Intérim</div>
-                    <div class="candidat-detail"><strong>Rémunération :</strong> fourchette transmise par le candidat</div>
-                </div>
-                <div class="candidat-actions">
-                    <div class="action-buttons">
-                        <button class="action-btn accept">
-                            <i class="fas fa-check"></i>
-                        </button>
-                        <button class="action-btn reject">
-                            <i class="fas fa-times"></i>
+            <div class="candidate-cards">
+                <!-- Candidat 4 -->
+                <div class="candidate-card">
+                    <div class="card-header">
+                        <div class="candidate-avatar">PN</div>
+                        <div class="candidate-info">
+                            <div class="candidate-name">Prénom N.</div>
+                            <div class="candidate-position">Intitulé du profil</div>
+                        </div>
+                        <div class="match-badge">88%</div>
+                    </div>
+                    
+                    <div class="card-body">
+                        <div class="detail-row">
+                            <i class="fas fa-file-alt detail-icon"></i>
+                            <div class="detail-content">
+                                <button class="cv-button" id="view-cv-btn-4">
+                                    <i class="fas fa-eye"></i> Voir le CV
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-row">
+                            <i class="fas fa-search detail-icon"></i>
+                            <div class="detail-content">
+                                <span class="detail-label">Recherche :</span>
+                                <span class="detail-value">CDI CDD Intérim</span>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-row">
+                            <i class="fas fa-euro-sign detail-icon"></i>
+                            <div class="detail-content">
+                                <span class="detail-label">Rémunération :</span>
+                                <span class="detail-value">fourchette transmise par le candidat</span>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-row">
+                            <i class="fas fa-route detail-icon"></i>
+                            <div class="detail-content">
+                                <span class="detail-value">Temps de trajet exact</span><br>
+                                <a href="#" class="maps-link">
+                                    <i class="fas fa-map-marker-alt"></i> Voir sur Maps
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-row">
+                            <i class="fas fa-star detail-icon"></i>
+                            <div class="detail-content">
+                                <div class="star-rating">
+                                    <i class="fas fa-star star"></i>
+                                    <i class="fas fa-star star"></i>
+                                    <i class="fas fa-star star"></i>
+                                    <i class="fas fa-star star"></i>
+                                    <i class="fas fa-star star"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="availability">
+                            <i class="fas fa-calendar-check"></i> Disponibilité pour une prise de poste
+                        </div>
+                    </div>
+                    
+                    <div class="card-footer">
+                        <div class="action-buttons">
+                            <button class="action-btn accept" title="Accepter">
+                                <i class="fas fa-check"></i>
+                            </button>
+                            <button class="action-btn reject" title="Rejeter">
+                                <i class="fas fa-times"></i>
+                            </button>
+                            <button class="action-btn contact" title="Contacter">
+                                <i class="fas fa-comment"></i>
+                            </button>
+                        </div>
+                        <button class="more-button" title="Plus d'options">
+                            <i class="fas fa-ellipsis-v"></i>
                         </button>
                     </div>
-                    <div class="match-rate">90%</div>
-                    <div class="trajet-info">Temps de trajet exact</div>
-                    <a href="#" class="maps-link">Lien qui redirige sur maps</a>
-                    <div class="star-rating">
-                        <i class="fas fa-star star"></i>
-                        <i class="fas fa-star star"></i>
-                        <i class="fas fa-star star"></i>
-                        <i class="fas fa-star star"></i>
-                        <i class="fas fa-star star"></i>
-                    </div>
-                    <div class="disponibilite">Disponibilité pour une prise de poste</div>
                 </div>
             </div>
             
             <!-- Poste d'assistant de direction -->
-            <h4 class="poste-title">Poste d'assistant de direction</h4>
+            <h3 class="job-title">
+                <i class="fas fa-briefcase"></i> Poste d'assistant de direction
+            </h3>
             
-            <!-- Candidat 5 -->
-            <div class="candidat-card">
-                <div class="candidat-info">
-                    <div class="candidat-name">Prénom N.</div>
-                    <div class="candidat-profile">Intitulé du profil</div>
-                    <div class="candidat-cv">CV : bouton qui permet de faire apparaître le CV</div>
-                    <div class="candidat-detail"><strong>Recherche :</strong> CDI CDD Intérim</div>
-                    <div class="candidat-detail"><strong>Rémunération :</strong> fourchette transmise par le candidat</div>
+            <div class="candidate-cards">
+                <!-- Candidat 5 -->
+                <div class="candidate-card">
+                    <div class="card-header">
+                        <div class="candidate-avatar">PN</div>
+                        <div class="candidate-info">
+                            <div class="candidate-name">Prénom N.</div>
+                            <div class="candidate-position">Intitulé du profil</div>
+                        </div>
+                        <div class="match-badge">95%</div>
+                    </div>
+                    
+                    <div class="card-body">
+                        <div class="detail-row">
+                            <i class="fas fa-file-alt detail-icon"></i>
+                            <div class="detail-content">
+                                <button class="cv-button" id="view-cv-btn-5">
+                                    <i class="fas fa-eye"></i> Voir le CV
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-row">
+                            <i class="fas fa-search detail-icon"></i>
+                            <div class="detail-content">
+                                <span class="detail-label">Recherche :</span>
+                                <span class="detail-value">CDI CDD Intérim</span>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-row">
+                            <i class="fas fa-euro-sign detail-icon"></i>
+                            <div class="detail-content">
+                                <span class="detail-label">Rémunération :</span>
+                                <span class="detail-value">fourchette transmise par le candidat</span>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-row">
+                            <i class="fas fa-route detail-icon"></i>
+                            <div class="detail-content">
+                                <span class="detail-value">Temps de trajet exact</span><br>
+                                <a href="#" class="maps-link">
+                                    <i class="fas fa-map-marker-alt"></i> Voir sur Maps
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-row">
+                            <i class="fas fa-star detail-icon"></i>
+                            <div class="detail-content">
+                                <div class="star-rating">
+                                    <i class="fas fa-star star"></i>
+                                    <i class="fas fa-star star"></i>
+                                    <i class="fas fa-star star"></i>
+                                    <i class="fas fa-star star"></i>
+                                    <i class="fas fa-star star"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="availability">
+                            <i class="fas fa-calendar-check"></i> Disponibilité pour une prise de poste
+                        </div>
+                    </div>
+                    
+                    <div class="card-footer">
+                        <div class="action-buttons">
+                            <button class="action-btn accept" title="Accepter">
+                                <i class="fas fa-check"></i>
+                            </button>
+                            <button class="action-btn reject" title="Rejeter">
+                                <i class="fas fa-times"></i>
+                            </button>
+                            <button class="action-btn contact" title="Contacter">
+                                <i class="fas fa-comment"></i>
+                            </button>
+                        </div>
+                        <button class="more-button" title="Plus d'options">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </button>
+                    </div>
                 </div>
-                <div class="candidat-actions">
-                    <div class="action-buttons">
-                        <button class="action-btn accept">
-                            <i class="fas fa-check"></i>
-                        </button>
-                        <button class="action-btn reject">
-                            <i class="fas fa-times"></i>
+            </div>
+        </section>
+        
+        <!-- Section des candidats favoris -->
+        <section class="section-container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-star"></i> Candidats favoris
+                    <span class="section-counter">2</span>
+                </h2>
+            </div>
+            
+            <div class="candidate-cards">
+                <!-- Candidat 6 -->
+                <div class="candidate-card">
+                    <div class="card-header">
+                        <div class="candidate-avatar">PN</div>
+                        <div class="candidate-info">
+                            <div class="candidate-name">Prénom N.</div>
+                            <div class="candidate-position">Intitulé du profil</div>
+                        </div>
+                        <div class="match-badge">94%</div>
+                    </div>
+                    
+                    <div class="card-body">
+                        <div class="detail-row">
+                            <i class="fas fa-file-alt detail-icon"></i>
+                            <div class="detail-content">
+                                <button class="cv-button" id="view-cv-btn-6">
+                                    <i class="fas fa-eye"></i> Voir le CV
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-row">
+                            <i class="fas fa-search detail-icon"></i>
+                            <div class="detail-content">
+                                <span class="detail-label">Recherche :</span>
+                                <span class="detail-value">CDI CDD Intérim</span>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-row">
+                            <i class="fas fa-euro-sign detail-icon"></i>
+                            <div class="detail-content">
+                                <span class="detail-label">Rémunération :</span>
+                                <span class="detail-value">fourchette transmise par le candidat</span>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-row">
+                            <i class="fas fa-route detail-icon"></i>
+                            <div class="detail-content">
+                                <span class="detail-value">Temps de trajet exact</span><br>
+                                <a href="#" class="maps-link">
+                                    <i class="fas fa-map-marker-alt"></i> Voir sur Maps
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-row">
+                            <i class="fas fa-star detail-icon"></i>
+                            <div class="detail-content">
+                                <div class="star-rating">
+                                    <i class="fas fa-star star"></i>
+                                    <i class="fas fa-star star"></i>
+                                    <i class="fas fa-star star"></i>
+                                    <i class="fas fa-star star"></i>
+                                    <i class="fas fa-star star"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="availability">
+                            <i class="fas fa-calendar-check"></i> Disponibilité pour une prise de poste
+                        </div>
+                    </div>
+                    
+                    <div class="card-footer">
+                        <div class="action-buttons">
+                            <button class="action-btn accept" title="Accepter">
+                                <i class="fas fa-check"></i>
+                            </button>
+                            <button class="action-btn reject" title="Rejeter">
+                                <i class="fas fa-times"></i>
+                            </button>
+                            <button class="action-btn contact" title="Contacter">
+                                <i class="fas fa-comment"></i>
+                            </button>
+                        </div>
+                        <button class="more-button" title="Plus d'options">
+                            <i class="fas fa-ellipsis-v"></i>
                         </button>
                     </div>
-                    <div class="match-rate">90%</div>
-                    <div class="trajet-info">Temps de trajet exact</div>
-                    <a href="#" class="maps-link">Lien qui redirige sur maps</a>
-                    <div class="star-rating">
-                        <i class="fas fa-star star"></i>
-                        <i class="fas fa-star star"></i>
-                        <i class="fas fa-star star"></i>
-                        <i class="fas fa-star star"></i>
-                        <i class="fas fa-star star"></i>
+                </div>
+                
+                <!-- Candidat 7 -->
+                <div class="candidate-card">
+                    <div class="card-header">
+                        <div class="candidate-avatar">PN</div>
+                        <div class="candidate-info">
+                            <div class="candidate-name">Prénom N.</div>
+                            <div class="candidate-position">Intitulé du profil</div>
+                        </div>
+                        <div class="match-badge">91%</div>
                     </div>
-                    <div class="disponibilite">Disponibilité pour une prise de poste</div>
+                    
+                    <div class="card-body">
+                        <div class="detail-row">
+                            <i class="fas fa-file-alt detail-icon"></i>
+                            <div class="detail-content">
+                                <button class="cv-button" id="view-cv-btn-7">
+                                    <i class="fas fa-eye"></i> Voir le CV
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-row">
+                            <i class="fas fa-search detail-icon"></i>
+                            <div class="detail-content">
+                                <span class="detail-label">Recherche :</span>
+                                <span class="detail-value">CDI CDD Intérim</span>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-row">
+                            <i class="fas fa-euro-sign detail-icon"></i>
+                            <div class="detail-content">
+                                <span class="detail-label">Rémunération :</span>
+                                <span class="detail-value">fourchette transmise par le candidat</span>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-row">
+                            <i class="fas fa-route detail-icon"></i>
+                            <div class="detail-content">
+                                <span class="detail-value">Temps de trajet exact</span><br>
+                                <a href="#" class="maps-link">
+                                    <i class="fas fa-map-marker-alt"></i> Voir sur Maps
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-row">
+                            <i class="fas fa-star detail-icon"></i>
+                            <div class="detail-content">
+                                <div class="star-rating">
+                                    <i class="fas fa-star star"></i>
+                                    <i class="fas fa-star star"></i>
+                                    <i class="fas fa-star star"></i>
+                                    <i class="fas fa-star star"></i>
+                                    <i class="fas fa-star star"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="availability">
+                            <i class="fas fa-calendar-check"></i> Disponibilité pour une prise de poste
+                        </div>
+                    </div>
+                    
+                    <div class="card-footer">
+                        <div class="action-buttons">
+                            <button class="action-btn accept" title="Accepter">
+                                <i class="fas fa-check"></i>
+                            </button>
+                            <button class="action-btn reject" title="Rejeter">
+                                <i class="fas fa-times"></i>
+                            </button>
+                            <button class="action-btn contact" title="Contacter">
+                                <i class="fas fa-comment"></i>
+                            </button>
+                        </div>
+                        <button class="more-button" title="Plus d'options">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
+    
+    <!-- Modal pour afficher le CV -->
+    <div class="modal-backdrop" id="cv-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">CV de Prénom N.</h2>
+                <button class="modal-close" id="close-modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="cv-viewer">
+                    <!-- Contenu du CV -->
+                    <p>Contenu du CV à afficher ici...</p>
+                </div>
+                <div class="cv-actions">
+                    <button class="cv-btn">
+                        <i class="fas fa-download"></i> Télécharger
+                    </button>
+                    <button class="cv-btn">
+                        <i class="fas fa-print"></i> Imprimer
+                    </button>
+                    <button class="cv-btn primary">
+                        <i class="fas fa-paper-plane"></i> Envoyer par email
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
     
     <footer id="contact">
         <div class="container">
@@ -555,12 +2139,67 @@
                 });
             }
             
+            // Dropdown du filtre
+            const filterBtn = document.getElementById('filter-btn');
+            const filterDropdown = document.getElementById('filter-dropdown');
+            
+            if (filterBtn && filterDropdown) {
+                filterBtn.addEventListener('click', function() {
+                    filterDropdown.classList.toggle('show');
+                });
+                
+                // Fermer le dropdown quand on clique ailleurs
+                document.addEventListener('click', function(e) {
+                    if (!filterBtn.contains(e.target) && !filterDropdown.contains(e.target)) {
+                        filterDropdown.classList.remove('show');
+                    }
+                });
+                
+                // Gestion des options de filtre
+                const filterOptions = document.querySelectorAll('.filter-option');
+                
+                filterOptions.forEach(option => {
+                    option.addEventListener('click', function() {
+                        // Désélectionner toutes les options
+                        filterOptions.forEach(opt => opt.classList.remove('active'));
+                        
+                        // Sélectionner l'option cliquée
+                        this.classList.add('active');
+                        
+                        // Fermer le dropdown
+                        filterDropdown.classList.remove('show');
+                    });
+                });
+            }
+            
+            // Gestion de la recherche
+            const searchInput = document.querySelector('.search-input');
+            
+            if (searchInput) {
+                searchInput.addEventListener('input', function() {
+                    const searchTerm = this.value.toLowerCase();
+                    const candidateCards = document.querySelectorAll('.candidate-card');
+                    
+                    candidateCards.forEach(card => {
+                        const candidateName = card.querySelector('.candidate-name').textContent.toLowerCase();
+                        const candidatePosition = card.querySelector('.candidate-position').textContent.toLowerCase();
+                        
+                        // Vérifier si la recherche correspond au nom ou au poste
+                        if (candidateName.includes(searchTerm) || candidatePosition.includes(searchTerm)) {
+                            card.style.display = 'flex';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            }
+            
             // Animations des boutons d'action
             const actionButtons = document.querySelectorAll('.action-btn');
             
             actionButtons.forEach(button => {
                 button.addEventListener('click', function() {
-                    const candidatCard = this.closest('.candidat-card');
+                    const candidateCard = this.closest('.candidate-card');
                     
                     // Animation du bouton
                     this.classList.add('clicked');
@@ -571,33 +2210,52 @@
                     
                     // Si le bouton est "rejeter", griser la carte
                     if (this.classList.contains('reject')) {
-                        candidatCard.style.opacity = '0.5';
-                        candidatCard.style.transform = 'scale(0.98)';
+                        candidateCard.style.opacity = '0.5';
+                        candidateCard.style.transform = 'scale(0.98)';
                         
                         // Option: faire disparaître la carte après un délai
                         /*
                         setTimeout(() => {
-                            candidatCard.style.display = 'none';
+                            candidateCard.style.display = 'none';
                         }, 1000);
                         */
                     }
                     
                     // Si le bouton est "accepter", mettre en évidence la carte
                     if (this.classList.contains('accept')) {
-                        candidatCard.style.boxShadow = '0 8px 25px rgba(34, 197, 94, 0.3)';
-                        candidatCard.style.borderLeft = '4px solid #22c55e';
+                        candidateCard.style.boxShadow = '0 8px 25px rgba(34, 197, 94, 0.3)';
+                        candidateCard.style.borderLeft = '4px solid #22c55e';
                     }
                 });
             });
             
-            // CV toggle (simulation)
-            const cvButtons = document.querySelectorAll('.candidat-cv');
+            // Gestion du modal pour afficher le CV
+            const cvButtons = document.querySelectorAll('.cv-button');
+            const cvModal = document.getElementById('cv-modal');
+            const closeModalBtn = document.getElementById('close-modal');
             
-            cvButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    alert('Affichage du CV en cours...');
+            if (cvButtons.length && cvModal && closeModalBtn) {
+                cvButtons.forEach(button => {
+                    button.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        cvModal.classList.add('show');
+                        document.body.style.overflow = 'hidden'; // Empêcher le défilement
+                    });
                 });
-            });
+                
+                closeModalBtn.addEventListener('click', function() {
+                    cvModal.classList.remove('show');
+                    document.body.style.overflow = ''; // Rétablir le défilement
+                });
+                
+                // Fermer le modal en cliquant à l'extérieur
+                cvModal.addEventListener('click', function(e) {
+                    if (e.target === cvModal) {
+                        cvModal.classList.remove('show');
+                        document.body.style.overflow = ''; // Rétablir le défilement
+                    }
+                });
+            }
             
             // Redirection Maps (simulation)
             const mapsLinks = document.querySelectorAll('.maps-link');
