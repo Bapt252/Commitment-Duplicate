@@ -3,177 +3,1160 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Publier une offre - Commitment</title>
-    <link rel="stylesheet" href="../static/styles/modern.css">
-    <link rel="stylesheet" href="../static/styles/styles.css">
-    <link rel="stylesheet" href="../static/styles/additional.css">
+    <meta name="description" content="Nexten - Création d'un nouveau poste">
+    <title>Nexten - Création d'un nouveau poste</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../static/styles/nexten-modern-interactive.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../static/images/favicon.ico" type="image/x-icon">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        /* Styles spécifiques à la création de poste */
+        body {
+            background-color: var(--cream);
+        }
+        
+        #main-content {
+            padding-top: 40px;
+            padding-bottom: 60px;
+        }
+        
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+        
+        /* Bannière d'entreprise avec le style moderne */
+        .company-banner {
+            background: linear-gradient(135deg, var(--purple) 0%, var(--purple-dark) 100%);
+            color: var(--white);
+            padding: var(--spacing-lg) 0;
+            margin-top: 80px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 25px rgba(124, 58, 237, 0.3);
+        }
+        
+        .company-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            transform: rotate(30deg);
+        }
+        
+        .company-banner::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--purple-light) 0%, transparent 100%);
+            opacity: 0.5;
+        }
+        
+        .company-banner-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .company-info {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+        
+        .company-logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 16px;
+            background-color: var(--white);
+            padding: 10px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .company-logo:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .company-logo::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+        
+        .company-logo:hover::after {
+            transform: translateX(100%);
+        }
+        
+        .company-logo img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+        
+        .company-name {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .company-category {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+        
+        .user-details {
+            text-align: right;
+        }
+        
+        .user-fullname {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        
+        .user-position {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--white);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .user-avatar:hover {
+            transform: scale(1.1) rotate(10deg);
+            background-color: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Page title */
+        .page-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-md);
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .page-title i {
+            color: var(--purple);
+        }
+        
+        /* Form container */
+        .form-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        @media (max-width: 1200px) {
+            .form-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .form-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Form cards */
+        .form-card {
+            background-color: var(--white);
+            border-radius: 16px;
+            padding: var(--spacing-lg);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .form-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--purple) 0%, var(--purple-dark) 100%);
+        }
+        
+        .form-card h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+            color: var(--dark);
+        }
+        
+        /* Form groups */
+        .form-group {
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+        
+        .form-control, .custom-select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            color: var(--dark);
+            background-color: #fff;
+        }
+        
+        .form-control:focus, .custom-select:focus {
+            border-color: var(--purple);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+        }
+        
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 8px;
+        }
+        
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 8px 16px;
+            background-color: #f8fafc;
+            border-radius: 8px;
+            border: 1.5px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+        
+        .checkbox-label:hover {
+            background-color: #f1f5f9;
+            border-color: #cbd5e1;
+        }
+        
+        .checkbox-label input {
+            margin-right: 8px;
+        }
+        
+        .checkbox-label.selected {
+            background-color: var(--primary-light);
+            border-color: var(--purple);
+        }
+        
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 8px;
+        }
+        
+        .radio-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px 16px;
+            background-color: #f8fafc;
+            border-radius: 8px;
+            border: 1.5px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+        
+        .radio-label:hover {
+            background-color: #f1f5f9;
+            border-color: #cbd5e1;
+        }
+        
+        .radio-label input {
+            margin-right: 10px;
+        }
+        
+        .radio-label.selected {
+            background-color: var(--primary-light);
+            border-color: var(--purple);
+        }
+        
+        /* Action buttons */
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-xl);
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            font-weight: 600;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            gap: 10px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--purple) 0%, var(--purple-dark) 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(124, 58, 237, 0.3);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
+        }
+        
+        .btn-secondary {
+            background-color: white;
+            color: var(--gray);
+            border: 1.5px solid #e2e8f0;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #f8fafc;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        
+        /* Process Flow */
+        .process-flow {
+            margin-top: var(--spacing-xl);
+            padding: var(--spacing-lg);
+            background-color: var(--white);
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+        }
+        
+        .process-flow h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+            color: var(--dark);
+            text-align: center;
+        }
+        
+        .flow-container {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+        
+        .flow-step {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            padding: var(--spacing-sm);
+        }
+        
+        .flow-step-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #f8fafc;
+            border: 1.5px solid #e2e8f0;
+            color: var(--gray);
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        
+        .flow-step.active .flow-step-icon {
+            background-color: var(--purple);
+            color: white;
+            border-color: var(--purple);
+        }
+        
+        .flow-step-content {
+            flex: 1;
+        }
+        
+        .flow-step-title {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 4px;
+        }
+        
+        .flow-step-actions {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .flow-action-btn {
+            padding: 3px 10px;
+            border-radius: 6px;
+            background-color: #f8fafc;
+            color: var(--gray);
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .flow-action-btn:hover {
+            background-color: #f1f5f9;
+            color: var(--dark);
+        }
+        
+        .flow-action-btn.btn-danger {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border-color: rgba(239, 68, 68, 0.2);
+        }
+        
+        .flow-action-btn.btn-danger:hover {
+            background-color: rgba(239, 68, 68, 0.15);
+        }
+        
+        .flow-arrow {
+            margin-left: 18px;
+            height: 20px;
+            border-left: 2px dashed #e2e8f0;
+        }
+        
+        .add-step-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 18px;
+            padding: 8px 16px;
+            background-color: #f8fafc;
+            border: 1.5px dashed #cbd5e1;
+            border-radius: 8px;
+            color: var(--gray);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .add-step-btn:hover {
+            background-color: var(--primary-light);
+            border-color: var(--purple);
+            color: var(--purple);
+        }
+        
+        .add-step-btn i {
+            margin-right: 8px;
+        }
+        
+        /* Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+        
+        /* Responsive design */
+        @media (max-width: 992px) {
+            .company-banner-content {
+                flex-direction: column;
+                gap: var(--spacing-lg);
+            }
+            
+            .user-info {
+                width: 100%;
+                justify-content: flex-start;
+            }
+            
+            .user-details {
+                text-align: left;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .company-info {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .user-info {
+                flex-direction: column-reverse;
+                align-items: flex-start;
+            }
+        }
+    </style>
 </head>
 <body>
-    <header class="site-header">
-        <div class="container header-container">
-            <a href="index.html" class="logo">
-                <img src="../static/images/logo.svg" alt="Commitment Logo">
-            </a>
-            <nav class="main-nav">
+    <!-- Notification bar -->
+    <div class="notification-bar">
+        <i class="fas fa-bell"></i> Vous avez 5 nouveaux candidats correspondant à vos offres et 2 entretiens programmés aujourd'hui
+    </div>
+
+    <!-- Lien d'accessibilité pour sauter au contenu principal -->
+    <a href="#main-content" class="skip-to-content">Aller au contenu principal</a>
+
+    <header>
+        <div class="container">
+            <div class="logo">
+                nex<span>ten</span><div class="logo-badge">10</div>
+            </div>
+            
+            <button class="menu-toggle" aria-label="Menu principal">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav>
                 <ul>
                     <li><a href="index.html">Accueil</a></li>
-                    <li><a href="recruiter-dashboard.html">Tableau de bord</a></li>
                     <li><a href="post-job.html" class="active">Publier une offre</a></li>
-                    <li><a href="recruiter-matches.html">Correspondances</a></li>
+                    <li><a href="candidate-dashboard.html">Espace candidat</a></li>
+                    <li><a href="company-dashboard.html">Espace entreprise</a></li>
+                    <li><a href="#contact">Contact</a></li>
                 </ul>
             </nav>
-            <div class="header-actions">
-                <a href="recruiter-dashboard.html" class="user-profile">
-                    <i class="fas fa-user-circle"></i>
-                    <span>Mon profil</span>
-                </a>
-            </div>
         </div>
     </header>
-
-    <main class="site-main">
-        <section class="page-header">
-            <div class="container">
-                <h1>Publier une offre d'emploi</h1>
-                <p>Créez une annonce attractive et trouvez les meilleurs candidats correspondant à vos besoins.</p>
+    
+    <div class="company-banner">
+        <div class="company-banner-content">
+            <div class="company-info">
+                <div class="company-logo">
+                    <img src="https://via.placeholder.com/90x90?text=Logo" alt="Logo InnovTech">
+                </div>
+                <div>
+                    <h2 class="company-name">InnovTech</h2>
+                    <p class="company-category">Technologie & Innovation</p>
+                </div>
             </div>
-        </section>
-
-        <section class="job-form-section">
-            <div class="container">
-                <div class="card">
-                    <div class="card-header">
-                        <h2>Détails de l'offre</h2>
+            <div class="user-info">
+                <div class="user-details">
+                    <h3 class="user-fullname">Thomas Martin</h3>
+                    <p class="user-position">Directeur des Ressources Humaines</p>
+                </div>
+                <div class="user-avatar">
+                    <span>TM</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <main class="main-container" id="main-content">
+        <h1 class="page-title">
+            <i class="fas fa-plus-circle"></i> Création d'un nouveau poste
+        </h1>
+        
+        <form id="create-job-form">
+            <div class="form-container">
+                <!-- Première colonne du formulaire -->
+                <div class="form-card fade-in">
+                    <h3>Descriptif du poste</h3>
+                    
+                    <div class="form-group">
+                        <label for="job-title" class="form-label">Intitulé du poste</label>
+                        <input type="text" id="job-title" name="job-title" class="form-control" placeholder="Ex: Développeur Full-Stack">
                     </div>
-                    <div class="card-body">
-                        <p>Remplissez le formulaire ci-dessous pour publier votre offre d'emploi. Tous les champs marqués d'un * sont obligatoires.</p>
-                        <form id="job-form" action="recruiter-questionnaire.html" method="get">
-                            <div class="form-group">
-                                <label for="job-title">Titre du poste *</label>
-                                <input type="text" id="job-title" name="job-title" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="job-description">Description du poste *</label>
-                                <textarea id="job-description" name="job-description" rows="6" required></textarea>
-                                <small>Décrivez les responsabilités, les tâches quotidiennes et les objectifs du poste.</small>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group form-col">
-                                    <label for="job-type">Type de contrat *</label>
-                                    <select id="job-type" name="job-type" required>
-                                        <option value="">Sélectionner</option>
-                                        <option value="CDI">CDI</option>
-                                        <option value="CDD">CDD</option>
-                                        <option value="Intérim">Intérim</option>
-                                        <option value="Stage">Stage</option>
-                                        <option value="Alternance">Alternance</option>
-                                        <option value="Freelance">Freelance</option>
-                                    </select>
-                                </div>
-                                <div class="form-group form-col">
-                                    <label for="job-location">Lieu *</label>
-                                    <input type="text" id="job-location" name="job-location" required>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group form-col">
-                                    <label for="job-salary">Salaire (€)</label>
-                                    <input type="text" id="job-salary" name="job-salary" placeholder="ex: 30K-40K">
-                                    <small>Laissez vide pour "À négocier"</small>
-                                </div>
-                                <div class="form-group form-col">
-                                    <label for="job-remote">Télétravail</label>
-                                    <select id="job-remote" name="job-remote">
-                                        <option value="0">Pas de télétravail</option>
-                                        <option value="partial">Partiel</option>
-                                        <option value="hybrid">Hybride</option>
-                                        <option value="full">Complet</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="job-requirements">Compétences requises *</label>
-                                <textarea id="job-requirements" name="job-requirements" rows="4" required></textarea>
-                                <small>Listez les compétences et qualifications essentielles pour ce poste.</small>
-                            </div>
-                            <div class="form-group">
-                                <label for="job-benefits">Avantages</label>
-                                <textarea id="job-benefits" name="job-benefits" rows="4"></textarea>
-                                <small>Décrivez les avantages offerts (RTT, tickets restaurant, mutuelle, etc.)</small>
-                            </div>
-                            <div class="form-group">
-                                <label for="application-email">Email de réception des candidatures *</label>
-                                <input type="email" id="application-email" name="application-email" required>
-                                <small>Les candidatures seront envoyées à cette adresse</small>
-                            </div>
-                            <div class="form-group">
-                                <label for="application-deadline">Date limite de candidature</label>
-                                <input type="date" id="application-deadline" name="application-deadline">
-                                <small>Laissez vide si pas de date limite</small>
-                            </div>
-                            <div class="form-actions">
-                                <button type="submit" class="btn btn-primary">Passer au questionnaire pour optimiser le matching</button>
-                                <button type="button" class="btn btn-outline">Enregistrer comme brouillon</button>
-                            </div>
-                        </form>
+                    
+                    <div class="form-group">
+                        <label for="job-description" class="form-label">Tâches et descriptif</label>
+                        <textarea id="job-description" name="job-description" class="form-control" rows="4" placeholder="Décrivez les principales tâches et responsabilités du poste"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Délai de recrutement</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="recruitment-delay" value="immediate"> Immédiat
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="recruitment-delay" value="2weeks"> 2 semaines
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="recruitment-delay" value="1month"> 1 mois
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="recruitment-delay" value="2months"> 2 mois
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="recruitment-delay" value="3months"> 3 mois
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Pouvez-vous gérer un préavis ?</label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="notice-period" value="yes-1month"> OUI
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="notice-period" value="no"> NON
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" id="notice-period-container" style="display: none;">
+                        <label class="form-label">Durée du préavis acceptable</label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="notice-period-duration" value="1month"> 1 mois
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="notice-period-duration" value="2months"> 2 mois
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="notice-period-duration" value="3months"> 3 mois
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Deuxième colonne du formulaire -->
+                <div class="form-card fade-in delay-1">
+                    <h3>Contexte de recrutement</h3>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Type de recrutement</label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="recruitment-context" value="creation"> Création de poste
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="recruitment-context" value="replacement"> Remplacement
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="recruitment-context" value="growth"> Accroissement d'activité / Renfort
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="recruitment-context" value="confidential"> Je ne souhaite pas communiquer
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Années d'expérience requises pour le poste</label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="experience-required" value="junior"> Profil Junior
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="experience-required" value="2-3years"> 2 ans - 3 ans
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="experience-required" value="5-10years"> 5 ans - 10 ans
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="experience-required" value="10plusyears"> 10 ans et plus
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">La connaissance de votre secteur est-elle obligatoire ?</label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="sector-knowledge" value="yes"> OUI
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="sector-knowledge" value="no"> NON
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" id="sector-container" style="display: none;">
+                        <label for="business-sector" class="form-label">Sélection du Secteur d'activité</label>
+                        <select id="business-sector" name="business-sector" class="custom-select">
+                            <option value="">Sélectionnez un secteur</option>
+                            <option value="tech">Technologies et informatique</option>
+                            <option value="finance">Finance et banque</option>
+                            <option value="healthcare">Santé et médical</option>
+                            <option value="retail">Commerce et distribution</option>
+                            <option value="manufacturing">Industrie et fabrication</option>
+                            <option value="services">Services</option>
+                            <option value="education">Éducation et formation</option>
+                            <option value="construction">Construction et immobilier</option>
+                            <option value="transportation">Transport et logistique</option>
+                            <option value="energy">Énergie et environnement</option>
+                            <option value="media">Médias et communication</option>
+                            <option value="hospitality">Hôtellerie et restauration</option>
+                            <option value="agriculture">Agriculture et agroalimentaire</option>
+                            <option value="public">Secteur public</option>
+                            <option value="other">Autre</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Troisième colonne du formulaire -->
+                <div class="form-card fade-in delay-2">
+                    <h3>Environnement de travail</h3>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Type d'environnement</label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="work-environment" value="openspace"> Open Space
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="work-environment" value="office"> Bureau fermé
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Composition de l'équipe et rattachement interne</label>
+                        <textarea id="team-composition" name="team-composition" class="form-control" rows="3" placeholder="Ex: Équipe de 5 personnes, rattaché à la direction générale..."></textarea>
+                        <small class="form-text text-muted">Précisions pour donner du contexte au candidat : ex : équipe de 5 personnes, rattaché à un responsable, etc.</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Perspectives d'évolution</label>
+                        <textarea id="evolution-prospects" name="evolution-prospects" class="form-control" rows="2" placeholder="Mentionnez les possibilités d'évolution, s'il y en a"></textarea>
                     </div>
                 </div>
             </div>
-        </section>
+            
+            <!-- Section du processus de recrutement -->
+            <div class="process-flow fade-in delay-3">
+                <h3>étape 3 : création du process (prérecommander et modifiable)</h3>
+                
+                <div class="flow-container">
+                    <!-- Étape 1 -->
+                    <div class="flow-step active">
+                        <div class="flow-step-icon">1</div>
+                        <div class="flow-step-content">
+                            <div class="flow-step-title">En cours de validation</div>
+                            <div class="flow-step-actions">
+                                <button type="button" class="flow-action-btn btn-danger">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                                <button type="button" class="flow-action-btn">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flow-arrow"></div>
+                    
+                    <!-- Étape 2 -->
+                    <div class="flow-step">
+                        <div class="flow-step-icon">2</div>
+                        <div class="flow-step-content">
+                            <div class="flow-step-title">Call prise de contact</div>
+                            <div class="flow-step-actions">
+                                <button type="button" class="flow-action-btn btn-danger">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                                <button type="button" class="flow-action-btn">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flow-arrow"></div>
+                    
+                    <!-- Étape 3 -->
+                    <div class="flow-step">
+                        <div class="flow-step-icon">3</div>
+                        <div class="flow-step-content">
+                            <div class="flow-step-title">Entretien visio</div>
+                            <div class="flow-step-actions">
+                                <button type="button" class="flow-action-btn btn-danger">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                                <button type="button" class="flow-action-btn">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                                <button type="button" class="flow-action-btn">Ajouter un membre: @</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flow-arrow"></div>
+                    
+                    <!-- Étape 4 -->
+                    <div class="flow-step">
+                        <div class="flow-step-icon">4</div>
+                        <div class="flow-step-content">
+                            <div class="flow-step-title">Entretien Présentiel</div>
+                            <div class="flow-step-actions">
+                                <button type="button" class="flow-action-btn btn-danger">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                                <button type="button" class="flow-action-btn">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                                <button type="button" class="flow-action-btn">Ajouter un membre: @</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flow-arrow"></div>
+                    
+                    <!-- Étape 5 -->
+                    <div class="flow-step">
+                        <div class="flow-step-icon">5</div>
+                        <div class="flow-step-content">
+                            <div class="flow-step-title">Acceptation</div>
+                            <div class="flow-step-actions">
+                                <button type="button" class="flow-action-btn btn-danger">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                                <button type="button" class="flow-action-btn">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Bouton d'ajout d'étape -->
+                    <button type="button" class="add-step-btn">
+                        <i class="fas fa-plus"></i> Ajouter une étape
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Bouton de validation du poste -->
+            <div class="action-buttons">
+                <button type="button" class="btn btn-secondary">
+                    <i class="fas fa-save"></i> Enregistrer comme brouillon
+                </button>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-check-circle"></i> Validation du poste
+                </button>
+            </div>
+        </form>
     </main>
-
-    <footer class="site-footer">
+    
+    <footer id="contact">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-logo">
-                    <img src="../static/images/logo.svg" alt="Commitment Logo">
-                </div>
-                <div class="footer-links">
-                    <div class="footer-links-column">
-                        <h3>À propos</h3>
-                        <ul>
-                            <li><a href="#">Notre mission</a></li>
-                            <li><a href="#">L'équipe</a></li>
-                            <li><a href="#">Nos partenaires</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-links-column">
-                        <h3>Ressources</h3>
-                        <ul>
-                            <li><a href="#">Blog</a></li>
-                            <li><a href="#">Guides</a></li>
-                            <li><a href="#">FAQ</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-links-column">
-                        <h3>Légal</h3>
-                        <ul>
-                            <li><a href="#">Confidentialité</a></li>
-                            <li><a href="#">Conditions</a></li>
-                            <li><a href="#">Cookies</a></li>
-                        </ul>
+                <div>
+                    <h4 class="footer-heading">Nexten</h4>
+                    <p class="footer-description">Notre plateforme utilise l'intelligence artificielle pour révolutionner le processus de recrutement, offrant 10 correspondances personnalisées pour les candidats et les recruteurs.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
                     </div>
                 </div>
-                <div class="footer-contact">
-                    <h3>Restez connecté</h3>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
+                
+                <div>
+                    <h4 class="footer-heading">Navigation</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Accueil</a></li>
+                        <li><a href="post-job.html"><i class="fas fa-chevron-right"></i> Publier une offre</a></li>
+                        <li><a href="candidate-dashboard.html"><i class="fas fa-chevron-right"></i> Espace candidat</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> À propos</a></li>
+                        <li><a href="#contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="footer-heading">Contact</h4>
+                    <div class="footer-contact">
+                        <p><i class="fas fa-map-marker-alt"></i> 123 Avenue de l'Innovation, 75001 Paris</p>
+                        <p><i class="fas fa-phone"></i> +33 1 23 45 67 89</p>
+                        <p><i class="fas fa-envelope"></i> contact@nexten.fr</p>
                     </div>
-                    <p>contact@commitment.fr</p>
-                    <p>+33 1 23 45 67 89</p>
                 </div>
             </div>
+            
             <div class="footer-bottom">
-                <p>&copy; 2025 Commitment. Tous droits réservés.</p>
+                <p>&copy; 2025 Nexten - Tous droits réservés | <a href="#">Politique de confidentialité</a> | <a href="#">Conditions d'utilisation</a></p>
             </div>
         </div>
     </footer>
-
-    <script src="../static/services/proposals.js"></script>
+    
+    <!-- Bouton de retour en haut -->
+    <button id="scroll-to-top" class="scroll-to-top" aria-label="Retour en haut">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    
+    <!-- Bootstrap JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Scripts personnalisés -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Menu mobile toggle
+            const menuToggle = document.querySelector('.menu-toggle');
+            const nav = document.querySelector('nav');
+            
+            if (menuToggle && nav) {
+                menuToggle.addEventListener('click', function() {
+                    nav.classList.toggle('active');
+                    this.classList.toggle('active');
+                });
+            }
+            
+            // Animation au défilement
+            const animatedElements = document.querySelectorAll('.fade-in');
+            
+            function checkIfInView() {
+                const windowHeight = window.innerHeight;
+                const windowTop = window.scrollY;
+                const windowBottom = windowTop + windowHeight;
+                
+                animatedElements.forEach(function(element) {
+                    const elementTop = element.getBoundingClientRect().top + windowTop;
+                    const elementBottom = elementTop + element.offsetHeight;
+                    
+                    // Si l'élément est visible dans la fenêtre
+                    if (elementBottom > windowTop && elementTop < windowBottom) {
+                        element.classList.add('visible');
+                    }
+                });
+            }
+            
+            // Vérifier au chargement de la page
+            checkIfInView();
+            
+            // Vérifier lors du défilement
+            window.addEventListener('scroll', checkIfInView);
+            
+            // Header change on scroll
+            const header = document.querySelector('header');
+            
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 10) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+            
+            // Gestion des champs du préavis
+            const noticeRadios = document.querySelectorAll('input[name="notice-period"]');
+            const noticePeriodContainer = document.getElementById('notice-period-container');
+            
+            noticeRadios.forEach(function(radio) {
+                radio.addEventListener('change', function() {
+                    if (this.value === 'yes-1month') {
+                        noticePeriodContainer.style.display = 'block';
+                    } else {
+                        noticePeriodContainer.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Gestion du secteur d'activité
+            const sectorKnowledgeRadios = document.querySelectorAll('input[name="sector-knowledge"]');
+            const sectorContainer = document.getElementById('sector-container');
+            
+            sectorKnowledgeRadios.forEach(function(radio) {
+                radio.addEventListener('change', function() {
+                    if (this.value === 'yes') {
+                        sectorContainer.style.display = 'block';
+                    } else {
+                        sectorContainer.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Sélection des checkboxes et radios
+            const checkboxLabels = document.querySelectorAll('.checkbox-label');
+            checkboxLabels.forEach(function(label) {
+                const checkbox = label.querySelector('input[type="checkbox"]');
+                
+                label.addEventListener('click', function(e) {
+                    if (e.target !== checkbox) {
+                        checkbox.checked = !checkbox.checked;
+                        label.classList.toggle('selected', checkbox.checked);
+                    } else {
+                        label.classList.toggle('selected', checkbox.checked);
+                    }
+                });
+            });
+            
+            const radioLabels = document.querySelectorAll('.radio-label');
+            radioLabels.forEach(function(label) {
+                const radio = label.querySelector('input[type="radio"]');
+                
+                label.addEventListener('click', function(e) {
+                    if (e.target !== radio) {
+                        radio.checked = true;
+                        
+                        // Mettre à jour les autres labels du même groupe
+                        const name = radio.getAttribute('name');
+                        document.querySelectorAll(`input[name="${name}"]`).forEach(function(r) {
+                            const parentLabel = r.closest('.radio-label');
+                            if (parentLabel) {
+                                parentLabel.classList.toggle('selected', r.checked);
+                            }
+                        });
+                        
+                        // Déclencher l'événement change pour les logiques conditionnelles
+                        const event = new Event('change');
+                        radio.dispatchEvent(event);
+                    } else {
+                        // Mettre à jour les autres labels du même groupe
+                        const name = radio.getAttribute('name');
+                        document.querySelectorAll(`input[name="${name}"]`).forEach(function(r) {
+                            const parentLabel = r.closest('.radio-label');
+                            if (parentLabel) {
+                                parentLabel.classList.toggle('selected', r.checked);
+                            }
+                        });
+                    }
+                });
+            });
+            
+            // Gestion des étapes du processus
+            const addStepBtn = document.querySelector('.add-step-btn');
+            const flowContainer = document.querySelector('.flow-container');
+            
+            addStepBtn.addEventListener('click', function() {
+                const steps = document.querySelectorAll('.flow-step');
+                const newStepNumber = steps.length + 1;
+                
+                // Créer un nouvel élément d'étape
+                const newStep = document.createElement('div');
+                newStep.className = 'flow-step';
+                
+                newStep.innerHTML = `
+                    <div class="flow-step-icon">${newStepNumber}</div>
+                    <div class="flow-step-content">
+                        <div class="flow-step-title">Nouvelle étape</div>
+                        <div class="flow-step-actions">
+                            <button type="button" class="flow-action-btn btn-danger">
+                                <i class="fas fa-times"></i>
+                            </button>
+                            <button type="button" class="flow-action-btn">
+                                <i class="fas fa-check"></i>
+                            </button>
+                            <button type="button" class="flow-action-btn">Ajouter un membre: @</button>
+                        </div>
+                    </div>
+                `;
+                
+                // Créer une flèche pour la connexion
+                const arrow = document.createElement('div');
+                arrow.className = 'flow-arrow';
+                
+                // Insérer l'étape et la flèche avant le bouton d'ajout
+                flowContainer.insertBefore(arrow, addStepBtn);
+                flowContainer.insertBefore(newStep, arrow);
+            });
+            
+            // Gestion de la soumission du formulaire
+            const form = document.getElementById('create-job-form');
+            
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Simuler la validation et l'envoi du formulaire
+                const submitBtn = form.querySelector('button[type="submit"]');
+                const originalText = submitBtn.innerHTML;
+                
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Validation en cours...';
+                submitBtn.disabled = true;
+                
+                setTimeout(function() {
+                    // Rediriger vers le tableau de bord
+                    window.location.href = 'company-dashboard.html';
+                }, 2000);
+            });
+            
+            // Bouton de retour en haut
+            const scrollToTopButton = document.getElementById('scroll-to-top');
+            
+            if (scrollToTopButton) {
+                window.addEventListener('scroll', function() {
+                    if (window.scrollY > 500) {
+                        scrollToTopButton.classList.add('visible');
+                    } else {
+                        scrollToTopButton.classList.remove('visible');
+                    }
+                });
+                
+                scrollToTopButton.addEventListener('click', function() {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+        });
+    </script>
 </body>
 </html>
