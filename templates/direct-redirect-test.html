@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test de Redirection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            text-align: center;
+        }
+        button {
+            background-color: #7c4dff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #6a3de8;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test de Redirection</h1>
+    <p>Cliquez sur le bouton ci-dessous pour tester la redirection vers candidate-matching-improved.html</p>
+    
+    <button id="redirectButton">Rediriger vers Matching</button>
+
+    <script>
+        document.getElementById('redirectButton').addEventListener('click', function() {
+            window.location.href = 'candidate-matching-improved.html';
+        });
+    </script>
+</body>
+</html>
