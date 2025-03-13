@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nexten - Organisation">
+    <title>Nexten - Organisation</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../static/styles/nexten-modern-interactive.css">
+    <link rel="stylesheet" href="../static/styles/organization.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../static/images/favicon.ico" type="image/x-icon">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        body {
+            background-color: var(--cream);
+        }
+        
+        #main-content {
+            padding-top: 40px;
+        }
+        
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+        
+        /* Bannière d'entreprise avec le style moderne */
+        .company-banner {
+            background: linear-gradient(135deg, var(--purple) 0%, var(--purple-dark) 100%);
+            color: var(--white);
+            padding: var(--spacing-lg) 0;
+            margin-top: 80px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 25px rgba(124, 58, 237, 0.3);
+        }
+        
+        .company-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            transform: rotate(30deg);
+        }
+        
+        .company-banner::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--purple-light) 0%, transparent 100%);
+            opacity: 0.5;
+        }
+        
+        .company-banner-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .company-info {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+        
+        .company-logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 16px;
+            background-color: var(--white);
+            padding: 10px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .company-logo:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .company-logo::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+        
+        .company-logo:hover::after {
+            transform: translateX(100%);
+        }
+        
+        .company-logo img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+        
+        .company-name {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .company-category {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+        
+        .user-details {
+            text-align: right;
+        }
+        
+        .user-fullname {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        
+        .user-position {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--white);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .user-avatar:hover {
+            transform: scale(1.1) rotate(10deg);
+            background-color: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Section de titre */
+        .page-header {
+            margin-bottom: var(--spacing-lg);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .page-title {
+            font-size: 2rem;
+            font-weight: 600;
+            background: linear-gradient(90deg, var(--black) 0%, var(--purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+        }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background-color: var(--white);
+            border: 2px solid var(--purple);
+            color: var(--purple);
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            background-color: var(--purple-light);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(124, 58, 237, 0.1);
+        }
+
+        /* Toast container pour les notifications */
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1050;
+        }
+    </style>
+</head>
+<body>
+    <!-- Notification bar -->
+    <div class="notification-bar">
+        <i class="fas fa-bell"></i> Vous avez 5 nouveaux candidats correspondant à vos offres et 2 entretiens programmés aujourd'hui
+    </div>
+
+    <!-- Lien d'accessibilité pour sauter au contenu principal -->
+    <a href="#main-content" class="skip-to-content">Aller au contenu principal</a>
+
+    <header>
+        <div class="container">
+            <div class="logo">
+                nex<span>ten</span><div class="logo-badge">10</div>
+            </div>
+            
+            <button class="menu-toggle" aria-label="Menu principal">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="post-job.html">Publier une offre</a></li>
+                    <li><a href="candidate-dashboard.html">Espace candidat</a></li>
+                    <li><a href="company-dashboard.html" class="active">Espace entreprise</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <div class="company-banner">
+        <div class="company-banner-content">
+            <div class="company-info">
+                <div class="company-logo">
+                    <img src="https://via.placeholder.com/90x90?text=Logo" alt="Logo InnovTech">
+                </div>
+                <div>
+                    <h2 class="company-name">InnovTech</h2>
+                    <p class="company-category">Technologie & Innovation</p>
+                </div>
+            </div>
+            <div class="user-info">
+                <div class="user-details">
+                    <h3 class="user-fullname">Thomas Martin</h3>
+                    <p class="user-position">Directeur des Ressources Humaines</p>
+                </div>
+                <div class="user-avatar">
+                    <span>TM</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <main class="main-container" id="main-content">
+        <!-- Container pour les notifications -->
+        <div class="toast-container position-fixed bottom-0 end-0 p-3"></div>
+        
+        <!-- En-tête de la page -->
+        <div class="page-header">
+            <h1 class="page-title">Mon organisation</h1>
+            <a href="company-dashboard.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                Retour au tableau de bord
+            </a>
+        </div>
+        
+        <!-- Section Organisation -->
+        <div class="organization-section">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Gestion de l'organisation</h3>
+                </div>
+                <div class="card-body">
+                    <!-- Barre de navigation interne -->
+                    <ul class="nav nav-tabs mb-4 organization-tabs" id="organizationTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="team-tab" data-bs-toggle="tab" data-bs-target="#team" type="button" role="tab" aria-controls="team" aria-selected="true">Équipe et Contacts</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="permissions-tab" data-bs-toggle="tab" data-bs-target="#permissions" type="button" role="tab" aria-controls="permissions" aria-selected="false">Gestion des accès</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" type="button" role="tab" aria-controls="settings" aria-selected="false">Paramètres</button>
+                        </li>
+                    </ul>
+                    
+                    <!-- Contenu des onglets -->
+                    <div class="tab-content" id="organizationTabsContent">
+                        <!-- Onglet Équipe et Contacts -->
+                        <div class="tab-pane fade show active" id="team" role="tabpanel" aria-labelledby="team-tab">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover contacts-table" id="contactsTable">
+                                            <thead>
+                                                <tr>
+                                                    <th>Prénom</th>
+                                                    <th>Nom</th>
+                                                    <th>Fonction</th>
+                                                    <th>Email</th>
+                                                    <th>Téléphone</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Marie</td>
+                                                    <td>DURAND</td>
+                                                    <td>Chargée recrutement</td>
+                                                    <td>marie.durand@example.com</td>
+                                                    <td>+33 6 12 34 56 78</td>
+                                                    <td>
+                                                        <div class="dropdown">
+                                                            <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                <i class="fas fa-ellipsis-v"></i>
+                                                            </button>
+                                                            <ul class="dropdown-menu">
+                                                                <li><a class="dropdown-item edit-contact" href="#"><i class="fas fa-edit me-2"></i>Modifier</a></li>
+                                                                <li><a class="dropdown-item delete-contact" href="#"><i class="fas fa-trash me-2"></i>Supprimer</a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Joseph</td>
+                                                    <td>EUX</td>
+                                                    <td>DAF</td>
+                                                    <td>joseph.eux@example.com</td>
+                                                    <td>+33 6 98 76 54 32</td>
+                                                    <td>
+                                                        <div class="dropdown">
+                                                            <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                <i class="fas fa-ellipsis-v"></i>
+                                                            </button>
+                                                            <ul class="dropdown-menu">
+                                                                <li><a class="dropdown-item edit-contact" href="#"><i class="fas fa-edit me-2"></i>Modifier</a></li>
+                                                                <li><a class="dropdown-item delete-contact" href="#"><i class="fas fa-trash me-2"></i>Supprimer</a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    
+                                    <div class="alert alert-success contact-added-alert d-none">
+                                        <i class="fas fa-check-circle me-2"></i>Contact ajouté
+                                    </div>
+                                    
+                                    <div class="d-flex mt-3 gap-3">
+                                        <button type="button" class="btn add-contact-btn" data-bs-toggle="modal" data-bs-target="#addContactModal">
+                                            <i class="fas fa-plus me-2"></i>Ajouter un contact
+                                        </button>
+                                        
+                                        <form id="invitationForm" class="d-flex flex-grow-1">
+                                            <div class="input-group">
+                                                <span class="input-group-text">@</span>
+                                                <input type="email" class="form-control" placeholder="Email" required>
+                                                <button type="submit" class="btn btn-outline-primary">Envoyer une invitation</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-4">
+                                    <div class="card h-100">
+                                        <div class="card-header bg-light">
+                                            <h5 class="mb-0">Ajouter à un recrutement</h5>
+                                            <p class="text-muted small mb-0">(bouton +, liste déroulante)</p>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="recruitment-list">
+                                                <div class="recruitment-item" data-recruitment-id="1">
+                                                    <span class="recruitment-title">Développeur Full-Stack</span>
+                                                    <button class="assign-to-recruitment btn btn-sm btn-light" data-contact-id="1">
+                                                        <i class="fas fa-plus"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="recruitment-item" data-recruitment-id="2">
+                                                    <span class="recruitment-title">Chef de Projet IT</span>
+                                                    <button class="assign-to-recruitment btn btn-sm btn-light" data-contact-id="1">
+                                                        <i class="fas fa-plus"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="recruitment-item" data-recruitment-id="3">
+                                                    <span class="recruitment-title">Designer UX/UI</span>
+                                                    <button class="assign-to-recruitment btn btn-sm btn-light" data-contact-id="1">
+                                                        <i class="fas fa-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <button class="btn btn-outline-primary w-100 mt-3">
+                                                <i class="fas fa-plus me-2"></i>Nouveau recrutement
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Onglet Gestion des accès -->
+                        <div class="tab-pane fade" id="permissions" role="tabpanel" aria-labelledby="permissions-tab">
+                            <h4 class="mb-4">Gestion des accès → Qui peut faire quoi ?</h4>
+                            
+                            <div class="roles-list">
+                                <div class="role-item">
+                                    <div class="role-header">
+                                        <h5 class="role-name">Role 1 : Administrateur (gestion complète)</h5>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input role-switch" type="checkbox" id="adminRoleSwitch" data-role="Administrateur" checked>
+                                        </div>
+                                    </div>
+                                    <p class="role-description">Accès complet à toutes les fonctionnalités et à la gestion des utilisateurs</p>
+                                </div>
+                                
+                                <div class="role-item">
+                                    <div class="role-header">
+                                        <h5 class="role-name">Role 2 : Manager (accès aux recrutements)</h5>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input role-switch" type="checkbox" id="managerRoleSwitch" data-role="Manager" checked>
+                                        </div>
+                                    </div>
+                                    <p class="role-description">Peut gérer les recrutements et voir toutes les candidatures</p>
+                                </div>
+                                
+                                <div class="role-item">
+                                    <div class="role-header">
+                                        <h5 class="role-name">Recruteur (accès limité à certaines candidatures)</h5>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input role-switch" type="checkbox" id="recruiterRoleSwitch" data-role="Recruteur">
+                                        </div>
+                                    </div>
+                                    <p class="role-description">Accès limité aux candidatures assignées et aux recrutements spécifiques</p>
+                                </div>
+                            </div>
+                            
+                            <div class="permissions-info">
+                                <h6><i class="fas fa-cog"></i> Modification des permissions</h6>
+                                <p>Cases à cocher pour définir les accès par utilisateur. Vous pouvez personnaliser les permissions pour chaque membre de votre équipe.</p>
+                            </div>
+                            
+                            <div class="permissions-info">
+                                <h6><i class="fas fa-bell"></i> Notification d'ajout</h6>
+                                <p>Lorsqu'un membre est ajouté, il reçoit une invitation par email pour rejoindre votre organisation.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Onglet Paramètres -->
+                        <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+                            <h4 class="mb-4">Paramètres de l'organisation</h4>
+                            
+                            <form id="organizationSettingsForm" class="settings-form">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="mb-3">
+                                            <label for="companyName" class="form-label">Nom de l'entreprise</label>
+                                            <input type="text" class="form-control" id="companyName" value="InnovTech" required>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label for="companyDescription" class="form-label">Description</label>
+                                            <textarea class="form-control" id="companyDescription" rows="4" placeholder="Décrivez votre entreprise en quelques phrases">Entreprise spécialisée dans l'innovation technologique et le développement de solutions numériques.</textarea>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label for="companyIndustry" class="form-label">Secteur d'activité</label>
+                                            <select class="form-select" id="companyIndustry">
+                                                <option selected value="tech">Technologie & Innovation</option>
+                                                <option value="finance">Finance</option>
+                                                <option value="health">Santé</option>
+                                                <option value="education">Éducation</option>
+                                                <option value="retail">Commerce & Distribution</option>
+                                                <option value="other">Autre</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label for="companyWebsite" class="form-label">Site web</label>
+                                            <input type="url" class="form-control" id="companyWebsite" placeholder="https://www.exemple.com" value="https://www.innovtech.com">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Logo de l'entreprise</label>
+                                            <div class="logo-preview">
+                                                <img src="https://via.placeholder.com/120x120?text=Logo" alt="Aperçu du logo" id="logoPreview">
+                                            </div>
+                                            <input type="file" class="form-control" id="companyLogo" accept="image/*">
+                                            <div class="form-text">Format recommandé: PNG ou JPG (300x300px)</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <button type="submit" class="btn save-btn mt-4">
+                                    <i class="fas fa-save me-2"></i>Sauvegarder les modifications
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Modal Ajouter un contact -->
+    <div class="modal fade" id="addContactModal" tabindex="-1" aria-labelledby="addContactModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addContactModalLabel">Ajouter un contact</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addContactForm">
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="firstName" class="form-label">Prénom</label>
+                                <input type="text" class="form-control" id="firstName" required>
+                            </div>
+                            <div class="col">
+                                <label for="lastName" class="form-label">Nom</label>
+                                <input type="text" class="form-control" id="lastName" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="function" class="form-label">Fonction</label>
+                            <input type="text" class="form-control" id="function">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Téléphone</label>
+                            <input type="tel" class="form-control" id="phone">
+                        </div>
+                        <div class="mb-3">
+                            <label for="role" class="form-label">Rôle</label>
+                            <select class="form-select" id="role" required>
+                                <option value="" selected disabled>Sélectionner un rôle</option>
+                                <option value="admin">Administrateur</option>
+                                <option value="manager">Manager</option>
+                                <option value="recruiter">Recruteur</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-primary" form="addContactForm">Ajouter</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <h4 class="footer-heading">Nexten</h4>
+                    <p class="footer-description">Notre plateforme utilise l'intelligence artificielle pour révolutionner le processus de recrutement, offrant 10 correspondances personnalisées pour les candidats et les recruteurs.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="footer-heading">Navigation</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Accueil</a></li>
+                        <li><a href="post-job.html"><i class="fas fa-chevron-right"></i> Publier une offre</a></li>
+                        <li><a href="candidate-dashboard.html"><i class="fas fa-chevron-right"></i> Espace candidat</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> À propos</a></li>
+                        <li><a href="#contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="footer-heading">Contact</h4>
+                    <div class="footer-contact">
+                        <p><i class="fas fa-map-marker-alt"></i> 123 Avenue de l'Innovation, 75001 Paris</p>
+                        <p><i class="fas fa-phone"></i> +33 1 23 45 67 89</p>
+                        <p><i class="fas fa-envelope"></i> contact@nexten.fr</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Nexten - Tous droits réservés | <a href="#">Politique de confidentialité</a> | <a href="#">Conditions d'utilisation</a></p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Bouton de retour en haut -->
+    <button id="scroll-to-top" class="scroll-to-top" aria-label="Retour en haut">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    
+    <!-- Bootstrap JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Scripts personnalisés -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Menu mobile toggle
+            const menuToggle = document.querySelector('.menu-toggle');
+            const nav = document.querySelector('nav');
+            
+            if (menuToggle && nav) {
+                menuToggle.addEventListener('click', function() {
+                    nav.classList.toggle('active');
+                    this.classList.toggle('active');
+                });
+            }
+            
+            // Header change on scroll
+            const header = document.querySelector('header');
+            
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 10) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+            
+            // Bouton de retour en haut
+            const scrollToTopButton = document.getElementById('scroll-to-top');
+            
+            if (scrollToTopButton) {
+                window.addEventListener('scroll', function() {
+                    if (window.scrollY > 500) {
+                        scrollToTopButton.classList.add('visible');
+                    } else {
+                        scrollToTopButton.classList.remove('visible');
+                    }
+                });
+                
+                scrollToTopButton.addEventListener('click', function() {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+        });
+    </script>
+    
+    <!-- Script pour la section Organisation -->
+    <script src="../static/scripts/organization.js"></script>
+</body>
+</html>
