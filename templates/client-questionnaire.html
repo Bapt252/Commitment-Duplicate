@@ -504,6 +504,50 @@
             color: var(--black);
             transform: rotate(90deg);
         }
+
+        /* Animation de chargement de la redirection */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .loading-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(124, 58, 237, 0.1);
+            border-radius: 50%;
+            border-top: 4px solid var(--purple);
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        .loading-text {
+            font-size: 1.2rem;
+            color: var(--purple);
+            font-weight: 500;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
         
         @media (max-width: 768px) {
             .stepper {
@@ -876,6 +920,12 @@
         <div class="notification-close"><i class="fas fa-times"></i></div>
     </div>
 
+    <!-- Écran de chargement pour la redirection -->
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Redirection vers votre tableau de bord...</div>
+    </div>
+
     <footer id="contact">
         <div class="container">
             <div class="footer-content">
@@ -1029,7 +1079,18 @@
                 document.getElementById('step2').classList.remove('completed');
             });
             
-            // Affichage conditionnel des sections
+            // Fonction pour rediriger vers le tableau de bord
+            function redirectToDashboard() {
+                // Afficher l'écran de chargement
+                document.getElementById('loading-overlay').classList.add('active');
+                
+                // Redirection après un délai pour voir l'animation
+                setTimeout(() => {
+                    window.location.href = 'company-dashboard.html';
+                }, 1500);
+            }
+            
+            // Affichage conditionnel des sections et redirection si réponse "Non"
             const hasPositionRadios = document.querySelectorAll('input[name="has-position"]');
             const recruitmentDetails = document.getElementById('recruitment-details');
             
@@ -1039,6 +1100,14 @@
                         recruitmentDetails.style.display = 'block';
                     } else {
                         recruitmentDetails.style.display = 'none';
+                        
+                        // Afficher une notification et rediriger vers le tableau de bord
+                        showNotification('Votre profil a été enregistré. Vous allez être redirigé vers votre espace entreprise.', 'success');
+                        
+                        // Redirection après un délai pour laisser le temps de voir la notification
+                        setTimeout(() => {
+                            redirectToDashboard();
+                        }, 2000);
                     }
                 });
             });
@@ -1106,10 +1175,10 @@
                     submitButton.innerHTML = '<i class="fas fa-check-circle"></i> <span>Soumettre</span>';
                     showNotification('Formulaire soumis avec succès ! Merci pour vos informations.', 'success');
                     
-                    // Redirection simulée
+                    // Redirection vers le tableau de bord
                     setTimeout(() => {
-                        showNotification('Redirection vers votre espace entreprise...', 'success');
-                    }, 3000);
+                        redirectToDashboard();
+                    }, 2000);
                 }, 2000);
             });
             
