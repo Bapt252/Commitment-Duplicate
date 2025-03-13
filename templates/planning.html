@@ -9,6 +9,7 @@
     <!-- CSS -->
     <link rel="stylesheet" href="../static/styles/nexten-modern-interactive.css">
     <link rel="stylesheet" href="../static/styles/planning.css">
+    <link rel="stylesheet" href="../static/styles/planning-enhanced.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
@@ -19,24 +20,70 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     
     <style>
+        :root {
+            --purple: #7c3aed;
+            --purple-light: #ede9fe;
+            --purple-dark: #5b21b6;
+            --yellow: #fef9c3;
+            --yellow-dark: #ca8a04;
+            --green: #10b981;
+            --green-light: #d1fae5;
+            --red: #ef4444;
+            --red-light: #fee2e2;
+            --blue: #3b82f6;
+            --blue-light: #dbeafe;
+            --cream: #f8fafc;
+            --white: #ffffff;
+            --black: #0f172a;
+            --gray: #64748b;
+            --gray-light: #e2e8f0;
+            --gray-dark: #334155;
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 16px;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+            --shadow-md: 0 8px 16px rgba(0,0,0,0.1);
+            --shadow-lg: 0 12px 24px rgba(0,0,0,0.15);
+            --transition: all 0.3s ease;
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
+            font-family: 'Inter', sans-serif;
             background-color: var(--cream);
+            color: var(--black);
+            line-height: 1.6;
         }
         
-        #main-content {
-            padding-top: 40px;
-        }
-        
+        /* Main container styles */
         .main-container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 0 var(--spacing-md);
+            padding: 2rem var(--spacing-md);
+        }
+
+        /* Glassmorphism styles */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-md);
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
         
-        /* Bannière d'entreprise avec le style moderne */
+        /* Company banner with improved styling */
         .company-banner {
             background: linear-gradient(135deg, var(--purple) 0%, var(--purple-dark) 100%);
-            color: var(--white);
             padding: var(--spacing-lg) 0;
             margin-top: 80px;
             position: relative;
@@ -53,17 +100,6 @@
             height: 200%;
             background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
             transform: rotate(30deg);
-        }
-        
-        .company-banner::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, var(--purple-light) 0%, transparent 100%);
-            opacity: 0.5;
         }
         
         .company-banner-content {
@@ -87,21 +123,21 @@
         .company-logo {
             width: 80px;
             height: 80px;
-            border-radius: 16px;
+            border-radius: var(--radius-lg);
             background-color: var(--white);
             padding: 10px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            box-shadow: var(--shadow-md);
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: var(--transition);
             overflow: hidden;
             position: relative;
         }
         
         .company-logo:hover {
-            transform: scale(1.1) rotate(5deg);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+            transform: scale(1.05);
+            box-shadow: var(--shadow-lg);
         }
         
         .company-logo::after {
@@ -120,16 +156,11 @@
             transform: translateX(100%);
         }
         
-        .company-logo img {
-            width: 100%;
-            height: auto;
-            object-fit: contain;
-        }
-        
         .company-name {
             font-size: 2rem;
             font-weight: 700;
             margin-bottom: 5px;
+            color: var(--white);
         }
         
         .company-category {
@@ -151,6 +182,7 @@
             font-size: 1.2rem;
             font-weight: 500;
             margin-bottom: 5px;
+            color: var(--white);
         }
         
         .user-position {
@@ -171,21 +203,23 @@
             color: var(--white);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
             border: 2px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
+            transition: var(--transition);
         }
         
         .user-avatar:hover {
-            transform: scale(1.1) rotate(10deg);
+            transform: scale(1.05);
             background-color: rgba(255, 255, 255, 0.25);
             box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
         }
         
-        /* Section de titre */
+        /* Page header with improved styling */
         .page-header {
             margin-bottom: var(--spacing-lg);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: var(--spacing-md) 0;
+            border-bottom: 1px solid var(--gray-light);
         }
         
         .page-title {
@@ -196,6 +230,18 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             text-fill-color: transparent;
+            position: relative;
+        }
+        
+        .page-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--purple) 0%, var(--purple-light) 100%);
+            border-radius: 2px;
         }
         
         .back-btn {
@@ -206,51 +252,96 @@
             border: 2px solid var(--purple);
             color: var(--purple);
             padding: var(--spacing-sm) var(--spacing-lg);
-            border-radius: 10px;
+            border-radius: var(--radius-md);
             text-decoration: none;
             font-weight: 500;
-            transition: all 0.3s ease;
+            transition: var(--transition);
         }
         
         .back-btn:hover {
             background-color: var(--purple-light);
             transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(124, 58, 237, 0.1);
+            box-shadow: var(--shadow-md);
+            color: var(--purple-dark);
         }
 
-        /* Toast container pour les notifications */
-        .toast-container {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1050;
+        /* Improved tabs styling */
+        .nav-tabs {
+            border-bottom: none;
+            gap: 10px;
+            margin-bottom: 1.5rem !important;
         }
         
-        /* Style de la légende des codes couleur */
+        .nav-tabs .nav-item {
+            margin-bottom: 0;
+        }
+        
+        .nav-tabs .nav-link {
+            background-color: var(--white);
+            border: 1px solid var(--gray-light);
+            border-radius: var(--radius-md);
+            color: var(--gray);
+            padding: 12px 20px;
+            font-weight: 500;
+            transition: var(--transition);
+            margin-right: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .nav-tabs .nav-link:hover {
+            color: var(--purple);
+            border-color: var(--purple-light);
+            transform: translateY(-2px);
+        }
+        
+        .nav-tabs .nav-link.active {
+            color: var(--purple);
+            background-color: var(--purple-light);
+            border-color: var(--purple);
+            box-shadow: 0 4px 10px rgba(124, 58, 237, 0.1);
+        }
+        
+        .nav-tabs .nav-link i {
+            font-size: 1.1rem;
+        }
+        
+        /* Color code legend with improved styling */
         .color-code-legend {
-            background-color: white;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-            padding: 15px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            background-color: var(--white);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--gray-light);
+            transition: var(--transition);
+        }
+        
+        .color-code-legend:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
         }
         
         .color-code-title {
             font-weight: 600;
-            margin-bottom: 8px;
+            margin-bottom: var(--spacing-sm);
+            color: var(--black);
+            font-size: 1.1rem;
         }
         
         .color-code-description {
             font-size: 0.9rem;
             color: var(--gray);
-            margin-bottom: 10px;
+            margin-bottom: var(--spacing-md);
+            line-height: 1.5;
         }
         
         .color-code-items {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
         }
         
         .color-code-item {
@@ -260,96 +351,139 @@
         }
         
         .color-circle {
-            width: 20px;
-            height: 20px;
+            width: 24px;
+            height: 24px;
             border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border: 2px solid white;
         }
         
         .coherent {
-            background-color: #2ecc71;
+            background-color: var(--green);
         }
         
         .above-market {
-            background-color: #f1c40f;
+            background-color: var(--yellow-dark);
         }
         
         .extreme {
-            background-color: #e74c3c;
+            background-color: var(--red);
         }
         
-        /* Styles pour les besoins de recrutement */
+        /* Recruitment need card with improved styling */
         .recruitment-need {
-            background-color: var(--yellow);
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            background-color: var(--white);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--gray-light);
+            transition: var(--transition);
+        }
+        
+        .recruitment-need:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-3px);
         }
         
         .recruitment-need-title {
             font-size: 1.5rem;
             font-weight: 600;
             margin-bottom: 5px;
+            color: var(--black);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .recruitment-need-title::before {
+            content: '';
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background-color: var(--purple);
+            border-radius: 50%;
         }
         
         .recruitment-need-subtitle {
             font-size: 1rem;
-            color: var(--gray-dark);
-            margin-bottom: 15px;
+            color: var(--gray);
+            margin-bottom: var(--spacing-lg);
+            padding-left: 22px;
         }
         
         .salary-info {
             display: flex;
-            justify-content: flex-end;
             align-items: center;
             gap: 10px;
-            margin-bottom: 15px;
+            background-color: var(--purple-light);
+            padding: 8px 16px;
+            border-radius: var(--radius-md);
+            align-self: flex-start;
         }
         
         .salary-label {
             font-weight: 500;
+            color: var(--gray-dark);
         }
         
         .salary-value {
             font-weight: 600;
             color: var(--purple);
+            font-size: 1.1rem;
         }
         
-        /* Styles pour les candidats */
+        /* Candidate cards with improved styling */
         .candidate-list {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
         }
         
         .candidate-card {
-            background-color: white;
-            border-radius: 8px;
-            padding: 15px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
+            background-color: var(--white);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border: 1px solid var(--gray-light);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .candidate-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--purple), var(--purple-light));
         }
         
         .candidate-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow-md);
+            border-color: var(--purple-light);
         }
         
         .candidate-header {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 10px;
+            margin-bottom: var(--spacing-md);
+            padding-left: var(--spacing-md);
         }
         
         .candidate-info h4 {
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-weight: 600;
             margin-bottom: 2px;
+            color: var(--black);
         }
         
         .candidate-job {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: var(--gray);
         }
         
@@ -358,124 +492,281 @@
             gap: 5px;
         }
         
-        .candidate-rating {
-            background-color: #f8f9fa;
-            padding: 5px 8px;
-            border-radius: 5px;
-            font-size: 0.8rem;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
         .candidate-details {
-            font-size: 0.85rem;
-            margin-bottom: 10px;
+            font-size: 0.9rem;
+            margin-bottom: var(--spacing-md);
+            padding-left: var(--spacing-md);
         }
         
         .candidate-details p {
-            margin-bottom: 3px;
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 10px;
         }
         
         .candidate-details i {
-            color: var(--gray);
+            color: var(--purple);
             width: 16px;
         }
         
-        /* Styles pour les étapes de recrutement */
+        /* Recruitment steps with improved styling */
         .recruitment-steps {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
-            gap: 10px;
-            margin-top: 15px;
+            gap: 8px;
+            margin-top: var(--spacing-md);
         }
         
         .step-button {
-            padding: 8px;
+            padding: 8px 4px;
             text-align: center;
-            border-radius: 6px;
-            font-size: 0.85rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.8rem;
             font-weight: 500;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: var(--transition);
             border: none;
-            background-color: #f8f9fa;
+            background-color: var(--gray-light);
             color: var(--gray-dark);
         }
         
         .step-button.active {
-            background-color: var(--primary-light);
-            color: var(--purple);
+            background-color: var(--purple);
+            color: var(--white);
+            box-shadow: 0 4px 8px rgba(124, 58, 237, 0.2);
         }
         
         .step-button.completed {
-            background-color: var(--purple-light);
-            color: var(--purple);
+            background-color: var(--green-light);
+            color: var(--green);
         }
 
-        .step-button i {
-            margin-right: 5px;
-        }
-        
         .step-button:hover {
-            background-color: var(--primary-light);
+            filter: brightness(1.05);
             transform: translateY(-2px);
         }
         
-        /* Boutons d'action pour les candidats */
+        /* Action buttons with improved styling */
         .action-buttons {
             display: flex;
             justify-content: space-between;
-            margin-top: 10px;
+            margin-top: var(--spacing-md);
+            gap: 8px;
         }
         
         .candidate-action-btn {
             flex: 1;
-            padding: 6px 10px;
-            border-radius: 4px;
+            padding: 8px 12px;
+            border-radius: var(--radius-sm);
             font-size: 0.85rem;
             text-align: center;
             cursor: pointer;
-            background-color: #f8f9fa;
-            border: 1px solid #dee2e6;
-            margin: 0 2px;
-            transition: all 0.2s ease;
+            background-color: var(--white);
+            border: 1px solid var(--gray-light);
+            color: var(--gray-dark);
+            transition: var(--transition);
+            font-weight: 500;
         }
         
         .candidate-action-btn:hover {
             background-color: var(--purple-light);
             border-color: var(--purple);
-        }
-        
-        .add-candidate-btn {
-            background-color: var(--purple-light);
             color: var(--purple);
-            border: 1px solid var(--purple);
-            padding: 8px 15px;
-            border-radius: 6px;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            transform: translateY(-2px);
         }
         
-        .add-candidate-btn:hover {
+        /* Improved calendar styling */
+        .calendar-view {
+            background-color: var(--white);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--gray-light);
+            transition: var(--transition);
+        }
+        
+        .calendar-view:hover {
+            box-shadow: var(--shadow-md);
+        }
+        
+        .list-group-item {
+            border-color: var(--gray-light);
+            transition: var(--transition);
+        }
+        
+        .list-group-item:hover {
+            background-color: var(--purple-light);
+            transform: translateX(4px);
+        }
+        
+        .list-group-item.active {
             background-color: var(--purple);
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(124, 58, 237, 0.2);
+            border-color: var(--purple);
+        }
+        
+        .badge {
+            transition: var(--transition);
+        }
+        
+        .badge:hover {
+            transform: scale(1.1);
+        }
+        
+        /* Calendar table styling */
+        .table-bordered {
+            border-color: var(--gray-light);
+        }
+        
+        .table-bordered th {
+            background-color: var(--purple-light);
+            color: var(--purple-dark);
+            font-weight: 600;
+            text-align: center;
+            padding: 10px;
+        }
+        
+        .table-bordered td {
+            padding: 12px;
+            text-align: center;
+            height: 80px;
+            vertical-align: top;
+            transition: var(--transition);
+        }
+        
+        .table-bordered td:hover {
+            background-color: var(--purple-light);
+        }
+        
+        /* Tracking tab styling */
+        .card {
+            border-radius: var(--radius-md);
+            border: 1px solid var(--gray-light);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-3px);
+        }
+        
+        .card-header {
+            background-color: var(--white);
+            border-bottom: 1px solid var(--gray-light);
+            padding: 16px 20px;
+            border-top-left-radius: var(--radius-md) !important;
+            border-top-right-radius: var(--radius-md) !important;
+        }
+        
+        .card-title {
+            font-weight: 600;
+            color: var(--black);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .progress {
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: var(--gray-light);
+        }
+        
+        .progress-bar {
+            transition: width 0.5s ease;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .company-banner-content {
+                flex-direction: column;
+                gap: var(--spacing-lg);
+                text-align: center;
+            }
+            
+            .company-info, .user-info {
+                justify-content: center;
+            }
+            
+            .user-details {
+                text-align: center;
+            }
+            
+            .page-header {
+                flex-direction: column;
+                gap: var(--spacing-md);
+                align-items: flex-start;
+            }
+            
+            .candidate-list {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .recruitment-steps {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 5px;
+            }
+            
+            .step-button {
+                margin-bottom: 5px;
+                font-size: 0.7rem;
+                padding: 6px 3px;
+            }
+            
+            .color-code-items {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .candidate-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .candidate-actions {
+                flex-direction: column;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .candidate-action-btn {
+                margin-bottom: 5px;
+            }
+        }
+        
+        /* Animation pour l'icône de notification */
+        @keyframes shake {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(5deg); }
+            50% { transform: rotate(0eg); }
+            75% { transform: rotate(-5deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        .fa-shake {
+            animation: shake 0.8s infinite;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
         }
     </style>
 </head>
 <body>
-    <!-- Notification bar -->
+    <!-- Notification bar avec animation -->
     <div class="notification-bar">
-        <i class="fas fa-bell"></i> Vous avez 5 nouveaux candidats correspondant à vos offres et 2 entretiens programmés aujourd'hui
+        <i class="fas fa-bell fa-shake"></i> Vous avez 5 nouveaux candidats correspondant à vos offres et 2 entretiens programmés aujourd'hui
     </div>
 
     <!-- Lien d'accessibilité pour sauter au contenu principal -->
@@ -510,7 +801,7 @@
                     <img src="https://via.placeholder.com/90x90?text=Logo" alt="Logo InnovTech">
                 </div>
                 <div>
-                    <h2 class="company-name">InnovTech</h2>
+                    <h2 class="company-name">INNOVTECH</h2>
                     <p class="company-category">Technologie & Innovation</p>
                 </div>
             </div>
@@ -539,8 +830,54 @@
             </a>
         </div>
         
+        <!-- Recherche et filtres -->
+        <div class="search-filter-section glass-card mb-4">
+            <div class="container p-3">
+                <div class="row align-items-center">
+                    <div class="col-md-6 mb-3 mb-md-0">
+                        <div class="input-group">
+                            <span class="input-group-text bg-white border-end-0">
+                                <i class="fas fa-search text-purple"></i>
+                            </span>
+                            <input type="text" class="form-control border-start-0" placeholder="Rechercher un candidat, un poste...">
+                            <button class="btn btn-primary">Rechercher</button>
+                        </div>
+                    </div>
+                    <div class="col-md-6 d-flex justify-content-md-end">
+                        <div class="dropdown me-2">
+                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                <i class="fas fa-filter"></i> Filtrer
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Tous les candidats</a></li>
+                                <li><a class="dropdown-item" href="#">En attente d'entretien</a></li>
+                                <li><a class="dropdown-item" href="#">Entretien programmé</a></li>
+                                <li><a class="dropdown-item" href="#">Offre envoyée</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Tous les postes</a></li>
+                            </ul>
+                        </div>
+                        <div class="dropdown me-2">
+                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                <i class="fas fa-sort"></i> Trier par
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Date (plus récent)</a></li>
+                                <li><a class="dropdown-item" href="#">Date (plus ancien)</a></li>
+                                <li><a class="dropdown-item" href="#">Nom (A-Z)</a></li>
+                                <li><a class="dropdown-item" href="#">Matching (descendant)</a></li>
+                            </ul>
+                        </div>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#scheduleInterviewModal">
+                            <i class="fas fa-plus"></i> Planifier
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <!-- Section d'onglets -->
-        <ul class="nav nav-tabs mb-4" id="planningTabs" role="tablist">
+        <ul class="nav nav-tabs" id="planningTabs" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="candidates-tab" data-bs-toggle="tab" data-bs-target="#candidates" type="button" role="tab" aria-controls="candidates" aria-selected="true">
                     <i class="fas fa-users"></i> Candidatures
@@ -562,6 +899,36 @@
         <div class="tab-content" id="planningTabsContent">
             <!-- Onglet Candidatures -->
             <div class="tab-pane fade show active" id="candidates" role="tabpanel" aria-labelledby="candidates-tab">
+                <!-- Résumé du recrutement -->
+                <div class="recruitment-summary glass-card p-3 mb-4">
+                    <div class="row text-center">
+                        <div class="col-md-3 mb-3 mb-md-0">
+                            <div class="d-flex flex-column">
+                                <span class="fs-4 fw-bold text-purple">12</span>
+                                <span class="text-muted">Candidats actifs</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3 mb-md-0">
+                            <div class="d-flex flex-column">
+                                <span class="fs-4 fw-bold text-purple">5</span>
+                                <span class="text-muted">Entretiens planifiés</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3 mb-md-0">
+                            <div class="d-flex flex-column">
+                                <span class="fs-4 fw-bold text-green">3</span>
+                                <span class="text-muted">Offres envoyées</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="d-flex flex-column">
+                                <span class="fs-4 fw-bold text-blue">2</span>
+                                <span class="text-muted">Postes à pourvoir</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
                 <!-- Légende des codes couleur -->
                 <div class="color-code-legend">
                     <div class="color-code-title">Code couleur</div>
@@ -586,11 +953,11 @@
                 <section class="recruitment-need">
                     <div class="d-flex justify-content-between align-items-start mb-3">
                         <div>
-                            <h2 class="recruitment-need-title">BESOIN 1 : Comptabilité général</h2>
+                            <h2 class="recruitment-need-title">Comptabilité général</h2>
                             <div class="recruitment-need-subtitle">Statut : Entretien en présentiel</div>
                         </div>
                         <div class="salary-info">
-                            <span class="salary-label">Rémunération du poste :</span>
+                            <span class="salary-label">Rémunération :</span>
                             <span class="salary-value">45k</span>
                         </div>
                     </div>
@@ -604,7 +971,7 @@
                                     <div class="candidate-job">Analyste du profit</div>
                                 </div>
                                 <div class="candidate-actions">
-                                    <button class="btn btn-sm btn-outline-secondary">
+                                    <button class="btn btn-sm btn-outline-purple">
                                         <i class="fas fa-eye"></i>
                                     </button>
                                 </div>
@@ -613,7 +980,7 @@
                             <div class="candidate-details">
                                 <p><i class="fas fa-briefcase"></i> 7+ Années par poste (En expérience de CPA)</p>
                                 <p><i class="fas fa-map-marker-alt"></i> Montréal - QC (100 minutes)</p>
-                                <p><i class="fas fa-info-circle"></i> Disponible pour une entretien...</p>
+                                <p><i class="fas fa-info-circle"></i> Disponible pour un entretien...</p>
                             </div>
                             
                             <div class="recruitment-steps">
@@ -624,9 +991,16 @@
                                 <button class="step-button">Acceptation</button>
                             </div>
                             
-                            <div class="action-buttons mt-3">
-                                <button class="candidate-action-btn">Poser une question</button>
-                                <button class="candidate-action-btn">Enlever shortlist</button>
+                            <div class="action-buttons">
+                                <button class="candidate-action-btn">
+                                    <i class="fas fa-comment-dots"></i> Question
+                                </button>
+                                <button class="candidate-action-btn">
+                                    <i class="fas fa-calendar-alt"></i> Planifier
+                                </button>
+                                <button class="candidate-action-btn">
+                                    <i class="fas fa-times"></i> Retirer
+                                </button>
                             </div>
                         </div>
                         
@@ -638,7 +1012,7 @@
                                     <div class="candidate-job">Analyste du profit</div>
                                 </div>
                                 <div class="candidate-actions">
-                                    <button class="btn btn-sm btn-outline-secondary">
+                                    <button class="btn btn-sm btn-outline-purple">
                                         <i class="fas fa-eye"></i>
                                     </button>
                                 </div>
@@ -647,7 +1021,7 @@
                             <div class="candidate-details">
                                 <p><i class="fas fa-briefcase"></i> 7+ Années par poste (En expérience de CPA)</p>
                                 <p><i class="fas fa-map-marker-alt"></i> Montréal - QC (100 minutes)</p>
-                                <p><i class="fas fa-info-circle"></i> Disponible pour une entretien...</p>
+                                <p><i class="fas fa-info-circle"></i> Disponible pour un entretien...</p>
                             </div>
                             
                             <div class="recruitment-steps">
@@ -658,9 +1032,16 @@
                                 <button class="step-button">Acceptation</button>
                             </div>
                             
-                            <div class="action-buttons mt-3">
-                                <button class="candidate-action-btn">Poser une question</button>
-                                <button class="candidate-action-btn">Enlever shortlist</button>
+                            <div class="action-buttons">
+                                <button class="candidate-action-btn">
+                                    <i class="fas fa-comment-dots"></i> Question
+                                </button>
+                                <button class="candidate-action-btn">
+                                    <i class="fas fa-calendar-alt"></i> Planifier
+                                </button>
+                                <button class="candidate-action-btn">
+                                    <i class="fas fa-times"></i> Retirer
+                                </button>
                             </div>
                         </div>
                         
@@ -672,7 +1053,7 @@
                                     <div class="candidate-job">Analyste du profit</div>
                                 </div>
                                 <div class="candidate-actions">
-                                    <button class="btn btn-sm btn-outline-secondary">
+                                    <button class="btn btn-sm btn-outline-purple">
                                         <i class="fas fa-eye"></i>
                                     </button>
                                 </div>
@@ -681,7 +1062,7 @@
                             <div class="candidate-details">
                                 <p><i class="fas fa-briefcase"></i> 7+ Années par poste (En expérience de CPA)</p>
                                 <p><i class="fas fa-map-marker-alt"></i> Montréal - QC (100 minutes)</p>
-                                <p><i class="fas fa-info-circle"></i> Disponible pour une entretien...</p>
+                                <p><i class="fas fa-info-circle"></i> Disponible pour un entretien...</p>
                             </div>
                             
                             <div class="recruitment-steps">
@@ -692,23 +1073,34 @@
                                 <button class="step-button">Acceptation</button>
                             </div>
                             
-                            <div class="action-buttons mt-3">
-                                <button class="candidate-action-btn">Poser une question</button>
-                                <button class="candidate-action-btn">Enlever shortlist</button>
+                            <div class="action-buttons">
+                                <button class="candidate-action-btn">
+                                    <i class="fas fa-comment-dots"></i> Question
+                                </button>
+                                <button class="candidate-action-btn">
+                                    <i class="fas fa-calendar-alt"></i> Planifier
+                                </button>
+                                <button class="candidate-action-btn">
+                                    <i class="fas fa-times"></i> Retirer
+                                </button>
                             </div>
                         </div>
                     </div>
+                    
+                    <button class="btn btn-outline-purple mt-2">
+                        <i class="fas fa-plus"></i> Ajouter un candidat
+                    </button>
                 </section>
                 
                 <!-- Deuxième besoin de recrutement -->
                 <section class="recruitment-need">
                     <div class="d-flex justify-content-between align-items-start mb-3">
                         <div>
-                            <h2 class="recruitment-need-title">BESOIN 2 : Assistant de direction</h2>
+                            <h2 class="recruitment-need-title">Assistant de direction</h2>
                             <div class="recruitment-need-subtitle">Statut : Entretien en visioconférence</div>
                         </div>
                         <div class="salary-info">
-                            <span class="salary-label">Rémunération du poste :</span>
+                            <span class="salary-label">Rémunération :</span>
                             <span class="salary-value">32k</span>
                         </div>
                     </div>
@@ -722,7 +1114,7 @@
                                     <div class="candidate-job">Assistant administratif</div>
                                 </div>
                                 <div class="candidate-actions">
-                                    <button class="btn btn-sm btn-outline-secondary">
+                                    <button class="btn btn-sm btn-outline-purple">
                                         <i class="fas fa-eye"></i>
                                     </button>
                                 </div>
@@ -742,9 +1134,16 @@
                                 <button class="step-button">Acceptation</button>
                             </div>
                             
-                            <div class="action-buttons mt-3">
-                                <button class="candidate-action-btn">Poser une question</button>
-                                <button class="candidate-action-btn">Enlever shortlist</button>
+                            <div class="action-buttons">
+                                <button class="candidate-action-btn">
+                                    <i class="fas fa-comment-dots"></i> Question
+                                </button>
+                                <button class="candidate-action-btn">
+                                    <i class="fas fa-calendar-alt"></i> Planifier
+                                </button>
+                                <button class="candidate-action-btn">
+                                    <i class="fas fa-times"></i> Retirer
+                                </button>
                             </div>
                         </div>
                         
@@ -756,7 +1155,7 @@
                                     <div class="candidate-job">Assistant de direction</div>
                                 </div>
                                 <div class="candidate-actions">
-                                    <button class="btn btn-sm btn-outline-secondary">
+                                    <button class="btn btn-sm btn-outline-purple">
                                         <i class="fas fa-eye"></i>
                                     </button>
                                 </div>
@@ -776,9 +1175,16 @@
                                 <button class="step-button">Acceptation</button>
                             </div>
                             
-                            <div class="action-buttons mt-3">
-                                <button class="candidate-action-btn">Poser une question</button>
-                                <button class="candidate-action-btn">Enlever shortlist</button>
+                            <div class="action-buttons">
+                                <button class="candidate-action-btn">
+                                    <i class="fas fa-comment-dots"></i> Question
+                                </button>
+                                <button class="candidate-action-btn">
+                                    <i class="fas fa-calendar-alt"></i> Planifier
+                                </button>
+                                <button class="candidate-action-btn">
+                                    <i class="fas fa-times"></i> Retirer
+                                </button>
                             </div>
                         </div>
                         
@@ -790,7 +1196,7 @@
                                     <div class="candidate-job">Assistant exécutif</div>
                                 </div>
                                 <div class="candidate-actions">
-                                    <button class="btn btn-sm btn-outline-secondary">
+                                    <button class="btn btn-sm btn-outline-purple">
                                         <i class="fas fa-eye"></i>
                                     </button>
                                 </div>
@@ -806,39 +1212,50 @@
                                 <button class="step-button completed">En cours</button>
                                 <button class="step-button completed">Call prise</button>
                                 <button class="step-button completed">Entretien visio</button>
-                                <button class="step-button">Présentiel</button>
+                                <button class="step-button active">Présentiel</button>
                                 <button class="step-button">Acceptation</button>
                             </div>
                             
-                            <div class="action-buttons mt-3">
-                                <button class="candidate-action-btn">Poser une question</button>
-                                <button class="candidate-action-btn">Enlever shortlist</button>
+                            <div class="action-buttons">
+                                <button class="candidate-action-btn">
+                                    <i class="fas fa-comment-dots"></i> Question
+                                </button>
+                                <button class="candidate-action-btn">
+                                    <i class="fas fa-calendar-alt"></i> Planifier
+                                </button>
+                                <button class="candidate-action-btn">
+                                    <i class="fas fa-times"></i> Retirer
+                                </button>
                             </div>
                         </div>
                     </div>
+                    
+                    <button class="btn btn-outline-purple mt-2">
+                        <i class="fas fa-plus"></i> Ajouter un candidat
+                    </button>
                 </section>
             </div>
             
             <!-- Onglet Calendrier -->
             <div class="tab-pane fade" id="calendar" role="tabpanel" aria-labelledby="calendar-tab">
                 <div class="card">
-                    <div class="card-header bg-white">
+                    <div class="card-header">
                         <div class="d-flex justify-content-between align-items-center">
                             <h5 class="mb-0">Calendrier des entretiens</h5>
                             <div>
-                                <button class="btn btn-sm btn-outline-primary me-2">
+                                <button class="btn btn-sm btn-outline-secondary me-2">
                                     <i class="fas fa-sync-alt"></i> Actualiser
                                 </button>
-                                <button class="btn btn-sm btn-primary">
+                                <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#scheduleInterviewModal">
                                     <i class="fas fa-plus"></i> Planifier un entretien
                                 </button>
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
-                        <div class="row mb-4">
+                        <div class="row">
                             <div class="col-md-3">
-                                <div class="list-group">
+                                <div class="list-group mb-4">
                                     <a href="#" class="list-group-item list-group-item-action active">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <span>Aujourd'hui</span>
@@ -871,49 +1288,52 @@
                                     </a>
                                 </div>
                                 
-                                <div class="mt-4">
+                                <div class="card p-3">
                                     <h6 class="mb-3">Filtres</h6>
-                                    <div class="form-check mb-2">
+                                    <div class="form-check form-switch mb-2">
                                         <input class="form-check-input" type="checkbox" id="filterComptabilite" checked>
                                         <label class="form-check-label" for="filterComptabilite">
                                             Comptabilité général
                                         </label>
                                     </div>
-                                    <div class="form-check mb-2">
+                                    <div class="form-check form-switch mb-2">
                                         <input class="form-check-input" type="checkbox" id="filterAssistant" checked>
                                         <label class="form-check-label" for="filterAssistant">
                                             Assistant de direction
                                         </label>
                                     </div>
-                                    <div class="form-check mb-2">
+                                    <div class="form-check form-switch mb-2">
                                         <input class="form-check-input" type="checkbox" id="filterAppel" checked>
                                         <label class="form-check-label" for="filterAppel">
                                             Appel téléphonique
                                         </label>
                                     </div>
-                                    <div class="form-check mb-2">
+                                    <div class="form-check form-switch mb-2">
                                         <input class="form-check-input" type="checkbox" id="filterVisio" checked>
                                         <label class="form-check-label" for="filterVisio">
                                             Entretien visio
                                         </label>
                                     </div>
-                                    <div class="form-check mb-2">
+                                    <div class="form-check form-switch mb-2">
                                         <input class="form-check-input" type="checkbox" id="filterPresentiel" checked>
                                         <label class="form-check-label" for="filterPresentiel">
                                             Entretien présentiel
                                         </label>
                                     </div>
+                                    <button class="btn btn-sm btn-outline-primary w-100 mt-2">
+                                        Appliquer les filtres
+                                    </button>
                                 </div>
                             </div>
                             
                             <div class="col-md-9">
-                                <div class="calendar-view p-3 border rounded">
+                                <div class="calendar-view p-3">
                                     <div class="d-flex justify-content-between align-items-center mb-4">
-                                        <button class="btn btn-sm btn-outline-secondary">
+                                        <button class="btn btn-sm btn-outline-purple">
                                             <i class="fas fa-chevron-left"></i>
                                         </button>
                                         <h4 class="mb-0">Mars 2025</h4>
-                                        <button class="btn btn-sm btn-outline-secondary">
+                                        <button class="btn btn-sm btn-outline-purple">
                                             <i class="fas fa-chevron-right"></i>
                                         </button>
                                     </div>
@@ -1005,7 +1425,12 @@
                                 </div>
                                 
                                 <div class="mt-4">
-                                    <h5 class="mb-3">Entretiens aujourd'hui</h5>
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <h5 class="mb-0">Entretiens aujourd'hui</h5>
+                                        <button class="btn btn-sm btn-outline-purple">
+                                            <i class="fas fa-plus"></i> Ajouter
+                                        </button>
+                                    </div>
                                     
                                     <div class="list-group">
                                         <div class="list-group-item list-group-item-action">
@@ -1058,7 +1483,7 @@
             <!-- Onglet Suivi -->
             <div class="tab-pane fade" id="tracking" role="tabpanel" aria-labelledby="tracking-tab">
                 <div class="card">
-                    <div class="card-header bg-white">
+                    <div class="card-header">
                         <h5 class="mb-0">Suivi de recrutement</h5>
                     </div>
                     <div class="card-body">
@@ -1067,25 +1492,27 @@
                                 <div class="card mb-3">
                                     <div class="card-body">
                                         <h5 class="card-title">Vue d'ensemble</h5>
-                                        <div class="d-flex justify-content-between align-items-center mb-3">
-                                            <span>Postes ouverts :</span>
-                                            <strong>3</strong>
-                                        </div>
-                                        <div class="d-flex justify-content-between align-items-center mb-3">
-                                            <span>Candidats shortlistés :</span>
-                                            <strong>12</strong>
-                                        </div>
-                                        <div class="d-flex justify-content-between align-items-center mb-3">
-                                            <span>Entretiens planifiés :</span>
-                                            <strong>8</strong>
-                                        </div>
-                                        <div class="d-flex justify-content-between align-items-center mb-3">
-                                            <span>Candidats en attente de décision :</span>
-                                            <strong>3</strong>
-                                        </div>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <span>Offres acceptées :</span>
-                                            <strong>1</strong>
+                                        <div class="list-group list-group-flush">
+                                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                                <span>Postes ouverts :</span>
+                                                <span class="badge bg-primary rounded-pill">3</span>
+                                            </div>
+                                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                                <span>Candidats shortlistés :</span>
+                                                <span class="badge bg-primary rounded-pill">12</span>
+                                            </div>
+                                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                                <span>Entretiens planifiés :</span>
+                                                <span class="badge bg-primary rounded-pill">8</span>
+                                            </div>
+                                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                                <span>Candidats en attente de décision :</span>
+                                                <span class="badge bg-primary rounded-pill">3</span>
+                                            </div>
+                                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                                <span>Offres acceptées :</span>
+                                                <span class="badge bg-success rounded-pill">1</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -1095,7 +1522,7 @@
                                         <h5 class="card-title">Statistiques</h5>
                                         <p class="card-text text-muted small">Durée moyenne du processus de recrutement</p>
                                         
-                                        <div class="progress mb-3" style="height: 8px;">
+                                        <div class="progress mb-3" style="height: 10px;">
                                             <div class="progress-bar bg-success" role="progressbar" style="width: 40%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                         <div class="d-flex justify-content-between small text-muted mb-4">
@@ -1105,7 +1532,7 @@
                                         </div>
                                         
                                         <p class="card-text text-muted small">Taux de conversion des candidatures</p>
-                                        <div class="progress mb-3" style="height: 8px;">
+                                        <div class="progress mb-3" style="height: 10px;">
                                             <div class="progress-bar bg-info" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                         <div class="d-flex justify-content-between small text-muted">
@@ -1127,7 +1554,7 @@
                                                 <h6 class="mb-0">Comptabilité général</h6>
                                                 <span class="badge bg-primary">En cours</span>
                                             </div>
-                                            <div class="progress" style="height: 8px;">
+                                            <div class="progress" style="height: 10px;">
                                                 <div class="progress-bar bg-primary" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div>
                                             <div class="d-flex justify-content-between mt-2 small text-muted">
@@ -1144,7 +1571,7 @@
                                                 <h6 class="mb-0">Assistant de direction</h6>
                                                 <span class="badge bg-primary">En cours</span>
                                             </div>
-                                            <div class="progress" style="height: 8px;">
+                                            <div class="progress" style="height: 10px;">
                                                 <div class="progress-bar bg-primary" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div>
                                             <div class="d-flex justify-content-between mt-2 small text-muted">
@@ -1161,7 +1588,7 @@
                                                 <h6 class="mb-0">Développeur Full-Stack</h6>
                                                 <span class="badge bg-primary">En cours</span>
                                             </div>
-                                            <div class="progress" style="height: 8px;">
+                                            <div class="progress" style="height: 10px;">
                                                 <div class="progress-bar bg-primary" role="progressbar" style="width: 40%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div>
                                             <div class="d-flex justify-content-between mt-2 small text-muted">
@@ -1211,7 +1638,7 @@
         
         <!-- Modal pour planifier un entretien -->
         <div class="modal fade" id="scheduleInterviewModal" tabindex="-1" aria-labelledby="scheduleInterviewModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="scheduleInterviewModalLabel">Planifier un entretien</h5>
@@ -1219,44 +1646,48 @@
                     </div>
                     <div class="modal-body">
                         <form>
-                            <div class="mb-3">
-                                <label for="candidate" class="form-label">Candidat</label>
-                                <select class="form-select" id="candidate" required>
-                                    <option value="" selected disabled>Sélectionner un candidat</option>
-                                    <option value="1">Prénom N. - Comptabilité général</option>
-                                    <option value="2">Prénom N. - Assistant de direction</option>
-                                    <option value="3">Prénom N. - Développeur Full-Stack</option>
-                                </select>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="candidate" class="form-label">Candidat</label>
+                                    <select class="form-select" id="candidate" required>
+                                        <option value="" selected disabled>Sélectionner un candidat</option>
+                                        <option value="1">Prénom N. - Comptabilité général</option>
+                                        <option value="2">Prénom N. - Assistant de direction</option>
+                                        <option value="3">Prénom N. - Développeur Full-Stack</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="interviewType" class="form-label">Type d'entretien</label>
+                                    <select class="form-select" id="interviewType" required>
+                                        <option value="" selected disabled>Sélectionner un type</option>
+                                        <option value="phone">Appel téléphonique</option>
+                                        <option value="video">Entretien visio</option>
+                                        <option value="in-person">Entretien présentiel</option>
+                                    </select>
+                                </div>
                             </div>
-                            <div class="mb-3">
-                                <label for="interviewType" class="form-label">Type d'entretien</label>
-                                <select class="form-select" id="interviewType" required>
-                                    <option value="" selected disabled>Sélectionner un type</option>
-                                    <option value="phone">Appel téléphonique</option>
-                                    <option value="video">Entretien visio</option>
-                                    <option value="in-person">Entretien présentiel</option>
-                                </select>
-                            </div>
+                            
                             <div class="row mb-3">
-                                <div class="col">
+                                <div class="col-md-4">
                                     <label for="interviewDate" class="form-label">Date</label>
                                     <input type="date" class="form-control" id="interviewDate" required>
                                 </div>
-                                <div class="col">
+                                <div class="col-md-4">
                                     <label for="interviewTime" class="form-label">Heure</label>
                                     <input type="time" class="form-control" id="interviewTime" required>
                                 </div>
+                                <div class="col-md-4">
+                                    <label for="interviewDuration" class="form-label">Durée</label>
+                                    <select class="form-select" id="interviewDuration" required>
+                                        <option value="30">30 minutes</option>
+                                        <option value="45">45 minutes</option>
+                                        <option value="60" selected>1 heure</option>
+                                        <option value="90">1 heure 30</option>
+                                        <option value="120">2 heures</option>
+                                    </select>
+                                </div>
                             </div>
-                            <div class="mb-3">
-                                <label for="interviewDuration" class="form-label">Durée</label>
-                                <select class="form-select" id="interviewDuration" required>
-                                    <option value="30">30 minutes</option>
-                                    <option value="45">45 minutes</option>
-                                    <option value="60" selected>1 heure</option>
-                                    <option value="90">1 heure 30</option>
-                                    <option value="120">2 heures</option>
-                                </select>
-                            </div>
+                            
                             <div class="mb-3">
                                 <label for="interviewParticipants" class="form-label">Participants</label>
                                 <select class="form-select" id="interviewParticipants" multiple>
@@ -1266,15 +1697,23 @@
                                 </select>
                                 <div class="form-text">Maintenez Ctrl (ou Cmd) pour sélectionner plusieurs participants</div>
                             </div>
+                            
                             <div class="mb-3">
                                 <label for="interviewNotes" class="form-label">Notes</label>
                                 <textarea class="form-control" id="interviewNotes" rows="3" placeholder="Informations complémentaires ou consignes particulières..."></textarea>
                             </div>
+                            
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="checkbox" id="sendNotification" checked>
+                                <label class="form-check-label" for="sendNotification">
+                                    Envoyer une notification au candidat
+                                </label>
+                            </div>
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                        <button type="button" class="btn btn-primary">Planifier</button>
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Annuler</button>
+                        <button type="button" class="btn btn-primary">Planifier l'entretien</button>
                     </div>
                 </div>
             </div>
@@ -1396,14 +1835,43 @@
                 });
             });
             
-            // Gestion de l'ouverture de la modal de planification
-            const planningButtons = document.querySelectorAll('.btn-primary');
-            planningButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    if (this.innerText.includes('Planifier')) {
-                        const scheduleModal = new bootstrap.Modal(document.getElementById('scheduleInterviewModal'));
-                        scheduleModal.show();
+            // Animation au scroll
+            const animatedElements = document.querySelectorAll('.recruitment-need, .card, .color-code-legend');
+            
+            function checkAnimation() {
+                animatedElements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const windowHeight = window.innerHeight;
+                    
+                    if (elementPosition < windowHeight * 0.9) {
+                        element.style.opacity = '1';
+                        element.style.transform = 'translateY(0)';
                     }
+                });
+            }
+            
+            // Initialiser les styles d'animation
+            animatedElements.forEach(element => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(20px)';
+                element.style.transition = 'opacity 0.5s ease-out, transform 0.5s ease-out';
+            });
+            
+            // Vérifier les animations au chargement et au scroll
+            window.addEventListener('load', checkAnimation);
+            window.addEventListener('scroll', checkAnimation);
+            
+            // Hover effect sur les cartes candidat
+            const candidateCards = document.querySelectorAll('.candidate-card');
+            candidateCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px)';
+                    this.style.boxShadow = '0 12px 24px rgba(124, 58, 237, 0.15)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = '';
+                    this.style.boxShadow = '';
                 });
             });
         });
