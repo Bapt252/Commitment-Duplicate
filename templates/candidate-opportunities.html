@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="../static/styles/dashboard.css">
     <link rel="stylesheet" href="../static/styles/dashboard-new.css">
     <link rel="stylesheet" href="../static/styles/nav-improvement.css">
+    <link rel="stylesheet" href="../static/styles/candidate-opportunities-new.css">
     
     <!-- Favicon -->
     <link rel="shortcut icon" href="../static/images/favicon.ico" type="image/x-icon">
@@ -54,260 +55,289 @@
             <span>Mes opportunités sélectionnées</span>
         </div>
         
+        <!-- Section progress tracker -->
+        <div class="progress-tracker-container fade-in">
+            <div class="progress-step active">
+                <div class="step-number">1</div>
+                <div class="step-label">Mes opportunités</div>
+            </div>
+            <div class="progress-step">
+                <div class="step-number">2</div>
+                <div class="step-label">Mes offres reçues</div>
+            </div>
+            <div class="progress-step">
+                <div class="step-number">3</div>
+                <div class="step-label">Postuler en un clic</div>
+            </div>
+            <div class="progress-step">
+                <div class="step-number">4</div>
+                <div class="step-label">Travailler mon CV</div>
+            </div>
+            <div class="progress-step">
+                <div class="step-number">5</div>
+                <div class="step-label">Centre de ressources</div>
+            </div>
+            <div class="progress-step">
+                <div class="step-number">6</div>
+                <div class="step-label">Messagerie</div>
+            </div>
+        </div>
+        
         <!-- Section Mes opportunités selectionnées -->
         <div class="candidate-dashboard-section fade-in">
-            <h2 class="section-heading">Mes opportunités sélectionnées</h2>
-            
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                <div>
-                    <span class="filter-badge active"><i class="fas fa-filter"></i> Tous</span>
-                    <span class="filter-badge"><i class="fas fa-spinner"></i> En cours</span>
-                    <span class="filter-badge"><i class="fas fa-check"></i> Terminés</span>
+            <div class="section-header">
+                <h2 class="section-heading">Mes opportunités sélectionnées</h2>
+                <div class="section-actions">
+                    <a href="candidate-dashboard-new.html" class="btn btn-sm btn-outline dashboard-btn"><i class="fas fa-th-large"></i> Tableau de bord</a>
                 </div>
-                <div>
-                    <select class="form-control form-control-sm" style="padding: 5px 10px; border-radius: 4px; border: 1px solid var(--cream-dark);">
-                        <option>Trier par : Date</option>
-                        <option>Trier par : Entreprise</option>
-                        <option>Trier par : Avancement</option>
-                    </select>
+            </div>
+            
+            <div class="filter-section">
+                <div class="filter-badges">
+                    <span class="filter-badge active" data-filter="all"><i class="fas fa-filter"></i> Tous</span>
+                    <span class="filter-badge" data-filter="in-progress"><i class="fas fa-spinner"></i> En cours</span>
+                    <span class="filter-badge" data-filter="completed"><i class="fas fa-check"></i> Terminés</span>
+                </div>
+                <div class="filter-sort">
+                    <label for="sort-select" class="sr-only">Trier par</label>
+                    <div class="select-wrapper">
+                        <select id="sort-select" class="form-control">
+                            <option>Trier par : Date</option>
+                            <option>Trier par : Entreprise</option>
+                            <option>Trier par : Avancement</option>
+                        </select>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
                 </div>
             </div>
             
             <div class="opportunities-container">
                 <!-- Opportunity 1 -->
-                <div class="opportunity-row fade-in">
-                    <div class="opportunity-company">
-                        <div class="logo-placeholder"></div>
-                        <div class="company-details">
-                            <h3 class="company-name">Entreprise Alpha</h3>
-                            <h4 class="job-title">Chef de Projet Digital</h4>
-                            <p class="small text-muted">Rémunération: 42K-48K</p>
+                <div class="opportunity-card fade-in" data-status="in-progress">
+                    <div class="opportunity-header">
+                        <div class="opportunity-company">
+                            <div class="logo-placeholder"></div>
+                            <div class="company-details">
+                                <h3 class="company-name">Entreprise Alpha</h3>
+                                <h4 class="job-title">Chef de Projet Digital</h4>
+                                <p class="job-info"><i class="fas fa-money-bill-wave"></i> 42K-48K</p>
+                            </div>
                         </div>
-                        <div style="margin-left: auto;">
-                            <span class="job-match">90%</span>
+                        <div class="opportunity-match">
+                            <span class="match-percentage">90%</span>
+                            <span class="match-label">Match</span>
                         </div>
                     </div>
                     
-                    <div class="recruitment-pipeline">
-                        <div class="pipeline-status">
+                    <div class="opportunity-status">
+                        <div class="status-info">
                             <span class="status-label"><i class="fas fa-info-circle"></i> Statut: Entretien présentiel</span>
-                            <span class="travel-time"><i class="fas fa-map-marker-alt"></i> Temps de trajet: <a href="#" class="map-link">25 min (voir sur Maps)</a></span>
+                            <span class="travel-time"><i class="fas fa-map-marker-alt"></i> Temps de trajet: <a href="#" class="map-link">25 min <span class="text-nowrap">(voir sur Maps)</span></a></span>
                         </div>
                         
                         <div class="progress-bar-container">
                             <div class="progress-bar" style="width: 70%;"></div>
                         </div>
-                        
-                        <div class="pipeline-stages">
-                            <div class="stage active">
-                                <div class="stage-box">
-                                    <i class="fas fa-check-circle"></i><br>
-                                    En cours de validation
-                                </div>
+                    </div>
+                    
+                    <div class="recruitment-stages">
+                        <div class="stage completed">
+                            <div class="stage-icon"><i class="fas fa-check-circle"></i></div>
+                            <div class="stage-label">En cours de validation</div>
+                        </div>
+                        <div class="stage completed">
+                            <div class="stage-icon"><i class="fas fa-check-circle"></i></div>
+                            <div class="stage-label">Call prise de contact</div>
+                        </div>
+                        <div class="stage completed">
+                            <div class="stage-icon"><i class="fas fa-check-circle"></i></div>
+                            <div class="stage-label">Entretien visio</div>
+                        </div>
+                        <div class="stage active">
+                            <div class="stage-icon"><i class="fas fa-circle"></i></div>
+                            <div class="stage-label">Entretien Présentiel</div>
+                            <div class="interviewer">
+                                <p class="interviewer-name">Jean-François LEBOEUF</p>
+                                <p class="interviewer-title">Directeur Administratif et Financier</p>
+                                <p class="interview-date"><i class="fas fa-calendar-alt"></i> 28 Mars, 14h00</p>
                             </div>
-                            <div class="stage active">
-                                <div class="stage-box">
-                                    <i class="fas fa-check-circle"></i><br>
-                                    Call prise de contact
-                                </div>
-                            </div>
-                            <div class="stage active">
-                                <div class="stage-box">
-                                    <i class="fas fa-check-circle"></i><br>
-                                    Entretien visio
-                                </div>
-                            </div>
-                            <div class="stage current">
-                                <div class="stage-box">
-                                    <i class="fas fa-circle"></i><br>
-                                    Entretien Présentiel
-                                    <div class="interviewer">
-                                        Prévu avec Jean-François LEBOEUF<br>
-                                        Directeur Administratif et Financier<br>
-                                        <small>28 Mars, 14h00</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="stage">
-                                <div class="stage-box">
-                                    <i class="far fa-circle"></i><br>
-                                    Acceptation
-                                </div>
-                            </div>
+                        </div>
+                        <div class="stage">
+                            <div class="stage-icon"><i class="far fa-circle"></i></div>
+                            <div class="stage-label">Acceptation</div>
                         </div>
                     </div>
                     
                     <div class="opportunity-actions">
-                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <div class="primary-actions">
                             <button class="btn btn-primary"><i class="fas fa-comment-dots"></i> Poser une question</button>
                             <button class="btn btn-outline-danger"><i class="fas fa-times-circle"></i> Annuler ma candidature</button>
                             <button class="btn btn-outline"><i class="fas fa-calendar-alt"></i> Modifier le rendez-vous</button>
                         </div>
-                        <div class="action-arrows" style="margin-top: 15px;">
-                            <div class="action-buttons" style="display: flex; align-items: center; gap: 10px;">
-                                <button class="btn btn-outline"><i class="fas fa-envelope"></i> Messagerie</button>
-                                <div class="reason-field">
-                                    <span>Note personnelle: </span>
-                                    <input type="text" class="form-control form-control-sm" placeholder="Ajouter un rappel..." style="min-width: 250px;">
+                        <div class="secondary-actions">
+                            <button class="btn btn-outline btn-icon-text"><i class="fas fa-envelope"></i> Messagerie</button>
+                            <div class="notes-container">
+                                <span>Note personnelle: </span>
+                                <div class="note-input-container">
+                                    <input type="text" class="form-control" placeholder="Ajouter un rappel...">
+                                    <button class="btn-save" aria-label="Sauvegarder la note"><i class="fas fa-save"></i></button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Opportunity 2 (similar structure, different data) -->
-                <div class="opportunity-row fade-in">
-                    <div class="opportunity-company">
-                        <div class="logo-placeholder"></div>
-                        <div class="company-details">
-                            <h3 class="company-name">Entreprise Beta</h3>
-                            <h4 class="job-title">Business Developer</h4>
-                            <p class="small text-muted">Rémunération: 38K-45K</p>
+                <!-- Opportunity 2 -->
+                <div class="opportunity-card fade-in" data-status="in-progress">
+                    <div class="opportunity-header">
+                        <div class="opportunity-company">
+                            <div class="logo-placeholder"></div>
+                            <div class="company-details">
+                                <h3 class="company-name">Entreprise Beta</h3>
+                                <h4 class="job-title">Business Developer</h4>
+                                <p class="job-info"><i class="fas fa-money-bill-wave"></i> 38K-45K</p>
+                            </div>
                         </div>
-                        <div style="margin-left: auto;">
-                            <span class="job-match">85%</span>
+                        <div class="opportunity-match">
+                            <span class="match-percentage">85%</span>
+                            <span class="match-label">Match</span>
                         </div>
                     </div>
                     
-                    <div class="recruitment-pipeline">
-                        <div class="pipeline-status">
+                    <div class="opportunity-status">
+                        <div class="status-info">
                             <span class="status-label"><i class="fas fa-info-circle"></i> Statut: Entretien visio</span>
-                            <span class="travel-time"><i class="fas fa-map-marker-alt"></i> Temps de trajet: <a href="#" class="map-link">35 min (voir sur Maps)</a></span>
+                            <span class="travel-time"><i class="fas fa-map-marker-alt"></i> Temps de trajet: <a href="#" class="map-link">35 min <span class="text-nowrap">(voir sur Maps)</span></a></span>
                         </div>
                         
                         <div class="progress-bar-container">
                             <div class="progress-bar" style="width: 50%;"></div>
                         </div>
-                        
-                        <div class="pipeline-stages">
-                            <div class="stage active">
-                                <div class="stage-box">
-                                    <i class="fas fa-check-circle"></i><br>
-                                    En cours de validation
-                                </div>
+                    </div>
+                    
+                    <div class="recruitment-stages">
+                        <div class="stage completed">
+                            <div class="stage-icon"><i class="fas fa-check-circle"></i></div>
+                            <div class="stage-label">En cours de validation</div>
+                        </div>
+                        <div class="stage completed">
+                            <div class="stage-icon"><i class="fas fa-check-circle"></i></div>
+                            <div class="stage-label">Call prise de contact</div>
+                        </div>
+                        <div class="stage active">
+                            <div class="stage-icon"><i class="fas fa-circle"></i></div>
+                            <div class="stage-label">Entretien visio</div>
+                            <div class="interviewer">
+                                <p class="interviewer-name">Marie LAROCHON</p>
+                                <p class="interviewer-title">Directrice RH</p>
+                                <p class="interview-date"><i class="fas fa-calendar-alt"></i> 25 Mars, 10h30</p>
                             </div>
-                            <div class="stage active">
-                                <div class="stage-box">
-                                    <i class="fas fa-check-circle"></i><br>
-                                    Call prise de contact
-                                </div>
-                            </div>
-                            <div class="stage current">
-                                <div class="stage-box">
-                                    <i class="fas fa-circle"></i><br>
-                                    Entretien visio
-                                    <div class="interviewer">
-                                        Prévu avec Marie LAROCHON<br>
-                                        Directrice RH<br>
-                                        <small>25 Mars, 10h30</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="stage">
-                                <div class="stage-box">
-                                    <i class="far fa-circle"></i><br>
-                                    Entretien Présentiel
-                                </div>
-                            </div>
-                            <div class="stage">
-                                <div class="stage-box">
-                                    <i class="far fa-circle"></i><br>
-                                    Acceptation
-                                </div>
-                            </div>
+                        </div>
+                        <div class="stage">
+                            <div class="stage-icon"><i class="far fa-circle"></i></div>
+                            <div class="stage-label">Entretien Présentiel</div>
+                        </div>
+                        <div class="stage">
+                            <div class="stage-icon"><i class="far fa-circle"></i></div>
+                            <div class="stage-label">Acceptation</div>
                         </div>
                     </div>
                     
                     <div class="opportunity-actions">
-                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <div class="primary-actions">
                             <button class="btn btn-primary"><i class="fas fa-comment-dots"></i> Poser une question</button>
                             <button class="btn btn-outline-danger"><i class="fas fa-times-circle"></i> Annuler ma candidature</button>
                             <button class="btn btn-outline"><i class="fas fa-calendar-alt"></i> Modifier le rendez-vous</button>
                         </div>
-                        <div class="action-arrows" style="margin-top: 15px;">
-                            <div class="action-buttons" style="display: flex; align-items: center; gap: 10px;">
-                                <button class="btn btn-outline"><i class="fas fa-envelope"></i> Messagerie</button>
-                                <div class="reason-field">
-                                    <span>Note personnelle: </span>
-                                    <input type="text" class="form-control form-control-sm" placeholder="Ajouter un rappel..." style="min-width: 250px;">
+                        <div class="secondary-actions">
+                            <button class="btn btn-outline btn-icon-text"><i class="fas fa-envelope"></i> Messagerie</button>
+                            <div class="notes-container">
+                                <span>Note personnelle: </span>
+                                <div class="note-input-container">
+                                    <input type="text" class="form-control" placeholder="Ajouter un rappel...">
+                                    <button class="btn-save" aria-label="Sauvegarder la note"><i class="fas fa-save"></i></button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Opportunity 3 (in progress) -->
-                <div class="opportunity-row fade-in">
-                    <div class="opportunity-company">
-                        <div class="logo-placeholder"></div>
-                        <div class="company-details">
-                            <h3 class="company-name">Entreprise Gamma</h3>
-                            <h4 class="job-title">Product Owner</h4>
-                            <p class="small text-muted">Rémunération: 45K-52K</p>
+                <!-- Opportunity 3 -->
+                <div class="opportunity-card fade-in" data-status="in-progress">
+                    <div class="opportunity-header">
+                        <div class="opportunity-company">
+                            <div class="logo-placeholder"></div>
+                            <div class="company-details">
+                                <h3 class="company-name">Entreprise Gamma</h3>
+                                <h4 class="job-title">Product Owner</h4>
+                                <p class="job-info"><i class="fas fa-money-bill-wave"></i> 45K-52K</p>
+                            </div>
                         </div>
-                        <div style="margin-left: auto;">
-                            <span class="job-match">95%</span>
+                        <div class="opportunity-match">
+                            <span class="match-percentage">95%</span>
+                            <span class="match-label">Match</span>
                         </div>
                     </div>
                     
-                    <div class="recruitment-pipeline">
-                        <div class="pipeline-status">
+                    <div class="opportunity-status">
+                        <div class="status-info">
                             <span class="status-label"><i class="fas fa-info-circle"></i> Statut: En cours de validation</span>
-                            <span class="travel-time"><i class="fas fa-map-marker-alt"></i> Temps de trajet: <a href="#" class="map-link">20 min (voir sur Maps)</a></span>
+                            <span class="travel-time"><i class="fas fa-map-marker-alt"></i> Temps de trajet: <a href="#" class="map-link">20 min <span class="text-nowrap">(voir sur Maps)</span></a></span>
                         </div>
                         
                         <div class="progress-bar-container">
                             <div class="progress-bar" style="width: 20%;"></div>
                         </div>
-                        
-                        <div class="pipeline-stages">
-                            <div class="stage current">
-                                <div class="stage-box">
-                                    <i class="fas fa-circle"></i><br>
-                                    En cours de validation
-                                </div>
-                            </div>
-                            <div class="stage">
-                                <div class="stage-box">
-                                    <i class="far fa-circle"></i><br>
-                                    Call prise de contact
-                                </div>
-                            </div>
-                            <div class="stage">
-                                <div class="stage-box">
-                                    <i class="far fa-circle"></i><br>
-                                    Entretien visio
-                                </div>
-                            </div>
-                            <div class="stage">
-                                <div class="stage-box">
-                                    <i class="far fa-circle"></i><br>
-                                    Entretien Présentiel
-                                </div>
-                            </div>
-                            <div class="stage">
-                                <div class="stage-box">
-                                    <i class="far fa-circle"></i><br>
-                                    Acceptation
-                                </div>
-                            </div>
+                    </div>
+                    
+                    <div class="recruitment-stages">
+                        <div class="stage active">
+                            <div class="stage-icon"><i class="fas fa-circle"></i></div>
+                            <div class="stage-label">En cours de validation</div>
+                        </div>
+                        <div class="stage">
+                            <div class="stage-icon"><i class="far fa-circle"></i></div>
+                            <div class="stage-label">Call prise de contact</div>
+                        </div>
+                        <div class="stage">
+                            <div class="stage-icon"><i class="far fa-circle"></i></div>
+                            <div class="stage-label">Entretien visio</div>
+                        </div>
+                        <div class="stage">
+                            <div class="stage-icon"><i class="far fa-circle"></i></div>
+                            <div class="stage-label">Entretien Présentiel</div>
+                        </div>
+                        <div class="stage">
+                            <div class="stage-icon"><i class="far fa-circle"></i></div>
+                            <div class="stage-label">Acceptation</div>
                         </div>
                     </div>
                     
                     <div class="opportunity-actions">
-                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <div class="primary-actions">
                             <button class="btn btn-primary"><i class="fas fa-comment-dots"></i> Poser une question</button>
                             <button class="btn btn-outline-danger"><i class="fas fa-times-circle"></i> Annuler ma candidature</button>
                         </div>
-                        <div class="action-arrows" style="margin-top: 15px;">
-                            <div class="action-buttons" style="display: flex; align-items: center; gap: 10px;">
-                                <button class="btn btn-outline"><i class="fas fa-envelope"></i> Messagerie</button>
-                                <div class="reason-field">
-                                    <span>Note personnelle: </span>
-                                    <input type="text" class="form-control form-control-sm" placeholder="Ajouter un rappel..." style="min-width: 250px;">
+                        <div class="secondary-actions">
+                            <button class="btn btn-outline btn-icon-text"><i class="fas fa-envelope"></i> Messagerie</button>
+                            <div class="notes-container">
+                                <span>Note personnelle: </span>
+                                <div class="note-input-container">
+                                    <input type="text" class="form-control" placeholder="Ajouter un rappel...">
+                                    <button class="btn-save" aria-label="Sauvegarder la note"><i class="fas fa-save"></i></button>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                <!-- Pas d'opportunités message (caché par défaut, affiché via JavaScript) -->
+                <div class="no-opportunities hidden">
+                    <div class="empty-state">
+                        <i class="fas fa-search"></i>
+                        <h3>Aucune opportunité trouvée</h3>
+                        <p>Aucune opportunité ne correspond aux filtres sélectionnés.</p>
+                        <button class="btn btn-outline reset-filters"><i class="fas fa-sync"></i> Réinitialiser les filtres</button>
                     </div>
                 </div>
             </div>
@@ -421,21 +451,69 @@
             
             // Interaction avec les filtres
             const filterBadges = document.querySelectorAll('.filter-badge');
+            const opportunities = document.querySelectorAll('.opportunity-card');
+            const noOpportunitiesMsg = document.querySelector('.no-opportunities');
             
             filterBadges.forEach(badge => {
                 badge.addEventListener('click', function() {
-                    // Dans chaque groupe de filtres, désactiver tous les autres
-                    const parentElement = this.parentElement;
-                    parentElement.querySelectorAll('.filter-badge').forEach(b => {
+                    // Désactiver tous les filtres
+                    filterBadges.forEach(b => {
                         b.classList.remove('active');
                     });
                     
                     // Activer le filtre cliqué
                     this.classList.add('active');
+                    
+                    const filter = this.getAttribute('data-filter');
+                    let hasVisibleOpportunities = false;
+                    
+                    opportunities.forEach(opportunity => {
+                        if (filter === 'all' || opportunity.getAttribute('data-status') === filter) {
+                            opportunity.style.display = 'block';
+                            hasVisibleOpportunities = true;
+                        } else {
+                            opportunity.style.display = 'none';
+                        }
+                    });
+                    
+                    // Afficher/masquer le message "aucune opportunité"
+                    if (hasVisibleOpportunities) {
+                        noOpportunitiesMsg.classList.add('hidden');
+                    } else {
+                        noOpportunitiesMsg.classList.remove('hidden');
+                    }
+                });
+            });
+            
+            // Réinitialiser les filtres
+            const resetFiltersBtn = document.querySelector('.reset-filters');
+            if (resetFiltersBtn) {
+                resetFiltersBtn.addEventListener('click', function() {
+                    const allFilter = document.querySelector('[data-filter="all"]');
+                    if (allFilter) {
+                        allFilter.click();
+                    }
+                });
+            }
+            
+            // Sauvegarde des notes personnelles (simulation)
+            const saveButtons = document.querySelectorAll('.btn-save');
+            saveButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const input = this.previousElementSibling;
+                    if (input.value.trim() !== '') {
+                        // Simuler une sauvegarde
+                        const originalText = button.innerHTML;
+                        button.innerHTML = '<i class="fas fa-check"></i>';
+                        setTimeout(() => {
+                            button.innerHTML = originalText;
+                        }, 1500);
+                    }
                 });
             });
         });
     </script>
+    
     <!-- Script d'amélioration de la navigation -->
     <script src="../static/services/nav-enhancement.js"></script>
 </body>
