@@ -3,1822 +3,528 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Questionnaire Candidat - Commitment</title>
-    <link rel="stylesheet" href="../static/styles/modern.css">
-    <link rel="stylesheet" href="../static/styles/styles.css">
-    <link rel="stylesheet" href="../static/styles/additional.css">
-    <link rel="stylesheet" href="../static/styles/nexten-modern-interactive.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- API Google Maps avec gestion d'erreur -->
-    <script>
-        function handleGoogleMapsError() {
-            console.error("Erreur de chargement de l'API Google Maps");
-            setTimeout(() => {
-                const addressInput = document.getElementById('address');
-                if (addressInput && addressInput.parentNode) {
-                    const errorMsg = document.createElement('div');
-                    errorMsg.className = 'error-message';
-                    errorMsg.innerHTML = '<i class="fas fa-exclamation-triangle"></i> L\'autocomplétion d\'adresses est indisponible. Saisissez l\'adresse manuellement.';
-                    if (!addressInput.parentNode.querySelector('.error-message')) {
-                        addressInput.parentNode.appendChild(errorMsg);
-                    }
-                }
-            }, 2000);
-        }
-
-        function initAutocompleteCallback() {
-            console.log("Google Maps API chargée avec succès");
-            try {
-                initAutocomplete();
-            } catch (e) {
-                console.error("Erreur lors de l'initialisation de l'autocomplete", e);
-                handleGoogleMapsError();
-            }
-        }
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpOvIETyTmlNODPoMEZ46l1ogsQg7Fcyg&libraries=places&callback=initAutocompleteCallback" async defer onerror="handleGoogleMapsError()"></script>
+    <title>Nexten - Questionnaire Candidat</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* Styles spécifiques pour le questionnaire - Améliorations UI/UX */
-        .radio-option, .checkbox-option {
-            display: flex;
-            align-items: flex-start;
-            padding: 1rem 1.25rem;
-            border: 1px solid #e2e8f0;
-            border-radius: var(--radius);
-            margin-bottom: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+        :root {
+            --primary-color: #7c4dff;
+            --primary-light: #e8e3ff;
+            --gray-light: #f5f5f5;
+            --gray-dark: #666;
+            --text-color: #333;
+            --border-radius: 8px;
         }
 
-        .radio-option:hover, .checkbox-option:hover {
-            background-color: rgba(108, 99, 255, 0.05);
-            border-color: var(--primary);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .radio-option.selected, .checkbox-option.selected {
-            background-color: rgba(108, 99, 255, 0.1);
-            border: 2px solid var(--primary);
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .radio-option.selected::before, .checkbox-option.selected::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background-color: var(--primary);
-        }
-
-        .radio-option input[type="radio"], .checkbox-option input[type="checkbox"] {
-            margin-right: 1rem;
-            margin-top: 0.25rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .option-label {
-            font-weight: 500;
-            color: var(--dark);
-            transition: all 0.3s ease;
-            flex: 1;
-        }
-
-        .radio-option.selected .option-label, .checkbox-option.selected .option-label {
-            color: var(--primary-dark);
-            font-weight: 600;
-        }
-
-        .sortable-list {
-            list-style: none;
+        * {
+            margin: 0;
             padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
         }
 
-        .sortable-item {
-            display: flex;
-            align-items: center;
-            padding: 1rem 1.25rem;
-            border: 1px solid #e2e8f0;
-            border-radius: var(--radius);
-            margin-bottom: 1rem;
-            background-color: white;
-            cursor: move;
-            transition: all 0.3s ease;
-            position: relative;
+        body {
+            background-color: #f8f9fa;
+            color: var(--text-color);
+            min-height: 100vh;
         }
 
-        .sortable-item:hover {
-            background-color: rgba(108, 99, 255, 0.05);
-            border-color: var(--primary);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .sortable-item .handle {
-            margin-right: 1rem;
-            color: #94a3b8;
-            cursor: grab;
-            transition: all 0.3s ease;
-        }
-
-        .sortable-item:hover .handle {
-            color: var(--primary);
-        }
-
-        .sortable-item .item-number {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background-color: var(--primary);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            font-size: 0.9rem;
-            margin-right: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .sortable-item:hover .item-number {
-            transform: scale(1.1);
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
-        }
-
-        .sortable-item .item-text {
-            font-weight: 500;
-            flex: 1;
-        }
-
-        .conditional-section {
-            padding-left: 2rem;
-            margin-top: 1.5rem;
-            display: none;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
-        }
-
-        .conditional-section.visible {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .form-progress {
-            height: 8px;
-            background-color: #e2e8f0;
-            border-radius: 4px;
-            margin-bottom: 2.5rem;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            border-radius: 4px;
-            transition: width 0.5s ease-in-out;
-            position: relative;
-        }
-
-        .progress-bar::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(90deg, 
-                rgba(255, 255, 255, 0) 0%, 
-                rgba(255, 255, 255, 0.3) 50%, 
-                rgba(255, 255, 255, 0) 100%);
-            animation: shimmer 1.5s infinite;
-            background-size: 200% 100%;
-        }
-
-        @keyframes shimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
-        }
-
-        .btn-circle {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0;
-            transition: all 0.3s ease;
-        }
-
-        .btn-circle:hover {
-            transform: scale(1.1);
-        }
-
-        .info-tooltip {
-            display: inline-block;
-            margin-left: 0.5rem;
-            position: relative;
-            cursor: help;
-        }
-
-        .info-tooltip i {
-            color: var(--primary);
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-        }
-
-        .info-tooltip:hover i {
-            color: var(--primary-dark);
-            transform: scale(1.2);
-        }
-
-        .info-tooltip .tooltip-text {
-            position: absolute;
-            left: 50%;
-            top: 100%;
-            transform: translateX(-50%);
-            background-color: var(--dark);
-            color: white;
-            padding: 0.75rem 1rem;
-            border-radius: var(--radius);
-            font-size: 0.9rem;
-            width: 250px;
-            z-index: 100;
-            pointer-events: none;
-            opacity: 0;
-            transition: all 0.3s ease;
-            box-shadow: var(--shadow-md);
-            margin-top: 0.75rem;
-            visibility: hidden;
-        }
-
-        .info-tooltip:hover .tooltip-text {
-            opacity: 1;
-            visibility: visible;
-            transform: translateX(-50%) translateY(5px);
-        }
-
-        .form-step {
-            transition: all 0.5s ease-in-out;
-            opacity: 1;
-            transform: translateX(0);
-            position: relative;
-        }
-
-        .form-step.fade-out {
-            opacity: 0;
-            transform: translateX(-20px);
-        }
-
-        .form-step.fade-in {
-            opacity: 0;
-            transform: translateX(20px);
-            animation: fadeInStep 0.5s forwards 0.1s;
-        }
-
-        @keyframes fadeInStep {
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .navigation-buttons {
+        .header {
             display: flex;
             justify-content: space-between;
-            margin-top: 2.5rem;
-        }
-
-        .navigation-buttons button {
-            min-width: 120px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .navigation-buttons button:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .navigation-buttons button::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            opacity: 0;
-            transition: width 0.6s ease, height 0.6s ease, opacity 0.6s ease;
-        }
-
-        .navigation-buttons button:active::after {
-            width: 300px;
-            height: 300px;
-            opacity: 1;
-        }
-
-        .form-label {
-            display: flex;
             align-items: center;
-            margin-bottom: 0.75rem;
-            font-weight: 600;
-            color: var(--dark);
-        }
-
-        .form-group {
-            margin-bottom: 2rem;
-            transition: all 0.3s ease;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 0.875rem 1rem;
-            border-radius: var(--radius);
-            border: 2px solid #e2e8f0;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-        }
-
-        .form-control:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
-            outline: none;
-        }
-
-        .form-control::placeholder {
-            color: #94a3b8;
-        }
-
-        .form-text {
-            display: block;
-            margin-top: 0.5rem;
-            font-size: 0.875rem;
-            color: var(--text-light);
-        }
-
-        .badge-ai {
-            display: inline-flex;
-            align-items: center;
-            padding: 0.5rem 1rem;
-            background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
-            color: white;
-            border-radius: 2rem;
-            font-weight: 600;
-            font-size: 0.875rem;
-            gap: 0.5rem;
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
-        }
-
-        /* Styles pour les étapes */
-        .progress-steps {
-            margin-bottom: 3rem;
-        }
-
-        .step .step-circle {
-            box-shadow: 0 0 0 5px rgba(99, 102, 241, 0.1);
-        }
-
-        .step.active .step-circle {
-            box-shadow: 0 0 0 5px rgba(99, 102, 241, 0.3);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.5);
-            }
-            70% {
-                box-shadow: 0 0 0 10px rgba(99, 102, 241, 0);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);
-            }
-        }
-
-        /* Ajout de cartes d'information */
-        .info-card {
-            padding: 1.5rem;
-            border-radius: var(--radius);
-            background-color: #f8fafc;
-            margin-bottom: 1.5rem;
-            border-left: 4px solid var(--primary);
-            transition: all 0.3s ease;
-        }
-
-        .info-card:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-md);
-        }
-
-        /* Interface de tags pour les postes recherchés */
-        .tags-input-container {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: flex-start;
-            min-height: 50px;
-            padding: 0.5rem;
-            border: 2px solid #e2e8f0;
-            border-radius: var(--radius);
-            gap: 0.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .tags-input-container:focus-within {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
-        }
-
-        .tag {
-            display: inline-flex;
-            align-items: center;
-            padding: 0.5rem 0.75rem;
-            background-color: rgba(99, 102, 241, 0.1);
-            color: var(--primary);
-            border-radius: 2rem;
-            font-size: 0.875rem;
-            gap: 0.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .tag:hover {
-            background-color: rgba(99, 102, 241, 0.2);
-        }
-
-        .tag .close-tag {
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            background-color: rgba(99, 102, 241, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        .tag .close-tag:hover {
-            background-color: rgba(99, 102, 241, 0.4);
-            transform: scale(1.1);
-        }
-
-        .tags-input {
-            flex: 1;
-            border: none;
-            outline: none;
-            padding: 0.5rem;
-            min-width: 120px;
-            font-size: 0.9375rem;
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Responsive amélioré */
-        @media (max-width: 767px) {
-            .progress-steps {
-                padding-left: 25px;
-            }
-            
-            .step-text {
-                font-size: 0.9rem;
-            }
-            
-            .radio-option, .checkbox-option {
-                padding: 0.875rem 1rem;
-            }
-            
-            .form-step h3 {
-                font-size: 1.3rem;
-            }
-            
-            .navigation-buttons button {
-                padding: 0.75rem 1rem;
-                font-size: 0.9375rem;
-            }
-            
-            .card {
-                padding: 1.5rem;
-            }
-        }
-
-        /* Loader personnalisé */
-        .loading-spinner {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: spin 1s ease-in-out infinite;
-            margin-right: 0.5rem;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Gestion des erreurs améliorée */
-        .error-message {
-            color: var(--error);
-            font-size: 0.875rem;
-            margin-top: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            animation: shake 0.5s ease-in-out;
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-            20%, 40%, 60%, 80% { transform: translateX(5px); }
-        }
-
-        /* Bouton de validation final amélioré */
-        .btn-submit-final {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            font-weight: 600;
             padding: 1rem 2rem;
-            border-radius: var(--radius);
-            border: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.75rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-submit-final:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 15px rgba(99, 102, 241, 0.4);
-        }
-
-        .btn-submit-final::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0) 100%);
-            transform: rotate(30deg);
-            transition: all 0.3s ease;
-            opacity: 0;
-        }
-
-        .btn-submit-final:hover::after {
-            opacity: 1;
-            animation: shine 1.5s infinite;
-        }
-
-        @keyframes shine {
-            0% { transform: translateX(-100%) rotate(30deg); }
-            100% { transform: translateX(100%) rotate(30deg); }
-        }
-
-        /* Animation de succès pour les inputs */
-        .input-success-message {
-            color: var(--success);
-            font-size: 0.875rem;
-            margin-top: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            animation: fadeIn 0.5s ease-in-out;
-        }
-
-        .form-control.success {
-            border-color: var(--success);
-        }
-
-        .form-control.error {
-            border-color: var(--error);
-        }
-
-        /* Animation pour les transitions de formulaire */
-        .success-animation {
-            animation: successPulse 0.5s ease-in-out;
-        }
-
-        @keyframes successPulse {
-            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
-        }
-
-        /* Nouveau style de header cohérent avec la page d'accueil */
-        header {
-            background-color: #fff;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            padding: 1rem 0;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
-        }
-
-        header .container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
         }
 
         .logo {
-            font-size: 1.8rem;
+            color: var(--text-color);
             font-weight: 700;
-            color: #333;
             text-decoration: none;
+            font-size: 1.5rem;
             display: flex;
             align-items: center;
         }
 
         .logo span {
-            color: var(--primary);
+            color: var(--primary-color);
         }
 
         .logo-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            font-size: 0.8rem;
+            margin-left: 4px;
+        }
+
+        .nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color);
+        }
+
+        .profile-btn {
+            background-color: #f5f5f5;
+            color: var(--primary-color);
+            border: none;
+            border-radius: 20px;
+            padding: 0.5rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .profile-btn:hover {
+            background-color: #e8e3ff;
+        }
+
+        .main-content {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+            text-align: center;
+        }
+
+        .page-subtitle {
+            font-size: 1rem;
+            color: var(--gray-dark);
+            text-align: center;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            line-height: 1.5;
+        }
+
+        .ai-badge {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            padding: 0.5rem 1rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .questionnaire-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .stepper {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-bottom: 2.5rem;
+            padding: 0 3rem;
+        }
+
+        .stepper-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            height: 3px;
+            background-color: #e0e0e0;
+            width: 100%;
+            z-index: 1;
+        }
+
+        .stepper-progress {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            height: 3px;
+            background-color: var(--primary-color);
+            width: 33.33%;
+            z-index: 1;
+            transition: width 0.3s;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .step-number {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 28px;
-            height: 28px;
-            background-color: var(--primary);
-            color: white;
-            border-radius: 50%;
-            font-size: 0.9rem;
-            margin-left: 0.5rem;
             font-weight: 600;
+            margin-bottom: 0.5rem;
+            background-color: white;
+            border: 2px solid #e0e0e0;
+            color: #9e9e9e;
         }
 
-        .menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--dark);
+        .step.active .step-number {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+        }
+
+        .step.completed .step-number {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+        }
+
+        .step-label {
+            font-size: 0.875rem;
+            color: var(--gray-dark);
+            margin-top: 0.25rem;
+        }
+
+        .step.active .step-label {
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        .form-section-title {
             font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+
+        .required::after {
+            content: '*';
+            color: var(--primary-color);
+            margin-left: 0.25rem;
+        }
+
+        .info-icon {
+            margin-left: 0.5rem;
+            color: #bbb;
+            cursor: help;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            transition: border 0.2s;
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        textarea.form-control {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .radio-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: flex-start;
+            padding: 1rem 1.2rem;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 8px;
+            margin-bottom: 0.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .radio-option:hover {
+            background-color: var(--primary-light);
+            border-color: #cbd5e1;
+            transform: translateY(-1px);
+        }
+
+        .radio-option input[type="radio"] {
+            margin-right: 1rem;
+            margin-top: 0.25rem;
             cursor: pointer;
         }
 
-        nav ul {
-            display: flex;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        nav ul li {
-            margin-left: 2rem;
-        }
-
-        nav ul li a {
-            text-decoration: none;
-            color: var(--dark);
+        .option-label {
             font-weight: 500;
-            position: relative;
-            transition: all 0.3s ease;
+            color: #334155;
+            cursor: pointer;
+            flex: 1;
         }
 
-        nav ul li a:hover {
-            color: var(--primary);
-        }
-
-        nav ul li a.active {
-            color: var(--primary);
-        }
-
-        nav ul li a.active::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background-color: var(--primary);
-            border-radius: 2px;
-        }
-
-        .user-profile {
+        .form-actions {
             display: flex;
-            align-items: center;
-            text-decoration: none;
-            color: var(--dark);
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            border-radius: var(--radius);
-            transition: all 0.3s ease;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--border-radius);
             font-weight: 500;
-            background-color: rgba(99, 102, 241, 0.1);
+            cursor: pointer;
+            transition: background-color 0.2s;
         }
 
-        .user-profile:hover {
-            background-color: rgba(99, 102, 241, 0.2);
-            transform: translateY(-2px);
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
         }
 
-        .user-profile i {
-            color: var(--primary);
-            font-size: 1.2rem;
+        .btn-primary:hover {
+            background-color: #6a3de8;
         }
-        
+
+        .btn-outline {
+            background-color: white;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-light);
+        }
+
         @media (max-width: 768px) {
-            .menu-toggle {
-                display: block;
-            }
-            
-            nav {
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background: white;
+            .header {
                 padding: 1rem;
-                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-                transform: translateY(-100%);
-                opacity: 0;
-                visibility: hidden;
-                transition: all 0.3s ease-in-out;
             }
             
-            nav.active {
-                transform: translateY(0);
-                opacity: 1;
-                visibility: visible;
+            .stepper {
+                padding: 0 1rem;
             }
             
-            nav ul {
+            .questionnaire-card {
+                padding: 1.5rem;
+            }
+            
+            .form-actions {
                 flex-direction: column;
+                gap: 1rem;
             }
             
-            nav ul li {
-                margin: 0.5rem 0;
+            .btn {
+                width: 100%;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Nouveau header cohérent avec la page d'accueil -->
-    <header>
-        <div class="container">
-            <a href="index.html" class="logo">
-                nex<span>ten</span><div class="logo-badge">10</div>
-            </a>
-            
-            <button class="menu-toggle" aria-label="Menu principal">
-                <i class="fas fa-bars"></i>
+    <header class="header">
+        <a href="index.html" class="logo">
+            nex<span>ten</span><div class="logo-badge">10</div>
+        </a>
+        
+        <nav class="nav">
+            <a href="index.html" class="nav-link">Accueil</a>
+            <button class="profile-btn">
+                <i class="fas fa-user"></i>
+                Mon profil
             </button>
-            
-            <nav>
-                <ul>
-                    <li><a href="index.html">Accueil</a></li>
-                    <li><a href="candidate-login.html" class="active">Espace candidat</a></li>
-                    <li><a href="company-login.html">Espace entreprise</a></li>
-                    <li><a href="index.html#contact">Contact</a></li>
-                </ul>
-            </nav>
-            
-            <a href="candidate-dashboard.html" class="user-profile">
-                <i class="fas fa-user-circle"></i>
-                <span>Mon profil</span>
-            </a>
-        </div>
+        </nav>
     </header>
 
-    <section style="padding: 8rem 0 4rem; background-color: var(--light-bg);">
-        <div class="container">
-            <div style="text-align: center; margin-bottom: 3rem; animation: fadeIn 0.8s ease-out;">
-                <span class="badge badge-ai">
-                    <i class="fas fa-robot"></i> Propulsé par l'IA
-                </span>
-                <h2 style="font-size: 2.5rem; font-weight: 700; color: var(--dark); margin-top: 1.25rem; margin-bottom: 0.75rem;">
-                    Questionnaire Candidat
-                </h2>
-                <p style="color: var(--text); font-size: 1.2rem; max-width: 700px; margin: 0 auto;">
-                    Aidez-nous à mieux vous connaître pour trouver les offres qui correspondent parfaitement à votre profil.
-                </p>
-            </div>
-
-            <div class="card" style="max-width: 900px; margin: 0 auto; padding: 3rem; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); animation: fadeIn 1s ease-out;">
-                <div class="progress-steps">
-                    <div class="step completed">
-                        <div class="step-circle"><i class="fas fa-check"></i></div>
-                        <div class="step-text">Upload CV</div>
-                    </div>
-                    <div class="step active">
-                        <div class="step-circle">2</div>
-                        <div class="step-text">Questionnaire</div>
-                    </div>
-                    <div class="step">
-                        <div class="step-circle">3</div>
-                        <div class="step-text">Matching</div>
-                    </div>
-                </div>
-
-                <div class="form-progress">
-                    <div class="progress-bar" style="width: 0%"></div>
-                </div>
-
-                <form id="candidate-form">
-                    <!-- Étape 1: Informations personnelles -->
-                    <div class="form-step" id="step-1">
-                        <h3 style="font-size: 1.6rem; margin-bottom: 1.5rem; color: var(--dark); font-weight: 700;">
-                            <i class="fas fa-user-alt" style="color: var(--primary); margin-right: 0.75rem;"></i>
-                            Informations personnelles
-                        </h3>
-                        
-                        <!-- Question 1: Nom et Prénom -->
-                        <div class="form-group" style="animation: fadeIn 0.3s ease-out 0.1s both;">
-                            <label for="fullname" class="form-label">
-                                Nom et Prénom <span style="color: var(--primary);">*</span>
-                            </label>
-                            <input type="text" id="fullname" name="fullname" class="form-control" required
-                                   placeholder="Votre nom complet" style="font-size: 1rem;">
-                        </div>
-
-                        <!-- Question 2: Intitulé de poste recherché -->
-                        <div class="form-group" style="animation: fadeIn 0.3s ease-out 0.2s both;">
-                            <label for="job-titles" class="form-label">
-                                Intitulé de poste recherché <span style="color: var(--primary);">*</span>
-                                <div class="info-tooltip">
-                                    <i class="fas fa-info-circle"></i>
-                                    <div class="tooltip-text">
-                                        Ajoutez plusieurs postes pour augmenter vos chances d'être mis en relation. 
-                                        Par exemple : "Développeur Web", "Développeur Front-end", etc.
-                                    </div>
-                                </div>
-                            </label>
-                            <div class="tags-input-container" id="job-titles-container">
-                                <input type="text" class="tags-input" id="job-titles-input" placeholder="Saisir et appuyer sur Entrée...">
-                            </div>
-                            <small class="form-text">Vous pouvez ajouter plusieurs postes (appuyez sur Entrée après chaque poste)</small>
-                        </div>
-
-                        <!-- Question 3: Temps de trajet -->
-                        <div class="form-group" style="animation: fadeIn 0.3s ease-out 0.3s both;">
-                            <label class="form-label">
-                                Combien de temps de trajet êtes-vous prêt à faire ? <span style="color: var(--primary);">*</span>
-                            </label>
-                            <div class="radio-options">
-                                <div class="radio-option">
-                                    <input type="radio" id="commute-10" name="commute-time" value="10 min">
-                                    <label for="commute-10" class="option-label">
-                                        <i class="fas fa-clock" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        10 minutes maximum
-                                    </label>
-                                </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="commute-20" name="commute-time" value="20 min">
-                                    <label for="commute-20" class="option-label">
-                                        <i class="fas fa-clock" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        20 minutes maximum
-                                    </label>
-                                </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="commute-30" name="commute-time" value="30 min">
-                                    <label for="commute-30" class="option-label">
-                                        <i class="fas fa-clock" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        30 minutes maximum
-                                    </label>
-                                </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="commute-45" name="commute-time" value="45 min">
-                                    <label for="commute-45" class="option-label">
-                                        <i class="fas fa-clock" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        45 minutes maximum
-                                    </label>
-                                </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="commute-60" name="commute-time" value="60 min">
-                                    <label for="commute-60" class="option-label">
-                                        <i class="fas fa-clock" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        1 heure maximum
-                                    </label>
-                                </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="commute-more" name="commute-time" value="+60 min">
-                                    <label for="commute-more" class="option-label">
-                                        <i class="fas fa-clock" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        Plus d'une heure
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Question 4: Mode de transport -->
-                        <div class="form-group" style="animation: fadeIn 0.3s ease-out 0.4s both;">
-                            <label class="form-label">
-                                Comment vous déplacez-vous ? <span style="color: var(--primary);">*</span>
-                            </label>
-                            <div class="checkbox-options">
-                                <div class="checkbox-option">
-                                    <input type="checkbox" id="transport-public" name="transport-mode" value="Transports en commun">
-                                    <label for="transport-public" class="option-label">
-                                        <i class="fas fa-bus" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        Transports en commun
-                                    </label>
-                                </div>
-                                <div class="checkbox-option">
-                                    <input type="checkbox" id="transport-vehicle" name="transport-mode" value="Véhicule personnel">
-                                    <label for="transport-vehicle" class="option-label">
-                                        <i class="fas fa-car" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        Véhicule personnel
-                                    </label>
-                                </div>
-                                <div class="checkbox-option">
-                                    <input type="checkbox" id="transport-bike" name="transport-mode" value="Vélo">
-                                    <label for="transport-bike" class="option-label">
-                                        <i class="fas fa-bicycle" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        Vélo
-                                    </label>
-                                </div>
-                                <div class="checkbox-option">
-                                    <input type="checkbox" id="transport-foot" name="transport-mode" value="À pied">
-                                    <label for="transport-foot" class="option-label">
-                                        <i class="fas fa-walking" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        À pied
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Question 5: Adresse exacte -->
-                        <div class="form-group" style="animation: fadeIn 0.3s ease-out 0.5s both;">
-                            <label for="address" class="form-label">
-                                Adresse exacte <span style="color: var(--primary);">*</span>
-                                <div class="info-tooltip">
-                                    <i class="fas fa-info-circle"></i>
-                                    <div class="tooltip-text">
-                                        Cette information est nécessaire pour calculer le temps de trajet vers les entreprises.
-                                        Vos données personnelles sont protégées et ne seront utilisées que pour le matching.
-                                    </div>
-                                </div>
-                            </label>
-                            <div style="position: relative;">
-                                <input type="text" id="address" name="address" class="form-control" 
-                                       placeholder="Saisissez votre adresse complète" required>
-                                <div id="location-loading" style="display: none; position: absolute; right: 10px; top: 50%; transform: translateY(-50%);">
-                                    <i class="fas fa-spinner fa-spin" style="color: var(--primary);"></i>
-                                </div>
-                            </div>
-                            <small class="form-text">
-                                <i class="fas fa-shield-alt" style="margin-right: 0.25rem;"></i>
-                                Commencez à saisir votre adresse pour voir des suggestions
-                            </small>
-                        </div>
-                    </div>
-
-                    <!-- Étape 2: Motivations et préférences -->
-                    <div class="form-step" id="step-2" style="display: none;">
-                        <h3 style="font-size: 1.6rem; margin-bottom: 1.5rem; color: var(--dark); font-weight: 700;">
-                            <i class="fas fa-chart-line" style="color: var(--primary); margin-right: 0.75rem;"></i>
-                            Motivations et préférences
-                        </h3>
-                        
-                        <!-- Question 6: Leviers de motivation -->
-                        <div class="form-group">
-                            <label class="form-label">
-                                Quels sont vos leviers de motivation ? (classez par ordre d'importance) <span style="color: var(--primary);">*</span>
-                                <div class="info-tooltip">
-                                    <i class="fas fa-info-circle"></i>
-                                    <div class="tooltip-text">
-                                        Cet ordre nous aidera à mieux comprendre vos priorités et à vous proposer des offres adaptées.
-                                    </div>
-                                </div>
-                            </label>
-                            <small class="form-text">
-                                <i class="fas fa-arrows-alt" style="margin-right: 0.25rem;"></i>
-                                Glissez-déposez les éléments pour les réordonner
-                            </small>
-                            <ul class="sortable-list" id="motivation-factors">
-                                <li class="sortable-item" data-value="Rémunération">
-                                    <span class="handle"><i class="fas fa-grip-lines"></i></span>
-                                    <span class="item-number">1</span>
-                                    <span class="item-text">Rémunération</span>
-                                </li>
-                                <li class="sortable-item" data-value="Perspectives d'évolution">
-                                    <span class="handle"><i class="fas fa-grip-lines"></i></span>
-                                    <span class="item-number">2</span>
-                                    <span class="item-text">Perspectives d'évolution</span>
-                                </li>
-                                <li class="sortable-item" data-value="Flexibilité (télétravail, horaires)">
-                                    <span class="handle"><i class="fas fa-grip-lines"></i></span>
-                                    <span class="item-number">3</span>
-                                    <span class="item-text">Flexibilité (télétravail, horaires)</span>
-                                </li>
-                                <li class="sortable-item" data-value="Localisation">
-                                    <span class="handle"><i class="fas fa-grip-lines"></i></span>
-                                    <span class="item-number">4</span>
-                                    <span class="item-text">Localisation</span>
-                                </li>
-                                <li class="sortable-item" data-value="Autre">
-                                    <span class="handle"><i class="fas fa-grip-lines"></i></span>
-                                    <span class="item-number">5</span>
-                                    <span class="item-text">Autre</span>
-                                </li>
-                            </ul>
-                            <div id="other-motivation-container" style="display: none; margin-top: 1.5rem; animation: fadeIn 0.5s ease;">
-                                <label for="other-motivation" class="form-label">Précisez :</label>
-                                <input type="text" id="other-motivation" name="other-motivation" class="form-control" 
-                                       placeholder="Ex: Qualité de vie au travail, technologies utilisées...">
-                            </div>
-                        </div>
-
-                        <!-- Question 7: Type de structure -->
-                        <div class="form-group">
-                            <label class="form-label">
-                                Quel type de structure priorisez-vous ? <span style="color: var(--primary);">*</span>
-                            </label>
-                            <div class="checkbox-options">
-                                <div class="checkbox-option">
-                                    <input type="checkbox" id="structure-startup" name="company-structure" value="Start-up">
-                                    <label for="structure-startup" class="option-label">
-                                        <i class="fas fa-rocket" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        Start-up
-                                    </label>
-                                </div>
-                                <div class="checkbox-option">
-                                    <input type="checkbox" id="structure-pme" name="company-structure" value="PME">
-                                    <label for="structure-pme" class="option-label">
-                                        <i class="fas fa-building" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        PME
-                                    </label>
-                                </div>
-                                <div class="checkbox-option">
-                                    <input type="checkbox" id="structure-group" name="company-structure" value="Grand groupe">
-                                    <label for="structure-group" class="option-label">
-                                        <i class="fas fa-city" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        Grand groupe
-                                    </label>
-                                </div>
-                                <div class="checkbox-option">
-                                    <input type="checkbox" id="structure-any" name="company-structure" value="Peu importe">
-                                    <label for="structure-any" class="option-label">
-                                        <i class="fas fa-check-circle" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        Peu importe
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Question 8: Environnement de travail -->
-                        <div class="form-group">
-                            <label class="form-label">
-                                Préférez-vous un environnement : <span style="color: var(--primary);">*</span>
-                            </label>
-                            <div class="radio-options">
-                                <div class="radio-option">
-                                    <input type="radio" id="workspace-open" name="workspace-type" value="Open Space">
-                                    <label for="workspace-open" class="option-label">
-                                        <i class="fas fa-users" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        Open Space
-                                    </label>
-                                </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="workspace-office" name="workspace-type" value="Bureau fermé">
-                                    <label for="workspace-office" class="option-label">
-                                        <i class="fas fa-door-closed" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        Bureau fermé
-                                    </label>
-                                </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="workspace-any" name="workspace-type" value="Peu importe">
-                                    <label for="workspace-any" class="option-label">
-                                        <i class="fas fa-check-circle" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        Peu importe
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Étape 3: Secteurs d'activité -->
-                    <div class="form-step" id="step-3" style="display: none;">
-                        <h3 style="font-size: 1.6rem; margin-bottom: 1.5rem; color: var(--dark); font-weight: 700;">
-                            <i class="fas fa-briefcase" style="color: var(--primary); margin-right: 0.75rem;"></i>
-                            Secteurs d'activité
-                        </h3>
-                        
-                        <!-- Question 9: Préférence pour un secteur d'activité -->
-                        <div class="form-group">
-                            <label class="form-label">
-                                Avez-vous une préférence pour un secteur d'activité ? <span style="color: var(--primary);">*</span>
-                            </label>
-                            <div class="radio-options">
-                                <div class="radio-option">
-                                    <input type="radio" id="sector-yes" name="sector-preference" value="Oui">
-                                    <label for="sector-yes" class="option-label">
-                                        <i class="fas fa-check" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        Oui
-                                    </label>
-                                </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="sector-no" name="sector-preference" value="Non">
-                                    <label for="sector-no" class="option-label">
-                                        <i class="fas fa-times" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        Non
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div id="preferred-sectors-container" class="conditional-section">
-                            <div class="form-group">
-                                <label class="form-label">
-                                    Sélectionnez vos secteurs préférés : <span style="color: var(--primary);">*</span>
-                                </label>
-                                <div class="checkbox-options">
-                                    <div class="checkbox-option">
-                                        <input type="checkbox" id="sector-tech" name="preferred-sectors" value="Technologie/Digital">
-                                        <label for="sector-tech" class="option-label">
-                                            <i class="fas fa-laptop-code" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                            Technologie/Digital
-                                        </label>
-                                    </div>
-                                    <div class="checkbox-option">
-                                        <input type="checkbox" id="sector-finance" name="preferred-sectors" value="Finance/Banque/Assurance">
-                                        <label for="sector-finance" class="option-label">
-                                            <i class="fas fa-chart-line" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                            Finance/Banque/Assurance
-                                        </label>
-                                    </div>
-                                    <div class="checkbox-option">
-                                        <input type="checkbox" id="sector-health" name="preferred-sectors" value="Santé/Pharmaceutique">
-                                        <label for="sector-health" class="option-label">
-                                            <i class="fas fa-heartbeat" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                            Santé/Pharmaceutique
-                                        </label>
-                                    </div>
-                                    <div class="checkbox-option">
-                                        <input type="checkbox" id="sector-retail" name="preferred-sectors" value="Commerce/Distribution">
-                                        <label for="sector-retail" class="option-label">
-                                            <i class="fas fa-shopping-cart" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                            Commerce/Distribution
-                                        </label>
-                                    </div>
-                                    <div class="checkbox-option">
-                                        <input type="checkbox" id="sector-industry" name="preferred-sectors" value="Industrie/Automobile">
-                                        <label for="sector-industry" class="option-label">
-                                            <i class="fas fa-industry" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                            Industrie/Automobile
-                                        </label>
-                                    </div>
-                                    <div class="checkbox-option">
-                                        <input type="checkbox" id="sector-services" name="preferred-sectors" value="Services/Conseil">
-                                        <label for="sector-services" class="option-label">
-                                            <i class="fas fa-handshake" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                            Services/Conseil
-                                        </label>
-                                    </div>
-                                    <div class="checkbox-option">
-                                        <input type="checkbox" id="sector-education" name="preferred-sectors" value="Éducation/Formation">
-                                        <label for="sector-education" class="option-label">
-                                            <i class="fas fa-graduation-cap" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                            Éducation/Formation
-                                        </label>
-                                    </div>
-                                    <div class="checkbox-option">
-                                        <input type="checkbox" id="sector-media" name="preferred-sectors" value="Médias/Communication">
-                                        <label for="sector-media" class="option-label">
-                                            <i class="fas fa-microphone" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                            Médias/Communication
-                                        </label>
-                                    </div>
-                                    <div class="checkbox-option">
-                                        <input type="checkbox" id="sector-public" name="preferred-sectors" value="Secteur public">
-                                        <label for="sector-public" class="option-label">
-                                            <i class="fas fa-landmark" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                            Secteur public
-                                        </label>
-                                    </div>
-                                    <div class="checkbox-option">
-                                        <input type="checkbox" id="sector-other" name="preferred-sectors" value="Autre">
-                                        <label for="sector-other" class="option-label">
-                                            <i class="fas fa-plus-circle" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                            Autre
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="form-label">
-                                    Avez-vous un secteur rédhibitoire ?
-                                </label>
-                                <div class="radio-options">
-                                    <div class="radio-option">
-                                        <input type="radio" id="excluding-yes" name="has-excluding-sectors" value="Oui">
-                                        <label for="excluding-yes" class="option-label">
-                                            <i class="fas fa-ban" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                            Oui
-                                        </label>
-                                    </div>
-                                    <div class="radio-option">
-                                        <input type="radio" id="excluding-no" name="has-excluding-sectors" value="Non">
-                                        <label for="excluding-no" class="option-label">
-                                            <i class="fas fa-check" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                            Non
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div id="excluding-sectors-container" class="conditional-section">
-                                <div class="form-group">
-                                    <label class="form-label">
-                                        Sélectionnez les secteurs à exclure : <span style="color: var(--primary);">*</span>
-                                    </label>
-                                    <div class="checkbox-options">
-                                        <div class="checkbox-option">
-                                            <input type="checkbox" id="exclude-tech" name="excluding-sectors" value="Technologie/Digital">
-                                            <label for="exclude-tech" class="option-label">
-                                                <i class="fas fa-laptop-code" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                                Technologie/Digital
-                                            </label>
-                                        </div>
-                                        <div class="checkbox-option">
-                                            <input type="checkbox" id="exclude-finance" name="excluding-sectors" value="Finance/Banque/Assurance">
-                                            <label for="exclude-finance" class="option-label">
-                                                <i class="fas fa-chart-line" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                                Finance/Banque/Assurance
-                                            </label>
-                                        </div>
-                                        <div class="checkbox-option">
-                                            <input type="checkbox" id="exclude-health" name="excluding-sectors" value="Santé/Pharmaceutique">
-                                            <label for="exclude-health" class="option-label">
-                                                <i class="fas fa-heartbeat" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                                Santé/Pharmaceutique
-                                            </label>
-                                        </div>
-                                        <div class="checkbox-option">
-                                            <input type="checkbox" id="exclude-retail" name="excluding-sectors" value="Commerce/Distribution">
-                                            <label for="exclude-retail" class="option-label">
-                                                <i class="fas fa-shopping-cart" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                                Commerce/Distribution
-                                            </label>
-                                        </div>
-                                        <div class="checkbox-option">
-                                            <input type="checkbox" id="exclude-industry" name="excluding-sectors" value="Industrie/Automobile">
-                                            <label for="exclude-industry" class="option-label">
-                                                <i class="fas fa-industry" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                                Industrie/Automobile
-                                            </label>
-                                        </div>
-                                        <div class="checkbox-option">
-                                            <input type="checkbox" id="exclude-services" name="excluding-sectors" value="Services/Conseil">
-                                            <label for="exclude-services" class="option-label">
-                                                <i class="fas fa-handshake" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                                Services/Conseil
-                                            </label>
-                                        </div>
-                                        <div class="checkbox-option">
-                                            <input type="checkbox" id="exclude-education" name="excluding-sectors" value="Éducation/Formation">
-                                            <label for="exclude-education" class="option-label">
-                                                <i class="fas fa-graduation-cap" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                                Éducation/Formation
-                                            </label>
-                                        </div>
-                                        <div class="checkbox-option">
-                                            <input type="checkbox" id="exclude-media" name="excluding-sectors" value="Médias/Communication">
-                                            <label for="exclude-media" class="option-label">
-                                                <i class="fas fa-microphone" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                                Médias/Communication
-                                            </label>
-                                        </div>
-                                        <div class="checkbox-option">
-                                            <input type="checkbox" id="exclude-public" name="excluding-sectors" value="Secteur public">
-                                            <label for="exclude-public" class="option-label">
-                                                <i class="fas fa-landmark" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                                Secteur public
-                                            </label>
-                                        </div>
-                                        <div class="checkbox-option">
-                                            <input type="checkbox" id="exclude-other" name="excluding-sectors" value="Autre">
-                                            <label for="exclude-other" class="option-label">
-                                                <i class="fas fa-plus-circle" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                                Autre
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Étape 4: Rémunération et disponibilité -->
-                    <div class="form-step" id="step-4" style="display: none;">
-                        <h3 style="font-size: 1.6rem; margin-bottom: 1.5rem; color: var(--dark); font-weight: 700;">
-                            <i class="fas fa-money-bill-wave" style="color: var(--primary); margin-right: 0.75rem;"></i>
-                            Rémunération et disponibilité
-                        </h3>
-                        
-                        <!-- Question 10: Fourchette de rémunération -->
-                        <div class="form-group">
-                            <label for="salary-range" class="form-label">
-                                Quelle est votre fourchette de rémunération ? <span style="color: var(--primary);">*</span>
-                                <div class="info-tooltip">
-                                    <i class="fas fa-info-circle"></i>
-                                    <div class="tooltip-text">
-                                        Indiquez votre fourchette de salaire annuel brut souhaitée. 
-                                        Cette information nous aide à vous proposer des offres en adéquation avec vos attentes.
-                                    </div>
-                                </div>
-                            </label>
-                            <input type="text" id="salary-range" name="salary-range" class="form-control" 
-                                   placeholder="Ex: 45-50K€, 60K€ minimum..." required>
-                        </div>
-
-                        <!-- Question 11: Prise de poste -->
-                        <div class="form-group">
-                            <label class="form-label">
-                                Quand recherchez-vous à prendre un poste ? <span style="color: var(--primary);">*</span>
-                            </label>
-                            <div class="radio-options">
-                                <div class="radio-option">
-                                    <input type="radio" id="start-immediate" name="start-time" value="Immédiatement">
-                                    <label for="start-immediate" class="option-label">
-                                        <i class="fas fa-bolt" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        Immédiatement
-                                    </label>
-                                </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="start-1month" name="start-time" value="1 mois">
-                                    <label for="start-1month" class="option-label">
-                                        <i class="fas fa-calendar-alt" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        1 mois
-                                    </label>
-                                </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="start-2months" name="start-time" value="2 mois">
-                                    <label for="start-2months" class="option-label">
-                                        <i class="fas fa-calendar-alt" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        2 mois
-                                    </label>
-                                </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="start-3months" name="start-time" value="3 mois">
-                                    <label for="start-3months" class="option-label">
-                                        <i class="fas fa-calendar-alt" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        3 mois
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Question 12: Actuellement en poste -->
-                        <div class="form-group">
-                            <label class="form-label">
-                                Êtes-vous actuellement en poste ? <span style="color: var(--primary);">*</span>
-                            </label>
-                            <div class="radio-options">
-                                <div class="radio-option">
-                                    <input type="radio" id="current-job-yes" name="currently-employed" value="Oui">
-                                    <label for="current-job-yes" class="option-label">
-                                        <i class="fas fa-check" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        Oui
-                                    </label>
-                                </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="current-job-no" name="currently-employed" value="Non">
-                                    <label for="current-job-no" class="option-label">
-                                        <i class="fas fa-times" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        Non
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Étape 5: Situation candidat (actuellement en poste) -->
-                    <div class="form-step" id="step-5" style="display: none;">
-                        <div id="step-5-employed">
-                          <h3 style="font-size: 1.6rem; margin-bottom: 1.5rem; color: var(--dark); font-weight: 700;">
-                            <i class="fas fa-briefcase" style="color: var(--primary); margin-right: 0.75rem;"></i>
-                            Votre situation actuelle
-                          </h3>
-                          
-                          <div class="form-group">
-                              <label class="form-label">
-                                Pourquoi êtes-vous de nouveau à l'écoute ? <span style="color: var(--primary);">*</span>
-                              </label>
-                              <div class="radio-options">
-                                  <div class="radio-option">
-                                      <input type="radio" id="reason-newchallenges" name="change-reason" value="Je ne m'épanouis plus, je souhaite découvrir de nouvelles choses">
-                                      <label for="reason-newchallenges" class="option-label">
-                                        <i class="fas fa-compass" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        Je ne m'épanouis plus, je souhaite découvrir de nouvelles choses
-                                      </label>
-                                  </div>
-                                  <div class="radio-option">
-                                      <input type="radio" id="reason-evolution" name="change-reason" value="Manque de perspectives d'évolutions">
-                                      <label for="reason-evolution" class="option-label">
-                                        <i class="fas fa-chart-line" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        Manque de perspectives d'évolutions
-                                      </label>
-                                  </div>
-                                  <div class="radio-option">
-                                      <input type="radio" id="reason-salary" name="change-reason" value="Rémunération trop faible">
-                                      <label for="reason-salary" class="option-label">
-                                        <i class="fas fa-money-bill-alt" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        Rémunération trop faible
-                                      </label>
-                                  </div>
-                                  <div class="radio-option">
-                                      <input type="radio" id="reason-location" name="change-reason" value="Poste trop loin de mon domicile">
-                                      <label for="reason-location" class="option-label">
-                                        <i class="fas fa-map-marker-alt" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        Poste trop loin de mon domicile
-                                      </label>
-                                  </div>
-                                  <div class="radio-option">
-                                      <input type="radio" id="reason-flexibility" name="change-reason" value="Manque de flexibilité (pas de TT, RTT)">
-                                      <label for="reason-flexibility" class="option-label">
-                                        <i class="fas fa-home" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        Manque de flexibilité (pas de TT, RTT)
-                                      </label>
-                                  </div>
-                                  <div class="radio-option">
-                                      <input type="radio" id="reason-internal" name="change-reason" value="Problème en interne (organisation, management)">
-                                      <label for="reason-internal" class="option-label">
-                                        <i class="fas fa-exclamation-triangle" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        Problème en interne (organisation, management)
-                                      </label>
-                                  </div>
-                                  <div class="radio-option">
-                                      <input type="radio" id="reason-mismatch" name="change-reason" value="Le poste ne coïncide pas avec le poste proposé initialement">
-                                      <label for="reason-mismatch" class="option-label">
-                                        <i class="fas fa-not-equal" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        Le poste ne coïncide pas avec le poste proposé initialement
-                                      </label>
-                                  </div>
-                                  <div class="radio-option">
-                                      <input type="radio" id="reason-pse" name="change-reason" value="PSE">
-                                      <label for="reason-pse" class="option-label">
-                                        <i class="fas fa-file-contract" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        PSE (Plan de Sauvegarde de l'Emploi)
-                                      </label>
-                                  </div>
-                                  <div class="radio-option">
-                                      <input type="radio" id="reason-confidential" name="change-reason" value="Je ne souhaite pas communiquer">
-                                      <label for="reason-confidential" class="option-label">
-                                        <i class="fas fa-lock" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        Je ne souhaite pas communiquer
-                                      </label>
-                                  </div>
-                              </div>
-                          </div>
-
-                          <div class="form-group">
-                              <label class="form-label">
-                                Combien de temps est votre préavis ? <span style="color: var(--primary);">*</span>
-                              </label>
-                              <div class="radio-options">
-                                  <div class="radio-option">
-                                      <input type="radio" id="notice-none" name="notice-period" value="Je n'en ai pas, encore en période d'essai">
-                                      <label for="notice-none" class="option-label">
-                                        <i class="fas fa-bolt" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        Je n'en ai pas, encore en période d'essai
-                                      </label>
-                                  </div>
-                                  <div class="radio-option">
-                                      <input type="radio" id="notice-1month" name="notice-period" value="1 mois">
-                                      <label for="notice-1month" class="option-label">
-                                        <i class="fas fa-calendar-alt" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        1 mois
-                                      </label>
-                                  </div>
-                                  <div class="radio-option">
-                                      <input type="radio" id="notice-2months" name="notice-period" value="2 mois">
-                                      <label for="notice-2months" class="option-label">
-                                        <i class="fas fa-calendar-alt" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        2 mois
-                                      </label>
-                                  </div>
-                                  <div class="radio-option">
-                                      <input type="radio" id="notice-3months" name="notice-period" value="3 mois">
-                                      <label for="notice-3months" class="option-label">
-                                        <i class="fas fa-calendar-alt" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        3 mois
-                                      </label>
-                                  </div>
-                              </div>
-                          </div>
-
-                          <div class="form-group">
-                              <label class="form-label">
-                                Le préavis est-il négociable ? <span style="color: var(--primary);">*</span>
-                              </label>
-                              <div class="radio-options">
-                                  <div class="radio-option">
-                                      <input type="radio" id="notice-nego-yes" name="notice-negotiable" value="Oui">
-                                      <label for="notice-nego-yes" class="option-label">
-                                        <i class="fas fa-check" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        Oui
-                                      </label>
-                                  </div>
-                                  <div class="radio-option">
-                                      <input type="radio" id="notice-nego-no" name="notice-negotiable" value="Non">
-                                      <label for="notice-nego-no" class="option-label">
-                                        <i class="fas fa-times" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        Non
-                                      </label>
-                                  </div>
-                                  <div class="radio-option">
-                                      <input type="radio" id="notice-nego-unknown" name="notice-negotiable" value="Je ne sais pas">
-                                      <label for="notice-nego-unknown" class="option-label">
-                                        <i class="fas fa-question" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        Je ne sais pas
-                                      </label>
-                                  </div>
-                              </div>
-                          </div>
-
-                          <div class="form-group">
-                              <label class="form-label">
-                                Où en êtes-vous dans vos process de recrutement ? <span style="color: var(--primary);">*</span>
-                              </label>
-                              <div class="radio-options">
-                                  <div class="radio-option">
-                                      <input type="radio" id="process-none" name="recruitment-process" value="Je n'ai pas encore de piste">
-                                      <label for="process-none" class="option-label">
-                                        <i class="fas fa-search" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        Je n'ai pas encore de piste
-                                      </label>
-                                  </div>
-                                  <div class="radio-option">
-                                      <input type="radio" id="process-ongoing" name="recruitment-process" value="J'avance sur différents entretiens">
-                                      <label for="process-ongoing" class="option-label">
-                                        <i class="fas fa-comments" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        J'avance sur différents entretiens
-                                      </label>
-                                  </div>
-                                  <div class="radio-option">
-                                      <input type="radio" id="process-final" name="recruitment-process" value="Je suis en processus final">
-                                      <label for="process-final" class="option-label">
-                                        <i class="fas fa-flag-checkered" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        Je suis en processus final
-                                      </label>
-                                  </div>
-                                  <div class="radio-option">
-                                      <input type="radio" id="process-offers" name="recruitment-process" value="On m'a fait des propositions">
-                                      <label for="process-offers" class="option-label">
-                                        <i class="fas fa-file-contract" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        On m'a fait des propositions
-                                      </label>
-                                  </div>
-                              </div>
-                          </div>
-                        </div>
-
-                        <div id="step-5-unemployed" style="display: none;">
-                          <h3 style="font-size: 1.6rem; margin-bottom: 1.5rem; color: var(--dark); font-weight: 700;">
-                            <i class="fas fa-briefcase" style="color: var(--primary); margin-right: 0.75rem;"></i>
-                            Votre situation actuelle
-                          </h3>
-                          
-                          <div class="form-group">
-                              <label class="form-label">
-                                Où en êtes-vous dans vos process de recrutement ? <span style="color: var(--primary);">*</span>
-                              </label>
-                              <div class="radio-options">
-                                  <div class="radio-option">
-                                      <input type="radio" id="process-none-unemployed" name="recruitment-process-unemployed" value="Je n'ai pas encore de piste">
-                                      <label for="process-none-unemployed" class="option-label">
-                                        <i class="fas fa-search" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        Je n'ai pas encore de piste
-                                      </label>
-                                  </div>
-                                  <div class="radio-option">
-                                      <input type="radio" id="process-ongoing-unemployed" name="recruitment-process-unemployed" value="J'avance sur différents entretiens">
-                                      <label for="process-ongoing-unemployed" class="option-label">
-                                        <i class="fas fa-comments" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        J'avance sur différents entretiens
-                                      </label>
-                                  </div>
-                                  <div class="radio-option">
-                                      <input type="radio" id="process-final-unemployed" name="recruitment-process-unemployed" value="Je suis en processus final">
-                                      <label for="process-final-unemployed" class="option-label">
-                                        <i class="fas fa-flag-checkered" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        Je suis en processus final
-                                      </label>
-                                  </div>
-                                  <div class="radio-option">
-                                      <input type="radio" id="process-offers-unemployed" name="recruitment-process-unemployed" value="On m'a fait des propositions">
-                                      <label for="process-offers-unemployed" class="option-label">
-                                        <i class="fas fa-file-contract" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        On m'a fait des propositions
-                                      </label>
-                                  </div>
-                              </div>
-                          </div>
-
-                          <div class="form-group">
-                              <label class="form-label">
-                                Pourquoi votre dernier contrat s'est arrêté ? <span style="color: var(--primary);">*</span>
-                              </label>
-                              <div class="radio-options">
-                                  <div class="radio-option">
-                                      <input type="radio" id="end-reason-newchallenges" name="end-reason" value="Je ne m'épanouissais plus, je souhaitais découvrir de nouvelles choses">
-                                      <label for="end-reason-newchallenges" class="option-label">
-                                        <i class="fas fa-compass" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        Je ne m'épanouissais plus, je souhaitais découvrir de nouvelles choses
-                                      </label>
-                                  </div>
-                                  <div class="radio-option">
-                                      <input type="radio" id="end-reason-evolution" name="end-reason" value="Manque de perspectives d'évolutions">
-                                      <label for="end-reason-evolution" class="option-label">
-                                        <i class="fas fa-chart-line" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        Manque de perspectives d'évolutions
-                                      </label>
-                                  </div>
-                                  <div class="radio-option">
-                                      <input type="radio" id="end-reason-salary" name="end-reason" value="Rémunération trop faible">
-                                      <label for="end-reason-salary" class="option-label">
-                                        <i class="fas fa-money-bill-alt" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        Rémunération trop faible
-                                      </label>
-                                  </div>
-                                  <div class="radio-option">
-                                      <input type="radio" id="end-reason-location" name="end-reason" value="Poste trop loin de mon domicile">
-                                      <label for="end-reason-location" class="option-label">
-                                        <i class="fas fa-map-marker-alt" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        Poste trop loin de mon domicile
-                                      </label>
-                                  </div>
-                                  <div class="radio-option">
-                                      <input type="radio" id="end-reason-flexibility" name="end-reason" value="Manque de flexibilité (pas de TT, RTT)">
-                                      <label for="end-reason-flexibility" class="option-label">
-                                        <i class="fas fa-home" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        Manque de flexibilité (pas de TT, RTT)
-                                      </label>
-                                  </div>
-                                  <div class="radio-option">
-                                      <input type="radio" id="end-reason-internal" name="end-reason" value="Problème en interne (organisation, management)">
-                                      <label for="end-reason-internal" class="option-label">
-                                        <i class="fas fa-exclamation-triangle" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        Problème en interne (organisation, management)
-                                      </label>
-                                  </div>
-                                  <div class="radio-option">
-                                      <input type="radio" id="end-reason-mismatch" name="end-reason" value="Le poste ne coïncidait pas avec le poste proposé initialement">
-                                      <label for="end-reason-mismatch" class="option-label">
-                                        <i class="fas fa-not-equal" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        Le poste ne coïncidait pas avec le poste proposé initialement
-                                      </label>
-                                  </div>
-                                  <div class="radio-option">
-                                      <input type="radio" id="end-reason-pse" name="end-reason" value="PSE">
-                                      <label for="end-reason-pse" class="option-label">
-                                        <i class="fas fa-file-contract" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        PSE (Plan de Sauvegarde de l'Emploi)
-                                      </label>
-                                  </div>
-                                  <div class="radio-option">
-                                      <input type="radio" id="end-reason-confidential" name="end-reason" value="Je ne souhaite pas communiquer">
-                                      <label for="end-reason-confidential" class="option-label">
-                                        <i class="fas fa-lock" style="margin-right: 0.75rem; color: var(--primary);"></i>
-                                        Je ne souhaite pas communiquer
-                                      </label>
-                                  </div>
-                              </div>
-                          </div>
-                        </div>
-                    </div>
-
-                    <!-- Étape 6: Confirmation et matching -->
-                    <div class="form-step" id="step-6" style="display: none;">
-                        <div style="text-align: center; margin-bottom: 2.5rem;">
-                            <div style="width: 90px; height: 90px; margin: 0 auto; background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3); animation: pulse 2s infinite;">
-                                <i class="fas fa-check" style="font-size: 2.5rem; color: white;"></i>
-                            </div>
-                            <h3 style="font-size: 1.8rem; margin-bottom: 1rem; color: var(--dark); font-weight: 700;">Parfait ! Votre profil est complet</h3>
-                            <p style="color: var(--text); margin-bottom: 2rem; font-size: 1.1rem;">Nous allons maintenant analyser votre profil et vous proposer les meilleures opportunités.</p>
-                        </div>
-
-                        <div class="info-card" style="background-color: rgba(16, 185, 129, 0.1); border-left-color: var(--success); margin-bottom: 2.5rem; transition: all 0.3s ease; animation: fadeIn 0.5s ease-out;">
-                            <div style="display: flex; align-items: flex-start;">
-                                <i class="fas fa-lightbulb" style="color: var(--success); margin-right: 1rem; margin-top: 0.2rem; font-size: 1.2rem;"></i>
-                                <div>
-                                    <h4 style="font-weight: 600; margin-bottom: 0.5rem; color: var(--dark); font-size: 1.2rem;">
-                                        Intelligence artificielle en action
-                                    </h4>
-                                    <p style="color: var(--text); line-height: 1.6;">
-                                        Notre IA utilise vos préférences et votre profil pour analyser plus de 100 critères et vous proposer les offres qui correspondent le mieux à vos attentes. Cette approche personnalisée augmente considérablement vos chances de trouver l'emploi idéal.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <button type="submit" class="btn-submit-final">
-                            <span>Voir mes opportunités</span>
-                            <i class="fas fa-arrow-right"></i>
-                        </button>
-                    </div>
-
-                    <!-- Navigation des étapes -->
-                    <div class="navigation-buttons" id="form-navigation">
-                        <button type="button" id="prev-button" class="btn btn-secondary" disabled>
-                            <i class="fas fa-arrow-left" style="margin-right: 0.5rem;"></i> Précédent
-                        </button>
-                        <div style="text-align: center; flex-grow: 1; display: none;" id="step-indicator">
-                            <span id="current-step-indicator" style="font-size: 0.9rem; color: var(--text-light);">Étape <span>1</span> sur 6</span>
-                        </div>
-                        <button type="button" id="next-button" class="btn btn-primary">
-                            Suivant <i class="fas fa-arrow-right" style="margin-left: 0.5rem;"></i>
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <footer id="contact">
-        <div class="container">
-            <div class="footer-content">
-                <div>
-                    <h4 class="footer-heading">Nexten</h4>
-                    <p class="footer-description">Notre plateforme utilise l'intelligence artificielle pour révolutionner le processus de recrutement, offrant 10 correspondances personnalisées pour les candidats et les recruteurs.</p>
-                    <div class="footer-social">
-                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    </div>
+    <div class="main-content">
+        <h1 class="page-title">QUESTIONNAIRE CANDIDAT</h1>
+        <p class="page-subtitle">Aidez-nous à mieux vous connaître pour trouver les offres qui correspondent parfaitement à votre profil.</p>
+        
+        <span class="ai-badge">
+            <i class="fas fa-robot"></i>
+            Propulsé par l'IA
+        </span>
+        
+        <div class="questionnaire-card">
+            <div class="stepper">
+                <div class="stepper-line"></div>
+                <div class="stepper-progress"></div>
+                
+                <div class="step completed">
+                    <div class="step-number"><i class="fas fa-check"></i></div>
+                    <div class="step-label">Upload CV</div>
                 </div>
                 
-                <div>
-                    <h4 class="footer-heading">Navigation</h4>
-                    <ul class="footer-links">
-                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Accueil</a></li>
-                        <li><a href="candidate-login.html"><i class="fas fa-chevron-right"></i> Espace candidat</a></li>
-                        <li><a href="company-login.html"><i class="fas fa-chevron-right"></i> Espace entreprise</a></li>
-                        <li><a href="about.html"><i class="fas fa-chevron-right"></i> À propos</a></li>
-                        <li><a href="#contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
-                    </ul>
+                <div class="step active">
+                    <div class="step-number">2</div>
+                    <div class="step-label">Questionnaire</div>
                 </div>
                 
-                <div>
-                    <h4 class="footer-heading">Contact</h4>
-                    <div class="footer-contact">
-                        <p><i class="fas fa-map-marker-alt"></i> 123 Avenue de l'Innovation, 75001 Paris</p>
-                        <p><i class="fas fa-phone"></i> +33 1 23 45 67 89</p>
-                        <p><i class="fas fa-envelope"></i> contact@nexten.fr</p>
-                    </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-label">Matching</div>
                 </div>
             </div>
             
-            <div class="footer-bottom">
-                <p>&copy; 2025 Nexten - Tous droits réservés | <a href="privacy.html">Politique de confidentialité</a> | <a href="terms.html">Conditions d'utilisation</a></p>
-            </div>
+            <h2 class="form-section-title">Informations personnelles</h2>
+            
+            <form>
+                <div class="form-group">
+                    <label for="fullname" class="form-label required">Nom et Prénom</label>
+                    <input type="text" id="fullname" class="form-control" placeholder="Votre nom complet" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="job-title" class="form-label required">
+                        Intitulé de poste recherché
+                        <i class="fas fa-info-circle info-icon"></i>
+                    </label>
+                    <input type="text" id="job-title" class="form-control" placeholder="Saisir et appuyer sur Entrée..." required>
+                    <small style="display: block; margin-top: 0.5rem; color: #666;">Vous pouvez ajouter plusieurs postes (appuyez sur Entrée après chaque poste)</small>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label required">
+                        Combien de temps de trajet êtes-vous prêt à faire ?
+                    </label>
+                    <div class="radio-options">
+                        <div class="radio-option">
+                            <input type="radio" id="commute-10" name="commute-time" value="10 min">
+                            <label for="commute-10" class="option-label">
+                                <i class="fas fa-clock" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
+                                10 minutes maximum
+                            </label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="commute-20" name="commute-time" value="20 min">
+                            <label for="commute-20" class="option-label">
+                                <i class="fas fa-clock" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
+                                20 minutes maximum
+                            </label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="commute-30" name="commute-time" value="30 min">
+                            <label for="commute-30" class="option-label">
+                                <i class="fas fa-clock" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
+                                30 minutes maximum
+                            </label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="commute-45" name="commute-time" value="45 min">
+                            <label for="commute-45" class="option-label">
+                                <i class="fas fa-clock" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
+                                45 minutes maximum
+                            </label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="commute-60" name="commute-time" value="60 min">
+                            <label for="commute-60" class="option-label">
+                                <i class="fas fa-clock" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
+                                1 heure maximum
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="address" class="form-label required">
+                        Adresse exacte
+                        <i class="fas fa-info-circle info-icon"></i>
+                    </label>
+                    <input type="text" id="address" class="form-control" placeholder="Saisissez votre adresse complète" required>
+                    <small style="display: block; margin-top: 0.5rem; color: #666;">
+                        <i class="fas fa-shield-alt" style="margin-right: 0.25rem;"></i>
+                        Cette information est nécessaire pour calculer le temps de trajet vers les entreprises
+                    </small>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline">Retour</button>
+                    <button type="button" class="btn btn-primary">Suivant</button>
+                </div>
+            </form>
         </div>
-    </footer>
+    </div>
 
-    <!-- Bouton de retour en haut -->
-    <button id="scroll-to-top" class="scroll-to-top" aria-label="Retour en haut">
-        <i class="fas fa-arrow-up"></i>
-    </button>
-
-    <!-- Chargement du JavaScript UI amélioré -->
-    <script src="../static/js/questionnaire-improved.js"></script>
-    <script src="../static/services/interactions.js"></script>
     <script>
-        // Menu mobile toggle
-        document.querySelector('.menu-toggle').addEventListener('click', function() {
-            document.querySelector('nav').classList.toggle('active');
-        });
-        
-        // Fermer le menu mobile en cliquant à l'extérieur
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('nav') && !e.target.closest('.menu-toggle') && document.querySelector('nav').classList.contains('active')) {
-                document.querySelector('nav').classList.remove('active');
-            }
+        // Simple script to handle hover effects and interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            const infoIcons = document.querySelectorAll('.info-icon');
+            
+            infoIcons.forEach(icon => {
+                icon.addEventListener('mouseover', function() {
+                    // You could implement tooltips here
+                });
+            });
+            
+            const nextButton = document.querySelector('.btn-primary');
+            nextButton.addEventListener('click', function() {
+                // Here you would handle form validation and step navigation
+                alert('Formulaire soumis avec succès! (Naviguerait vers l\'étape suivante)');
+            });
+            
+            // Add click handler for radio options
+            document.querySelectorAll('.radio-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const radio = this.querySelector('input[type="radio"]');
+                    radio.checked = true;
+                    
+                    // Update visual selection
+                    document.querySelectorAll('.radio-option').forEach(opt => {
+                        opt.style.backgroundColor = '';
+                        opt.style.borderColor = '#e2e8f0';
+                    });
+                    
+                    this.style.backgroundColor = 'var(--primary-light)';
+                    this.style.borderColor = 'var(--primary-color)';
+                });
+            });
         });
     </script>
 </body>
