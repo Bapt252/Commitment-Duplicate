@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nexten - Messagerie Interne">
+    <title>Nexten - Messagerie Interne</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../static/styles/nexten-modern-interactive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../static/images/favicon.ico" type="image/x-icon">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        /* Styles spécifiques à la messagerie interne */
+        body {
+            background-color: var(--cream);
+        }
+        
+        #main-content {
+            padding-top: 40px;
+        }
+        
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+        
+        /* Container de messagerie */
+        .messagerie-container {
+            display: flex;
+            background-color: var(--white);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            margin-top: 20px;
+            overflow: hidden;
+            height: calc(100vh - 250px);
+            min-height: 600px;
+        }
+        
+        /* Liste des contacts internes */
+        .contacts-sidebar {
+            width: 350px;
+            background-color: var(--cream);
+            border-right: 1px solid var(--cream-dark);
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .sidebar-header {
+            padding: var(--spacing-md);
+            background-color: var(--white);
+            border-bottom: 1px solid var(--cream-dark);
+        }
+        
+        .search-contacts {
+            display: flex;
+            margin-top: 10px;
+            position: relative;
+        }
+        
+        .search-contacts input {
+            width: 100%;
+            padding: 10px 15px;
+            padding-left: 40px;
+            border: 1px solid var(--cream-dark);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        
+        .search-contacts i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+        }
+        
+        .search-contacts input:focus {
+            border-color: var(--purple-light);
+            box-shadow: 0 0 0 3px var(--purple-glass);
+        }
+        
+        .contact-section {
+            padding: var(--spacing-md);
+            border-bottom: 1px solid var(--cream-dark);
+        }
+        
+        .section-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gray);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .contact-item {
+            padding: var(--spacing-sm);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .contact-item:hover {
+            background-color: var(--cream-dark);
+        }
+        
+        .contact-item.active {
+            background-color: var(--purple-glass);
+        }
+        
+        .contact-avatar {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--white);
+            color: var(--purple);
+            font-weight: 500;
+            font-size: 1rem;
+            border-radius: 10px;
+            border: 1px solid var(--cream-dark);
+            transition: all 0.3s ease;
+        }
+        
+        .contact-item:hover .contact-avatar,
+        .contact-item.active .contact-avatar {
+            border-color: var(--purple-light);
+            transform: scale(1.05);
+        }
+        
+        .contact-info {
+            flex: 1;
+            overflow: hidden;
+        }
+        
+        .contact-name {
+            font-weight: 500;
+            margin-bottom: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .contact-role {
+            font-size: 0.8rem;
+            color: var(--gray);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .contact-status {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #4CAF50;
+            margin-left: auto;
+        }
+        
+        .contact-status.away {
+            background-color: #FFC107;
+        }
+        
+        .contact-status.offline {
+            background-color: var(--gray-light);
+        }
+        
+        /* Zone de conversation */
+        .conversation-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .conversation-header {
+            padding: var(--spacing-md);
+            border-bottom: 1px solid var(--cream-dark);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--white);
+        }
+        
+        .interlocutor-info {
+            display: flex;
+            gap: var(--spacing-md);
+            align-items: center;
+        }
+        
+        .interlocutor-avatar {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--white);
+            color: var(--purple);
+            font-weight: 500;
+            font-size: 1.2rem;
+            border-radius: 12px;
+            border: 1px solid var(--cream-dark);
+        }
+        
+        .interlocutor-details h3 {
+            margin: 0;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+        
+        .conversation-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .action-btn {
+            background: none;
+            border: none;
+            color: var(--gray);
+            font-size: 1.1rem;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .action-btn:hover {
+            background-color: var(--cream);
+            color: var(--purple);
+        }
+        
+        /* Messages */
+        .messages-container {
+            flex: 1;
+            padding: var(--spacing-md);
+            overflow-y: auto;
+            background-color: var(--cream);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .message {
+            margin-bottom: var(--spacing-md);
+            display: flex;
+            flex-direction: column;
+            max-width: 80%;
+        }
+        
+        .message.incoming {
+            align-self: flex-start;
+        }
+        
+        .message.outgoing {
+            align-self: flex-end;
+            margin-left: auto;
+        }
+        
+        .message-content {
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: 18px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .incoming .message-content {
+            background-color: var(--white);
+            color: var(--black);
+            border-bottom-left-radius: 5px;
+        }
+        
+        .outgoing .message-content {
+            background: linear-gradient(135deg, var(--purple) 0%, var(--purple-dark) 100%);
+            color: var(--white);
+            border-bottom-right-radius: 5px;
+        }
+        
+        .message-time {
+            font-size: 0.75rem;
+            color: var(--gray);
+            margin-top: 5px;
+            align-self: flex-end;
+        }
+        
+        /* Zone de saisie */
+        .message-input-container {
+            padding: var(--spacing-md);
+            border-top: 1px solid var(--cream-dark);
+            background-color: var(--white);
+        }
+        
+        .message-input-wrapper {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .message-input {
+            flex: 1;
+            padding: 15px;
+            border: 1px solid var(--cream-dark);
+            border-radius: 25px;
+            outline: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+        
+        .message-input:focus {
+            border-color: var(--purple-light);
+            box-shadow: 0 0 0 3px var(--purple-glass);
+        }
+        
+        .input-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .action-icon-btn {
+            background: none;
+            border: none;
+            color: var(--gray);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+        }
+        
+        .action-icon-btn:hover {
+            background-color: var(--cream);
+            color: var(--purple);
+        }
+        
+        .send-btn {
+            background: linear-gradient(135deg, var(--purple) 0%, var(--purple-dark) 100%);
+            color: var(--white);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .send-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(124, 58, 237, 0.3);
+        }
+        
+        /* Suggestions IA */
+        .ia-suggestions {
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-top: 1px solid var(--cream-dark);
+        }
+        
+        .ia-suggestions-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-bottom: 10px;
+        }
+        
+        .ia-suggestions-title i {
+            color: var(--purple);
+        }
+        
+        .suggestions-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .suggestion-item {
+            background-color: var(--cream);
+            border: 1px solid var(--cream-dark);
+            border-radius: 20px;
+            padding: 8px 15px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .suggestion-item:hover {
+            background-color: var(--purple-glass);
+            border-color: var(--purple-light);
+            color: var(--purple);
+        }
+        
+        /* Possibilité d'envoi de fichiers */
+        .fichier-options {
+            border-top: 1px solid var(--cream-dark);
+            padding: var(--spacing-sm) var(--spacing-md);
+        }
+        
+        .fichier-options-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-bottom: 10px;
+        }
+        
+        .fichier-options-title i {
+            color: var(--purple);
+        }
+        
+        .fichier-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .fichier-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background-color: var(--cream);
+            border: 1px solid var(--cream-dark);
+            border-radius: 20px;
+            padding: 8px 15px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .fichier-item:hover {
+            background-color: var(--purple-glass);
+            border-color: var(--purple-light);
+            color: var(--purple);
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .messagerie-container {
+                flex-direction: column;
+                height: auto;
+            }
+            
+            .contacts-sidebar {
+                width: 100%;
+                max-height: 300px;
+            }
+            
+            .conversation-container {
+                height: 500px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .conversation-container {
+                height: 400px;
+            }
+            
+            .interlocutor-info {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Notification bar -->
+    <div class="notification-bar">
+        <i class="fas fa-bell"></i> Vous avez 5 nouveaux candidats correspondant à vos offres et 2 entretiens programmés aujourd'hui
+    </div>
+
+    <!-- Lien d'accessibilité pour sauter au contenu principal -->
+    <a href="#main-content" class="skip-to-content">Aller au contenu principal</a>
+
+    <header>
+        <div class="container">
+            <div class="logo">
+                nex<span>ten</span><div class="logo-badge">10</div>
+            </div>
+            
+            <button class="menu-toggle" aria-label="Menu principal">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="post-job.html">Publier une offre</a></li>
+                    <li><a href="candidate-dashboard.html">Espace candidat</a></li>
+                    <li><a href="company-dashboard.html" class="active">Espace entreprise</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <div class="company-banner">
+        <div class="company-banner-content">
+            <div class="company-info">
+                <div class="company-logo">
+                    <img src="https://via.placeholder.com/90x90?text=Logo" alt="Logo InnovTech">
+                </div>
+                <div>
+                    <h2 class="company-name">InnovTech</h2>
+                    <p class="company-category">Technologie & Innovation</p>
+                </div>
+            </div>
+            <div class="user-info">
+                <div class="user-details">
+                    <h3 class="user-fullname">Thomas Martin</h3>
+                    <p class="user-position">Directeur des Ressources Humaines</p>
+                </div>
+                <div class="user-avatar">
+                    <span>TM</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <main class="main-container" id="main-content">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2 class="mb-0">MESSAGERIE : En interne</h2>
+                <p class="text-muted">Communiquez avec votre équipe</p>
+            </div>
+            <a href="company-dashboard.html" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left me-2"></i> Retour au tableau de bord
+            </a>
+        </div>
+        
+        <div class="messagerie-container">
+            <!-- Liste des contacts internes -->
+            <div class="contacts-sidebar">
+                <div class="sidebar-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h3 class="h5 mb-0">Contacts</h3>
+                        <button class="action-btn">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="search-contacts">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Rechercher...">
+                    </div>
+                </div>
+                
+                <!-- Direction -->
+                <div class="contact-section">
+                    <h4 class="section-title">Direction</h4>
+                    
+                    <!-- Contact 1 -->
+                    <div class="contact-item active">
+                        <div class="contact-avatar">JF-E</div>
+                        <div class="contact-info">
+                            <div class="contact-name">Jean-François EUDE</div>
+                            <div class="contact-role">Directeur administratif et financier</div>
+                        </div>
+                        <div class="contact-status"></div>
+                    </div>
+                </div>
+                
+                <!-- BESOIN 2 -->
+                <div class="contact-section">
+                    <h4 class="section-title">BESOIN 2 : Assistanat de direction</h4>
+                    
+                    <!-- Contact 2 -->
+                    <div class="contact-item">
+                        <div class="contact-avatar">PN</div>
+                        <div class="contact-info">
+                            <div class="contact-name">Prénom N.</div>
+                            <div class="contact-role">Intitulé du poste en interne</div>
+                        </div>
+                        <div class="contact-status offline"></div>
+                    </div>
+                    
+                    <!-- Contact 3 -->
+                    <div class="contact-item">
+                        <div class="contact-avatar">PN</div>
+                        <div class="contact-info">
+                            <div class="contact-name">Prénom N.</div>
+                            <div class="contact-role">Intitulé du poste en interne</div>
+                        </div>
+                        <div class="contact-status away"></div>
+                    </div>
+                    
+                    <!-- Contact 4 -->
+                    <div class="contact-item">
+                        <div class="contact-avatar">PN</div>
+                        <div class="contact-info">
+                            <div class="contact-name">Prénom N.</div>
+                            <div class="contact-role">Intitulé du poste en interne</div>
+                        </div>
+                        <div class="contact-status"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Zone de conversation -->
+            <div class="conversation-container">
+                <div class="conversation-header">
+                    <div class="interlocutor-info">
+                        <div class="interlocutor-avatar">JF-E</div>
+                        <div class="interlocutor-details">
+                            <h3>Jean-François EUDE</h3>
+                            <p class="mb-0 text-muted">Directeur administratif et financier</p>
+                        </div>
+                    </div>
+                    <div class="conversation-actions">
+                        <button class="action-btn" title="Appel vidéo">
+                            <i class="fas fa-video"></i>
+                        </button>
+                        <button class="action-btn" title="Appel audio">
+                            <i class="fas fa-phone-alt"></i>
+                        </button>
+                        <button class="action-btn" title="Options">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="messages-container">
+                    <!-- Messages -->
+                    <div class="message incoming">
+                        <div class="message-content">
+                            Hello, peux-tu organiser un entretien avec @Prénom N. Il est top !
+                        </div>
+                        <span class="message-time">10:30</span>
+                    </div>
+                    
+                    <div class="message outgoing">
+                        <div class="message-content">
+                            Super, tu veux le voir quand ?
+                        </div>
+                        <span class="message-time">10:35</span>
+                    </div>
+                    
+                    <div class="message incoming">
+                        <div class="message-content">
+                            J'ai vu sur son planning, il peut se libérer demain non ?
+                        </div>
+                        <span class="message-time">10:40</span>
+                    </div>
+                </div>
+                
+                <!-- Suggestions IA -->
+                <div class="ia-suggestions">
+                    <div class="ia-suggestions-title">
+                        <i class="fas fa-robot"></i>
+                        <span>Réponses suggérées via IA</span>
+                    </div>
+                    <div class="suggestions-list">
+                        <div class="suggestion-item">Oui, je peux organiser cela pour demain matin.</div>
+                        <div class="suggestion-item">Je vais vérifier son planning et je reviens vers toi.</div>
+                        <div class="suggestion-item">D'accord, quel horaire vous conviendrait à tous les deux ?</div>
+                    </div>
+                </div>
+                
+                <!-- Possibilité d'envoi de fichiers -->
+                <div class="fichier-options">
+                    <div class="fichier-options-title">
+                        <i class="fas fa-paperclip"></i>
+                        <span>Possibilité d'envoie de fichier :</span>
+                    </div>
+                    <div class="fichier-list">
+                        <div class="fichier-item">
+                            <i class="fas fa-file-alt"></i>
+                            Document RH
+                        </div>
+                        <div class="fichier-item">
+                            <i class="fas fa-file-alt"></i>
+                            Fiche de poste complémentaire
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Zone de saisie -->
+                <div class="message-input-container">
+                    <div class="message-input-wrapper">
+                        <input type="text" class="message-input" placeholder="Tapez votre message...">
+                        <div class="input-actions">
+                            <button class="action-icon-btn" title="Joindre un fichier">
+                                <i class="fas fa-paperclip"></i>
+                            </button>
+                            <button class="action-icon-btn" title="Émoji">
+                                <i class="far fa-smile"></i>
+                            </button>
+                            <button class="send-btn" title="Envoyer">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <h4 class="footer-heading">Nexten</h4>
+                    <p class="footer-description">Notre plateforme utilise l'intelligence artificielle pour révolutionner le processus de recrutement, offrant 10 correspondances personnalisées pour les candidats et les recruteurs.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="footer-heading">Navigation</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Accueil</a></li>
+                        <li><a href="post-job.html"><i class="fas fa-chevron-right"></i> Publier une offre</a></li>
+                        <li><a href="candidate-dashboard.html"><i class="fas fa-chevron-right"></i> Espace candidat</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> À propos</a></li>
+                        <li><a href="#contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="footer-heading">Contact</h4>
+                    <div class="footer-contact">
+                        <p><i class="fas fa-map-marker-alt"></i> 123 Avenue de l'Innovation, 75001 Paris</p>
+                        <p><i class="fas fa-phone"></i> +33 1 23 45 67 89</p>
+                        <p><i class="fas fa-envelope"></i> contact@nexten.fr</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Nexten - Tous droits réservés | <a href="#">Politique de confidentialité</a> | <a href="#">Conditions d'utilisation</a></p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Bouton de retour en haut -->
+    <button id="scroll-to-top" class="scroll-to-top" aria-label="Retour en haut">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    
+    <!-- Bootstrap JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Scripts personnalisés -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Menu mobile toggle
+            const menuToggle = document.querySelector('.menu-toggle');
+            const nav = document.querySelector('nav');
+            
+            if (menuToggle && nav) {
+                menuToggle.addEventListener('click', function() {
+                    nav.classList.toggle('active');
+                    this.classList.toggle('active');
+                });
+            }
+            
+            // Animation de click sur les suggestions IA
+            const suggestionItems = document.querySelectorAll('.suggestion-item');
+            suggestionItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const messageInput = document.querySelector('.message-input');
+                    messageInput.value = this.textContent;
+                    messageInput.focus();
+                });
+            });
+            
+            // Animation de click sur les options de fichiers
+            const fichierItems = document.querySelectorAll('.fichier-item');
+            fichierItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    alert('Ajout du fichier : ' + this.textContent.trim());
+                });
+            });
+            
+            // Animation de click sur le bouton d'envoi
+            const sendBtn = document.querySelector('.send-btn');
+            const messageInput = document.querySelector('.message-input');
+            const messagesContainer = document.querySelector('.messages-container');
+            
+            if (sendBtn && messageInput && messagesContainer) {
+                sendBtn.addEventListener('click', function() {
+                    if (messageInput.value.trim() !== '') {
+                        // Créer un nouveau message
+                        const newMessage = document.createElement('div');
+                        newMessage.className = 'message outgoing';
+                        
+                        // Contenu du message
+                        const messageContent = document.createElement('div');
+                        messageContent.className = 'message-content';
+                        messageContent.textContent = messageInput.value;
+                        
+                        // Heure du message
+                        const messageTime = document.createElement('span');
+                        messageTime.className = 'message-time';
+                        const now = new Date();
+                        messageTime.textContent = `${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')}`;
+                        
+                        // Ajouter les éléments au message
+                        newMessage.appendChild(messageContent);
+                        newMessage.appendChild(messageTime);
+                        
+                        // Ajouter le message à la conversation
+                        messagesContainer.appendChild(newMessage);
+                        
+                        // Vider le champ de saisie
+                        messageInput.value = '';
+                        
+                        // Scroll vers le bas
+                        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                    }
+                });
+                
+                // Envoyer le message avec la touche Entrée
+                messageInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        sendBtn.click();
+                    }
+                });
+            }
+            
+            // Sélection des contacts
+            const contactItems = document.querySelectorAll('.contact-item');
+            contactItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // Retirer la classe active de tous les contacts
+                    contactItems.forEach(contact => {
+                        contact.classList.remove('active');
+                    });
+                    
+                    // Ajouter la classe active au contact cliqué
+                    this.classList.add('active');
+                });
+            });
+            
+            // Recherche de contacts
+            const searchInput = document.querySelector('.search-contacts input');
+            if (searchInput) {
+                searchInput.addEventListener('input', function() {
+                    const searchValue = this.value.toLowerCase();
+                    
+                    // Filtrer les contacts
+                    contactItems.forEach(contact => {
+                        const contactName = contact.querySelector('.contact-name').textContent.toLowerCase();
+                        const contactRole = contact.querySelector('.contact-role').textContent.toLowerCase();
+                        
+                        if (contactName.includes(searchValue) || contactRole.includes(searchValue)) {
+                            contact.style.display = 'flex';
+                        } else {
+                            contact.style.display = 'none';
+                        }
+                    });
+                });
+            }
+            
+            // Bouton de retour en haut
+            const scrollToTopButton = document.getElementById('scroll-to-top');
+            
+            if (scrollToTopButton) {
+                window.addEventListener('scroll', function() {
+                    if (window.scrollY > 300) {
+                        scrollToTopButton.classList.add('visible');
+                    } else {
+                        scrollToTopButton.classList.remove('visible');
+                    }
+                });
+                
+                scrollToTopButton.addEventListener('click', function() {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
