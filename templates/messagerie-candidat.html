@@ -8,6 +8,7 @@
     
     <!-- CSS -->
     <link rel="stylesheet" href="../static/styles/nexten-modern-interactive.css">
+    <link rel="stylesheet" href="../static/styles/messagerie-enhanced.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
@@ -16,466 +17,11 @@
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <style>
-        /* Styles spécifiques à la messagerie */
-        body {
-            background-color: var(--cream);
-        }
-        
-        #main-content {
-            padding-top: 40px;
-        }
-        
-        .main-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 var(--spacing-md);
-        }
-        
-        /* Container de messagerie */
-        .messagerie-container {
-            display: flex;
-            background-color: var(--white);
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            margin-top: 20px;
-            overflow: hidden;
-            height: calc(100vh - 250px);
-            min-height: 600px;
-        }
-        
-        /* Liste des candidats */
-        .candidats-sidebar {
-            width: 350px;
-            background-color: var(--cream);
-            border-right: 1px solid var(--cream-dark);
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .sidebar-header {
-            padding: var(--spacing-md);
-            background-color: var(--white);
-            border-bottom: 1px solid var(--cream-dark);
-        }
-        
-        .filter-tabs {
-            display: flex;
-            gap: 5px;
-            margin-top: 10px;
-        }
-        
-        .filter-tab {
-            padding: 8px 15px;
-            background: none;
-            border: none;
-            font-size: 0.9rem;
-            color: var(--gray);
-            cursor: pointer;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-        
-        .filter-tab.active {
-            background-color: var(--purple-glass);
-            color: var(--purple);
-            font-weight: 500;
-        }
-        
-        .filter-tab:hover:not(.active) {
-            background-color: var(--cream-dark);
-        }
-        
-        .besoin-section {
-            padding: var(--spacing-md);
-            border-bottom: 1px solid var(--cream-dark);
-        }
-        
-        .besoin-titre {
-            font-size: 0.9rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--gray);
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        .candidat-item {
-            padding: var(--spacing-md);
-            border-bottom: 1px solid var(--cream-dark);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .candidat-item:hover {
-            background-color: var(--cream-dark);
-        }
-        
-        .candidat-item.active {
-            background-color: var(--purple-glass);
-            border-left: 4px solid var(--purple);
-        }
-        
-        .candidat-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 5px;
-        }
-        
-        .candidat-nom {
-            font-weight: 500;
-            color: var(--black);
-            margin: 0;
-        }
-        
-        .candidat-status {
-            font-size: 0.8rem;
-            color: var(--gray);
-        }
-        
-        .candidat-details {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-        
-        .candidat-poste {
-            font-size: 0.9rem;
-            color: var(--gray);
-            margin: 0;
-        }
-        
-        .candidat-competence {
-            font-size: 0.8rem;
-            background-color: var(--cream-dark);
-            padding: 4px 8px;
-            border-radius: 4px;
-            display: inline-block;
-            margin-right: 5px;
-            margin-bottom: 5px;
-            color: var(--gray);
-        }
-        
-        .candidat-match {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            background-color: var(--purple-glass);
-            color: var(--purple);
-            padding: 4px 8px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-        
-        /* Zone de conversation */
-        .conversation-container {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-        
-        .conversation-header {
-            padding: var(--spacing-md);
-            border-bottom: 1px solid var(--cream-dark);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: var(--white);
-        }
-        
-        .candidat-info {
-            display: flex;
-            gap: var(--spacing-md);
-            align-items: center;
-        }
-        
-        .candidat-avatar {
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: var(--purple-glass);
-            color: var(--purple);
-            font-weight: 500;
-            font-size: 1.2rem;
-            border-radius: 12px;
-        }
-        
-        .candidat-details h3 {
-            margin: 0;
-            font-size: 1.2rem;
-            font-weight: 500;
-        }
-        
-        .conversation-actions {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .action-btn {
-            background: none;
-            border: none;
-            color: var(--gray);
-            font-size: 1.1rem;
-            cursor: pointer;
-            padding: 8px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-        
-        .action-btn:hover {
-            background-color: var(--cream);
-            color: var(--purple);
-        }
-        
-        /* Messages */
-        .messages-container {
-            flex: 1;
-            padding: var(--spacing-md);
-            overflow-y: auto;
-            background-color: var(--cream);
-        }
-        
-        .message {
-            margin-bottom: var(--spacing-md);
-            display: flex;
-            flex-direction: column;
-            max-width: 80%;
-        }
-        
-        .message.incoming {
-            align-self: flex-start;
-        }
-        
-        .message.outgoing {
-            align-self: flex-end;
-            margin-left: auto;
-        }
-        
-        .message-content {
-            padding: var(--spacing-sm) var(--spacing-md);
-            border-radius: 18px;
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-        
-        .incoming .message-content {
-            background-color: var(--white);
-            color: var(--black);
-            border-bottom-left-radius: 5px;
-        }
-        
-        .outgoing .message-content {
-            background: linear-gradient(135deg, var(--purple) 0%, var(--purple-dark) 100%);
-            color: var(--white);
-            border-bottom-right-radius: 5px;
-        }
-        
-        .message-time {
-            font-size: 0.75rem;
-            color: var(--gray);
-            margin-top: 5px;
-            align-self: flex-end;
-        }
-        
-        /* Zone de saisie */
-        .message-input-container {
-            padding: var(--spacing-md);
-            border-top: 1px solid var(--cream-dark);
-            background-color: var(--white);
-        }
-        
-        .message-input-wrapper {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-        
-        .message-input {
-            flex: 1;
-            padding: 15px;
-            border: 1px solid var(--cream-dark);
-            border-radius: 25px;
-            outline: none;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-        }
-        
-        .message-input:focus {
-            border-color: var(--purple-light);
-            box-shadow: 0 0 0 3px var(--purple-glass);
-        }
-        
-        .input-actions {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .action-icon-btn {
-            background: none;
-            border: none;
-            color: var(--gray);
-            font-size: 1.2rem;
-            cursor: pointer;
-            padding: 8px;
-            border-radius: 50%;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-        }
-        
-        .action-icon-btn:hover {
-            background-color: var(--cream);
-            color: var(--purple);
-        }
-        
-        .send-btn {
-            background: linear-gradient(135deg, var(--purple) 0%, var(--purple-dark) 100%);
-            color: var(--white);
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .send-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 5px 15px rgba(124, 58, 237, 0.3);
-        }
-        
-        /* Suggestions IA */
-        .ia-suggestions {
-            padding: var(--spacing-sm) var(--spacing-md);
-            border-top: 1px solid var(--cream-dark);
-        }
-        
-        .ia-suggestions-title {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.9rem;
-            color: var(--gray);
-            margin-bottom: 10px;
-        }
-        
-        .ia-suggestions-title i {
-            color: var(--purple);
-        }
-        
-        .suggestions-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .suggestion-item {
-            background-color: var(--cream);
-            border: 1px solid var(--cream-dark);
-            border-radius: 20px;
-            padding: 8px 15px;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .suggestion-item:hover {
-            background-color: var(--purple-glass);
-            border-color: var(--purple-light);
-            color: var(--purple);
-        }
-        
-        /* Possibilité d'envoi de fichiers */
-        .fichier-options {
-            border-top: 1px solid var(--cream-dark);
-            padding: var(--spacing-sm) var(--spacing-md);
-        }
-        
-        .fichier-options-title {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.9rem;
-            color: var(--gray);
-            margin-bottom: 10px;
-        }
-        
-        .fichier-options-title i {
-            color: var(--purple);
-        }
-        
-        .fichier-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .fichier-item {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            background-color: var(--cream);
-            border: 1px solid var(--cream-dark);
-            border-radius: 20px;
-            padding: 8px 15px;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .fichier-item:hover {
-            background-color: var(--purple-glass);
-            border-color: var(--purple-light);
-            color: var(--purple);
-        }
-        
-        /* Responsive */
-        @media (max-width: 992px) {
-            .messagerie-container {
-                flex-direction: column;
-                height: auto;
-            }
-            
-            .candidats-sidebar {
-                width: 100%;
-                max-height: 300px;
-            }
-            
-            .conversation-container {
-                height: 500px;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .conversation-container {
-                height: 400px;
-            }
-            
-            .candidat-info {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-        }
-    </style>
 </head>
 <body>
     <!-- Notification bar -->
     <div class="notification-bar">
-        <i class="fas fa-bell"></i> Vous avez 5 nouveaux candidats correspondant à vos offres et 2 entretiens programmés aujourd'hui
+        <i class="fas fa-bell fa-shake"></i> Vous avez 5 nouveaux candidats correspondant à vos offres et 2 entretiens programmés aujourd'hui
     </div>
 
     <!-- Lien d'accessibilité pour sauter au contenu principal -->
@@ -510,7 +56,7 @@
                     <img src="https://via.placeholder.com/90x90?text=Logo" alt="Logo InnovTech">
                 </div>
                 <div>
-                    <h2 class="company-name">InnovTech</h2>
+                    <h2 class="company-name">INNOVTECH</h2>
                     <p class="company-category">Technologie & Innovation</p>
                 </div>
             </div>
@@ -527,80 +73,107 @@
     </div>
     
     <main class="main-container" id="main-content">
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="page-header">
             <div>
-                <h2 class="mb-0">MESSAGERIE : avec Candidat</h2>
-                <p class="text-muted">Communiquez avec vos candidats</p>
+                <h2>MESSAGERIE : AVEC CANDIDAT</h2>
+                <p>Communiquez avec vos candidats</p>
             </div>
-            <a href="company-dashboard.html" class="btn btn-outline-secondary">
-                <i class="fas fa-arrow-left me-2"></i> Retour au tableau de bord
+            <a href="company-dashboard.html" class="retour-btn">
+                <i class="fas fa-arrow-left"></i> Retour au tableau de bord
             </a>
         </div>
         
         <div class="messagerie-container">
             <!-- Liste des candidats -->
-            <div class="candidats-sidebar">
+            <div class="sidebar">
                 <div class="sidebar-header">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h3 class="h5 mb-0">Candidats</h3>
-                        <button class="action-btn">
-                            <i class="fas fa-search"></i>
+                    <div class="header-title">
+                        <h3>Candidats</h3>
+                        <button class="add-btn" title="Ajouter un candidat à la discussion">
+                            <i class="fas fa-plus"></i>
                         </button>
                     </div>
                     <div class="filter-tabs">
                         <button class="filter-tab active">Statut</button>
                         <button class="filter-tab">Date</button>
-                        <button class="filter-tab">Offre reçu</button>
+                        <button class="filter-tab">Offre reçue</button>
+                    </div>
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Rechercher un candidat...">
                     </div>
                 </div>
                 
-                <!-- BESOIN 1 -->
-                <div class="besoin-section">
-                    <h4 class="besoin-titre">BESOIN 1 : Comptabilité général</h4>
+                <div class="contact-list">
+                    <!-- BESOIN 1 -->
+                    <div class="section-heading">BESOIN 1 : Comptabilité général</div>
                     
                     <!-- Candidat 1 -->
-                    <div class="candidat-item active">
-                        <div class="candidat-header">
-                            <h5 class="candidat-nom">Prénom N.</h5>
-                            <span class="candidat-status">entretien présentiel</span>
+                    <div class="contact-item active">
+                        <div class="contact-header">
+                            <h5 class="contact-nom">Prénom N.</h5>
+                            <span class="contact-status">
+                                <span class="status-dot dot-online"></span>
+                                Entretien présentiel
+                            </span>
                         </div>
-                        <div class="candidat-details">
-                            <p class="candidat-poste">CV : Ajouter qui permet de faire apparaître le CV</p>
-                            <div>
-                                <span class="candidat-match">90%</span>
+                        <div class="contact-details">
+                            <p class="contact-poste">CV : Ajouter qui permet de faire apparaître le CV</p>
+                            <div class="contact-metadata">
+                                <span class="contact-badge match-badge">90%</span>
                             </div>
                         </div>
                     </div>
                     
                     <!-- Candidat 2 -->
-                    <div class="candidat-item">
-                        <div class="candidat-header">
-                            <h5 class="candidat-nom">Prénom N.</h5>
-                            <span class="candidat-status">entretien présentiel</span>
+                    <div class="contact-item">
+                        <div class="contact-header">
+                            <h5 class="contact-nom">Prénom N.</h5>
+                            <span class="contact-status">
+                                <span class="status-dot dot-online"></span>
+                                Entretien présentiel
+                            </span>
                         </div>
-                        <div class="candidat-details">
-                            <p class="candidat-poste">Recherche : CDI CDD Intérim</p>
-                            <div>
-                                <span class="candidat-match">90%</span>
+                        <div class="contact-details">
+                            <p class="contact-poste">Recherche : CDI CDD Intérim</p>
+                            <div class="contact-metadata">
+                                <span class="contact-badge match-badge">90%</span>
                             </div>
                         </div>
                     </div>
-                </div>
-                
-                <!-- BESOIN 2 -->
-                <div class="besoin-section">
-                    <h4 class="besoin-titre">BESOIN 2 : Assistanat de direction</h4>
+                    
+                    <!-- BESOIN 2 -->
+                    <div class="section-heading">BESOIN 2 : Assistanat de direction</div>
                     
                     <!-- Candidat 3 -->
-                    <div class="candidat-item">
-                        <div class="candidat-header">
-                            <h5 class="candidat-nom">Prénom N.</h5>
-                            <span class="candidat-status">entretien présentiel</span>
+                    <div class="contact-item">
+                        <div class="contact-header">
+                            <h5 class="contact-nom">Prénom N.</h5>
+                            <span class="contact-status">
+                                <span class="status-dot dot-away"></span>
+                                Entretien présentiel
+                            </span>
                         </div>
-                        <div class="candidat-details">
-                            <p class="candidat-poste">Recherche : CDI CDD Intérim</p>
-                            <div>
-                                <span class="candidat-match">75%</span>
+                        <div class="contact-details">
+                            <p class="contact-poste">Recherche : CDI CDD Intérim</p>
+                            <div class="contact-metadata">
+                                <span class="contact-badge match-badge">75%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-header">
+                            <h5 class="contact-nom">Marie L.</h5>
+                            <span class="contact-status">
+                                <span class="status-dot dot-offline"></span>
+                                Entretien visio
+                            </span>
+                        </div>
+                        <div class="contact-details">
+                            <p class="contact-poste">Assistant administratif senior</p>
+                            <div class="contact-metadata">
+                                <span class="contact-badge match-badge">82%</span>
                             </div>
                         </div>
                     </div>
@@ -608,23 +181,23 @@
             </div>
             
             <!-- Zone de conversation -->
-            <div class="conversation-container">
+            <div class="conversation">
                 <div class="conversation-header">
-                    <div class="candidat-info">
-                        <div class="candidat-avatar">J-V</div>
-                        <div class="candidat-details">
+                    <div class="interlocutor-info">
+                        <div class="avatar">J-V</div>
+                        <div class="interlocutor-details">
                             <h3>Jean V.</h3>
-                            <p class="mb-0 text-muted">Candidat pour Comptabilité générale</p>
+                            <p>Candidat pour Comptabilité générale</p>
                         </div>
                     </div>
                     <div class="conversation-actions">
-                        <button class="action-btn" title="Voir le profil">
+                        <button class="action-button" title="Voir le profil">
                             <i class="fas fa-user"></i>
                         </button>
-                        <button class="action-btn" title="Planifier un entretien">
+                        <button class="action-button" title="Planifier un entretien">
                             <i class="fas fa-calendar-alt"></i>
                         </button>
-                        <button class="action-btn" title="Options">
+                        <button class="action-button" title="Options">
                             <i class="fas fa-ellipsis-v"></i>
                         </button>
                     </div>
@@ -633,23 +206,46 @@
                 <div class="messages-container">
                     <!-- Messages -->
                     <div class="message incoming">
-                        <div class="message-content">
-                            Bonjour, je suis intéressé par le poste !
+                        <div class="message-content-wrapper">
+                            <div class="message-avatar">J</div>
+                            <div class="message-content">
+                                Bonjour, je suis intéressé par le poste !
+                            </div>
                         </div>
                         <span class="message-time">10:30</span>
                     </div>
                     
                     <div class="message outgoing">
-                        <div class="message-content">
-                            Super, vous êtes dispo ?
+                        <div class="message-content-wrapper">
+                            <div class="message-avatar">T</div>
+                            <div class="message-content">
+                                Bonjour Jean, merci pour votre intérêt. Votre profil semble bien correspondre à ce que nous recherchons. Êtes-vous disponible pour un premier échange téléphonique cette semaine ?
+                            </div>
                         </div>
                         <span class="message-time">10:35</span>
+                    </div>
+                    
+                    <div class="message incoming">
+                        <div class="message-content-wrapper">
+                            <div class="message-avatar">J</div>
+                            <div class="message-content">
+                                Oui tout à fait, je suis disponible jeudi ou vendredi après-midi si cela vous convient ?
+                            </div>
+                        </div>
+                        <span class="message-time">10:42</span>
+                    </div>
+                    
+                    <!-- Indicateur de saisie -->
+                    <div class="typing-indicator">
+                        <div class="typing-bubble"></div>
+                        <div class="typing-bubble"></div>
+                        <div class="typing-bubble"></div>
                     </div>
                 </div>
                 
                 <!-- Suggestions IA -->
-                <div class="ia-suggestions">
-                    <div class="ia-suggestions-title">
+                <div class="ai-suggestions">
+                    <div class="suggestions-header">
                         <i class="fas fa-robot"></i>
                         <span>Réponses suggérées via IA</span>
                     </div>
@@ -661,35 +257,39 @@
                 </div>
                 
                 <!-- Possibilité d'envoi de fichiers -->
-                <div class="fichier-options">
-                    <div class="fichier-options-title">
+                <div class="file-options">
+                    <div class="file-options-header">
                         <i class="fas fa-paperclip"></i>
-                        <span>Possibilité d'envoie de fichier :</span>
+                        <span>Possibilité d'envoi de fichier :</span>
                     </div>
-                    <div class="fichier-list">
-                        <div class="fichier-item">
+                    <div class="file-list">
+                        <div class="file-item">
                             <i class="fas fa-file-alt"></i>
                             Document RH
                         </div>
-                        <div class="fichier-item">
+                        <div class="file-item">
                             <i class="fas fa-file-alt"></i>
                             Fiche de poste complémentaire
+                        </div>
+                        <div class="file-item">
+                            <i class="fas fa-file-pdf"></i>
+                            Présentation entreprise
                         </div>
                     </div>
                 </div>
                 
                 <!-- Zone de saisie -->
-                <div class="message-input-container">
-                    <div class="message-input-wrapper">
+                <div class="input-container">
+                    <div class="input-wrapper">
                         <input type="text" class="message-input" placeholder="Tapez votre message...">
                         <div class="input-actions">
-                            <button class="action-icon-btn" title="Joindre un fichier">
+                            <button class="input-action-btn" title="Joindre un fichier">
                                 <i class="fas fa-paperclip"></i>
                             </button>
-                            <button class="action-icon-btn" title="Émoji">
+                            <button class="input-action-btn" title="Émoji">
                                 <i class="far fa-smile"></i>
                             </button>
-                            <button class="send-btn" title="Envoyer">
+                            <button class="send-button" title="Envoyer">
                                 <i class="fas fa-paper-plane"></i>
                             </button>
                         </div>
@@ -773,7 +373,7 @@
             });
             
             // Animation de click sur les options de fichiers
-            const fichierItems = document.querySelectorAll('.fichier-item');
+            const fichierItems = document.querySelectorAll('.file-item');
             fichierItems.forEach(item => {
                 item.addEventListener('click', function() {
                     alert('Ajout du fichier : ' + this.textContent.trim());
@@ -781,16 +381,29 @@
             });
             
             // Animation de click sur le bouton d'envoi
-            const sendBtn = document.querySelector('.send-btn');
+            const sendBtn = document.querySelector('.send-button');
             const messageInput = document.querySelector('.message-input');
             const messagesContainer = document.querySelector('.messages-container');
             
             if (sendBtn && messageInput && messagesContainer) {
                 sendBtn.addEventListener('click', function() {
                     if (messageInput.value.trim() !== '') {
+                        // Masquer l'indicateur de saisie
+                        const typingIndicator = document.querySelector('.typing-indicator');
+                        if (typingIndicator) typingIndicator.style.display = 'none';
+                        
                         // Créer un nouveau message
                         const newMessage = document.createElement('div');
                         newMessage.className = 'message outgoing';
+                        
+                        // Contenu du message avec wrapper
+                        const contentWrapper = document.createElement('div');
+                        contentWrapper.className = 'message-content-wrapper';
+                        
+                        // Avatar
+                        const avatar = document.createElement('div');
+                        avatar.className = 'message-avatar';
+                        avatar.textContent = 'T';
                         
                         // Contenu du message
                         const messageContent = document.createElement('div');
@@ -804,7 +417,9 @@
                         messageTime.textContent = `${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')}`;
                         
                         // Ajouter les éléments au message
-                        newMessage.appendChild(messageContent);
+                        contentWrapper.appendChild(avatar);
+                        contentWrapper.appendChild(messageContent);
+                        newMessage.appendChild(contentWrapper);
                         newMessage.appendChild(messageTime);
                         
                         // Ajouter le message à la conversation
@@ -815,6 +430,64 @@
                         
                         // Scroll vers le bas
                         messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                        
+                        // Simuler une réponse après 2 secondes
+                        setTimeout(() => {
+                            // Afficher l'indicateur de saisie
+                            const newTypingIndicator = document.createElement('div');
+                            newTypingIndicator.className = 'typing-indicator';
+                            for (let i = 0; i < 3; i++) {
+                                const bubble = document.createElement('div');
+                                bubble.className = 'typing-bubble';
+                                newTypingIndicator.appendChild(bubble);
+                            }
+                            messagesContainer.appendChild(newTypingIndicator);
+                            
+                            // Scroll vers le bas
+                            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                            
+                            // Simuler la réponse après 3 secondes
+                            setTimeout(() => {
+                                // Masquer l'indicateur de saisie
+                                newTypingIndicator.remove();
+                                
+                                // Créer un nouveau message de réponse
+                                const responseMessage = document.createElement('div');
+                                responseMessage.className = 'message incoming';
+                                
+                                // Contenu du message avec wrapper
+                                const responseWrapper = document.createElement('div');
+                                responseWrapper.className = 'message-content-wrapper';
+                                
+                                // Avatar
+                                const responseAvatar = document.createElement('div');
+                                responseAvatar.className = 'message-avatar';
+                                responseAvatar.textContent = 'J';
+                                
+                                // Contenu du message
+                                const responseContent = document.createElement('div');
+                                responseContent.className = 'message-content';
+                                responseContent.textContent = "Merci pour votre retour rapide. Je reste disponible pour toute information complémentaire dont vous auriez besoin.";
+                                
+                                // Heure du message
+                                const responseTime = document.createElement('span');
+                                responseTime.className = 'message-time';
+                                const responseNow = new Date();
+                                responseTime.textContent = `${responseNow.getHours()}:${String(responseNow.getMinutes()).padStart(2, '0')}`;
+                                
+                                // Ajouter les éléments au message
+                                responseWrapper.appendChild(responseAvatar);
+                                responseWrapper.appendChild(responseContent);
+                                responseMessage.appendChild(responseWrapper);
+                                responseMessage.appendChild(responseTime);
+                                
+                                // Ajouter le message à la conversation
+                                messagesContainer.appendChild(responseMessage);
+                                
+                                // Scroll vers le bas
+                                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                            }, 3000);
+                        }, 2000);
                     }
                 });
                 
@@ -827,7 +500,7 @@
             }
             
             // Sélection des candidats
-            const candidatItems = document.querySelectorAll('.candidat-item');
+            const candidatItems = document.querySelectorAll('.contact-item');
             candidatItems.forEach(item => {
                 item.addEventListener('click', function() {
                     // Retirer la classe active de tous les candidats
@@ -872,6 +545,11 @@
                         behavior: 'smooth'
                     });
                 });
+            }
+            
+            // Initialiser - Scrollez vers le bas des messages
+            if (messagesContainer) {
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
             }
         });
     </script>
