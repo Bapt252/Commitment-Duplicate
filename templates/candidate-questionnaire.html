@@ -302,6 +302,30 @@
             cursor: pointer;
         }
 
+        .checkbox-option {
+            display: flex;
+            align-items: flex-start;
+            padding: 1rem 1.2rem;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 8px;
+            margin-bottom: 0.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .checkbox-option:hover {
+            background-color: var(--primary-light);
+            border-color: #cbd5e1;
+            transform: translateY(-1px);
+        }
+        
+        .checkbox-option input[type="checkbox"] {
+            margin-right: 1rem;
+            margin-top: 0.25rem;
+            cursor: pointer;
+        }
+
         .option-label {
             font-weight: 500;
             color: #334155;
@@ -343,6 +367,85 @@
             background-color: var(--primary-light);
         }
 
+        /* Styles pour le classement des motivations */
+        .sortable-list {
+            margin-top: 1rem;
+        }
+
+        .sortable-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            background-color: white;
+            border: 1px solid #e2e8f0;
+            border-radius: var(--border-radius);
+            cursor: move;
+        }
+
+        .sortable-item:hover {
+            background-color: var(--primary-light);
+        }
+
+        .drag-handle {
+            margin-right: 1rem;
+            color: #bbb;
+        }
+
+        /* Styles pour les badges de job */
+        .job-badge {
+            display: inline-flex;
+            align-items: center;
+            background-color: var(--gray-light);
+            padding: 0.5rem 0.75rem;
+            border-radius: 50px;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .job-badge .remove-job {
+            margin-left: 0.5rem;
+            color: #999;
+            cursor: pointer;
+        }
+
+        .job-badge .remove-job:hover {
+            color: #d32f2f;
+        }
+
+        /* Style pour les sélections multiples */
+        .form-select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            transition: border 0.2s;
+            font-size: 1rem;
+        }
+
+        .form-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .form-select[multiple] {
+            min-height: 120px;
+        }
+
+        /* Style pour les inputs en ligne */
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -0.5rem;
+        }
+
+        .col-6 {
+            flex: 0 0 50%;
+            max-width: 50%;
+            padding: 0 0.5rem;
+        }
+
         @media (max-width: 768px) {
             .header {
                 padding: 1rem;
@@ -363,6 +466,11 @@
             
             .btn {
                 width: 100%;
+            }
+            
+            .col-6 {
+                flex: 0 0 100%;
+                max-width: 100%;
             }
         }
     </style>
@@ -388,7 +496,7 @@
         
         <span class="ai-badge">
             <i class="fas fa-robot"></i>
-            Propulsé par l'IA
+            Proposé par l'IA
         </span>
         
         <div class="questionnaire-card">
@@ -412,9 +520,10 @@
                 </div>
             </div>
             
-            <h2 class="form-section-title">Informations personnelles</h2>
-            
-            <form>
+            <form id="candidateForm">
+                <!-- Section 1: Informations personnelles -->
+                <h2 class="form-section-title">Informations personnelles</h2>
+                
                 <div class="form-group">
                     <label for="fullname" class="form-label required">Nom et Prénom</label>
                     <input type="text" id="fullname" class="form-control" placeholder="Votre nom complet" required>
@@ -423,10 +532,14 @@
                 <div class="form-group">
                     <label for="job-title" class="form-label required">
                         Intitulé de poste recherché
-                        <i class="fas fa-info-circle info-icon"></i>
+                        <i class="fas fa-info-circle info-icon" title="Ajoutez plusieurs postes en appuyant sur Entrée après chaque saisie"></i>
                     </label>
-                    <input type="text" id="job-title" class="form-control" placeholder="Saisir et appuyer sur Entrée..." required>
+                    <input type="text" id="job-title" class="form-control" placeholder="Saisir et appuyer sur Entrée..." required list="jobSuggestions">
+                    <datalist id="jobSuggestions">
+                        <!-- Les suggestions seront ajoutées dynamiquement -->
+                    </datalist>
                     <small style="display: block; margin-top: 0.5rem; color: #666;">Vous pouvez ajouter plusieurs postes (appuyez sur Entrée après chaque poste)</small>
+                    <div id="selectedJobs" class="mt-3" style="margin-top: 1rem;"></div>
                 </div>
                 
                 <div class="form-group">
@@ -435,38 +548,88 @@
                     </label>
                     <div class="radio-options">
                         <div class="radio-option">
-                            <input type="radio" id="commute-10" name="commute-time" value="10 min">
+                            <input type="radio" id="commute-10" name="commute-time" value="10" required>
                             <label for="commute-10" class="option-label">
                                 <i class="fas fa-clock" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
                                 10 minutes maximum
                             </label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="commute-20" name="commute-time" value="20 min">
+                            <input type="radio" id="commute-20" name="commute-time" value="20">
                             <label for="commute-20" class="option-label">
                                 <i class="fas fa-clock" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
                                 20 minutes maximum
                             </label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="commute-30" name="commute-time" value="30 min">
+                            <input type="radio" id="commute-30" name="commute-time" value="30">
                             <label for="commute-30" class="option-label">
                                 <i class="fas fa-clock" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
                                 30 minutes maximum
                             </label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="commute-45" name="commute-time" value="45 min">
+                            <input type="radio" id="commute-45" name="commute-time" value="45">
                             <label for="commute-45" class="option-label">
                                 <i class="fas fa-clock" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
                                 45 minutes maximum
                             </label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="commute-60" name="commute-time" value="60 min">
+                            <input type="radio" id="commute-60" name="commute-time" value="60">
                             <label for="commute-60" class="option-label">
                                 <i class="fas fa-clock" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
                                 1 heure maximum
+                            </label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="commute-90" name="commute-time" value="90">
+                            <label for="commute-90" class="option-label">
+                                <i class="fas fa-clock" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
+                                1 heure 30 maximum
+                            </label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="commute-120" name="commute-time" value="120">
+                            <label for="commute-120" class="option-label">
+                                <i class="fas fa-clock" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
+                                2 heures maximum
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">
+                        Comment vous déplacez-vous ? (plusieurs choix possibles)
+                    </label>
+                    <div class="checkbox-options">
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="transport-public" name="transport-mode" value="transport">
+                            <label for="transport-public" class="option-label">
+                                <i class="fas fa-bus" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
+                                Transports en commun
+                            </label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="transport-car" name="transport-mode" value="vehicle">
+                            <label for="transport-car" class="option-label">
+                                <i class="fas fa-car" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
+                                Véhicule personnel
+                            </label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="transport-bike" name="transport-mode" value="bike">
+                            <label for="transport-bike" class="option-label">
+                                <i class="fas fa-bicycle" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
+                                Vélo
+                            </label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="transport-walk" name="transport-mode" value="walk">
+                            <label for="transport-walk" class="option-label">
+                                <i class="fas fa-walking" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
+                                À pied
                             </label>
                         </div>
                     </div>
@@ -475,7 +638,7 @@
                 <div class="form-group">
                     <label for="address" class="form-label required">
                         Adresse exacte
-                        <i class="fas fa-info-circle info-icon"></i>
+                        <i class="fas fa-info-circle info-icon" title="Nécessaire pour calculer le temps de trajet"></i>
                     </label>
                     <input type="text" id="address" class="form-control" placeholder="Saisissez votre adresse complète" required>
                     <small style="display: block; margin-top: 0.5rem; color: #666;">
@@ -484,48 +647,855 @@
                     </small>
                 </div>
                 
+                <!-- Section 2: Motivations et préférences -->
+                <h2 class="form-section-title">Motivations et préférences</h2>
+                
+                <div class="form-group">
+                    <label class="form-label">
+                        Classez vos leviers de motivation (du plus important au moins important)
+                    </label>
+                    <small style="display: block; margin-top: 0.25rem; color: #666;">Glissez et déposez les éléments pour les réorganiser par ordre d'importance</small>
+                    <div id="motivationFactors" class="sortable-list">
+                        <div class="sortable-item" data-value="remuneration">
+                            <i class="fas fa-grip-lines drag-handle"></i>
+                            <span>Rémunération</span>
+                        </div>
+                        <div class="sortable-item" data-value="evolution">
+                            <i class="fas fa-grip-lines drag-handle"></i>
+                            <span>Perspectives d'évolution</span>
+                        </div>
+                        <div class="sortable-item" data-value="flexibility">
+                            <i class="fas fa-grip-lines drag-handle"></i>
+                            <span>Flexibilité</span>
+                        </div>
+                        <div class="sortable-item" data-value="location">
+                            <i class="fas fa-grip-lines drag-handle"></i>
+                            <span>Localisation</span>
+                        </div>
+                        <div class="sortable-item" data-value="other">
+                            <i class="fas fa-grip-lines drag-handle"></i>
+                            <span style="margin-right: 10px;">Autre</span>
+                            <input type="text" class="form-control" id="otherMotivation" style="flex: 1;" placeholder="Précisez...">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">
+                        Quel type de structure priorisez-vous ? (plusieurs choix possibles)
+                    </label>
+                    <div class="checkbox-options">
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="company-startup" name="company-type" value="startup" class="company-type">
+                            <label for="company-startup" class="option-label">
+                                <i class="fas fa-rocket" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
+                                Start-up
+                            </label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="company-big" name="company-type" value="bigCompany" class="company-type">
+                            <label for="company-big" class="option-label">
+                                <i class="fas fa-building" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
+                                Grand groupe
+                            </label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="company-sme" name="company-type" value="sme" class="company-type">
+                            <label for="company-sme" class="option-label">
+                                <i class="fas fa-store" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
+                                PME
+                            </label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="company-any" name="company-type" value="noPreference">
+                            <label for="company-any" class="option-label">
+                                <i class="fas fa-check-circle" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
+                                Ça n'a pas d'importance pour moi
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">
+                        Préférez-vous un environnement :
+                    </label>
+                    <div class="radio-options">
+                        <div class="radio-option">
+                            <input type="radio" id="env-openspace" name="work-environment" value="openSpace">
+                            <label for="env-openspace" class="option-label">
+                                <i class="fas fa-users" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
+                                Open Space
+                            </label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="env-office" name="work-environment" value="office">
+                            <label for="env-office" class="option-label">
+                                <i class="fas fa-door-closed" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
+                                Bureau
+                            </label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="env-any" name="work-environment" value="noPreference">
+                            <label for="env-any" class="option-label">
+                                <i class="fas fa-equals" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
+                                Pas de préférence
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">
+                        Avez-vous une préférence pour un secteur d'activité ?
+                    </label>
+                    <div class="radio-options">
+                        <div class="radio-option">
+                            <input type="radio" id="sector-yes" name="sector-preference" value="yes">
+                            <label for="sector-yes" class="option-label">
+                                <i class="fas fa-check" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
+                                Oui
+                            </label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="sector-no" name="sector-preference" value="no">
+                            <label for="sector-no" class="option-label">
+                                <i class="fas fa-times" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
+                                Non
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Champs conditionnels pour les secteurs préférés -->
+                <div id="sector-preferences" class="form-group" style="display: none;">
+                    <label for="preferred-sectors" class="form-label">
+                        Sélectionnez les secteurs que vous préférez :
+                    </label>
+                    <select id="preferred-sectors" class="form-select" multiple>
+                        <option value="it">Informatique/Numérique</option>
+                        <option value="finance">Finance/Banque/Assurance</option>
+                        <option value="healthcare">Santé/Pharmaceutique</option>
+                        <option value="retail">Commerce/Distribution</option>
+                        <option value="industry">Industrie</option>
+                        <option value="construction">Construction/BTP</option>
+                        <option value="consulting">Conseil</option>
+                        <option value="marketing">Marketing/Communication</option>
+                        <option value="hospitality">Hôtellerie/Restauration</option>
+                        <option value="education">Éducation/Formation</option>
+                        <option value="publicSector">Secteur public</option>
+                        <option value="energy">Énergie</option>
+                        <option value="transport">Transport/Logistique</option>
+                        <option value="environment">Environnement</option>
+                        <option value="legal">Juridique</option>
+                        <option value="arts">Arts/Culture</option>
+                        <option value="media">Médias</option>
+                        <option value="agriculture">Agriculture/Agroalimentaire</option>
+                        <option value="other">Autre</option>
+                    </select>
+                    <small style="display: block; margin-top: 0.5rem; color: #666;">Maintenez la touche Ctrl (ou Cmd sur Mac) pour sélectionner plusieurs secteurs.</small>
+                    
+                    <!-- Question sur les secteurs redhibitoires -->
+                    <div class="radio-options" style="margin-top: 1rem;">
+                        <label class="form-label">
+                            Avez-vous un secteur rédhibitoire ?
+                        </label>
+                        <div class="radio-option">
+                            <input type="radio" id="unwanted-yes" name="unwanted-sectors" value="yes">
+                            <label for="unwanted-yes" class="option-label">
+                                <i class="fas fa-check" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
+                                Oui
+                            </label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="unwanted-no" name="unwanted-sectors" value="no">
+                            <label for="unwanted-no" class="option-label">
+                                <i class="fas fa-times" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
+                                Non
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Champs conditionnels pour les secteurs à éviter -->
+                <div id="unwanted-sector-list" class="form-group" style="display: none;">
+                    <label for="unwanted-sectors-select" class="form-label">
+                        Sélectionnez les secteurs que vous évitez :
+                    </label>
+                    <select id="unwanted-sectors-select" class="form-select" multiple>
+                        <option value="it">Informatique/Numérique</option>
+                        <option value="finance">Finance/Banque/Assurance</option>
+                        <option value="healthcare">Santé/Pharmaceutique</option>
+                        <option value="retail">Commerce/Distribution</option>
+                        <option value="industry">Industrie</option>
+                        <option value="construction">Construction/BTP</option>
+                        <option value="consulting">Conseil</option>
+                        <option value="marketing">Marketing/Communication</option>
+                        <option value="hospitality">Hôtellerie/Restauration</option>
+                        <option value="education">Éducation/Formation</option>
+                        <option value="publicSector">Secteur public</option>
+                        <option value="energy">Énergie</option>
+                        <option value="transport">Transport/Logistique</option>
+                        <option value="environment">Environnement</option>
+                        <option value="legal">Juridique</option>
+                        <option value="arts">Arts/Culture</option>
+                        <option value="media">Médias</option>
+                        <option value="agriculture">Agriculture/Agroalimentaire</option>
+                        <option value="other">Autre</option>
+                    </select>
+                    <small style="display: block; margin-top: 0.5rem; color: #666;">Maintenez la touche Ctrl (ou Cmd sur Mac) pour sélectionner plusieurs secteurs.</small>
+                </div>
+                
+                <!-- Section 3: Attentes financières et disponibilité -->
+                <h2 class="form-section-title">Attentes financières et disponibilité</h2>
+                
+                <div class="form-group">
+                    <label class="form-label required">
+                        Quelle est votre fourchette de rémunération annuelle brute ? (en €)
+                    </label>
+                    <div class="row">
+                        <div class="col-6">
+                            <label for="salary-min" class="form-label">Minimum</label>
+                            <input type="number" id="salary-min" class="form-control" min="0" required>
+                        </div>
+                        <div class="col-6">
+                            <label for="salary-max" class="form-label">Maximum</label>
+                            <input type="number" id="salary-max" class="form-control" min="0" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">
+                        Quand recherchez-vous à prendre un poste en main ?
+                    </label>
+                    <div class="radio-options">
+                        <div class="radio-option">
+                            <input type="radio" id="availability-immediate" name="availability" value="immediate">
+                            <label for="availability-immediate" class="option-label">
+                                <i class="fas fa-bolt" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
+                                Immédiatement
+                            </label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="availability-1month" name="availability" value="1month">
+                            <label for="availability-1month" class="option-label">
+                                <i class="fas fa-calendar-alt" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
+                                1 mois
+                            </label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="availability-2months" name="availability" value="2months">
+                            <label for="availability-2months" class="option-label">
+                                <i class="fas fa-calendar-alt" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
+                                2 mois
+                            </label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="availability-3months" name="availability" value="3months">
+                            <label for="availability-3months" class="option-label">
+                                <i class="fas fa-calendar-alt" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
+                                3 mois
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">
+                        Êtes-vous actuellement en poste ?
+                    </label>
+                    <div class="radio-options">
+                        <div class="radio-option">
+                            <input type="radio" id="employed-yes" name="currently-employed" value="yes">
+                            <label for="employed-yes" class="option-label">
+                                <i class="fas fa-check" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
+                                Oui
+                            </label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="employed-no" name="currently-employed" value="no">
+                            <label for="employed-no" class="option-label">
+                                <i class="fas fa-times" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
+                                Non
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Questions pour les candidats en poste -->
+                <div id="employed-questions" style="display: none;">
+                    <div class="form-group">
+                        <label class="form-label">
+                            Pourquoi êtes-vous de nouveau à l'écoute ?
+                        </label>
+                        <div class="radio-options">
+                            <div class="radio-option">
+                                <input type="radio" id="reason-1" name="change-reason" value="discovery">
+                                <label for="reason-1" class="option-label">
+                                    Je ne m'épanouis plus, je souhaite découvrir de nouvelles choses
+                                </label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="reason-2" name="change-reason" value="lackOfEvolution">
+                                <label for="reason-2" class="option-label">
+                                    Manque de perspectives d'évolutions
+                                </label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="reason-3" name="change-reason" value="lowSalary">
+                                <label for="reason-3" class="option-label">
+                                    Rémunération trop faible
+                                </label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="reason-4" name="change-reason" value="farFromHome">
+                                <label for="reason-4" class="option-label">
+                                    Poste trop loin de mon domicile
+                                </label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="reason-5" name="change-reason" value="lackOfFlexibility">
+                                <label for="reason-5" class="option-label">
+                                    Manque de flexibilité (pas de TT, RTT)
+                                </label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="reason-6" name="change-reason" value="internalIssues">
+                                <label for="reason-6" class="option-label">
+                                    Problème en interne (organisation, management)
+                                </label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="reason-7" name="change-reason" value="jobMismatch">
+                                <label for="reason-7" class="option-label">
+                                    Le poste ne coïncide pas avec le poste proposé initialement
+                                </label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="reason-8" name="change-reason" value="pse">
+                                <label for="reason-8" class="option-label">
+                                    PSE
+                                </label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="reason-9" name="change-reason" value="confidential">
+                                <label for="reason-9" class="option-label">
+                                    Je ne souhaite pas communiquer
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="notice-period" class="form-label">
+                            Combien de temps est votre préavis ?
+                        </label>
+                        <select id="notice-period" class="form-select">
+                            <option value="" selected disabled>Choisissez une option</option>
+                            <option value="none">Je n'en ai pas</option>
+                            <option value="trial">Encore en période d'essai</option>
+                            <option value="1month">1 mois</option>
+                            <option value="2months">2 mois</option>
+                            <option value="3months">3 mois</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">
+                            Le préavis est-il négociable ?
+                        </label>
+                        <div class="radio-options">
+                            <div class="radio-option">
+                                <input type="radio" id="negotiable-yes" name="notice-negotiable" value="yes">
+                                <label for="negotiable-yes" class="option-label">
+                                    <i class="fas fa-check" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
+                                    Oui
+                                </label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="negotiable-no" name="notice-negotiable" value="no">
+                                <label for="negotiable-no" class="option-label">
+                                    <i class="fas fa-times" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
+                                    Non
+                                </label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="negotiable-unknown" name="notice-negotiable" value="dontKnow">
+                                <label for="negotiable-unknown" class="option-label">
+                                    <i class="fas fa-question" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
+                                    Je ne sais pas
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">
+                            Où en êtes-vous dans vos process de recrutement ?
+                        </label>
+                        <div class="radio-options">
+                            <div class="radio-option">
+                                <input type="radio" id="process-1" name="recruitment-process" value="none">
+                                <label for="process-1" class="option-label">
+                                    Je n'ai pas encore de piste
+                                </label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="process-2" name="recruitment-process" value="ongoing">
+                                <label for="process-2" class="option-label">
+                                    J'avance sur différents entretiens
+                                </label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="process-3" name="recruitment-process" value="final">
+                                <label for="process-3" class="option-label">
+                                    Je suis en processus final
+                                </label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="process-4" name="recruitment-process" value="offers">
+                                <label for="process-4" class="option-label">
+                                    On m'a fait des propositions
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Questions pour les candidats sans emploi -->
+                <div id="unemployed-questions" style="display: none;">
+                    <div class="form-group">
+                        <label class="form-label">
+                            Où en êtes-vous dans vos process de recrutement ?
+                        </label>
+                        <div class="radio-options">
+                            <div class="radio-option">
+                                <input type="radio" id="unemployed-process-1" name="unemployed-recruitment-process" value="none">
+                                <label for="unemployed-process-1" class="option-label">
+                                    Je n'ai pas encore de piste
+                                </label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="unemployed-process-2" name="unemployed-recruitment-process" value="ongoing">
+                                <label for="unemployed-process-2" class="option-label">
+                                    J'avance sur différents entretiens
+                                </label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="unemployed-process-3" name="unemployed-recruitment-process" value="final">
+                                <label for="unemployed-process-3" class="option-label">
+                                    Je suis en processus final
+                                </label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="unemployed-process-4" name="unemployed-recruitment-process" value="offers">
+                                <label for="unemployed-process-4" class="option-label">
+                                    On m'a fait des propositions
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">
+                            Pourquoi votre dernier contrat s'est arrêté ?
+                        </label>
+                        <div class="radio-options">
+                            <div class="radio-option">
+                                <input type="radio" id="end-reason-1" name="end-contract-reason" value="discovery">
+                                <label for="end-reason-1" class="option-label">
+                                    Je ne m'épanouissais plus, je souhaitais découvrir de nouvelles choses
+                                </label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="end-reason-2" name="end-contract-reason" value="lackOfEvolution">
+                                <label for="end-reason-2" class="option-label">
+                                    Manque de perspectives d'évolutions
+                                </label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="end-reason-3" name="end-contract-reason" value="lowSalary">
+                                <label for="end-reason-3" class="option-label">
+                                    Rémunération trop faible
+                                </label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="end-reason-4" name="end-contract-reason" value="farFromHome">
+                                <label for="end-reason-4" class="option-label">
+                                    Poste trop loin de mon domicile
+                                </label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="end-reason-5" name="end-contract-reason" value="lackOfFlexibility">
+                                <label for="end-reason-5" class="option-label">
+                                    Manque de flexibilité (pas de TT, RTT)
+                                </label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="end-reason-6" name="end-contract-reason" value="internalIssues">
+                                <label for="end-reason-6" class="option-label">
+                                    Problème en interne (organisation, management)
+                                </label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="end-reason-7" name="end-contract-reason" value="jobMismatch">
+                                <label for="end-reason-7" class="option-label">
+                                    Le poste ne coïncidait pas avec le poste proposé initialement
+                                </label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="end-reason-8" name="end-contract-reason" value="pse">
+                                <label for="end-reason-8" class="option-label">
+                                    PSE
+                                </label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="end-reason-9" name="end-contract-reason" value="confidential">
+                                <label for="end-reason-9" class="option-label">
+                                    Je ne souhaite pas communiquer
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="form-actions">
-                    <button type="button" class="btn btn-outline">Retour</button>
-                    <button type="button" class="btn btn-primary">Suivant</button>
+                    <button type="button" class="btn btn-outline" id="backBtn">Retour</button>
+                    <button type="submit" class="btn btn-primary" id="nextBtn">Suivant</button>
                 </div>
             </form>
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script>
-        // Simple script to handle hover effects and interactions
+        // Liste de suggestions de postes
+        const jobSuggestions = [
+            "Développeur Web", "Développeur Front-end", "Développeur Back-end", "Développeur Full-stack",
+            "Chef de projet IT", "Data Scientist", "Data Analyst", "Business Analyst", "UX/UI Designer",
+            "Product Owner", "Scrum Master", "DevOps Engineer", "System Administrator", "Network Engineer",
+            "Security Engineer", "QA Engineer", "Technical Writer", "IT Support Specialist", "Database Administrator",
+            "Machine Learning Engineer", "Cloud Architect", "Mobile Developer", "Game Developer", "Blockchain Developer",
+            "Comptable", "Contrôleur de gestion", "Auditeur", "Responsable financier", "Consultant financier",
+            "Analyste financier", "Gestionnaire de paie", "Trésorier", "Responsable commercial", "Commercial B2B",
+            "Commercial B2C", "Responsable grands comptes", "Business Developer", "Chargé de clientèle",
+            "Responsable d'agence", "Conseiller bancaire", "Courtier", "Responsable communication",
+            "Chargé de communication", "Community Manager", "Responsable marketing", "Chef de produit",
+            "Chef de marque", "Responsable CRM", "Social Media Manager", "Responsable SEO/SEA"
+        ];
+
+        // Variables pour stocker les données
+        let selectedJobs = [];
+
         document.addEventListener('DOMContentLoaded', function() {
-            const infoIcons = document.querySelectorAll('.info-icon');
-            
-            infoIcons.forEach(icon => {
-                icon.addEventListener('mouseover', function() {
-                    // You could implement tooltips here
+            // Initialiser les suggestions de postes
+            const datalist = document.getElementById('jobSuggestions');
+            jobSuggestions.forEach(job => {
+                const option = document.createElement('option');
+                option.value = job;
+                datalist.appendChild(option);
+            });
+
+            // Rendre les éléments de motivation triables
+            if (typeof $.fn.sortable !== 'undefined') {
+                $("#motivationFactors").sortable({
+                    handle: ".drag-handle",
+                    axis: "y",
+                    containment: "parent",
+                    tolerance: "pointer"
+                });
+            }
+
+            // Gérer l'ajout de postes
+            const jobInput = document.getElementById('job-title');
+            jobInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    addJob();
+                }
+            });
+
+            // Affichage conditionnel pour les préférences de secteur
+            document.querySelectorAll('input[name="sector-preference"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    const showSectorPreferences = document.getElementById('sector-yes').checked;
+                    document.getElementById('sector-preferences').style.display = showSectorPreferences ? 'block' : 'none';
                 });
             });
-            
-            const nextButton = document.querySelector('.btn-primary');
-            nextButton.addEventListener('click', function() {
-                // Here you would handle form validation and step navigation
-                alert('Formulaire soumis avec succès! (Naviguerait vers l\'étape suivante)');
+
+            // Affichage conditionnel pour les secteurs à éviter
+            document.querySelectorAll('input[name="unwanted-sectors"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    const showUnwantedSectors = document.getElementById('unwanted-yes').checked;
+                    document.getElementById('unwanted-sector-list').style.display = showUnwantedSectors ? 'block' : 'none';
+                });
             });
-            
-            // Add click handler for radio options
+
+            // Affichage conditionnel pour le statut d'emploi
+            document.querySelectorAll('input[name="currently-employed"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    const isEmployed = document.getElementById('employed-yes').checked;
+                    document.getElementById('employed-questions').style.display = isEmployed ? 'block' : 'none';
+                    document.getElementById('unemployed-questions').style.display = isEmployed ? 'none' : 'block';
+                });
+            });
+
+            // Gestion des options de structure d'entreprise
+            document.getElementById('company-any').addEventListener('change', function() {
+                const isNoPreference = this.checked;
+                document.querySelectorAll('.company-type').forEach(checkbox => {
+                    checkbox.disabled = isNoPreference;
+                    if (isNoPreference) checkbox.checked = false;
+                });
+            });
+
+            // Gérer les événements de clic pour les options radio
             document.querySelectorAll('.radio-option').forEach(option => {
                 option.addEventListener('click', function() {
                     const radio = this.querySelector('input[type="radio"]');
-                    radio.checked = true;
-                    
-                    // Update visual selection
-                    document.querySelectorAll('.radio-option').forEach(opt => {
-                        opt.style.backgroundColor = '';
-                        opt.style.borderColor = '#e2e8f0';
-                    });
-                    
-                    this.style.backgroundColor = 'var(--primary-light)';
-                    this.style.borderColor = 'var(--primary-color)';
+                    if (radio) {
+                        radio.checked = true;
+                        
+                        // Mettre à jour le style de l'option sélectionnée
+                        const optionGroup = document.querySelectorAll(`input[name="${radio.name}"]`);
+                        optionGroup.forEach(input => {
+                            const parentOption = input.closest('.radio-option');
+                            if (parentOption) {
+                                if (input.checked) {
+                                    parentOption.style.backgroundColor = 'var(--primary-light)';
+                                    parentOption.style.borderColor = 'var(--primary-color)';
+                                } else {
+                                    parentOption.style.backgroundColor = '';
+                                    parentOption.style.borderColor = '#e2e8f0';
+                                }
+                            }
+                        });
+                    }
                 });
             });
+
+            // Gérer les événements de clic pour les options checkbox
+            document.querySelectorAll('.checkbox-option').forEach(option => {
+                option.addEventListener('click', function(e) {
+                    if (e.target.tagName !== 'INPUT') {
+                        const checkbox = this.querySelector('input[type="checkbox"]');
+                        checkbox.checked = !checkbox.checked;
+                    }
+                    
+                    // Mettre à jour le style
+                    const checkbox = this.querySelector('input[type="checkbox"]');
+                    if (checkbox.checked) {
+                        this.style.backgroundColor = 'var(--primary-light)';
+                        this.style.borderColor = 'var(--primary-color)';
+                    } else {
+                        this.style.backgroundColor = '';
+                        this.style.borderColor = '#e2e8f0';
+                    }
+                    
+                    // Gérer l'état "Ça n'a pas d'importance pour moi" pour les types d'entreprise
+                    if (checkbox.id === 'company-any') {
+                        const isNoPreference = checkbox.checked;
+                        document.querySelectorAll('.company-type').forEach(cb => {
+                            cb.disabled = isNoPreference;
+                            if (isNoPreference) {
+                                cb.checked = false;
+                                const parentOption = cb.closest('.checkbox-option');
+                                if (parentOption) {
+                                    parentOption.style.backgroundColor = '';
+                                    parentOption.style.borderColor = '#e2e8f0';
+                                }
+                            }
+                        });
+                    }
+                });
+            });
+
+            // Gestion du formulaire
+            document.getElementById('candidateForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Validation du formulaire
+                if (!validateForm()) {
+                    return;
+                }
+                
+                // Collecte des données
+                const formData = collectFormData();
+                
+                // Envoi des données ou transition vers la page suivante
+                console.log("Données du formulaire :", formData);
+                alert("Formulaire validé ! Redirection vers la page de matching...");
+                // window.location.href = 'candidate-matching.html';
+            });
+
+            // Bouton Retour
+            document.getElementById('backBtn').addEventListener('click', function() {
+                window.location.href = 'candidate-upload.html';
+            });
         });
+
+        // Fonction pour ajouter un poste à la liste
+        function addJob() {
+            const jobInput = document.getElementById('job-title');
+            const jobTitle = jobInput.value.trim();
+            
+            if (jobTitle && !selectedJobs.includes(jobTitle)) {
+                selectedJobs.push(jobTitle);
+                updateJobsDisplay();
+                jobInput.value = '';
+            }
+        }
+
+        // Fonction pour mettre à jour l'affichage des postes sélectionnés
+        function updateJobsDisplay() {
+            const container = document.getElementById('selectedJobs');
+            container.innerHTML = '';
+            
+            selectedJobs.forEach((job, index) => {
+                const badge = document.createElement('div');
+                badge.className = 'job-badge';
+                badge.innerHTML = `
+                    ${job}
+                    <span class="remove-job" data-index="${index}">
+                        <i class="fas fa-times-circle"></i>
+                    </span>
+                `;
+                container.appendChild(badge);
+            });
+            
+            // Ajouter les événements pour supprimer les postes
+            document.querySelectorAll('.remove-job').forEach(button => {
+                button.addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    selectedJobs.splice(index, 1);
+                    updateJobsDisplay();
+                });
+            });
+        }
+
+        // Fonction pour valider le formulaire
+        function validateForm() {
+            // Valider les champs requis
+            const requiredFields = document.querySelectorAll('[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!field.value) {
+                    field.classList.add('is-invalid');
+                    isValid = false;
+                } else {
+                    field.classList.remove('is-invalid');
+                }
+            });
+            
+            // Valider les postes sélectionnés
+            if (selectedJobs.length === 0) {
+                document.getElementById('job-title').classList.add('is-invalid');
+                isValid = false;
+            }
+            
+            // Valider au moins un mode de transport sélectionné
+            const transportModes = document.querySelectorAll('input[name="transport-mode"]:checked');
+            if (transportModes.length === 0) {
+                isValid = false;
+                alert("Veuillez sélectionner au moins un mode de transport.");
+            }
+            
+            // Valider la fourchette de salaire
+            const salaryMin = parseInt(document.getElementById('salary-min').value);
+            const salaryMax = parseInt(document.getElementById('salary-max').value);
+            if (salaryMin >= salaryMax) {
+                document.getElementById('salary-max').classList.add('is-invalid');
+                isValid = false;
+                alert("La rémunération maximum doit être supérieure à la rémunération minimum.");
+            }
+            
+            return isValid;
+        }
+
+        // Fonction pour collecter toutes les données du formulaire
+        function collectFormData() {
+            // Récupérer les motivations dans l'ordre
+            const motivations = Array.from(document.querySelectorAll('#motivationFactors .sortable-item')).map(item => {
+                const factor = item.dataset.value;
+                return {
+                    factor,
+                    value: factor === 'other' ? document.getElementById('otherMotivation').value : item.querySelector('span').textContent.trim()
+                };
+            });
+            
+            // Récupérer les types d'entreprise sélectionnés
+            let companyTypes = [];
+            if (document.getElementById('company-any').checked) {
+                companyTypes = ['noPreference'];
+            } else {
+                companyTypes = Array.from(document.querySelectorAll('.company-type:checked')).map(checkbox => checkbox.value);
+            }
+            
+            // Récupérer les secteurs préférés et évités
+            let preferredSectors = [];
+            let unwantedSectors = [];
+            
+            if (document.getElementById('sector-yes').checked) {
+                preferredSectors = Array.from(document.getElementById('preferred-sectors').selectedOptions).map(option => option.value);
+                
+                if (document.getElementById('unwanted-yes').checked) {
+                    unwantedSectors = Array.from(document.getElementById('unwanted-sectors-select').selectedOptions).map(option => option.value);
+                }
+            }
+            
+            // Créer l'objet de données
+            const formData = {
+                personalInfo: {
+                    fullName: document.getElementById('fullname').value
+                },
+                jobTitles: selectedJobs,
+                mobility: {
+                    commuteTime: document.querySelector('input[name="commute-time"]:checked')?.value,
+                    transportModes: Array.from(document.querySelectorAll('input[name="transport-mode"]:checked')).map(checkbox => checkbox.value),
+                    address: document.getElementById('address').value
+                },
+                preferences: {
+                    motivations,
+                    companyTypes,
+                    workEnvironment: document.querySelector('input[name="work-environment"]:checked')?.value,
+                    sectorPreferences: {
+                        hasSectorPreference: document.getElementById('sector-yes').checked,
+                        preferredSectors,
+                        unwantedSectors
+                    }
+                },
+                expectations: {
+                    salary: {
+                        min: document.getElementById('salary-min').value,
+                        max: document.getElementById('salary-max').value
+                    },
+                    availability: document.querySelector('input[name="availability"]:checked')?.value
+                },
+                employmentStatus: {
+                    isEmployed: document.getElementById('employed-yes').checked
+                }
+            };
+            
+            // Ajouter les détails spécifiques selon le statut d'emploi
+            if (formData.employmentStatus.isEmployed) {
+                formData.employmentStatus.details = {
+                    changeReason: document.querySelector('input[name="change-reason"]:checked')?.value,
+                    noticePeriod: document.getElementById('notice-period').value,
+                    noticeNegotiable: document.querySelector('input[name="notice-negotiable"]:checked')?.value,
+                    recruitmentProgress: document.querySelector('input[name="recruitment-process"]:checked')?.value
+                };
+            } else {
+                formData.employmentStatus.details = {
+                    endContractReason: document.querySelector('input[name="end-contract-reason"]:checked')?.value,
+                    recruitmentProgress: document.querySelector('input[name="unemployed-recruitment-process"]:checked')?.value
+                };
+            }
+            
+            return formData;
+        }
     </script>
 </body>
 </html>
