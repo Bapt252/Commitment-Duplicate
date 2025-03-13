@@ -16,6 +16,324 @@
     
     <!-- Favicon -->
     <link rel="shortcut icon" href="../static/images/favicon.ico" type="image/x-icon">
+    
+    <!-- Style spécifique pour la messagerie -->
+    <style>
+        /* MESSAGERIE */
+        .messaging-container {
+            display: flex;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            background-color: var(--white);
+            height: 600px;
+        }
+        
+        .conversation-list {
+            width: 350px;
+            border-right: 1px solid var(--cream-dark);
+            background-color: var(--white);
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .conversation-filters {
+            padding: 15px;
+            border-bottom: 1px solid var(--cream-dark);
+            background-color: var(--white);
+        }
+        
+        .filter-buttons {
+            display: flex;
+            margin-bottom: 10px;
+            margin-top: 10px;
+            gap: 10px;
+        }
+        
+        .filter-button {
+            padding: 8px 12px;
+            border: none;
+            background: none;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.2s;
+        }
+        
+        .filter-button.active {
+            background-color: var(--purple);
+            color: white;
+        }
+        
+        .conversation-row {
+            padding: 15px;
+            border-bottom: 1px solid var(--cream-dark);
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .conversation-row:hover {
+            background-color: var(--cream-light);
+        }
+        
+        .conversation-row.active {
+            background-color: var(--cream);
+        }
+        
+        .logo-placeholder {
+            width: 50px;
+            height: 50px;
+            background-color: var(--cream);
+            border-radius: 50%;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+            color: var(--gray);
+        }
+        
+        .conversation-details {
+            flex-grow: 1;
+        }
+        
+        .conversation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3px;
+        }
+        
+        .company-name {
+            font-weight: 500;
+            font-size: 16px;
+            margin: 0;
+        }
+        
+        .status-badge {
+            font-size: 0.8rem;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        
+        .status-interview {
+            background-color: rgba(103, 58, 183, 0.1);
+            color: var(--purple);
+        }
+        
+        .status-offer {
+            background-color: rgba(33, 150, 243, 0.1);
+            color: #2196F3;
+        }
+        
+        .job-title {
+            font-size: 14px;
+            margin: 3px 0;
+            font-weight: 400;
+            color: var(--black);
+        }
+        
+        .message-date {
+            font-size: 13px;
+            color: var(--gray);
+            margin: 0;
+        }
+        
+        .status-badge.active {
+            color: #4CAF50;
+            background-color: rgba(76, 175, 80, 0.1);
+        }
+        
+        .status-badge.inactive {
+            color: #f44336;
+            background-color: rgba(244, 67, 54, 0.1);
+        }
+        
+        /* Contenu des messages */
+        .message-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--cream);
+        }
+        
+        .company-header {
+            padding: 20px;
+            background-color: white;
+            border-bottom: 1px solid var(--cream-dark);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .company-header h2 {
+            margin: 0;
+            margin-bottom: 5px;
+            font-size: 1.3rem;
+            font-weight: 500;
+        }
+        
+        .company-subheader {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .messages-container {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .message-bubble {
+            max-width: 70%;
+            padding: 12px 15px;
+            border-radius: 18px;
+            position: relative;
+        }
+        
+        .message-recruiter {
+            align-self: flex-start;
+            background-color: #4A7DFF;
+            color: white;
+            border-bottom-left-radius: 5px;
+        }
+        
+        .message-candidate {
+            align-self: flex-end;
+            background-color: #EDEDED;
+            color: var(--black);
+            border-bottom-right-radius: 5px;
+        }
+        
+        .message-time {
+            font-size: 0.7rem;
+            opacity: 0.7;
+            margin-top: 5px;
+            text-align: right;
+        }
+        
+        .message-input-container {
+            padding: 15px;
+            background-color: white;
+            border-top: 1px solid var(--cream-dark);
+        }
+        
+        .message-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--cream-dark);
+            border-radius: 20px;
+            outline: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            transition: border-color 0.2s;
+            margin-bottom: 10px;
+        }
+        
+        .message-input:focus {
+            border-color: var(--purple);
+        }
+        
+        .ai-suggestions {
+            background-color: white;
+            border: 1px solid var(--cream-dark);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .suggestions-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .suggestions-title {
+            font-weight: 500;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+        
+        .attachment-upload {
+            display: flex;
+            align-items: center;
+            color: var(--gray);
+            font-size: 0.85rem;
+        }
+        
+        .attachment-upload i {
+            margin-right: 5px;
+            font-size: 1.2rem;
+        }
+        
+        .attachment-info {
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-top: 8px;
+        }
+        
+        .attachment-info ul {
+            padding-left: 20px;
+            margin: 5px 0;
+        }
+        
+        /* Styles pour les onglets de filtre */
+        .messaging-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .messaging-tab {
+            background: none;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .messaging-tab i {
+            font-size: 12px;
+        }
+
+        .messaging-tab.active {
+            background-color: var(--purple);
+            color: white;
+        }
+
+        .messaging-tab:not(.active) {
+            background-color: var(--cream);
+            color: var(--black);
+        }
+        
+        @media (max-width: 992px) {
+            .messaging-container {
+                flex-direction: column;
+                height: auto;
+            }
+            
+            .conversation-list {
+                width: 100%;
+                max-height: 400px;
+            }
+            
+            .message-content {
+                min-height: 500px;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Notification bar -->
@@ -56,41 +374,140 @@
         
         <!-- Section Messagerie -->
         <div class="candidate-dashboard-section fade-in">
-            <h2 class="section-heading">Messagerie</h2>
+            <h2 class="section-heading">MESSAGERIE</h2>
             <p class="section-description">Échangez directement avec les recruteurs et restez informé de l'avancement de vos candidatures.</p>
             
             <!-- Onglets de messagerie -->
-            <div class="messaging-tabs" style="margin-bottom: 20px;">
+            <div class="messaging-tabs">
                 <button class="messaging-tab active"><i class="fas fa-inbox"></i> Tous</button>
                 <button class="messaging-tab"><i class="fas fa-spinner"></i> En cours</button>
                 <button class="messaging-tab"><i class="fas fa-check-circle"></i> Répondus</button>
                 <button class="messaging-tab"><i class="fas fa-star"></i> Favoris</button>
             </div>
             
-            <div class="messaging-container" style="background-color: white; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); overflow: hidden;">
-                <!-- Conversation 1 -->
-                <div class="conversation-row fade-in" style="padding: 15px; border-bottom: 1px solid #eee; display: flex; align-items: center;">
-                    <div class="logo-placeholder" style="width: 50px; height: 50px; background-color: #f0f0f0; border-radius: 25px; margin-right: 15px;"></div>
-                    <div style="flex-grow: 1;">
-                        <div style="display: flex; justify-content: space-between;">
-                            <h4 style="margin: 0;">Entreprise Alpha</h4>
-                            <span style="color: var(--purple); font-weight: 500; font-size: 0.8rem; background-color: rgba(103, 58, 183, 0.1); padding: 2px 8px; border-radius: 4px;">Entretien présentiel</span>
+            <div class="messaging-container">
+                <!-- Liste des conversations -->
+                <div class="conversation-list">
+                    <div class="conversation-filters">
+                        <div class="filter-buttons">
+                            <button class="filter-button active">Filtrer</button>
+                            <button class="filter-button">Statut</button>
+                            <button class="filter-button">Date</button>
+                            <button class="filter-button">Offre reçu</button>
                         </div>
-                        <h5 style="margin: 3px 0; font-weight: 500;">Chef de Projet Digital</h5>
-                        <p style="margin: 0; font-size: 0.9rem; color: var(--gray);">Dernier message : 26/02/2025</p>
+                    </div>
+                    
+                    <!-- Conversation 1 -->
+                    <div class="conversation-row active">
+                        <div class="logo-placeholder">
+                            Logo
+                        </div>
+                        <div class="conversation-details">
+                            <div class="conversation-header">
+                                <h4 class="company-name">Entreprise</h4>
+                                <span class="status-badge status-interview">Entretien présentiel</span>
+                            </div>
+                            <p class="job-title">INTITULÉ DE POSTE</p>
+                            <p class="message-date">Date : Message le 26/02/2025</p>
+                            <p class="message-date" style="color: #4CAF50;">POSTE ACTIF</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Conversation 2 -->
+                    <div class="conversation-row">
+                        <div class="logo-placeholder">
+                            Logo
+                        </div>
+                        <div class="conversation-details">
+                            <div class="conversation-header">
+                                <h4 class="company-name">Entreprise</h4>
+                                <span class="status-badge status-offer">Offre reçu</span>
+                            </div>
+                            <p class="job-title">INTITULÉ DE POSTE</p>
+                            <p class="message-date" style="color: #4CAF50;">POSTE ACTIF</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Conversation 3 -->
+                    <div class="conversation-row">
+                        <div class="logo-placeholder">
+                            Logo
+                        </div>
+                        <div class="conversation-details">
+                            <div class="conversation-header">
+                                <h4 class="company-name">Entreprise</h4>
+                            </div>
+                            <p class="job-title">INTITULÉ DE POSTE</p>
+                            <p class="message-date" style="color: #f44336;">POSTE INACTIF</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Conversation 4 -->
+                    <div class="conversation-row">
+                        <div class="logo-placeholder">
+                            Logo
+                        </div>
+                        <div class="conversation-details">
+                            <div class="conversation-header">
+                                <h4 class="company-name">Entreprise</h4>
+                            </div>
+                            <p class="job-title">INTITULÉ DE POSTE</p>
+                            <p class="message-date" style="color: #f44336;">POSTE INACTIF</p>
+                        </div>
                     </div>
                 </div>
                 
-                <!-- Conversation 2 -->
-                <div class="conversation-row fade-in" style="padding: 15px; border-bottom: 1px solid #eee; display: flex; align-items: center;">
-                    <div class="logo-placeholder" style="width: 50px; height: 50px; background-color: #f0f0f0; border-radius: 25px; margin-right: 15px;"></div>
-                    <div style="flex-grow: 1;">
-                        <div style="display: flex; justify-content: space-between;">
-                            <h4 style="margin: 0;">Entreprise Beta</h4>
-                            <span style="color: #2196F3; font-weight: 500; font-size: 0.8rem; background-color: rgba(33, 150, 243, 0.1); padding: 2px 8px; border-radius: 4px;">Offre reçue</span>
+                <!-- Contenu des messages -->
+                <div class="message-content">
+                    <div class="company-header">
+                        <h2>Entreprise</h2>
+                        <span class="company-subheader">Corentin MELON - DRH</span>
+                    </div>
+                    
+                    <div class="messages-container">
+                        <!-- Message du recruteur -->
+                        <div class="message-bubble message-recruiter">
+                            <p>Bonjour,<br>votre candidature nous intéresse</p>
+                            <div class="message-time">14:35</div>
                         </div>
-                        <h5 style="margin: 3px 0; font-weight: 500;">Business Developer</h5>
-                        <p style="margin: 0; font-size: 0.9rem; color: var(--gray);">Actif</p>
+                        
+                        <!-- Réponse du candidat -->
+                        <div class="message-bubble message-candidate">
+                            <p>Super, je suis intéressé !</p>
+                            <div class="message-time">14:40</div>
+                        </div>
+                        
+                        <!-- Autre message du recruteur -->
+                        <div class="message-bubble message-recruiter">
+                            <p>Êtes-vous disponible pour un échange téléphonique ?</p>
+                            <div class="message-time">15:10</div>
+                        </div>
+                        
+                        <!-- Autre réponse du candidat -->
+                        <div class="message-bubble message-candidate">
+                            <p>Appelez moi, demain 15h00 !</p>
+                            <div class="message-time">15:30</div>
+                        </div>
+                    </div>
+                    
+                    <div class="message-input-container">
+                        <div class="ai-suggestions">
+                            <div class="suggestions-header">
+                                <span class="suggestions-title">Réponses suggérées via IA</span>
+                                <span class="attachment-upload">
+                                    <i class="fas fa-paperclip"></i> Joindre un fichier
+                                </span>
+                            </div>
+                            <div class="attachment-info">
+                                Possibilité d'envoie de fichier :
+                                <ul>
+                                    <li>CV personnalisé si besoin</li>
+                                    <li>lettre de recommandation</li>
+                                    <li>prise de référence</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <input type="text" class="message-input" placeholder="Écrivez un message...">
                     </div>
                 </div>
             </div>
@@ -213,6 +630,36 @@
                     });
                     
                     // Activer l'onglet cliqué
+                    this.classList.add('active');
+                });
+            });
+            
+            // Interaction avec les filtres
+            const filterButtons = document.querySelectorAll('.filter-button');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Désactiver tous les boutons
+                    filterButtons.forEach(b => {
+                        b.classList.remove('active');
+                    });
+                    
+                    // Activer le bouton cliqué
+                    this.classList.add('active');
+                });
+            });
+            
+            // Interaction avec les conversations
+            const conversationRows = document.querySelectorAll('.conversation-row');
+            
+            conversationRows.forEach(row => {
+                row.addEventListener('click', function() {
+                    // Désactiver toutes les conversations
+                    conversationRows.forEach(r => {
+                        r.classList.remove('active');
+                    });
+                    
+                    // Activer la conversation cliquée
                     this.classList.add('active');
                 });
             });
