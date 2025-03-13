@@ -3,1452 +3,417 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Questionnaire Client - Commitment</title>
-    <link rel="stylesheet" href="../static/styles/modern.css">
-    <link rel="stylesheet" href="../static/styles/styles.css">
-    <link rel="stylesheet" href="../static/styles/additional.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Commitment - Questionnaire Client</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* Styles améliorés pour le questionnaire */
         :root {
-            --primary-light: rgba(108, 99, 255, 0.1);
-            --primary-lighter: rgba(108, 99, 255, 0.05);
-            --success-light: rgba(16, 185, 129, 0.1);
-            --info-light: rgba(14, 165, 233, 0.1);
-            --warning-light: rgba(245, 158, 11, 0.1);
-            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --primary-color: #7c4dff;
+            --primary-light: #e8e3ff;
+            --gray-light: #f5f5f5;
+            --gray-dark: #666;
+            --text-color: #333;
+            --border-radius: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
         }
 
         body {
-            scroll-behavior: smooth;
+            background-color: #f8f9fa;
+            color: var(--text-color);
+            min-height: 100vh;
         }
 
-        .card {
-            border-radius: 12px;
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
-            transition: var(--transition-smooth);
-        }
-
-        .form-step {
-            opacity: 0;
-            transform: translateY(10px);
-            transition: var(--transition-smooth);
-            animation: fadeIn 0.5s forwards;
-        }
-
-        .form-progress {
-            height: 8px;
-            background-color: #f1f5f9;
-            border-radius: 4px;
-            margin-bottom: 2.5rem;
-            overflow: hidden;
-            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary) 0%, #9f94ff 100%);
-            border-radius: 4px;
-            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 1px 3px rgba(108, 99, 255, 0.3);
-        }
-
-        /* Progress steps enhanced */
-        .progress-steps {
-            margin-bottom: 2.5rem;
+        .header {
             display: flex;
             justify-content: space-between;
-            position: relative;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
         }
 
-        .progress-steps::before {
-            content: '';
-            position: absolute;
-            top: 16px;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background-color: #e2e8f0;
-            z-index: 0;
+        .logo {
+            height: 30px;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .progress-steps .step {
-            position: relative;
-            z-index: 1;
+        .nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color);
+        }
+
+        .profile-btn {
+            background-color: #f5f5f5;
+            color: var(--primary-color);
+            border: none;
+            border-radius: 20px;
+            padding: 0.5rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .profile-btn:hover {
+            background-color: #e8e3ff;
+        }
+
+        .main-content {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
             display: flex;
             flex-direction: column;
             align-items: center;
-            flex: 1;
         }
 
-        .step-circle {
-            width: 34px;
-            height: 34px;
+        .page-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+            text-align: center;
+        }
+
+        .page-subtitle {
+            font-size: 1rem;
+            color: var(--gray-dark);
+            text-align: center;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            line-height: 1.5;
+        }
+
+        .create-account-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            padding: 0.8rem 1.5rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            margin: 1.5rem 0;
+            transition: background-color 0.2s;
+        }
+
+        .create-account-btn:hover {
+            background-color: #6a3de8;
+        }
+
+        .questionnaire-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .stepper {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-bottom: 2.5rem;
+            padding: 0 3rem;
+        }
+
+        .stepper-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            height: 3px;
+            background-color: #e0e0e0;
+            width: 100%;
+            z-index: 1;
+        }
+
+        .stepper-progress {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            height: 3px;
+            background-color: var(--primary-color);
+            width: 33.33%;
+            z-index: 1;
+            transition: width 0.3s;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .step-number {
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
-            background-color: #f1f5f9;
-            border: 2px solid #e2e8f0;
-            color: #64748b;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 600;
-            margin-bottom: 0.8rem;
-            transition: var(--transition-smooth);
-            z-index: 1;
+            margin-bottom: 0.5rem;
+            background-color: white;
+            border: 2px solid #e0e0e0;
+            color: #9e9e9e;
         }
 
-        .step.active .step-circle {
-            background-color: var(--primary);
-            border-color: var(--primary);
-            color: white;
-            box-shadow: 0 0 0 4px rgba(108, 99, 255, 0.2);
-            transform: scale(1.1);
-        }
-
-        .step.completed .step-circle {
-            background-color: var(--success);
-            border-color: var(--success);
+        .step.active .step-number {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
             color: white;
         }
 
-        .step-text {
-            font-size: 0.9rem;
+        .step.completed .step-number {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+        }
+
+        .step-label {
+            font-size: 0.875rem;
+            color: var(--gray-dark);
+            margin-top: 0.25rem;
+        }
+
+        .step.active .step-label {
+            color: var(--primary-color);
             font-weight: 500;
-            color: #64748b;
-            transition: var(--transition-smooth);
         }
 
-        .step.active .step-text {
-            color: var(--primary);
-            font-weight: 600;
+        .form-section-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid #eee;
         }
 
-        .step.completed .step-text {
-            color: var(--success);
-        }
-
-        /* Form elements enhanced */
         .form-group {
-            margin-bottom: 1.8rem;
+            margin-bottom: 1.5rem;
         }
 
         .form-label {
             display: block;
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.5rem;
             font-weight: 500;
-            color: #334155;
-            font-size: 0.95rem;
-            position: relative;
+            display: flex;
+            align-items: center;
         }
 
-        .required-star {
-            color: var(--primary);
-            margin-left: 0.2rem;
+        .required::after {
+            content: '*';
+            color: var(--primary-color);
+            margin-left: 0.25rem;
+        }
+
+        .info-icon {
+            margin-left: 0.5rem;
+            color: #bbb;
+            cursor: help;
         }
 
         .form-control {
             width: 100%;
-            padding: 12px 16px;
-            border: 1.5px solid #e2e8f0;
-            border-radius: 8px;
-            background-color: #fff;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            transition: border 0.2s;
             font-size: 1rem;
-            transition: var(--transition-smooth);
-            color: #1e293b;
         }
 
         .form-control:focus {
-            border-color: var(--primary);
             outline: none;
-            box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1);
+            border-color: var(--primary-color);
         }
 
-        .form-control.is-invalid {
-            border-color: #ef4444;
-            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+        textarea.form-control {
+            min-height: 100px;
+            resize: vertical;
         }
 
-        .validation-message {
-            font-size: 0.85rem;
-            margin-top: 0.5rem;
-            display: none;
-            align-items: center;
-        }
-
-        .validation-message.error {
-            color: #ef4444;
-            display: flex;
-        }
-
-        .validation-message.success {
-            color: var(--success);
-            display: flex;
-        }
-
-        .validation-message i {
-            margin-right: 0.4rem;
-        }
-
-        /* Radio and checkbox options enhanced */
-        .radio-options, .checkbox-options {
-            display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
-        }
-
-        .radio-option, .checkbox-option {
-            display: flex;
-            align-items: flex-start;
-            padding: 1rem 1.2rem;
-            border: 1.5px solid #e2e8f0;
-            border-radius: 8px;
-            margin-bottom: 0.2rem;
-            cursor: pointer;
-            transition: var(--transition-smooth);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .radio-option:hover, .checkbox-option:hover {
-            background-color: var(--primary-lighter);
-            border-color: #cbd5e1;
-            transform: translateY(-1px);
-        }
-
-        .radio-option.selected, .checkbox-option.selected {
-            background-color: var(--primary-light);
-            border: 1.5px solid var(--primary);
-            box-shadow: 0 1px 3px rgba(108, 99, 255, 0.1);
-        }
-
-        .radio-option input[type="radio"], .checkbox-option input[type="checkbox"] {
-            margin-right: 1rem;
-            margin-top: 0.25rem;
-            cursor: pointer;
-            width: 18px;
-            height: 18px;
-            accent-color: var(--primary);
-        }
-
-        .option-label {
-            font-weight: 500;
-            color: #334155;
-            cursor: pointer;
-            flex: 1;
-        }
-
-        /* Info cards enhanced */
-        .info-card {
-            padding: 1.5rem;
-            border-radius: 10px;
-            border-left: 4px solid;
-            margin-bottom: 2rem;
-            transition: var(--transition-smooth);
-        }
-
-        .info-card.info {
-            background-color: var(--info-light);
-            border-left-color: #0ea5e9;
-        }
-
-        .info-card.success {
-            background-color: var(--success-light);
-            border-left-color: var(--success);
-        }
-
-        .info-card.warning {
-            background-color: var(--warning-light);
-            border-left-color: #f59e0b;
-        }
-
-        /* Section dividers */
-        .section-divider {
-            margin: 2.5rem 0;
-            border-top: 1px solid #e2e8f0;
-            position: relative;
-        }
-
-        .section-divider::before {
-            content: attr(data-content);
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: white;
-            padding: 0 1rem;
-            color: #64748b;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        /* Conditional fields */
-        .conditional-field {
-            margin-top: 1.5rem;
-            padding-left: 1.5rem;
-            border-left: 2px solid #e2e8f0;
-            animation: fadeIn 0.5s forwards;
-        }
-
-        /* Navigation buttons enhanced */
-        .navigation-buttons {
+        .form-actions {
             display: flex;
             justify-content: space-between;
-            margin-top: 2.5rem;
-            gap: 1rem;
+            margin-top: 2rem;
         }
 
         .btn {
-            padding: 0.8rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition-smooth);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
+            padding: 0.75rem 1.5rem;
             border: none;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
         }
 
         .btn-primary {
-            background-color: var(--primary);
+            background-color: var(--primary-color);
             color: white;
         }
 
-        .btn-primary:hover:not(:disabled) {
-            background-color: #5549ff;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(108, 99, 255, 0.2);
+        .btn-primary:hover {
+            background-color: #6a3de8;
         }
 
-        .btn-primary:active:not(:disabled) {
-            transform: translateY(0);
-            box-shadow: 0 1px 3px rgba(108, 99, 255, 0.2);
+        .btn-outline {
+            background-color: white;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
         }
 
-        .btn-secondary {
-            background-color: #f1f5f9;
-            color: #64748b;
+        .btn-outline:hover {
+            background-color: var(--primary-light);
         }
 
-        .btn-secondary:hover:not(:disabled) {
-            background-color: #e2e8f0;
-            color: #1e293b;
-        }
-
-        .btn-secondary:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .btn-lg {
-            padding: 1rem 1.8rem;
-            font-size: 1.1rem;
-        }
-
-        /* Loading spinner */
-        .loading-spinner {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: spin 1s ease-in-out infinite;
-            margin-right: 0.8rem;
-        }
-
-        /* Tooltip styles */
-        .tooltip-container {
-            position: relative;
-            display: inline-block;
-            margin-left: 0.4rem;
-        }
-
-        .tooltip-icon {
-            color: #94a3b8;
-            cursor: pointer;
-            transition: var(--transition-smooth);
-        }
-
-        .tooltip-icon:hover {
-            color: var(--primary);
-        }
-
-        .tooltip-text {
-            position: absolute;
-            top: -5px;
-            left: 24px;
-            transform: translateY(-100%);
-            background-color: #1e293b;
-            color: white;
-            padding: 0.7rem 1rem;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            font-weight: 400;
-            width: 220px;
-            opacity: 0;
-            visibility: hidden;
-            transition: var(--transition-smooth);
-            z-index: 10;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        .tooltip-container:hover .tooltip-text {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .tooltip-text::after {
-            content: "";
-            position: absolute;
-            top: 75%;
-            left: -5px;
-            border-width: 5px;
-            border-style: solid;
-            border-color: transparent #1e293b transparent transparent;
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        /* Responsive adjustments */
         @media (max-width: 768px) {
-            .card {
-                padding: 1.5rem !important;
+            .header {
+                padding: 1rem;
             }
-
-            .navigation-buttons {
-                flex-direction: column-reverse;
+            
+            .stepper {
+                padding: 0 1rem;
             }
-
+            
+            .questionnaire-card {
+                padding: 1.5rem;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
             .btn {
                 width: 100%;
             }
-
-            .progress-steps .step-text {
-                font-size: 0.75rem;
-            }
-
-            .radio-option, .checkbox-option {
-                padding: 0.8rem;
-            }
-        }
-        
-        /* Highlighted question */
-        .highlighted-question {
-            background-color: var(--primary-lighter);
-            border-radius: 10px;
-            padding: 1.5rem;
-            border-left: 4px solid var(--primary);
-            margin-bottom: 2rem;
-            box-shadow: 0 2px 10px rgba(108, 99, 255, 0.1);
-        }
-        
-        .highlighted-question h4 {
-            color: var(--primary);
-            font-weight: 600;
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-        }
-        
-        /* Success modal */
-        .success-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: var(--transition-smooth);
-        }
-        
-        .success-modal.show {
-            opacity: 1;
-            visibility: visible;
-        }
-        
-        .modal-content {
-            background-color: white;
-            border-radius: 10px;
-            padding: 2rem;
-            width: 90%;
-            max-width: 500px;
-            text-align: center;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            transform: translateY(20px);
-            transition: transform 0.3s ease-out;
-        }
-        
-        .success-modal.show .modal-content {
-            transform: translateY(0);
-        }
-        
-        .success-icon {
-            font-size: 4rem;
-            color: var(--success);
-            margin-bottom: 1.5rem;
-        }
-        
-        .modal-actions {
-            margin-top: 2rem;
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
         }
     </style>
 </head>
 <body>
-    <header class="site-header">
-        <div class="container header-container">
-            <a href="index.html" class="logo">
-                <img src="../static/images/logo.svg" alt="Commitment Logo">
-            </a>
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="index.html">Accueil</a></li>
-                    <li><a href="recruiter-dashboard.html">Tableau de bord</a></li>
-                    <li><a href="post-job.html">Publier une offre</a></li>
-                    <li><a href="recruiter-matches.html">Correspondances</a></li>
-                </ul>
-            </nav>
-            <div class="header-actions">
-                <a href="recruiter-dashboard.html" class="user-profile">
-                    <i class="fas fa-user-circle"></i>
-                    <span>Mon profil</span>
-                </a>
-            </div>
-        </div>
+    <header class="header">
+        <img src="../assets/logo.svg" alt="Commitment Logo" class="logo">
+        
+        <nav class="nav">
+            <a href="index.html" class="nav-link">Accueil</a>
+            <button class="profile-btn">
+                <i class="fas fa-user"></i>
+                Mon profil
+            </button>
+        </nav>
     </header>
 
-    <section style="padding: 4rem 0; background-color: #f8fafc;">
-        <div class="container">
-            <div style="text-align: center; margin-bottom: 3rem;">
-                <span class="badge badge-ai" style="padding: 0.6rem 1rem; border-radius: 20px; background: linear-gradient(135deg, var(--primary) 0%, #9f94ff 100%); color: white; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 2px 5px rgba(108, 99, 255, 0.3);">
-                    <i class="fas fa-building"></i> Création de compte entreprise
-                </span>
-                <h2 style="font-size: 2.2rem; font-weight: 700; color: var(--dark); margin-top: 1.2rem; margin-bottom: 0.8rem;">
-                    Questionnaire Client
-                </h2>
-                <p style="color: #64748b; font-size: 1.1rem; max-width: 700px; margin: 0 auto; line-height: 1.6;">
-                    Créez votre profil entreprise et précisez vos besoins en recrutement pour accéder à notre plateforme.
-                </p>
-            </div>
-
-            <div class="card" style="max-width: 900px; margin: 0 auto; padding: 3rem;">
-                <div class="progress-steps">
-                    <div class="step active" data-step="1">
-                        <div class="step-circle">1</div>
-                        <div class="step-text">Informations entreprise</div>
-                    </div>
-                    <div class="step" data-step="2">
-                        <div class="step-circle">2</div>
-                        <div class="step-text">Besoins en recrutement</div>
-                    </div>
-                    <div class="step" data-step="3">
-                        <div class="step-circle">3</div>
-                        <div class="step-text">Détails du poste</div>
-                    </div>
+    <div class="main-content">
+        <h1 class="page-title">Questionnaire Client</h1>
+        <p class="page-subtitle">Créez votre profil entreprise et précisez vos besoins en recrutement pour accéder à notre plateforme.</p>
+        
+        <button class="create-account-btn">
+            <i class="fas fa-building"></i>
+            Création de compte entreprise
+        </button>
+        
+        <div class="questionnaire-card">
+            <div class="stepper">
+                <div class="stepper-line"></div>
+                <div class="stepper-progress"></div>
+                
+                <div class="step active">
+                    <div class="step-number">1</div>
+                    <div class="step-label">Informations entreprise</div>
                 </div>
-
-                <div class="form-progress">
-                    <div class="progress-bar" style="width: 33%"></div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-label">Besoins en recrutement</div>
                 </div>
-
-                <form id="client-form">
-                    <!-- Étape 1: Informations sur la structure -->
-                    <div class="form-step" id="step-1">
-                        <h3 style="font-size: 1.5rem; margin-bottom: 1.8rem; color: #1e293b; font-weight: 600;">
-                            Informations sur votre entreprise
-                        </h3>
-                        
-                        <div class="form-group">
-                            <label for="company-name" class="form-label">
-                                Nom de la structure <span class="required-star">*</span>
-                            </label>
-                            <input type="text" id="company-name" name="company-name" class="form-control" required data-validation="text">
-                            <div class="validation-message" id="company-name-validation"></div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="company-address" class="form-label">
-                                Adresse complète <span class="required-star">*</span>
-                            </label>
-                            <textarea id="company-address" name="company-address" class="form-control" rows="3" required data-validation="text"></textarea>
-                            <div class="validation-message" id="company-address-validation"></div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="company-website" class="form-label">
-                                Site internet
-                                <div class="tooltip-container">
-                                    <i class="fas fa-info-circle tooltip-icon"></i>
-                                    <span class="tooltip-text">Nous pourrons extraire des informations de votre site web pour faciliter votre présentation.</span>
-                                </div>
-                            </label>
-                            <input type="url" id="company-website" name="company-website" class="form-control" placeholder="https://www.votre-site.com">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="company-description" class="form-label">
-                                Présentation rapide
-                                <div class="tooltip-container">
-                                    <i class="fas fa-info-circle tooltip-icon"></i>
-                                    <span class="tooltip-text">Notre IA peut générer une présentation à partir de votre site web, ou vous pouvez rédiger votre propre présentation.</span>
-                                </div>
-                            </label>
-                            <textarea id="company-description" name="company-description" class="form-control" rows="4" placeholder="Décrivez brièvement votre entreprise, son secteur d'activité et sa mission..."></textarea>
-                            <div class="auto-generate-container" style="display: flex; align-items: center; margin-top: 0.8rem;">
-                                <button type="button" id="auto-generate-btn" class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">
-                                    <i class="fas fa-magic" style="margin-right: 0.5rem;"></i> Générer automatiquement
-                                </button>
-                                <span style="margin-left: 1rem; font-size: 0.85rem; color: #64748b;">À partir du site web</span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="company-size" class="form-label">
-                                Taille de structure <span class="required-star">*</span>
-                            </label>
-                            <select id="company-size" name="company-size" class="form-control" required>
-                                <option value="">Sélectionnez</option>
-                                <option value="tpe">TPE (moins de 10 salariés)</option>
-                                <option value="pme">PME (10 à 249 salariés)</option>
-                                <option value="eti">ETI (250 à 4999 salariés)</option>
-                                <option value="group">Groupe (5000 salariés et plus)</option>
-                                <option value="startup">Startup</option>
-                                <option value="association">Association</option>
-                                <option value="other">Autre</option>
-                            </select>
-                            <div class="validation-message" id="company-size-validation"></div>
-                        </div>
-
-                        <div class="highlighted-question">
-                            <h4><i class="fas fa-question-circle" style="margin-right: 0.5rem;"></i> Avez-vous un poste sur lequel vous souhaitez recruter ?</h4>
-                            <div class="radio-options">
-                                <div class="radio-option">
-                                    <input type="radio" id="recruitment-need-yes" name="recruitment-need" value="yes" required>
-                                    <label for="recruitment-need-yes" class="option-label">Oui</label>
-                                </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="recruitment-need-no" name="recruitment-need" value="no" required>
-                                    <label for="recruitment-need-no" class="option-label">Non, je souhaite seulement créer mon profil entreprise</label>
-                                </div>
-                            </div>
-                            <div class="validation-message" id="recruitment-need-validation"></div>
-                        </div>
-                    </div>
-
-                    <!-- Étape 2: Besoins en recrutement -->
-                    <div class="form-step" id="step-2" style="display: none;">
-                        <h3 style="font-size: 1.5rem; margin-bottom: 1.8rem; color: #1e293b; font-weight: 600;">
-                            Besoins en recrutement
-                        </h3>
-                        
-                        <div class="info-card info" style="margin-bottom: 2rem;">
-                            <div style="display: flex; align-items: flex-start;">
-                                <i class="fas fa-info-circle" style="color: #0ea5e9; margin-right: 1rem; margin-top: 0.2rem; font-size: 1.2rem;"></i>
-                                <div>
-                                    <p style="color: #64748b; line-height: 1.6; margin: 0;">
-                                        Ces informations nous permettront de comprendre vos besoins immédiats en recrutement.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="job-title" class="form-label">
-                                Intitulé du poste <span class="required-star">*</span>
-                            </label>
-                            <input type="text" id="job-title" name="job-title" class="form-control" required>
-                            <div class="validation-message" id="job-title-validation"></div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label">
-                                Délai de recrutement <span class="required-star">*</span>
-                                <div class="tooltip-container">
-                                    <i class="fas fa-info-circle tooltip-icon"></i>
-                                    <span class="tooltip-text">Vous pouvez sélectionner plusieurs options.</span>
-                                </div>
-                            </label>
-                            <div class="checkbox-options">
-                                <div class="checkbox-option">
-                                    <input type="checkbox" id="delay-immediate" name="recruitment-delay" value="immediate">
-                                    <label for="delay-immediate" class="option-label">Immédiat</label>
-                                </div>
-                                <div class="checkbox-option">
-                                    <input type="checkbox" id="delay-2weeks" name="recruitment-delay" value="2weeks">
-                                    <label for="delay-2weeks" class="option-label">2 semaines</label>
-                                </div>
-                                <div class="checkbox-option">
-                                    <input type="checkbox" id="delay-1month" name="recruitment-delay" value="1month">
-                                    <label for="delay-1month" class="option-label">1 mois</label>
-                                </div>
-                                <div class="checkbox-option">
-                                    <input type="checkbox" id="delay-2months" name="recruitment-delay" value="2months">
-                                    <label for="delay-2months" class="option-label">2 mois</label>
-                                </div>
-                                <div class="checkbox-option">
-                                    <input type="checkbox" id="delay-3months" name="recruitment-delay" value="3months">
-                                    <label for="delay-3months" class="option-label">3 mois</label>
-                                </div>
-                            </div>
-                            <div class="validation-message" id="recruitment-delay-validation"></div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label">
-                                Pouvez-vous gérer un préavis ? <span class="required-star">*</span>
-                            </label>
-                            <div class="radio-options">
-                                <div class="radio-option">
-                                    <input type="radio" id="notice-yes-1month" name="notice-period" value="yes-1month" required>
-                                    <label for="notice-yes-1month" class="option-label">Oui, 1 mois</label>
-                                </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="notice-yes-2months" name="notice-period" value="yes-2months">
-                                    <label for="notice-yes-2months" class="option-label">Oui, 2 mois</label>
-                                </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="notice-yes-3months" name="notice-period" value="yes-3months">
-                                    <label for="notice-yes-3months" class="option-label">Oui, 3 mois</label>
-                                </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="notice-no" name="notice-period" value="no">
-                                    <label for="notice-no" class="option-label">Non</label>
-                                </div>
-                            </div>
-                            <div class="validation-message" id="notice-period-validation"></div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label">
-                                Contexte de recrutement <span class="required-star">*</span>
-                            </label>
-                            <div class="radio-options">
-                                <div class="radio-option">
-                                    <input type="radio" id="context-creation" name="recruitment-context" value="creation" required>
-                                    <label for="context-creation" class="option-label">Création de poste</label>
-                                </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="context-replacement" name="recruitment-context" value="replacement">
-                                    <label for="context-replacement" class="option-label">Remplacement</label>
-                                </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="context-growth" name="recruitment-context" value="growth">
-                                    <label for="context-growth" class="option-label">Accroissement d'activité / Renfort</label>
-                                </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="context-confidential" name="recruitment-context" value="confidential">
-                                    <label for="context-confidential" class="option-label">Je ne souhaite pas communiquer</label>
-                                </div>
-                            </div>
-                            <div class="validation-message" id="recruitment-context-validation"></div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label">
-                                Années d'expérience requises pour le poste <span class="required-star">*</span>
-                            </label>
-                            <div class="radio-options">
-                                <div class="radio-option">
-                                    <input type="radio" id="experience-junior" name="experience-required" value="junior" required>
-                                    <label for="experience-junior" class="option-label">Profil Junior</label>
-                                </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="experience-2-3" name="experience-required" value="2-3years">
-                                    <label for="experience-2-3" class="option-label">2 ans - 3 ans</label>
-                                </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="experience-5-10" name="experience-required" value="5-10years">
-                                    <label for="experience-5-10" class="option-label">5 ans - 10 ans</label>
-                                </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="experience-10plus" name="experience-required" value="10plusyears">
-                                    <label for="experience-10plus" class="option-label">10 ans et plus</label>
-                                </div>
-                            </div>
-                            <div class="validation-message" id="experience-required-validation"></div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label">
-                                La connaissance de votre secteur est-elle obligatoire ? <span class="required-star">*</span>
-                            </label>
-                            <div class="radio-options">
-                                <div class="radio-option">
-                                    <input type="radio" id="sector-knowledge-yes" name="sector-knowledge" value="yes" required>
-                                    <label for="sector-knowledge-yes" class="option-label">Oui</label>
-                                </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="sector-knowledge-no" name="sector-knowledge" value="no">
-                                    <label for="sector-knowledge-no" class="option-label">Non</label>
-                                </div>
-                            </div>
-                            <div class="validation-message" id="sector-knowledge-validation"></div>
-                        </div>
-                        
-                        <div id="sector-container" class="conditional-field" style="display: none;">
-                            <div class="form-group">
-                                <label for="business-sector" class="form-label">
-                                    Secteur d'activité <span class="required-star">*</span>
-                                </label>
-                                <select id="business-sector" name="business-sector" class="form-control">
-                                    <option value="">Sélectionnez un secteur</option>
-                                    <option value="tech">Technologies et informatique</option>
-                                    <option value="finance">Finance et banque</option>
-                                    <option value="healthcare">Santé et médical</option>
-                                    <option value="retail">Commerce et distribution</option>
-                                    <option value="manufacturing">Industrie et fabrication</option>
-                                    <option value="services">Services</option>
-                                    <option value="education">Éducation et formation</option>
-                                    <option value="construction">Construction et immobilier</option>
-                                    <option value="transportation">Transport et logistique</option>
-                                    <option value="energy">Énergie et environnement</option>
-                                    <option value="media">Médias et communication</option>
-                                    <option value="hospitality">Hôtellerie et restauration</option>
-                                    <option value="agriculture">Agriculture et agroalimentaire</option>
-                                    <option value="public">Secteur public</option>
-                                    <option value="other">Autre</option>
-                                </select>
-                                <div class="validation-message" id="business-sector-validation"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Étape 3: Détails du poste -->
-                    <div class="form-step" id="step-3" style="display: none;">
-                        <h3 style="font-size: 1.5rem; margin-bottom: 1.8rem; color: #1e293b; font-weight: 600;">
-                            Détails du poste
-                        </h3>
-                        
-                        <div class="form-group">
-                            <label class="form-label">
-                                Environnement de travail <span class="required-star">*</span>
-                            </label>
-                            <div class="radio-options">
-                                <div class="radio-option">
-                                    <input type="radio" id="environment-openspace" name="work-environment" value="openspace" required>
-                                    <label for="environment-openspace" class="option-label">Open space</label>
-                                </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="environment-office" name="work-environment" value="office">
-                                    <label for="environment-office" class="option-label">Bureau</label>
-                                </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="environment-mixed" name="work-environment" value="mixed">
-                                    <label for="environment-mixed" class="option-label">Mixte</label>
-                                </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="environment-remote" name="work-environment" value="remote">
-                                    <label for="environment-remote" class="option-label">Télétravail</label>
-                                </div>
-                            </div>
-                            <div class="validation-message" id="work-environment-validation"></div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="team-composition" class="form-label">
-                                Composition de l'équipe et rattachement interne
-                                <div class="tooltip-container">
-                                    <i class="fas fa-info-circle tooltip-icon"></i>
-                                    <span class="tooltip-text">Précisions pour donner du contexte au candidat : ex : équipe de 5 personnes, rattaché à un responsable, etc.</span>
-                                </div>
-                            </label>
-                            <textarea id="team-composition" name="team-composition" class="form-control" rows="3" placeholder="Ex: Équipe de 5 personnes, rattaché à la direction générale..."></textarea>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="evolution-prospects" class="form-label">
-                                Perspectives d'évolution
-                            </label>
-                            <textarea id="evolution-prospects" name="evolution-prospects" class="form-control" rows="2" placeholder="Mentionnez les possibilités d'évolution, s'il y en a"></textarea>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="salary-range" class="form-label">
-                                Rémunération <span class="required-star">*</span>
-                                <div class="tooltip-container">
-                                    <i class="fas fa-info-circle tooltip-icon"></i>
-                                    <span class="tooltip-text">Indiquez la fourchette de salaire ou le salaire fixe proposé pour le poste.</span>
-                                </div>
-                            </label>
-                            <input type="text" id="salary-range" name="salary-range" class="form-control" placeholder="Ex: 45-50K€ ou selon profil" required>
-                            <div class="validation-message" id="salary-range-validation"></div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label">
-                                Avantages
-                                <div class="tooltip-container">
-                                    <i class="fas fa-info-circle tooltip-icon"></i>
-                                    <span class="tooltip-text">Sélectionnez les avantages proposés pour ce poste.</span>
-                                </div>
-                            </label>
-                            <div class="checkbox-options">
-                                <div class="checkbox-option">
-                                    <input type="checkbox" id="benefit-remote" name="benefits" value="remote">
-                                    <label for="benefit-remote" class="option-label">Télétravail</label>
-                                </div>
-                                <div class="checkbox-option">
-                                    <input type="checkbox" id="benefit-rtt" name="benefits" value="rtt">
-                                    <label for="benefit-rtt" class="option-label">RTT</label>
-                                </div>
-                                <div class="checkbox-option">
-                                    <input type="checkbox" id="benefit-13month" name="benefits" value="13month">
-                                    <label for="benefit-13month" class="option-label">13ème mois</label>
-                                </div>
-                                <div class="checkbox-option">
-                                    <input type="checkbox" id="benefit-mealvouchers" name="benefits" value="mealvouchers">
-                                    <label for="benefit-mealvouchers" class="option-label">Tickets restaurant</label>
-                                </div>
-                                <div class="checkbox-option">
-                                    <input type="checkbox" id="benefit-health" name="benefits" value="health">
-                                    <label for="benefit-health" class="option-label">Mutuelle</label>
-                                </div>
-                                <div class="checkbox-option">
-                                    <input type="checkbox" id="benefit-transport" name="benefits" value="transport">
-                                    <label for="benefit-transport" class="option-label">Remboursement transport</label>
-                                </div>
-                                <div class="checkbox-option">
-                                    <input type="checkbox" id="benefit-other" name="benefits" value="other">
-                                    <label for="benefit-other" class="option-label">Autre</label>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div id="other-benefits-container" class="conditional-field" style="display: none;">
-                            <div class="form-group">
-                                <label for="other-benefits" class="form-label">
-                                    Précisez les autres avantages
-                                </label>
-                                <textarea id="other-benefits" name="other-benefits" class="form-control" rows="2" placeholder="Décrivez les autres avantages proposés"></textarea>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label">
-                                Type de contrat <span class="required-star">*</span>
-                            </label>
-                            <div class="radio-options">
-                                <div class="radio-option">
-                                    <input type="radio" id="contract-35h" name="contract-type" value="35h" required>
-                                    <label for="contract-35h" class="option-label">35h</label>
-                                </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="contract-39h" name="contract-type" value="39h">
-                                    <label for="contract-39h" class="option-label">39h</label>
-                                </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="contract-other" name="contract-type" value="other">
-                                    <label for="contract-other" class="option-label">Autre</label>
-                                </div>
-                            </div>
-                            <div class="validation-message" id="contract-type-validation"></div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label">
-                                Statut <span class="required-star">*</span>
-                            </label>
-                            <div class="radio-options">
-                                <div class="radio-option">
-                                    <input type="radio" id="status-cadre" name="status" value="cadre" required>
-                                    <label for="status-cadre" class="option-label">Cadre</label>
-                                </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="status-noncadre" name="status" value="noncadre">
-                                    <label for="status-noncadre" class="option-label">Non-cadre</label>
-                                </div>
-                            </div>
-                            <div class="validation-message" id="status-validation"></div>
-                        </div>
-                        
-                        <div class="info-card success" style="margin-top: 2.5rem;">
-                            <div style="display: flex; align-items: flex-start;">
-                                <i class="fas fa-check-circle" style="color: var(--success); margin-right: 1rem; margin-top: 0.2rem; font-size: 1.2rem;"></i>
-                                <div>
-                                    <h4 style="font-weight: 600; margin-bottom: 0.8rem; color: #1e293b;">
-                                        Prêt à publier votre offre !
-                                    </h4>
-                                    <p style="color: #64748b; line-height: 1.6; margin: 0;">
-                                        Une fois votre questionnaire soumis, notre IA analysera vos besoins et vous proposera les meilleurs candidats correspondant à votre recherche.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Navigation des étapes -->
-                    <div class="navigation-buttons" id="form-navigation">
-                        <button type="button" id="prev-button" class="btn btn-secondary" disabled>
-                            <i class="fas fa-arrow-left" style="margin-right: 0.5rem;"></i> Précédent
-                        </button>
-                        <button type="button" id="next-button" class="btn btn-primary">
-                            Suivant <i class="fas fa-arrow-right" style="margin-left: 0.5rem;"></i>
-                        </button>
-                    </div>
-                </form>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-label">Détails du poste</div>
+                </div>
             </div>
-        </div>
-    </section>
-    
-    <!-- Modal de succès -->
-    <div class="success-modal" id="success-modal">
-        <div class="modal-content">
-            <div class="success-icon">
-                <i class="fas fa-check-circle"></i>
-            </div>
-            <h3>Votre profil a été créé avec succès !</h3>
-            <p>Nous avons bien enregistré vos informations. Notre IA analyse actuellement les données pour trouver les meilleurs candidats correspondant à votre recherche.</p>
-            <div class="modal-actions">
-                <button id="go-to-matches" class="btn btn-primary">
-                    Voir les candidats recommandés
-                </button>
-            </div>
+            
+            <h2 class="form-section-title">Informations sur votre entreprise</h2>
+            
+            <form>
+                <div class="form-group">
+                    <label for="company-name" class="form-label required">Nom de la structure</label>
+                    <input type="text" id="company-name" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="address" class="form-label required">Adresse complète</label>
+                    <textarea id="address" class="form-control" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="website" class="form-label">
+                        Site internet
+                        <i class="fas fa-info-circle info-icon"></i>
+                    </label>
+                    <input type="url" id="website" class="form-control" placeholder="https://www.votre-site.com">
+                </div>
+                
+                <div class="form-group">
+                    <label for="presentation" class="form-label">
+                        Présentation rapide
+                        <i class="fas fa-info-circle info-icon"></i>
+                    </label>
+                    <textarea id="presentation" class="form-control" placeholder="Décrivez brièvement votre entreprise, son secteur d'activité et sa mission..."></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline">Retour</button>
+                    <button type="button" class="btn btn-primary">Suivant</button>
+                </div>
+            </form>
         </div>
     </div>
 
-    <footer class="site-footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <img src="../static/images/logo.svg" alt="Commitment Logo">
-                </div>
-                <!-- Footer content -->
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Commitment. Tous droits réservés.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Script JS -->
     <script>
+        // Simple script to handle hover effects and interactions
         document.addEventListener('DOMContentLoaded', function() {
-            // Éléments du formulaire
-            const form = document.getElementById('client-form');
-            const prevButton = document.getElementById('prev-button');
-            const nextButton = document.getElementById('next-button');
-            const progressBar = document.querySelector('.progress-bar');
-            const successModal = document.getElementById('success-modal');
-            const goToMatchesBtn = document.getElementById('go-to-matches');
+            const infoIcons = document.querySelectorAll('.info-icon');
             
-            // Ajout de l'écouteur d'événement pour la redirection directe vers le dashboard recruteur
-            document.getElementById('recruitment-need-no').addEventListener('change', function() {
-                if (this.checked) {
-                    // Redirection vers le dashboard recruteur
-                    window.location.href = 'recruiter-dashboard.html';
-                }
-            });
-            
-            // Étapes du formulaire
-            const steps = document.querySelectorAll('.form-step');
-            let currentStep = 0;
-            
-            // Gestion des champs conditionnels
-            const sectorKnowledgeRadios = document.querySelectorAll('input[name="sector-knowledge"]');
-            const sectorContainer = document.getElementById('sector-container');
-            
-            sectorKnowledgeRadios.forEach(radio => {
-                radio.addEventListener('change', function() {
-                    if (this.value === 'yes') {
-                        sectorContainer.style.display = 'block';
-                        document.getElementById('business-sector').setAttribute('required', 'required');
-                    } else {
-                        sectorContainer.style.display = 'none';
-                        document.getElementById('business-sector').removeAttribute('required');
-                    }
+            infoIcons.forEach(icon => {
+                icon.addEventListener('mouseover', function() {
+                    // You could implement tooltips here
                 });
             });
             
-            // Gestion des autres avantages
-            const otherBenefitCheckbox = document.getElementById('benefit-other');
-            const otherBenefitsContainer = document.getElementById('other-benefits-container');
-            
-            otherBenefitCheckbox.addEventListener('change', function() {
-                otherBenefitsContainer.style.display = this.checked ? 'block' : 'none';
-            });
-            
-            // Gestion du bouton "Générer automatiquement"
-            const autoGenerateBtn = document.getElementById('auto-generate-btn');
-            const websiteInput = document.getElementById('company-website');
-            const descriptionInput = document.getElementById('company-description');
-            
-            autoGenerateBtn.addEventListener('click', function() {
-                const website = websiteInput.value.trim();
-                if (!website) {
-                    alert('Veuillez d\'abord renseigner l\'URL de votre site web.');
-                    websiteInput.focus();
-                    return;
-                }
-                
-                // Simuler une génération de description (à remplacer par l'appel à l'IA)
-                this.innerHTML = '<span class="loading-spinner"></span> Génération en cours...';
-                this.disabled = true;
-                
-                setTimeout(() => {
-                    // Exemple de description générée (à remplacer par le résultat de l'IA)
-                    const generatedDescription = `Entreprise dynamique spécialisée dans [secteur d'activité]. Fondée en [année], notre mission est de [mission]. Nous proposons des solutions innovantes pour répondre aux besoins de nos clients dans un environnement en constante évolution.`;
-                    
-                    descriptionInput.value = generatedDescription;
-                    
-                    this.innerHTML = '<i class="fas fa-check" style="margin-right: 0.5rem;"></i> Description générée';
-                    setTimeout(() => {
-                        this.innerHTML = '<i class="fas fa-magic" style="margin-right: 0.5rem;"></i> Générer automatiquement';
-                        this.disabled = false;
-                    }, 3000);
-                }, 2000);
-            });
-            
-            // Mise à jour de la progression
-            function updateProgressBar() {
-                const progress = ((currentStep + 1) / steps.length) * 100;
-                progressBar.style.width = progress + '%';
-            }
-            
-            // Mise à jour de l'indicateur d'étapes
-            function updateStepsIndicator() {
-                document.querySelectorAll('.progress-steps .step').forEach((step, index) => {
-                    if (index < currentStep) {
-                        step.classList.add('completed');
-                        step.classList.remove('active');
-                    } else if (index === currentStep) {
-                        step.classList.add('active');
-                        step.classList.remove('completed');
-                    } else {
-                        step.classList.remove('completed', 'active');
-                    }
-                });
-            }
-            
-            // Affichage de l'étape actuelle avec animation
-            function showStep(stepIndex) {
-                steps.forEach((step, index) => {
-                    step.style.display = index === stepIndex ? 'block' : 'none';
-                });
-                
-                // Animation de l'étape actuelle
-                const currentStepEl = steps[stepIndex];
-                currentStepEl.style.animation = 'none';
-                void currentStepEl.offsetWidth; // Trigger reflow
-                currentStepEl.style.animation = 'fadeIn 0.5s forwards';
-                
-                // Mise à jour des boutons de navigation
-                prevButton.disabled = stepIndex === 0;
-                
-                if (stepIndex === steps.length - 1) {
-                    nextButton.textContent = 'Soumettre';
-                    nextButton.innerHTML = 'Soumettre <i class="fas fa-check" style="margin-left: 0.5rem;"></i>';
-                } else {
-                    nextButton.innerHTML = 'Suivant <i class="fas fa-arrow-right" style="margin-left: 0.5rem;"></i>';
-                }
-                
-                updateProgressBar();
-                updateStepsIndicator();
-                
-                // Scroll en haut du formulaire
-                document.querySelector('.card').scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-            
-            // Validation de formulaire
-            function validateStep(stepIndex) {
-                let isValid = true;
-                const currentStepEl = steps[stepIndex];
-                
-                // Réinitialisation des messages de validation
-                currentStepEl.querySelectorAll('.validation-message').forEach(msg => {
-                    msg.textContent = '';
-                    msg.classList.remove('error', 'success');
-                });
-                
-                // Validation de chaque champ requis
-                const requiredFields = currentStepEl.querySelectorAll('[required]');
-                requiredFields.forEach(field => {
-                    if (!field.value.trim() && field.type !== 'radio' && field.type !== 'checkbox') {
-                        showValidationError(field.id, 'Ce champ est requis');
-                        isValid = false;
-                    }
-                });
-                
-                // Validations spécifiques par étape
-                if (stepIndex === 0) {
-                    // Vérifier si le radio "recrutement" est sélectionné
-                    const recruitmentRadios = currentStepEl.querySelectorAll('input[name="recruitment-need"]');
-                    let recruitmentSelected = false;
-                    recruitmentRadios.forEach(radio => {
-                        if (radio.checked) recruitmentSelected = true;
-                    });
-                    
-                    if (!recruitmentSelected) {
-                        showValidationError('recruitment-need', 'Veuillez indiquer si vous souhaitez recruter');
-                        isValid = false;
-                    }
-                    
-                    // Si "Non" est sélectionné pour le recrutement, créer le profil et rediriger vers le dashboard
-                    if (document.getElementById('recruitment-need-no').checked && isValid) {
-                        // Vérifier si tous les champs obligatoires sont remplis
-                        if (
-                            document.getElementById('company-name').value.trim() &&
-                            document.getElementById('company-address').value.trim() &&
-                            document.getElementById('company-size').value.trim()
-                        ) {
-                            // Créer le profil et rediriger vers le dashboard recruteur
-                            submitProfileOnly();
-                            return false;
-                        }
-                    }
-                }
-                
-                if (stepIndex === 1) {
-                    // Vérifier si au moins un délai de recrutement est sélectionné
-                    const delayCheckboxes = currentStepEl.querySelectorAll('input[name="recruitment-delay"]');
-                    let checkedDelay = false;
-                    delayCheckboxes.forEach(cb => {
-                        if (cb.checked) checkedDelay = true;
-                    });
-                    
-                    if (!checkedDelay) {
-                        showValidationError('recruitment-delay', 'Sélectionnez au moins un délai de recrutement');
-                        isValid = false;
-                    }
-                    
-                    // Vérifier si un radio pour préavis est sélectionné
-                    const noticeRadios = currentStepEl.querySelectorAll('input[name="notice-period"]');
-                    let noticeSelected = false;
-                    noticeRadios.forEach(radio => {
-                        if (radio.checked) noticeSelected = true;
-                    });
-                    
-                    if (!noticeSelected) {
-                        showValidationError('notice-period', 'Veuillez indiquer si vous pouvez gérer un préavis');
-                        isValid = false;
-                    }
-                    
-                    // Vérifier si un contexte de recrutement est sélectionné
-                    const contextRadios = currentStepEl.querySelectorAll('input[name="recruitment-context"]');
-                    let contextSelected = false;
-                    contextRadios.forEach(radio => {
-                        if (radio.checked) contextSelected = true;
-                    });
-                    
-                    if (!contextSelected) {
-                        showValidationError('recruitment-context', 'Veuillez sélectionner un contexte de recrutement');
-                        isValid = false;
-                    }
-                    
-                    // Vérifier si une expérience requise est sélectionnée
-                    const experienceRadios = currentStepEl.querySelectorAll('input[name="experience-required"]');
-                    let experienceSelected = false;
-                    experienceRadios.forEach(radio => {
-                        if (radio.checked) experienceSelected = true;
-                    });
-                    
-                    if (!experienceSelected) {
-                        showValidationError('experience-required', 'Veuillez sélectionner une expérience requise');
-                        isValid = false;
-                    }
-                    
-                    // Vérifier si la connaissance du secteur est sélectionnée
-                    const sectorRadios = currentStepEl.querySelectorAll('input[name="sector-knowledge"]');
-                    let sectorSelected = false;
-                    sectorRadios.forEach(radio => {
-                        if (radio.checked) sectorSelected = true;
-                    });
-                    
-                    if (!sectorSelected) {
-                        showValidationError('sector-knowledge', 'Veuillez indiquer si la connaissance du secteur est obligatoire');
-                        isValid = false;
-                    }
-                    
-                    // Si "Oui" est sélectionné pour la connaissance du secteur, vérifier si un secteur est sélectionné
-                    if (document.getElementById('sector-knowledge-yes').checked) {
-                        const sectorSelect = document.getElementById('business-sector');
-                        if (!sectorSelect.value) {
-                            showValidationError('business-sector', 'Veuillez sélectionner un secteur d\'activité');
-                            isValid = false;
-                        }
-                    }
-                }
-                
-                if (stepIndex === 2) {
-                    // Vérifier si un environnement de travail est sélectionné
-                    const environmentRadios = currentStepEl.querySelectorAll('input[name="work-environment"]');
-                    let environmentSelected = false;
-                    environmentRadios.forEach(radio => {
-                        if (radio.checked) environmentSelected = true;
-                    });
-                    
-                    if (!environmentSelected) {
-                        showValidationError('work-environment', 'Veuillez sélectionner un environnement de travail');
-                        isValid = false;
-                    }
-                    
-                    // Vérifier si un type de contrat est sélectionné
-                    const contractRadios = currentStepEl.querySelectorAll('input[name="contract-type"]');
-                    let contractSelected = false;
-                    contractRadios.forEach(radio => {
-                        if (radio.checked) contractSelected = true;
-                    });
-                    
-                    if (!contractSelected) {
-                        showValidationError('contract-type', 'Veuillez sélectionner un type de contrat');
-                        isValid = false;
-                    }
-                    
-                    // Vérifier si un statut est sélectionné
-                    const statusRadios = currentStepEl.querySelectorAll('input[name="status"]');
-                    let statusSelected = false;
-                    statusRadios.forEach(radio => {
-                        if (radio.checked) statusSelected = true;
-                    });
-                    
-                    if (!statusSelected) {
-                        showValidationError('status', 'Veuillez sélectionner un statut');
-                        isValid = false;
-                    }
-                }
-                
-                return isValid;
-            }
-            
-            function showValidationError(fieldId, message) {
-                const validationEl = document.getElementById(fieldId + '-validation');
-                if (validationEl) {
-                    validationEl.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
-                    validationEl.classList.add('error');
-                    validationEl.style.display = 'flex';
-                }
-                
-                const field = document.getElementById(fieldId);
-                if (field) {
-                    field.classList.add('is-invalid');
-                }
-            }
-            
-            // Navigation vers l'étape suivante
+            const nextButton = document.querySelector('.btn-primary');
             nextButton.addEventListener('click', function() {
-                if (currentStep === steps.length - 1) {
-                    // Si on est à la dernière étape, soumettre le formulaire
-                    if (validateStep(currentStep)) {
-                        submitCompletedForm();
-                    }
-                } else if (validateStep(currentStep)) {
-                    currentStep++;
-                    showStep(currentStep);
-                }
+                // Here you would handle form validation and step navigation
+                alert('Formulaire soumis avec succès! (Naviguerait vers l\'étape suivante)');
             });
-            
-            // Navigation vers l'étape précédente
-            prevButton.addEventListener('click', function() {
-                if (currentStep > 0) {
-                    currentStep--;
-                    showStep(currentStep);
-                }
-            });
-            
-            // Soumission du formulaire complet (avec poste)
-            function submitCompletedForm() {
-                // Désactiver les boutons de navigation
-                nextButton.disabled = true;
-                prevButton.disabled = true;
-                
-                // Animation du bouton de soumission
-                nextButton.innerHTML = '<span class="loading-spinner"></span> Traitement en cours...';
-                
-                // Simulation de soumission
-                setTimeout(() => {
-                    // Afficher une modal de succès puis rediriger
-                    successModal.classList.add('show');
-                }, 2000);
-            }
-            
-            // Soumission du profil uniquement (sans poste)
-            function submitProfileOnly() {
-                // Désactiver les boutons de navigation
-                nextButton.disabled = true;
-                prevButton.disabled = true;
-                
-                // Animation du bouton suivant
-                nextButton.innerHTML = '<span class="loading-spinner"></span> Création du profil...';
-                
-                // Simulation de création de profil
-                setTimeout(() => {
-                    // Afficher une modal de succès puis rediriger
-                    successModal.classList.add('show');
-                }, 2000);
-            }
-            
-            // Redirection depuis la modal vers la page de propositions de candidats
-            goToMatchesBtn.addEventListener('click', function() {
-                window.location.href = 'recruiter-candidates-proposals.html';
-            });
-            
-            // Initialisation des options cliquables
-            document.querySelectorAll('.radio-option, .checkbox-option').forEach(option => {
-                option.addEventListener('click', function(e) {
-                    const input = this.querySelector('input');
-                    if (e.target !== input) {
-                        if (input.type === 'radio') {
-                            input.checked = true;
-                            // Mettre à jour l'apparence des autres radios
-                            const name = input.getAttribute('name');
-                            document.querySelectorAll(`input[name="${name}"]`).forEach(radio => {
-                                radio.closest('.radio-option').classList.toggle('selected', radio.checked);
-                            });
-                        } else {
-                            input.checked = !input.checked;
-                            this.classList.toggle('selected', input.checked);
-                        }
-                        
-                        // Déclencher l'événement change pour activer les logiques conditionnelles
-                        const event = new Event('change');
-                        input.dispatchEvent(event);
-                    }
-                });
-            });
-            
-            // État initial des options sélectionnées
-            document.querySelectorAll('input[type="radio"]:checked').forEach(radio => {
-                radio.closest('.radio-option').classList.add('selected');
-                
-                // Déclencher l'événement change pour activer les logiques conditionnelles
-                const event = new Event('change');
-                radio.dispatchEvent(event);
-            });
-            
-            document.querySelectorAll('input[type="checkbox"]:checked').forEach(checkbox => {
-                checkbox.closest('.checkbox-option').classList.add('selected');
-                
-                // Déclencher l'événement change pour activer les logiques conditionnelles
-                const event = new Event('change');
-                checkbox.dispatchEvent(event);
-            });
-            
-            // Initialisation de la première étape
-            showStep(currentStep);
         });
     </script>
 </body>
