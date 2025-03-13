@@ -1,0 +1,700 @@
+/**
+ * Planning section styles
+ */
+
+/* Section principale */
+.planning-section {
+    position: relative;
+    overflow: hidden;
+    animation: fadeIn 0.8s ease-out;
+}
+
+/* Styles pour les onglets */
+.nav-tabs .nav-link {
+    color: var(--gray);
+    font-weight: 500;
+    padding: var(--spacing-sm) var(--spacing-md);
+    transition: all 0.3s ease;
+    border-radius: 8px 8px 0 0;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nav-tabs .nav-link i {
+    color: var(--gray);
+    transition: all 0.3s ease;
+}
+
+.nav-tabs .nav-link::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--purple) 0%, var(--purple-light) 100%);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+}
+
+.nav-tabs .nav-link:hover {
+    color: var(--purple);
+    background-color: rgba(124, 58, 237, 0.05);
+}
+
+.nav-tabs .nav-link:hover i {
+    color: var(--purple);
+}
+
+.nav-tabs .nav-link.active {
+    color: var(--purple);
+    font-weight: 600;
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.nav-tabs .nav-link.active i {
+    color: var(--purple);
+}
+
+.nav-tabs .nav-link.active::before {
+    transform: scaleX(1);
+}
+
+/* Styles pour les codes couleur */
+.color-code-legend {
+    background-color: white;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+}
+
+.color-code-legend:hover {
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+    transform: translateY(-5px);
+}
+
+.color-code-title {
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--black);
+}
+
+.color-code-description {
+    font-size: 0.9rem;
+    color: var(--gray);
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+.color-code-items {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.color-code-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.color-code-item:hover {
+    transform: scale(1.05);
+}
+
+.color-circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.color-code-item:hover .color-circle {
+    transform: scale(1.2);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* Styles pour les besoins de recrutement */
+.recruitment-need {
+    background-color: var(--yellow);
+    border-radius: 12px;
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideIn 0.5s ease-out forwards;
+}
+
+.recruitment-need:hover {
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.recruitment-need-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: var(--black);
+}
+
+.recruitment-need-subtitle {
+    font-size: 1rem;
+    color: var(--gray-dark);
+    margin-bottom: 15px;
+}
+
+.salary-info {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.salary-label {
+    font-weight: 500;
+    color: var(--gray-dark);
+}
+
+.salary-value {
+    font-weight: 600;
+    color: var(--purple);
+    background: linear-gradient(135deg, var(--purple) 0%, var(--purple-dark) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+.salary-info:hover .salary-value {
+    transform: scale(1.1);
+}
+
+/* Styles pour les candidats */
+.candidate-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.candidate-card {
+    background-color: white;
+    border-radius: 12px;
+    padding: var(--spacing-md);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.candidate-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.candidate-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.candidate-info h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 2px;
+    color: var(--black);
+}
+
+.candidate-job {
+    font-size: 0.8rem;
+    color: var(--gray);
+}
+
+.candidate-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.candidate-rating {
+    background-color: #f8f9fa;
+    padding: 5px 8px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.candidate-details {
+    font-size: 0.85rem;
+    margin-bottom: 10px;
+}
+
+.candidate-details p {
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.candidate-details p:hover {
+    transform: translateX(5px);
+}
+
+.candidate-details i {
+    color: var(--gray);
+    width: 16px;
+    transition: all 0.3s ease;
+}
+
+.candidate-details p:hover i {
+    color: var(--purple);
+}
+
+/* Styles pour les étapes de recrutement */
+.recruitment-steps {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.step-button {
+    padding: 8px;
+    text-align: center;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    background-color: #f8f9fa;
+    color: var(--gray-dark);
+}
+
+.step-button.active {
+    background-color: var(--primary-light);
+    color: var(--purple);
+    font-weight: 600;
+    box-shadow: 0 4px 8px rgba(124, 58, 237, 0.2);
+}
+
+.step-button.completed {
+    background-color: var(--purple-light);
+    color: var(--purple);
+}
+
+.step-button i {
+    margin-right: 5px;
+}
+
+.step-button:hover {
+    background-color: var(--primary-light);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(124, 58, 237, 0.1);
+}
+
+/* Boutons d'action pour les candidats */
+.action-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    gap: 8px;
+}
+
+.candidate-action-btn {
+    flex: 1;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    text-align: center;
+    cursor: pointer;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    transition: all 0.3s ease;
+    color: var(--gray-dark);
+}
+
+.candidate-action-btn:hover {
+    background-color: var(--purple-light);
+    border-color: var(--purple);
+    color: var(--purple);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(124, 58, 237, 0.1);
+}
+
+/* Styles pour l'onglet Calendrier */
+.calendar-view {
+    background-color: white;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.calendar-view:hover {
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+
+.calendar-view h4 {
+    font-weight: 600;
+    color: var(--black);
+}
+
+.calendar-view table {
+    border-radius: 8px;
+    overflow: hidden;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.calendar-view th {
+    background-color: var(--primary-light);
+    color: var(--purple);
+    font-weight: 600;
+    text-align: center;
+    padding: 10px;
+}
+
+.calendar-view td {
+    text-align: center;
+    padding: 15px 10px;
+    position: relative;
+    font-weight: 500;
+    vertical-align: top;
+    height: 80px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.calendar-view td:hover:not(.text-muted) {
+    background-color: var(--primary-light);
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(124, 58, 237, 0.1);
+    z-index: 1;
+}
+
+.calendar-view td.text-muted {
+    color: #adb5bd;
+    background-color: #f8f9fa;
+}
+
+.calendar-view .badge {
+    font-size: 0.7rem;
+    padding: 4px 8px;
+}
+
+/* Styles pour la liste des entretiens */
+.list-group-item {
+    border-radius: 8px !important;
+    margin-bottom: 8px;
+    transition: all 0.3s ease;
+    border: 1px solid #dee2e6;
+}
+
+.list-group-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.list-group-item h6 {
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: var(--black);
+}
+
+.list-group-item p {
+    margin-bottom: 5px;
+}
+
+.list-group-item .badge {
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.list-group-item:hover .badge {
+    transform: scale(1.1);
+}
+
+.list-group-item .btn {
+    transition: all 0.3s ease;
+}
+
+.list-group-item .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Styles pour l'onglet Suivi */
+.card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+    margin-bottom: var(--spacing-lg);
+}
+
+.card:hover {
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.card-header {
+    border-radius: 12px 12px 0 0 !important;
+    border-bottom: none;
+    padding: var(--spacing-md) var(--spacing-lg);
+    background-color: white;
+}
+
+.card-header h5 {
+    font-weight: 600;
+    margin: 0;
+    color: var(--black);
+}
+
+.card-body {
+    padding: var(--spacing-lg);
+}
+
+.card-title {
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--black);
+}
+
+.progress {
+    overflow: visible;
+    margin-bottom: 10px;
+    background-color: #f0f2f5;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.progress-bar {
+    position: relative;
+    border-radius: 4px;
+    transition: width 1s ease-in-out;
+}
+
+.progress-bar::after {
+    content: '';
+    position: absolute;
+    right: -5px;
+    top: -3px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: white;
+    border: 2px solid currentColor;
+}
+
+/* Modals */
+.modal-content {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.modal-header {
+    border-bottom: none;
+    padding: var(--spacing-md) var(--spacing-lg);
+    background-color: var(--primary-light);
+    border-radius: 12px 12px 0 0;
+}
+
+.modal-header .modal-title {
+    font-weight: 600;
+    color: var(--purple);
+}
+
+.modal-body {
+    padding: var(--spacing-lg);
+}
+
+.modal-footer {
+    border-top: none;
+    padding: var(--spacing-md) var(--spacing-lg);
+}
+
+.form-label {
+    font-weight: 500;
+    color: var(--gray-dark);
+    margin-bottom: 8px;
+}
+
+.form-control, .form-select {
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+    padding: 10px 12px;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--purple);
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
+}
+
+/* Animation de filtrage */
+.form-check-input {
+    width: 1.2em;
+    height: 1.2em;
+    margin-top: 0.2em;
+    transition: all 0.3s ease;
+}
+
+.form-check-input:checked {
+    background-color: var(--purple);
+    border-color: var(--purple);
+}
+
+.form-check-input:not(:checked):hover {
+    border-color: var(--purple);
+}
+
+.form-check-label {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.form-check:hover .form-check-label {
+    color: var(--purple);
+}
+
+/* Toast notifications */
+.toast-container {
+    z-index: 11;
+}
+
+.toast {
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-in {
+    animation: slideIn 0.5s ease-out forwards;
+}
+
+/* Responsive design */
+@media (max-width: 992px) {
+    .recruitment-steps {
+        grid-template-columns: repeat(3, 1fr);
+        grid-row-gap: 8px;
+    }
+    
+    .recruitment-steps button:nth-child(4),
+    .recruitment-steps button:nth-child(5) {
+        grid-column: span 1.5;
+    }
+    
+    .color-code-items {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-tabs .nav-link {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+    
+    .candidate-list {
+        grid-template-columns: 1fr;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+    }
+    
+    .candidate-action-btn {
+        margin-bottom: 8px;
+    }
+    
+    .recruitment-steps {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .recruitment-steps button {
+        padding: 6px;
+        font-size: 0.8rem;
+    }
+    
+    .recruitment-steps button:nth-child(5) {
+        grid-column: span 2;
+    }
+    
+    .calendar-view td {
+        padding: 8px 5px;
+        height: 60px;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .recruitment-need-title {
+        font-size: 1.2rem;
+    }
+    
+    .page-title {
+        font-size: 1.5rem;
+    }
+    
+    .salary-info {
+        margin-top: 10px;
+        justify-content: flex-start;
+    }
+    
+    .color-code-legend {
+        padding: 10px;
+    }
+    
+    .color-code-items {
+        gap: 8px;
+    }
+    
+    .recruitment-steps {
+        grid-template-columns: 1fr;
+    }
+    
+    .recruitment-steps button {
+        padding: 8px;
+    }
+    
+    .recruitment-steps button:nth-child(5) {
+        grid-column: span 1;
+    }
+    
+    .card-body {
+        padding: 15px;
+    }
+    
+    .form-check-label {
+        font-size: 0.9rem;
+    }
+}
