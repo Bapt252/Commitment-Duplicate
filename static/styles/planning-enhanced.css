@@ -1,0 +1,415 @@
+/* Styles supplémentaires pour planning.html */
+
+/* Amélioration des couleurs et variables */
+:root {
+    --purple: #7c3aed;
+    --purple-light: #ede9fe;
+    --purple-dark: #5b21b6;
+    --yellow: #fef9c3;
+    --yellow-dark: #ca8a04;
+    --green: #10b981;
+    --green-light: #d1fae5;
+    --red: #ef4444;
+    --red-light: #fee2e2;
+    --blue: #3b82f6;
+    --blue-light: #dbeafe;
+    --cream: #f8fafc;
+    --white: #ffffff;
+    --black: #0f172a;
+    --gray: #64748b;
+    --gray-light: #e2e8f0;
+    --gray-dark: #334155;
+    --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+    --shadow-md: 0 8px 16px rgba(0,0,0,0.1);
+    --shadow-lg: 0 12px 24px rgba(0,0,0,0.15);
+    --transition: all 0.3s ease;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+@keyframes shimmer {
+    0% { background-position: -1000px 0; }
+    100% { background-position: 1000px 0; }
+}
+
+/* Styles pour les boutons */
+.btn-purple {
+    background-color: var(--purple);
+    color: var(--white);
+    border: none;
+}
+
+.btn-purple:hover {
+    background-color: var(--purple-dark);
+    color: var(--white);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-outline-purple {
+    color: var(--purple);
+    border: 1px solid var(--purple);
+    background-color: transparent;
+    transition: var(--transition);
+}
+
+.btn-outline-purple:hover {
+    background-color: var(--purple-light);
+    color: var(--purple-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.floating-action-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--purple);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-lg);
+    z-index: 1000;
+    transition: var(--transition);
+}
+
+.floating-action-btn:hover {
+    transform: scale(1.1);
+    background-color: var(--purple-dark);
+}
+
+/* Effet de carte glassmorphism */
+.glass-card {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: var(--transition);
+}
+
+.glass-card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-5px);
+}
+
+/* Améliorations du tableau de suivi */
+.progress {
+    height: 10px;
+    border-radius: 10px;
+    background-color: var(--gray-light);
+    margin: 10px 0;
+}
+
+.progress-bar {
+    border-radius: 10px;
+    transition: width 0.6s ease;
+}
+
+.progress-bar.bg-success {
+    background: linear-gradient(to right, var(--green), #34d399);
+}
+
+.progress-bar.bg-primary {
+    background: linear-gradient(to right, var(--purple), #8b5cf6);
+}
+
+.progress-bar.bg-info {
+    background: linear-gradient(to right, var(--blue), #60a5fa);
+}
+
+/* Améliorations des badges */
+.badge {
+    padding: 6px 10px;
+    font-weight: 500;
+    border-radius: 6px;
+    transition: var(--transition);
+}
+
+.badge:hover {
+    transform: scale(1.05);
+}
+
+.badge.bg-success {
+    background: linear-gradient(to right, var(--green), #34d399);
+}
+
+.badge.bg-primary {
+    background: linear-gradient(to right, var(--purple), #8b5cf6);
+}
+
+.badge.bg-danger {
+    background: linear-gradient(to right, var(--red), #f87171);
+}
+
+/* Styles pour les listes et cartes */
+.list-group-item {
+    transition: var(--transition);
+    border-left: 3px solid transparent;
+}
+
+.list-group-item:hover {
+    background-color: var(--purple-light);
+    border-left: 3px solid var(--purple);
+    transform: translateX(5px);
+}
+
+.list-group-item.active {
+    background-color: var(--purple);
+    border-color: var(--purple);
+}
+
+/* Effets d'animations pour les éléments de la page */
+.fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+.shimmer {
+    background: linear-gradient(90deg, var(--gray-light) 0%, var(--white) 50%, var(--gray-light) 100%);
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite linear;
+}
+
+/* Styles pour le calendrier amélioré */
+.calendar-day {
+    min-height: 100px;
+    padding: 8px;
+    transition: var(--transition);
+    position: relative;
+}
+
+.calendar-day:hover {
+    background-color: var(--purple-light);
+}
+
+.calendar-day.has-events {
+    background-color: rgba(124, 58, 237, 0.1);
+}
+
+.calendar-day.today {
+    border: 2px solid var(--purple);
+}
+
+.event-indicator {
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    right: 5px;
+    height: 5px;
+    border-radius: 3px;
+}
+
+.event-indicator.type-phone {
+    background-color: var(--blue);
+}
+
+.event-indicator.type-video {
+    background-color: var(--purple);
+}
+
+.event-indicator.type-in-person {
+    background-color: var(--green);
+}
+
+/* Styles pour les switches et checkboxes améliorés */
+.form-check-input {
+    cursor: pointer;
+}
+
+.form-check-input:checked {
+    background-color: var(--purple);
+    border-color: var(--purple);
+}
+
+.form-switch .form-check-input:focus {
+    border-color: var(--purple-light);
+    box-shadow: 0 0 0 0.25rem rgba(124, 58, 237, 0.25);
+}
+
+/* Style pour la barre de recherche améliorée */
+.search-input {
+    border-radius: 30px;
+    padding: 10px 20px;
+    border: 1px solid var(--gray-light);
+    transition: var(--transition);
+}
+
+.search-input:focus {
+    border-color: var(--purple);
+    box-shadow: 0 0 0 0.25rem rgba(124, 58, 237, 0.25);
+}
+
+.search-btn {
+    border-radius: 0 30px 30px 0;
+    background-color: var(--purple);
+    color: var(--white);
+    border: none;
+}
+
+/* Améliorations pour les tooltips et popovers */
+.tooltip {
+    opacity: 0;
+    position: absolute;
+    background-color: var(--black);
+    color: var(--white);
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    pointer-events: none;
+    transition: var(--transition);
+    z-index: 1000;
+}
+
+.tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: var(--black) transparent transparent transparent;
+}
+
+/* Style pour le message de notification toast */
+.toast {
+    background-color: var(--white);
+    border-left: 4px solid var(--purple);
+    box-shadow: var(--shadow-md);
+    border-radius: 8px;
+    transition: var(--transition);
+}
+
+.toast:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+}
+
+.toast-header {
+    background-color: transparent;
+    border-bottom: 1px solid var(--gray-light);
+}
+
+.toast-body {
+    padding: 15px;
+}
+
+/* Styles pour les modals améliorés */
+.modal-content {
+    border-radius: 12px;
+    border: none;
+    box-shadow: var(--shadow-lg);
+}
+
+.modal-header {
+    border-bottom: 1px solid var(--gray-light);
+    padding: 15px 20px;
+}
+
+.modal-footer {
+    border-top: 1px solid var(--gray-light);
+    padding: 15px 20px;
+}
+
+.modal-title {
+    font-weight: 600;
+    color: var(--black);
+}
+
+/* Style pour les champs de formulaire dans la modal */
+.modal .form-control,
+.modal .form-select {
+    border-radius: 8px;
+    padding: 10px 15px;
+    border: 1px solid var(--gray-light);
+    transition: var(--transition);
+}
+
+.modal .form-control:focus,
+.modal .form-select:focus {
+    border-color: var(--purple);
+    box-shadow: 0 0 0 0.25rem rgba(124, 58, 237, 0.25);
+}
+
+/* Styles responsifs */
+@media (max-width: 992px) {
+    .calendar-day {
+        min-height: 60px;
+    }
+}
+
+@media (max-width: 768px) {
+    .calendar-day {
+        min-height: 40px;
+    }
+    
+    .candidate-card {
+        margin-bottom: 15px;
+    }
+}
+
+@media (max-width: 576px) {
+    .btn {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+    
+    .floating-action-btn {
+        width: 50px;
+        height: 50px;
+        bottom: 20px;
+        right: 20px;
+    }
+}
+
+/* Classes d'utilité pour les couleurs de texte */
+.text-purple {
+    color: var(--purple) !important;
+}
+
+.text-purple-dark {
+    color: var(--purple-dark) !important;
+}
+
+.text-green {
+    color: var(--green) !important;
+}
+
+.text-blue {
+    color: var(--blue) !important;
+}
+
+.text-red {
+    color: var(--red) !important;
+}
+
+/* Animation pour l'icône de notification */
+@keyframes shake {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(5deg); }
+    50% { transform: rotate(0eg); }
+    75% { transform: rotate(-5deg); }
+    100% { transform: rotate(0deg); }
+}
+
+.fa-shake {
+    animation: shake 0.8s infinite;
+}
