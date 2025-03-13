@@ -217,6 +217,14 @@
             border-bottom: 1px solid #eee;
         }
 
+        .form-step {
+            display: none;
+        }
+
+        .form-step.active {
+            display: block;
+        }
+
         .form-group {
             margin-bottom: 1.5rem;
         }
@@ -293,6 +301,67 @@
         .btn-outline:hover {
             background-color: var(--primary-light);
         }
+        
+        .radio-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: flex-start;
+            padding: 1rem 1.2rem;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 8px;
+            margin-bottom: 0.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .radio-option:hover {
+            background-color: var(--primary-light);
+            border-color: #cbd5e1;
+            transform: translateY(-1px);
+        }
+        
+        .radio-option.selected {
+            background-color: var(--primary-light);
+            border-color: var(--primary-color);
+        }
+
+        .radio-option input[type="radio"] {
+            margin-right: 1rem;
+            margin-top: 0.25rem;
+            cursor: pointer;
+        }
+
+        .option-label {
+            font-weight: 500;
+            color: #334155;
+            cursor: pointer;
+            flex: 1;
+        }
+        
+        .error-message {
+            color: #ff4d4f;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+        
+        .success-message {
+            text-align: center;
+            padding: 2rem;
+            display: none;
+        }
+        
+        .success-icon {
+            font-size: 3rem;
+            color: #52c41a;
+            margin-bottom: 1rem;
+        }
 
         @media (max-width: 768px) {
             .header {
@@ -343,77 +412,407 @@
         <div class="questionnaire-card">
             <div class="stepper">
                 <div class="stepper-line"></div>
-                <div class="stepper-progress"></div>
+                <div class="stepper-progress" id="stepper-progress"></div>
                 
-                <div class="step active">
+                <div class="step active" data-step="1">
                     <div class="step-number">1</div>
                     <div class="step-label">Informations entreprise</div>
                 </div>
                 
-                <div class="step">
+                <div class="step" data-step="2">
                     <div class="step-number">2</div>
                     <div class="step-label">Besoins en recrutement</div>
                 </div>
                 
-                <div class="step">
+                <div class="step" data-step="3">
                     <div class="step-number">3</div>
                     <div class="step-label">Détails du poste</div>
                 </div>
             </div>
             
-            <h2 class="form-section-title">Informations sur votre entreprise</h2>
-            
-            <form>
-                <div class="form-group">
-                    <label for="company-name" class="form-label required">Nom de la structure</label>
-                    <input type="text" id="company-name" class="form-control" required>
+            <form id="client-form">
+                <!-- Étape 1: Informations entreprise -->
+                <div class="form-step active" id="step-1">
+                    <h2 class="form-section-title">Informations sur votre entreprise</h2>
+                    
+                    <div class="form-group">
+                        <label for="company-name" class="form-label required">Nom de la structure</label>
+                        <input type="text" id="company-name" name="company-name" class="form-control" required>
+                        <div class="error-message" id="company-name-error">Ce champ est requis</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="address" class="form-label required">Adresse complète</label>
+                        <textarea id="address" name="address" class="form-control" required></textarea>
+                        <div class="error-message" id="address-error">Ce champ est requis</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="website" class="form-label">
+                            Site internet
+                            <i class="fas fa-info-circle info-icon" title="Facultatif: Renseignez l'URL de votre site web"></i>
+                        </label>
+                        <input type="url" id="website" name="website" class="form-control" placeholder="https://www.votre-site.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="presentation" class="form-label">
+                            Présentation rapide
+                            <i class="fas fa-info-circle info-icon" title="Facultatif: Décrivez brièvement votre entreprise"></i>
+                        </label>
+                        <textarea id="presentation" name="presentation" class="form-control" placeholder="Décrivez brièvement votre entreprise, son secteur d'activité et sa mission..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label required">Type de structure</label>
+                        <div class="radio-options">
+                            <div class="radio-option">
+                                <input type="radio" id="structure-startup" name="structure-type" value="startup">
+                                <label for="structure-startup" class="option-label">
+                                    <i class="fas fa-rocket" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
+                                    Start-up
+                                </label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="structure-tpe" name="structure-type" value="tpe">
+                                <label for="structure-tpe" class="option-label">
+                                    <i class="fas fa-store" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
+                                    TPE (moins de 10 salariés)
+                                </label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="structure-pme" name="structure-type" value="pme">
+                                <label for="structure-pme" class="option-label">
+                                    <i class="fas fa-building" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
+                                    PME (10 à 249 salariés)
+                                </label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="structure-group" name="structure-type" value="group">
+                                <label for="structure-group" class="option-label">
+                                    <i class="fas fa-city" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
+                                    Grande entreprise (250+ salariés)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="error-message" id="structure-type-error">Veuillez sélectionner un type de structure</div>
+                    </div>
                 </div>
                 
-                <div class="form-group">
-                    <label for="address" class="form-label required">Adresse complète</label>
-                    <textarea id="address" class="form-control" required></textarea>
+                <!-- Étape 2: Besoins en recrutement -->
+                <div class="form-step" id="step-2">
+                    <h2 class="form-section-title">Besoins en recrutement</h2>
+                    
+                    <div class="form-group">
+                        <label for="job-title" class="form-label required">Intitulé du poste</label>
+                        <input type="text" id="job-title" name="job-title" class="form-control" required>
+                        <div class="error-message" id="job-title-error">Ce champ est requis</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label required">Années d'expérience requises</label>
+                        <div class="radio-options">
+                            <div class="radio-option">
+                                <input type="radio" id="exp-junior" name="experience" value="junior">
+                                <label for="exp-junior" class="option-label">
+                                    <i class="fas fa-user-graduate" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
+                                    Débutant / Junior
+                                </label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="exp-mid" name="experience" value="mid">
+                                <label for="exp-mid" class="option-label">
+                                    <i class="fas fa-user" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
+                                    2 à 5 ans
+                                </label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="exp-senior" name="experience" value="senior">
+                                <label for="exp-senior" class="option-label">
+                                    <i class="fas fa-user-tie" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
+                                    6 à 10 ans
+                                </label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="exp-expert" name="experience" value="expert">
+                                <label for="exp-expert" class="option-label">
+                                    <i class="fas fa-user-shield" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
+                                    Plus de 10 ans
+                                </label>
+                            </div>
+                        </div>
+                        <div class="error-message" id="experience-error">Veuillez sélectionner une expérience requise</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label required">Contexte de recrutement</label>
+                        <div class="radio-options">
+                            <div class="radio-option">
+                                <input type="radio" id="context-creation" name="recruitment-context" value="creation">
+                                <label for="context-creation" class="option-label">
+                                    <i class="fas fa-plus-circle" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
+                                    Création de poste
+                                </label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="context-replacement" name="recruitment-context" value="replacement">
+                                <label for="context-replacement" class="option-label">
+                                    <i class="fas fa-exchange-alt" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
+                                    Remplacement
+                                </label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="context-growth" name="recruitment-context" value="growth">
+                                <label for="context-growth" class="option-label">
+                                    <i class="fas fa-chart-line" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
+                                    Accroissement d'activité
+                                </label>
+                            </div>
+                        </div>
+                        <div class="error-message" id="recruitment-context-error">Veuillez sélectionner un contexte de recrutement</div>
+                    </div>
                 </div>
                 
-                <div class="form-group">
-                    <label for="website" class="form-label">
-                        Site internet
-                        <i class="fas fa-info-circle info-icon"></i>
-                    </label>
-                    <input type="url" id="website" class="form-control" placeholder="https://www.votre-site.com">
+                <!-- Étape 3: Détails du poste -->
+                <div class="form-step" id="step-3">
+                    <h2 class="form-section-title">Détails du poste</h2>
+                    
+                    <div class="form-group">
+                        <label for="salary-range" class="form-label required">Fourchette de rémunération</label>
+                        <input type="text" id="salary-range" name="salary-range" class="form-control" placeholder="Ex: 35K€ - 45K€" required>
+                        <div class="error-message" id="salary-range-error">Ce champ est requis</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label required">Type de contrat</label>
+                        <div class="radio-options">
+                            <div class="radio-option">
+                                <input type="radio" id="contract-cdi" name="contract-type" value="cdi">
+                                <label for="contract-cdi" class="option-label">
+                                    <i class="fas fa-file-signature" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
+                                    CDI
+                                </label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="contract-cdd" name="contract-type" value="cdd">
+                                <label for="contract-cdd" class="option-label">
+                                    <i class="fas fa-file-contract" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
+                                    CDD
+                                </label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="contract-freelance" name="contract-type" value="freelance">
+                                <label for="contract-freelance" class="option-label">
+                                    <i class="fas fa-briefcase" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
+                                    Freelance
+                                </label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="contract-apprenticeship" name="contract-type" value="apprenticeship">
+                                <label for="contract-apprenticeship" class="option-label">
+                                    <i class="fas fa-graduation-cap" style="margin-right: 0.75rem; color: var(--primary-color);"></i>
+                                    Alternance / Apprentissage
+                                </label>
+                            </div>
+                        </div>
+                        <div class="error-message" id="contract-type-error">Veuillez sélectionner un type de contrat</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="job-description" class="form-label required">Description du poste</label>
+                        <textarea id="job-description" name="job-description" class="form-control" placeholder="Décrivez les principales responsabilités et missions..." rows="5" required></textarea>
+                        <div class="error-message" id="job-description-error">Ce champ est requis</div>
+                    </div>
                 </div>
                 
-                <div class="form-group">
-                    <label for="presentation" class="form-label">
-                        Présentation rapide
-                        <i class="fas fa-info-circle info-icon"></i>
-                    </label>
-                    <textarea id="presentation" class="form-control" placeholder="Décrivez brièvement votre entreprise, son secteur d'activité et sa mission..."></textarea>
+                <!-- Message de succès -->
+                <div class="success-message" id="success-message">
+                    <div class="success-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h2>Formulaire soumis avec succès!</h2>
+                    <p>Nous avons bien reçu vos informations. Notre équipe les analysera et vous contactera prochainement.</p>
+                    <button type="button" class="btn btn-primary" style="margin-top: 1rem;">
+                        Retour à l'accueil
+                    </button>
                 </div>
                 
                 <div class="form-actions">
-                    <button type="button" class="btn btn-outline">Retour</button>
-                    <button type="button" class="btn btn-primary">Suivant</button>
+                    <button type="button" class="btn btn-outline" id="prev-button" disabled>Retour</button>
+                    <button type="button" class="btn btn-primary" id="next-button">Suivant</button>
                 </div>
             </form>
         </div>
     </div>
 
     <script>
-        // Simple script to handle hover effects and interactions
         document.addEventListener('DOMContentLoaded', function() {
-            const infoIcons = document.querySelectorAll('.info-icon');
+            // Éléments du formulaire
+            const form = document.getElementById('client-form');
+            const steps = document.querySelectorAll('.form-step');
+            const prevButton = document.getElementById('prev-button');
+            const nextButton = document.getElementById('next-button');
+            const stepperProgress = document.getElementById('stepper-progress');
+            const successMessage = document.getElementById('success-message');
+            const formActions = document.querySelector('.form-actions');
             
-            infoIcons.forEach(icon => {
-                icon.addEventListener('mouseover', function() {
-                    // You could implement tooltips here
+            // État actuel
+            let currentStep = 0;
+            const totalSteps = steps.length;
+            
+            // Afficher l'étape actuelle
+            function showStep(stepIndex) {
+                // Masquer toutes les étapes
+                steps.forEach(step => {
+                    step.classList.remove('active');
+                });
+                
+                // Afficher l'étape actuelle
+                steps[stepIndex].classList.add('active');
+                
+                // Mettre à jour les étapes dans le stepper
+                document.querySelectorAll('.step').forEach((step, index) => {
+                    if (index < stepIndex) {
+                        step.classList.add('completed');
+                        step.classList.remove('active');
+                    } else if (index === stepIndex) {
+                        step.classList.add('active');
+                        step.classList.remove('completed');
+                    } else {
+                        step.classList.remove('active', 'completed');
+                    }
+                });
+                
+                // Mettre à jour la barre de progression
+                const progressWidth = ((stepIndex + 1) / totalSteps) * 100;
+                stepperProgress.style.width = `${progressWidth}%`;
+                
+                // Mettre à jour les boutons
+                prevButton.disabled = stepIndex === 0;
+                
+                if (stepIndex === totalSteps - 1) {
+                    nextButton.textContent = 'Soumettre';
+                } else {
+                    nextButton.textContent = 'Suivant';
+                }
+            }
+            
+            // Validation de l'étape actuelle
+            function validateStep(stepIndex) {
+                let isValid = true;
+                const currentStepElement = steps[stepIndex];
+                const requiredInputs = currentStepElement.querySelectorAll('input[required], textarea[required]');
+                
+                // Vérifier les champs requis
+                requiredInputs.forEach(input => {
+                    if (!input.value.trim()) {
+                        const errorElement = document.getElementById(`${input.id}-error`);
+                        if (errorElement) {
+                            errorElement.style.display = 'block';
+                        }
+                        isValid = false;
+                    } else {
+                        const errorElement = document.getElementById(`${input.id}-error`);
+                        if (errorElement) {
+                            errorElement.style.display = 'none';
+                        }
+                    }
+                });
+                
+                // Vérifier les boutons radio
+                if (stepIndex === 0) {
+                    const structureTypeSelected = currentStepElement.querySelector('input[name="structure-type"]:checked');
+                    if (!structureTypeSelected) {
+                        document.getElementById('structure-type-error').style.display = 'block';
+                        isValid = false;
+                    } else {
+                        document.getElementById('structure-type-error').style.display = 'none';
+                    }
+                } else if (stepIndex === 1) {
+                    const experienceSelected = currentStepElement.querySelector('input[name="experience"]:checked');
+                    const contextSelected = currentStepElement.querySelector('input[name="recruitment-context"]:checked');
+                    
+                    if (!experienceSelected) {
+                        document.getElementById('experience-error').style.display = 'block';
+                        isValid = false;
+                    } else {
+                        document.getElementById('experience-error').style.display = 'none';
+                    }
+                    
+                    if (!contextSelected) {
+                        document.getElementById('recruitment-context-error').style.display = 'block';
+                        isValid = false;
+                    } else {
+                        document.getElementById('recruitment-context-error').style.display = 'none';
+                    }
+                } else if (stepIndex === 2) {
+                    const contractTypeSelected = currentStepElement.querySelector('input[name="contract-type"]:checked');
+                    
+                    if (!contractTypeSelected) {
+                        document.getElementById('contract-type-error').style.display = 'block';
+                        isValid = false;
+                    } else {
+                        document.getElementById('contract-type-error').style.display = 'none';
+                    }
+                }
+                
+                return isValid;
+            }
+            
+            // Navigation vers l'étape suivante
+            nextButton.addEventListener('click', function() {
+                if (currentStep === totalSteps - 1) {
+                    // Dernière étape, soumettre le formulaire
+                    if (validateStep(currentStep)) {
+                        // Afficher le message de succès
+                        steps.forEach(step => step.style.display = 'none');
+                        successMessage.style.display = 'block';
+                        formActions.style.display = 'none';
+                    }
+                } else {
+                    // Valider l'étape actuelle et passer à la suivante
+                    if (validateStep(currentStep)) {
+                        currentStep++;
+                        showStep(currentStep);
+                    }
+                }
+            });
+            
+            // Navigation vers l'étape précédente
+            prevButton.addEventListener('click', function() {
+                if (currentStep > 0) {
+                    currentStep--;
+                    showStep(currentStep);
+                }
+            });
+            
+            // Gestion des options radio
+            document.querySelectorAll('.radio-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const radio = this.querySelector('input[type="radio"]');
+                    const name = radio.getAttribute('name');
+                    
+                    // Désélectionner toutes les options du même groupe
+                    document.querySelectorAll(`input[name="${name}"]`).forEach(r => {
+                        r.checked = false;
+                        r.closest('.radio-option').classList.remove('selected');
+                    });
+                    
+                    // Sélectionner cette option
+                    radio.checked = true;
+                    this.classList.add('selected');
                 });
             });
             
-            const nextButton = document.querySelector('.btn-primary');
-            nextButton.addEventListener('click', function() {
-                // Here you would handle form validation and step navigation
-                alert('Formulaire soumis avec succès! (Naviguerait vers l\'étape suivante)');
+            // Gestion des infobulles
+            document.querySelectorAll('.info-icon').forEach(icon => {
+                icon.addEventListener('mouseover', function() {
+                    // Affiche le titre comme infobulle
+                });
             });
+            
+            // Initialiser le formulaire
+            showStep(currentStep);
         });
     </script>
 </body>
