@@ -923,7 +923,7 @@
     <!-- Écran de chargement pour la redirection -->
     <div class="loading-overlay" id="loading-overlay">
         <div class="loading-spinner"></div>
-        <div class="loading-text">Redirection vers votre tableau de bord...</div>
+        <div class="loading-text">Redirection vers la sélection de candidats...</div>
     </div>
 
     <footer id="contact">
@@ -1079,14 +1079,14 @@
                 document.getElementById('step2').classList.remove('completed');
             });
             
-            // Fonction pour rediriger vers le tableau de bord
-            function redirectToDashboard() {
+            // Fonction pour rediriger vers la page de sélection des candidats
+            function redirectToCandidateSelection() {
                 // Afficher l'écran de chargement
                 document.getElementById('loading-overlay').classList.add('active');
                 
                 // Redirection après un délai pour voir l'animation
                 setTimeout(() => {
-                    window.location.href = 'company-dashboard.html';
+                    window.location.href = 'recruiter-candidate-selection.html';
                 }, 1500);
             }
             
@@ -1106,7 +1106,7 @@
                         
                         // Redirection après un délai pour laisser le temps de voir la notification
                         setTimeout(() => {
-                            redirectToDashboard();
+                            window.location.href = 'company-dashboard.html';
                         }, 2000);
                     }
                 });
@@ -1165,6 +1165,9 @@
             document.getElementById('questionnaire-form').addEventListener('submit', function(e) {
                 e.preventDefault();
                 
+                // Récupérer la valeur sélectionnée pour "has-position"
+                const hasPositionValue = document.querySelector('input[name="has-position"]:checked')?.value;
+                
                 // Simuler l'envoi du formulaire
                 const submitButton = document.querySelector('.btn-submit');
                 submitButton.disabled = true;
@@ -1175,9 +1178,14 @@
                     submitButton.innerHTML = '<i class="fas fa-check-circle"></i> <span>Soumettre</span>';
                     showNotification('Formulaire soumis avec succès ! Merci pour vos informations.', 'success');
                     
-                    // Redirection vers le tableau de bord
+                    // Redirection vers la page de sélection des candidats si la réponse est "oui"
+                    // Sinon, rediriger vers le tableau de bord
                     setTimeout(() => {
-                        redirectToDashboard();
+                        if (hasPositionValue === 'yes') {
+                            redirectToCandidateSelection();
+                        } else {
+                            window.location.href = 'company-dashboard.html';
+                        }
                     }, 2000);
                 }, 2000);
             });
