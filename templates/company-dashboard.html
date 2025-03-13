@@ -875,6 +875,16 @@
                 </div>
                 <h3>Messagerie</h3>
                 <p>Communiquez avec les candidats et votre équipe de recrutement de manière centralisée</p>
+                
+                <!-- Sous-menu de messagerie -->
+                <div class="messagerie-submenu mt-3" style="z-index: 2; position: relative;">
+                    <a href="messagerie-candidat.html" class="btn btn-sm btn-outline-light mb-2 w-100">
+                        <i class="fas fa-user-graduate me-2"></i> Avec candidats
+                    </a>
+                    <a href="messagerie-interne.html" class="btn btn-sm btn-outline-light w-100">
+                        <i class="fas fa-building me-2"></i> En interne
+                    </a>
+                </div>
             </div>
             
             <!-- 6. Organisation -->
@@ -1021,14 +1031,18 @@
                         badge.style.transform = '';
                     }
                 });
-                
-                item.addEventListener('click', function() {
-                    this.style.transform = 'scale(0.98)';
-                    setTimeout(() => {
-                        this.style.transform = '';
-                    }, 200);
-                });
             });
+            
+            // Gestion du sous-menu messagerie
+            const messagerieItem = document.querySelector('.menu-item:nth-child(5)');
+            if (messagerieItem) {
+                messagerieItem.addEventListener('click', function(e) {
+                    // Si on clique sur un lien du sous-menu, ne pas exécuter l'action du parent
+                    if (e.target.tagName === 'A' || e.target.closest('a')) {
+                        e.stopPropagation();
+                    }
+                });
+            }
             
             // Bouton de retour en haut
             const scrollToTopButton = document.getElementById('scroll-to-top');
