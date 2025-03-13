@@ -1,0 +1,597 @@
+/* Styles améliorés pour la page Opportunités Candidat */
+
+/* Variables globales */
+:root {
+    --card-radius: 12px;
+    --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    --transition-fast: 0.2s ease;
+    --transition-medium: 0.3s ease;
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+}
+
+/* Améliorations générales */
+body {
+    background-color: #f9f9fb;
+}
+
+.candidate-dashboard-section {
+    border-radius: var(--card-radius);
+    box-shadow: var(--card-shadow);
+    margin-bottom: var(--spacing-lg);
+    overflow: hidden;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+}
+
+.section-heading {
+    font-weight: 500;
+    margin-bottom: 0;
+    font-size: 1.4rem;
+}
+
+.section-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.dashboard-btn {
+    padding: 8px 15px;
+    font-size: 0.85rem;
+}
+
+/* Progress tracker */
+.progress-tracker-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0 30px;
+    position: relative;
+    padding: 20px;
+    background-color: var(--white);
+    border-radius: var(--card-radius);
+    box-shadow: var(--card-shadow);
+}
+
+.progress-tracker-container::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50px;
+    right: 50px;
+    height: 2px;
+    background-color: var(--cream-dark);
+    z-index: 1;
+    transform: translateY(-50%);
+}
+
+.progress-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+.step-number {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: var(--cream);
+    border: 2px solid var(--cream-dark);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    margin-bottom: 8px;
+    transition: all var(--transition-medium);
+}
+
+.progress-step.active .step-number {
+    background-color: var(--purple);
+    color: var(--white);
+    border-color: var(--purple);
+}
+
+.step-label {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--gray);
+    text-align: center;
+    max-width: 100px;
+}
+
+.progress-step.active .step-label {
+    color: var(--black);
+    font-weight: 500;
+}
+
+/* Filtres et tri */
+.filter-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    background-color: var(--cream);
+    border-radius: 8px;
+}
+
+.filter-badges {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.filter-badge {
+    padding: 8px 15px;
+    font-size: 0.85rem;
+    border-radius: 20px;
+    transition: all var(--transition-fast);
+    cursor: pointer;
+    background-color: var(--white);
+    border: 1px solid var(--cream-dark);
+}
+
+.filter-badge:hover {
+    background-color: var(--purple-light);
+    color: var(--white);
+    border-color: var(--purple-light);
+}
+
+.filter-badge.active {
+    background-color: var(--purple);
+    color: var(--white);
+    border-color: var(--purple);
+    font-weight: 500;
+}
+
+.filter-sort {
+    position: relative;
+}
+
+.select-wrapper {
+    position: relative;
+}
+
+.select-wrapper i {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: var(--gray);
+}
+
+.form-control {
+    padding: 8px 30px 8px 15px;
+    border-radius: 6px;
+    border: 1px solid var(--cream-dark);
+    background-color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    color: var(--black);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    cursor: pointer;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Cards d'opportunités */
+.opportunities-container {
+    padding: 0;
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.opportunity-card {
+    background-color: var(--white);
+    border-radius: var(--card-radius);
+    padding: 25px;
+    box-shadow: var(--card-shadow);
+    border-left: 4px solid var(--purple);
+    transition: transform var(--transition-medium), box-shadow var(--transition-medium);
+}
+
+.opportunity-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.opportunity-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.opportunity-company {
+    display: flex;
+    align-items: center;
+}
+
+.logo-placeholder {
+    width: 60px;
+    height: 60px;
+    background-color: var(--cream);
+    border-radius: 10px;
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.company-details h3 {
+    font-size: 1.2rem;
+    margin: 0 0 5px 0;
+    font-weight: 600;
+    color: var(--black);
+}
+
+.company-details h4 {
+    font-size: 1.05rem;
+    margin: 0 0 8px 0;
+    font-weight: 500;
+    color: var(--black-light);
+}
+
+.job-info {
+    font-size: 0.9rem;
+    margin: 0;
+    color: var(--gray);
+}
+
+.opportunity-match {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.match-percentage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    background-color: var(--purple);
+    color: var(--white);
+    border-radius: 50%;
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+.match-label {
+    font-size: 0.8rem;
+    color: var(--gray);
+}
+
+/* Status et progression */
+.opportunity-status {
+    margin-bottom: 25px;
+}
+
+.status-info {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+    gap: 10px;
+}
+
+.status-label, .travel-time {
+    font-size: 0.9rem;
+    color: var(--gray);
+}
+
+.map-link {
+    color: var(--purple);
+    text-decoration: none;
+}
+
+.map-link:hover {
+    text-decoration: underline;
+}
+
+.progress-bar-container {
+    height: 6px;
+    background-color: var(--cream-dark);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: var(--purple);
+}
+
+/* Étapes de recrutement */
+.recruitment-stages {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+}
+
+.stage:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 15px;
+    right: -8px;
+    width: 16px;
+    height: 2px;
+    background-color: var(--cream-dark);
+}
+
+.stage.completed:not(:last-child)::after {
+    background-color: var(--purple-light);
+}
+
+.stage-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    margin-bottom: 10px;
+    color: var(--cream-dark);
+    font-size: 1.1rem;
+}
+
+.stage.completed .stage-icon {
+    color: var(--purple);
+}
+
+.stage.active .stage-icon {
+    color: #28a745;
+}
+
+.stage-label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.interviewer {
+    background-color: var(--cream);
+    padding: 10px;
+    border-radius: 6px;
+    margin-top: 8px;
+    width: 100%;
+}
+
+.interviewer p {
+    margin: 0;
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+.interviewer-name {
+    font-weight: 500;
+}
+
+.interviewer-title {
+    color: var(--gray);
+}
+
+.interview-date {
+    margin-top: 5px;
+    color: var(--purple);
+    font-weight: 500;
+}
+
+/* Actions */
+.opportunity-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.primary-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.secondary-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    padding-top: 15px;
+    border-top: 1px solid var(--cream-dark);
+}
+
+.btn {
+    padding: 10px 16px;
+    font-size: 0.9rem;
+    transition: all var(--transition-fast);
+}
+
+.btn-icon-text i {
+    margin-right: 5px;
+}
+
+.notes-container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-left: auto;
+}
+
+.note-input-container {
+    position: relative;
+    flex-grow: 1;
+}
+
+.note-input-container input {
+    padding-right: 40px;
+    min-width: 250px;
+}
+
+.btn-save {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border: none;
+    background: none;
+    padding: 0 12px;
+    color: var(--purple);
+    cursor: pointer;
+    transition: color var(--transition-fast);
+}
+
+.btn-save:hover {
+    color: var(--purple-dark);
+}
+
+/* État vide */
+.no-opportunities {
+    padding: 50px 0;
+}
+
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.empty-state i {
+    font-size: 3rem;
+    color: var(--gray-light);
+    margin-bottom: 20px;
+}
+
+.empty-state h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.empty-state p {
+    color: var(--gray);
+    margin-bottom: 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+.text-nowrap {
+    white-space: nowrap;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .recruitment-stages {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .stage:nth-child(n+4) {
+        margin-top: 20px;
+    }
+    
+    .stage:not(:last-child)::after {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .progress-tracker-container {
+        overflow-x: auto;
+        justify-content: flex-start;
+        padding: 20px 10px;
+        gap: 30px;
+    }
+    
+    .progress-tracker-container::before {
+        left: 10px;
+        right: 10px;
+    }
+    
+    .filter-section {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .filter-sort {
+        width: 100%;
+    }
+    
+    .form-control {
+        width: 100%;
+    }
+    
+    .opportunity-header {
+        flex-direction: column;
+    }
+    
+    .opportunity-match {
+        margin-top: 15px;
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .status-info {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .recruitment-stages {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .recruitment-stages {
+        grid-template-columns: 1fr;
+    }
+    
+    .notes-container {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+    }
+    
+    .note-input-container {
+        width: 100%;
+    }
+    
+    .note-input-container input {
+        width: 100%;
+        min-width: auto;
+    }
+}
