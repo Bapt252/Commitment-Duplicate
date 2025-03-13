@@ -446,6 +446,18 @@
             padding: 0 0.5rem;
         }
 
+        /* Style pour le debugging */
+        .debug-info {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: var(--border-radius);
+            font-family: monospace;
+            white-space: pre-wrap;
+            display: none; /* Caché par défaut */
+        }
+
         @media (max-width: 768px) {
             .header {
                 padding: 1rem;
@@ -901,6 +913,9 @@
                     </div>
                 </div>
                 
+                <!-- Section 4: Situation professionnelle actuelle -->
+                <h2 class="form-section-title">Situation professionnelle actuelle</h2>
+                
                 <div class="form-group">
                     <label class="form-label">
                         Êtes-vous actuellement en poste ?
@@ -1235,12 +1250,40 @@
 
             // Affichage conditionnel pour le statut d'emploi
             document.querySelectorAll('input[name="currently-employed"]').forEach(radio => {
-                radio.addEventListener('change', function() {
-                    const isEmployed = document.getElementById('employed-yes').checked;
-                    document.getElementById('employed-questions').style.display = isEmployed ? 'block' : 'none';
-                    document.getElementById('unemployed-questions').style.display = isEmployed ? 'none' : 'block';
+                radio.addEventListener('click', function() { // Changé 'change' à 'click' pour assurer la réactivité
+                    updateEmploymentStatus();
                 });
             });
+            
+            // Fonction pour mettre à jour l'affichage en fonction du statut d'emploi
+            function updateEmploymentStatus() {
+                const isEmployed = document.getElementById('employed-yes').checked;
+                document.getElementById('employed-questions').style.display = isEmployed ? 'block' : 'none';
+                document.getElementById('unemployed-questions').style.display = isEmployed ? 'none' : 'block';
+                
+                // Réinitialiser les champs de la section non affichée
+                if (isEmployed) {
+                    // Réinitialiser les champs pour les personnes sans emploi
+                    document.querySelectorAll('input[name="unemployed-recruitment-process"]').forEach(radio => {
+                        radio.checked = false;
+                    });
+                    document.querySelectorAll('input[name="end-contract-reason"]').forEach(radio => {
+                        radio.checked = false;
+                    });
+                } else {
+                    // Réinitialiser les champs pour les personnes en poste
+                    document.querySelectorAll('input[name="change-reason"]').forEach(radio => {
+                        radio.checked = false;
+                    });
+                    document.querySelectorAll('input[name="notice-negotiable"]').forEach(radio => {
+                        radio.checked = false;
+                    });
+                    document.querySelectorAll('input[name="recruitment-process"]').forEach(radio => {
+                        radio.checked = false;
+                    });
+                    document.getElementById('notice-period').selectedIndex = 0;
+                }
+            }
 
             // Gestion des options de structure d'entreprise
             document.getElementById('company-any').addEventListener('change', function() {
@@ -1253,10 +1296,19 @@
 
             // Gérer les événements de clic pour les options radio
             document.querySelectorAll('.radio-option').forEach(option => {
-                option.addEventListener('click', function() {
+                option.addEventListener('click', function(e) {
+                    // Ne pas déclencher si on a cliqué directement sur l'input radio
+                    if (e.target.tagName === 'INPUT' && e.target.type === 'radio') {
+                        return;
+                    }
+                    
                     const radio = this.querySelector('input[type="radio"]');
                     if (radio) {
                         radio.checked = true;
+                        
+                        // Déclencher l'événement change manuellement
+                        const event = new Event('change');
+                        radio.dispatchEvent(event);
                         
                         // Mettre à jour le style de l'option sélectionnée
                         const optionGroup = document.querySelectorAll(`input[name="${radio.name}"]`);
@@ -1272,6 +1324,17 @@
                                 }
                             }
                         });
+                        
+                        // Mettre à jour les affichages conditionnels
+                        if (radio.name === 'currently-employed') {
+                            updateEmploymentStatus();
+                        } else if (radio.name === 'sector-preference') {
+                            const showSectorPreferences = document.getElementById('sector-yes').checked;
+                            document.getElementById('sector-preferences').style.display = showSectorPreferences ? 'block' : 'none';
+                        } else if (radio.name === 'unwanted-sectors') {
+                            const showUnwantedSectors = document.getElementById('unwanted-yes').checked;
+                            document.getElementById('unwanted-sector-list').style.display = showUnwantedSectors ? 'block' : 'none';
+                        }
                     }
                 });
             });
@@ -1282,6 +1345,10 @@
                     if (e.target.tagName !== 'INPUT') {
                         const checkbox = this.querySelector('input[type="checkbox"]');
                         checkbox.checked = !checkbox.checked;
+                        
+                        // Déclencher l'événement change manuellement
+                        const event = new Event('change');
+                        checkbox.dispatchEvent(event);
                     }
                     
                     // Mettre à jour le style
