@@ -18,52 +18,79 @@
     <link rel="shortcut icon" href="../static/images/favicon.ico" type="image/x-icon">
     
     <style>
-        /* Styles spécifiques à la page CV - cohérents avec le design système Nexten */
+        /* Styles spécifiques à la page CV - améliorations UI/UX */
         :root {
             --yellow-light: #FFF8D6;
+            --success-color: #10B981;
+            --warning-color: #F59E0B;
+            --danger-color: #EF4444;
+            --progress-bg: #E5E7EB;
+            --transition-default: all 0.3s ease;
+            --border-radius-sm: 6px;
+            --border-radius-md: 8px;
+            --border-radius-lg: 12px;
+            --box-shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --box-shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+            --box-shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
         }
         
+        body {
+            background-color: var(--cream);
+        }
+        
+        /* Amélioration des conteneurs */
         .cv-form-container {
-            background-color: var(--white);
-            border-radius: 8px;
+            background-color: transparent;
+            border-radius: var(--border-radius-lg);
             margin-bottom: 30px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
         
         .cv-section {
             background-color: var(--white);
-            border-radius: 8px;
-            margin-bottom: 20px;
-            padding: 25px;
-            border-top: 1px solid var(--cream-dark);
+            border-radius: var(--border-radius-md);
+            margin-bottom: 24px;
+            padding: 30px;
+            border: none;
+            box-shadow: var(--box-shadow-sm);
+            transition: var(--transition-default);
         }
         
-        .cv-section:first-child {
-            border-top: none;
+        .cv-section:hover {
+            box-shadow: var(--box-shadow-md);
         }
         
         .cv-section-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--cream-dark);
         }
         
         .cv-section-header h3 {
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             font-weight: 500;
             margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         
+        .cv-section-header h3 i {
+            color: var(--purple);
+        }
+        
+        /* Grilles et formulaires améliorés */
         .cv-form-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-            margin-bottom: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+            margin-bottom: 24px;
         }
         
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
         
         .form-group label {
@@ -71,21 +98,24 @@
             margin-bottom: 8px;
             font-weight: 500;
             color: var(--black);
+            font-size: 0.95rem;
         }
         
         .form-control {
             width: 100%;
-            padding: 12px;
+            padding: 14px;
             border: 1px solid var(--cream-dark);
-            border-radius: 4px;
+            border-radius: var(--border-radius-sm);
             font-family: 'Inter', sans-serif;
             font-size: 14px;
-            transition: border-color 0.3s;
+            transition: var(--transition-default);
+            background-color: var(--white);
         }
         
         .form-control:focus {
             border-color: var(--purple);
             outline: none;
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
         }
         
         textarea.form-control {
@@ -93,38 +123,46 @@
             resize: vertical;
         }
         
+        /* Amélioration des checkboxes et radios */
         .form-check {
             display: flex;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            cursor: pointer;
         }
         
         .form-check-input {
-            margin-right: 10px;
+            margin-right: 12px;
+            width: 18px;
+            height: 18px;
+            accent-color: var(--purple);
         }
         
         .radio-options {
             display: flex;
-            gap: 15px;
+            gap: 20px;
         }
         
+        /* Bouton d'ajout amélioré */
         .add-experience-btn {
             display: flex;
             align-items: center;
             justify-content: center;
             width: 100%;
-            padding: 15px;
-            border: 1px dashed var(--cream-dark);
-            border-radius: 8px;
+            padding: 16px;
+            border: 2px dashed var(--cream-dark);
+            border-radius: var(--border-radius-md);
             background: var(--cream);
             color: var(--purple);
             font-weight: 500;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: var(--transition-default);
         }
         
         .add-experience-btn:hover {
-            background-color: var(--cream-dark);
+            background-color: var(--white);
+            border-color: var(--purple-light);
+            transform: translateY(-2px);
         }
         
         .add-experience-btn i {
@@ -132,41 +170,47 @@
             font-size: 18px;
         }
         
+        /* Cartes d'expérience améliorées */
         .experience-card {
             border: 1px solid var(--cream-dark);
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
+            border-radius: var(--border-radius-md);
+            padding: 24px;
+            margin-bottom: 24px;
             position: relative;
-            transition: all 0.3s;
+            transition: var(--transition-default);
             background-color: var(--white);
         }
         
         .experience-card:hover {
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            box-shadow: var(--box-shadow-md);
             border-color: var(--purple-light);
+            transform: translateY(-3px);
         }
         
         .experience-header {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 15px;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--cream-dark);
         }
         
         .experience-header h4 {
             margin: 0;
-            font-weight: 500;
+            font-weight: 600;
             font-size: 1.1rem;
+            color: var(--black);
         }
         
         .experience-actions {
             display: flex;
-            gap: 10px;
+            gap: 12px;
         }
         
         .btn-icon {
-            width: 32px;
-            height: 32px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -176,11 +220,12 @@
             border: 1px solid var(--cream-dark);
             color: var(--gray);
             cursor: pointer;
-            transition: all 0.2s;
+            transition: var(--transition-default);
         }
         
         .btn-icon:hover {
             background-color: var(--cream);
+            transform: scale(1.1);
         }
         
         .btn-icon.edit:hover {
@@ -189,55 +234,63 @@
         }
         
         .btn-icon.delete:hover {
-            color: #dc3545;
-            border-color: #dc3545;
+            color: var(--danger-color);
+            border-color: var(--danger-color);
         }
         
+        /* Suggestions IA améliorées */
         .ai-suggestions {
             background-color: var(--cream);
-            border-left: 3px solid var(--purple);
-            padding: 15px;
-            margin-top: 20px;
-            border-radius: 0 8px 8px 0;
+            border-left: 4px solid var(--purple);
+            padding: 20px;
+            margin-top: 24px;
+            border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0;
+            box-shadow: var(--box-shadow-sm);
         }
         
         .ai-suggestions h4 {
             color: var(--purple);
             margin-top: 0;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
+            font-weight: 600;
         }
         
         .ai-suggestions h4 i {
-            margin-right: 8px;
+            margin-right: 10px;
+            font-size: 1.2rem;
         }
         
         .ai-suggestions ul {
             padding-left: 25px;
-            margin-bottom: 0;
+            margin-bottom: 16px;
         }
         
         .ai-suggestions li {
-            margin-bottom: 8px;
+            margin-bottom: 10px;
+            line-height: 1.5;
         }
         
         .ai-actions {
             display: flex;
             justify-content: flex-end;
-            margin-top: 15px;
-            gap: 10px;
+            margin-top: 16px;
+            gap: 12px;
         }
         
+        /* Améliorations des petits boutons */
         .btn-sm {
             padding: 8px 16px;
             font-size: 13px;
+            border-radius: var(--border-radius-sm);
         }
         
+        /* Barre de progression améliorée */
         .progress-bar-container {
-            height: 8px;
-            background-color: var(--cream-dark);
-            border-radius: 4px;
+            height: 10px;
+            background-color: var(--progress-bg);
+            border-radius: 20px;
             margin: 15px 0;
             overflow: hidden;
         }
@@ -245,10 +298,11 @@
         .progress-bar {
             height: 100%;
             background-color: var(--purple);
-            border-radius: 4px;
-            transition: width 0.3s;
+            border-radius: 20px;
+            transition: width 0.5s ease-in-out;
         }
         
+        /* Status du CV amélioré */
         .cv-status {
             display: flex;
             align-items: center;
@@ -257,18 +311,19 @@
         }
         
         .status-indicator {
-            width: 15px;
-            height: 15px;
+            width: 16px;
+            height: 16px;
             border-radius: 50%;
-            background-color: #28a745;
+            background-color: var(--success-color);
         }
         
         .status-indicator.pending {
-            background-color: var(--yellow);
+            background-color: var(--warning-color);
         }
         
         .status-text {
             font-weight: 500;
+            font-size: 1rem;
         }
         
         .completion-status {
@@ -281,57 +336,72 @@
         .percentage {
             font-weight: 600;
             color: var(--purple);
+            font-size: 1rem;
         }
         
-        /* Tag de compétence */
+        /* Tags de compétences améliorés */
         .skills-container {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 12px;
             margin-top: 15px;
         }
         
         .skill-tag {
             background-color: var(--cream);
-            border-radius: 20px;
-            padding: 6px 12px;
+            border-radius: 30px;
+            padding: 8px 16px;
             font-size: 14px;
             display: inline-flex;
             align-items: center;
-            transition: all 0.2s;
+            transition: var(--transition-default);
+            border: 1px solid transparent;
         }
         
         .skill-tag:hover {
             background-color: var(--cream-dark);
+            border-color: var(--purple-light);
+            transform: translateY(-2px);
         }
         
         .skill-tag i {
             margin-left: 8px;
             cursor: pointer;
             color: var(--gray);
+            transition: var(--transition-default);
         }
         
         .skill-tag i:hover {
-            color: #dc3545;
+            color: var(--danger-color);
+            transform: scale(1.2);
         }
         
         .add-skill {
             display: flex;
-            margin-top: 15px;
+            margin-top: 20px;
+            gap: 12px;
         }
         
         .add-skill input {
             flex: 1;
-            margin-right: 10px;
         }
         
-        /* Progress tracker */
+        /* Tracker de progression amélioré */
         .progress-tracker-container {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
             overflow-x: auto;
-            padding: 10px 0;
+            padding: 20px 10px;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            background-color: var(--white);
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--box-shadow-sm);
+        }
+        
+        .progress-tracker-container::-webkit-scrollbar {
+            display: none;
         }
         
         .progress-step {
@@ -339,7 +409,7 @@
             flex-direction: column;
             align-items: center;
             position: relative;
-            min-width: 110px;
+            min-width: 120px;
         }
         
         .progress-step::before {
@@ -348,7 +418,7 @@
             top: 15px;
             left: -50%;
             width: 100%;
-            height: 2px;
+            height: 3px;
             background-color: var(--cream-dark);
             z-index: 0;
         }
@@ -358,8 +428,8 @@
         }
         
         .step-number {
-            width: 30px;
-            height: 30px;
+            width: 34px;
+            height: 34px;
             border-radius: 50%;
             background-color: var(--cream-dark);
             display: flex;
@@ -369,11 +439,13 @@
             margin-bottom: 10px;
             position: relative;
             z-index: 1;
+            transition: var(--transition-default);
         }
         
         .progress-step.active .step-number {
             background-color: var(--purple);
             color: var(--white);
+            box-shadow: 0 0 0 5px rgba(124, 58, 237, 0.2);
         }
         
         .progress-step.completed .step-number {
@@ -392,9 +464,10 @@
         }
         
         .step-label {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             text-align: center;
             color: var(--gray);
+            transition: var(--transition-default);
         }
         
         .progress-step.active .step-label {
@@ -402,29 +475,94 @@
             font-weight: 500;
         }
         
+        /* En-têtes de section améliorés */
         .section-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--cream-dark);
         }
         
         .section-actions {
             display: flex;
-            gap: 10px;
+            gap: 12px;
         }
         
         .dashboard-btn {
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 8px;
         }
         
-        /* Animations */
+        /* Style des points forts/faibles */
+        .feature-list h4 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
+            font-weight: 500;
+        }
+        
+        .feature-list ul {
+            padding-left: 36px;
+        }
+        
+        .feature-list li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        
+        /* Améliorations responsives */
+        @media (max-width: 768px) {
+            .cv-form-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            
+            .experience-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .experience-actions {
+                align-self: flex-end;
+            }
+            
+            .progress-tracker-container {
+                padding-bottom: 10px;
+            }
+            
+            .progress-step {
+                min-width: 100px;
+            }
+            
+            .step-label {
+                font-size: 0.75rem;
+            }
+            
+            .cv-section {
+                padding: 20px;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .add-skill {
+                flex-direction: column;
+            }
+        }
+        
+        /* Animations améliorées */
         .fade-in {
             opacity: 0;
             transform: translateY(20px);
-            transition: opacity 0.8s, transform 0.8s;
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
         
         .fade-in.visible {
@@ -432,24 +570,105 @@
             transform: translateY(0);
         }
         
-        /* Responsivité */
-        @media (max-width: 768px) {
-            .cv-form-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .experience-header {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .progress-tracker-container {
-                padding-bottom: 5px;
-            }
-            
-            .progress-step {
-                min-width: 80px;
-            }
+        /* Amélioration de l'accessibilité */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+        
+        /* Indicateurs de niveau de langue améliorés */
+        .language-level-indicator {
+            display: flex;
+            gap: 5px;
+            margin-top: 10px;
+        }
+        
+        .level-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--cream-dark);
+        }
+        
+        .level-dot.active {
+            background-color: var(--purple);
+        }
+        
+        /* Style des recommandations */
+        .recommendation-container {
+            margin-top: 16px;
+            background-color: var(--yellow-light);
+            border-radius: var(--border-radius-sm);
+            padding: 16px;
+        }
+        
+        .recommendation-title {
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        
+        /* Tooltips */
+        .tooltip-container {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .tooltip-text {
+            visibility: hidden;
+            width: 200px;
+            background-color: var(--black);
+            color: var(--white);
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 12px;
+            pointer-events: none;
+        }
+        
+        .tooltip-container:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        /* Notification de sauvegarde */
+        .save-notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--success-color);
+            color: white;
+            padding: 12px 20px;
+            border-radius: var(--border-radius-sm);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: var(--box-shadow-md);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: transform 0.3s, opacity 0.3s;
+            z-index: 1000;
+        }
+        
+        .save-notification.show {
+            transform: translateY(0);
+            opacity: 1;
         }
     </style>
 </head>
@@ -491,16 +710,16 @@
         
         <!-- Progress tracker -->
         <div class="progress-tracker-container fade-in">
-            <div class="progress-step">
-                <div class="step-number">1</div>
+            <div class="progress-step completed">
+                <div class="step-number"><i class="fas fa-check"></i></div>
                 <div class="step-label">Mes opportunités</div>
             </div>
-            <div class="progress-step">
-                <div class="step-number">2</div>
+            <div class="progress-step completed">
+                <div class="step-number"><i class="fas fa-check"></i></div>
                 <div class="step-label">Mes offres reçues</div>
             </div>
-            <div class="progress-step">
-                <div class="step-number">3</div>
+            <div class="progress-step completed">
+                <div class="step-number"><i class="fas fa-check"></i></div>
                 <div class="step-label">Postuler en un clic</div>
             </div>
             <div class="progress-step active">
@@ -522,7 +741,9 @@
             <div class="section-header">
                 <h2 class="section-heading">Travailler mon CV</h2>
                 <div class="section-actions">
-                    <a href="candidate-dashboard.html?email=jean-olivier.penin%40b-acceptance.com&password=%C3%A9" class="btn btn-sm btn-outline dashboard-btn"><i class="fas fa-th-large"></i> Tableau de bord</a>
+                    <a href="candidate-dashboard.html?email=jean-olivier.penin%40b-acceptance.com&password=%C3%A9" class="btn btn-sm btn-outline dashboard-btn">
+                        <i class="fas fa-th-large"></i> Tableau de bord
+                    </a>
                 </div>
             </div>
             
@@ -530,7 +751,7 @@
                 <!-- Introduction et Score du CV -->
                 <div class="cv-section">
                     <div class="cv-section-header">
-                        <h3>Analyse de votre CV</h3>
+                        <h3><i class="fas fa-chart-line"></i> Analyse de votre CV</h3>
                         <button class="btn btn-primary"><i class="fas fa-cloud-upload-alt"></i> Mettre à jour mon CV</button>
                     </div>
                     
@@ -548,9 +769,14 @@
                         <div class="progress-bar" style="width: 75%"></div>
                     </div>
                     
+                    <div class="recommendation-container">
+                        <div class="recommendation-title"><i class="fas fa-magic"></i> Recommandation IA</div>
+                        <p>Ajoutez davantage de réalisations concrètes et de résultats chiffrés à vos expériences pour augmenter vos chances de décrocher un entretien.</p>
+                    </div>
+                    
                     <div class="cv-form-grid" style="margin-top: 25px;">
-                        <div>
-                            <h4><i class="fas fa-check-circle" style="color: var(--purple);"></i> Points forts</h4>
+                        <div class="feature-list">
+                            <h4><i class="fas fa-check-circle" style="color: var(--success-color);"></i> Points forts</h4>
                             <ul>
                                 <li>Structure claire et organisée</li>
                                 <li>Mise en avant des compétences techniques</li>
@@ -558,8 +784,8 @@
                             </ul>
                         </div>
                         
-                        <div>
-                            <h4><i class="fas fa-exclamation-circle" style="color: var(--yellow);"></i> Points à améliorer</h4>
+                        <div class="feature-list">
+                            <h4><i class="fas fa-exclamation-circle" style="color: var(--warning-color);"></i> Points à améliorer</h4>
                             <ul>
                                 <li>Ajouter des résultats quantifiables</li>
                                 <li>Détailler davantage les missions</li>
@@ -572,9 +798,10 @@
                 <!-- Expérience professionnelle -->
                 <div class="cv-section">
                     <div class="cv-section-header">
-                        <h3>L'expérience</h3>
-                        <button class="btn btn-sm btn-outline">
+                        <h3><i class="fas fa-briefcase"></i> Expérience professionnelle</h3>
+                        <button class="btn btn-sm btn-outline tooltip-container">
                             <i class="fas fa-question-circle"></i> Conseils
+                            <span class="tooltip-text">Ajoutez des détails sur vos responsabilités et résultats</span>
                         </button>
                     </div>
                     
@@ -583,8 +810,12 @@
                         <div class="experience-header">
                             <h4>Chef de projet marketing digital</h4>
                             <div class="experience-actions">
-                                <button class="btn-icon edit"><i class="fas fa-pencil-alt"></i></button>
-                                <button class="btn-icon delete"><i class="fas fa-trash-alt"></i></button>
+                                <button class="btn-icon edit" aria-label="Modifier cette expérience">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </button>
+                                <button class="btn-icon delete" aria-label="Supprimer cette expérience">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
                             </div>
                         </div>
                         
@@ -655,9 +886,10 @@
                 <!-- Formation et diplômes -->
                 <div class="cv-section">
                     <div class="cv-section-header">
-                        <h3>Certificats / Diplômes</h3>
-                        <button class="btn btn-sm btn-outline">
+                        <h3><i class="fas fa-graduation-cap"></i> Certificats & Diplômes</h3>
+                        <button class="btn btn-sm btn-outline tooltip-container">
                             <i class="fas fa-question-circle"></i> Conseils
+                            <span class="tooltip-text">Mettez en avant vos spécialisations et projets académiques</span>
                         </button>
                     </div>
                     
@@ -665,8 +897,12 @@
                         <div class="experience-header">
                             <h4>Master Marketing Digital</h4>
                             <div class="experience-actions">
-                                <button class="btn-icon edit"><i class="fas fa-pencil-alt"></i></button>
-                                <button class="btn-icon delete"><i class="fas fa-trash-alt"></i></button>
+                                <button class="btn-icon edit" aria-label="Modifier ce diplôme">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </button>
+                                <button class="btn-icon delete" aria-label="Supprimer ce diplôme">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
                             </div>
                         </div>
                         
@@ -702,9 +938,10 @@
                 <!-- Compétences -->
                 <div class="cv-section">
                     <div class="cv-section-header">
-                        <h3>Compétences</h3>
-                        <button class="btn btn-sm btn-outline">
+                        <h3><i class="fas fa-tools"></i> Compétences</h3>
+                        <button class="btn btn-sm btn-outline tooltip-container">
                             <i class="fas fa-question-circle"></i> Conseils
+                            <span class="tooltip-text">Ajoutez des compétences pertinentes pour les postes ciblés</span>
                         </button>
                     </div>
                     
@@ -738,14 +975,14 @@
                 <!-- Langues -->
                 <div class="cv-section">
                     <div class="cv-section-header">
-                        <h3>Langues</h3>
+                        <h3><i class="fas fa-language"></i> Langues</h3>
                     </div>
                     
                     <div class="cv-form-grid">
                         <div class="form-group">
                             <label>Français</label>
                             <select class="form-control">
-                                <option>Langue maternelle</option>
+                                <option selected>Langue maternelle</option>
                                 <option>C2 - Maîtrise</option>
                                 <option>C1 - Avancé</option>
                                 <option>B2 - Intermédiaire supérieur</option>
@@ -753,6 +990,14 @@
                                 <option>A2 - Élémentaire</option>
                                 <option>A1 - Débutant</option>
                             </select>
+                            <div class="language-level-indicator">
+                                <div class="level-dot active"></div>
+                                <div class="level-dot active"></div>
+                                <div class="level-dot active"></div>
+                                <div class="level-dot active"></div>
+                                <div class="level-dot active"></div>
+                                <div class="level-dot active"></div>
+                            </div>
                         </div>
                         
                         <div class="form-group">
@@ -766,6 +1011,14 @@
                                 <option>A2 - Élémentaire</option>
                                 <option>A1 - Débutant</option>
                             </select>
+                            <div class="language-level-indicator">
+                                <div class="level-dot active"></div>
+                                <div class="level-dot active"></div>
+                                <div class="level-dot active"></div>
+                                <div class="level-dot active"></div>
+                                <div class="level-dot active"></div>
+                                <div class="level-dot active"></div>
+                            </div>
                         </div>
                     </div>
                     
@@ -776,12 +1029,17 @@
                 
                 <!-- Actions finales -->
                 <div class="cv-section" style="text-align: center;">
-                    <button class="btn btn-primary">Enregistrer mon CV</button>
-                    <button class="btn btn-outline">Prévisualiser</button>
-                    <button class="btn btn-outline">Exporter en PDF</button>
+                    <button class="btn btn-primary" id="save-cv"><i class="fas fa-save"></i> Enregistrer mon CV</button>
+                    <button class="btn btn-outline"><i class="fas fa-eye"></i> Prévisualiser</button>
+                    <button class="btn btn-outline"><i class="fas fa-file-pdf"></i> Exporter en PDF</button>
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- Notification de sauvegarde -->
+    <div class="save-notification" id="save-notification">
+        <i class="fas fa-check-circle"></i> Votre CV a été enregistré avec succès !
     </div>
 
     <footer id="contact">
@@ -886,6 +1144,125 @@
                         behavior: 'smooth'
                     });
                 });
+            }
+            
+            // Notification de sauvegarde
+            const saveButton = document.getElementById('save-cv');
+            const saveNotification = document.getElementById('save-notification');
+            
+            if (saveButton && saveNotification) {
+                saveButton.addEventListener('click', function() {
+                    saveNotification.classList.add('show');
+                    
+                    setTimeout(function() {
+                        saveNotification.classList.remove('show');
+                    }, 3000);
+                });
+            }
+            
+            // Amélioration de l'expérience utilisateur pour les compétences
+            const skillTags = document.querySelectorAll('.skill-tag');
+            
+            skillTags.forEach(function(tag) {
+                const deleteIcon = tag.querySelector('i.fa-times-circle');
+                const addIcon = tag.querySelector('i.fa-plus-circle');
+                
+                if (deleteIcon) {
+                    deleteIcon.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        tag.style.opacity = '0';
+                        setTimeout(function() {
+                            tag.remove();
+                        }, 300);
+                    });
+                }
+                
+                if (addIcon) {
+                    addIcon.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        const skillsContainer = document.querySelector('.skills-container');
+                        const newTag = document.createElement('div');
+                        newTag.className = 'skill-tag';
+                        newTag.innerHTML = tag.textContent.trim() + ' <i class="fas fa-times-circle"></i>';
+                        
+                        // Animation d'ajout
+                        newTag.style.opacity = '0';
+                        newTag.style.transform = 'translateY(10px)';
+                        
+                        skillsContainer.appendChild(newTag);
+                        
+                        setTimeout(function() {
+                            newTag.style.opacity = '1';
+                            newTag.style.transform = 'translateY(0)';
+                        }, 10);
+                        
+                        // Ajouter l'événement de suppression au nouveau tag
+                        const newDeleteIcon = newTag.querySelector('i.fa-times-circle');
+                        if (newDeleteIcon) {
+                            newDeleteIcon.addEventListener('click', function(e) {
+                                e.stopPropagation();
+                                newTag.style.opacity = '0';
+                                setTimeout(function() {
+                                    newTag.remove();
+                                }, 300);
+                            });
+                        }
+                    });
+                }
+            });
+            
+            // Ajout de nouvelles compétences
+            const addSkillForm = document.querySelector('.add-skill');
+            if (addSkillForm) {
+                const skillInput = addSkillForm.querySelector('input');
+                const addButton = addSkillForm.querySelector('button');
+                
+                addButton.addEventListener('click', function() {
+                    addSkill();
+                });
+                
+                skillInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        addSkill();
+                    }
+                });
+                
+                function addSkill() {
+                    const skillName = skillInput.value.trim();
+                    if (skillName) {
+                        const skillsContainer = document.querySelector('.skills-container');
+                        const newTag = document.createElement('div');
+                        newTag.className = 'skill-tag';
+                        newTag.innerHTML = skillName + ' <i class="fas fa-times-circle"></i>';
+                        
+                        // Animation d'ajout
+                        newTag.style.opacity = '0';
+                        newTag.style.transform = 'translateY(10px)';
+                        
+                        skillsContainer.appendChild(newTag);
+                        
+                        setTimeout(function() {
+                            newTag.style.opacity = '1';
+                            newTag.style.transform = 'translateY(0)';
+                        }, 10);
+                        
+                        // Vider l'input
+                        skillInput.value = '';
+                        
+                        // Ajouter l'événement de suppression au nouveau tag
+                        const newDeleteIcon = newTag.querySelector('i.fa-times-circle');
+                        if (newDeleteIcon) {
+                            newDeleteIcon.addEventListener('click', function(e) {
+                                e.stopPropagation();
+                                newTag.style.opacity = '0';
+                                setTimeout(function() {
+                                    newTag.remove();
+                                }, 300);
+                            });
+                        }
+                    }
+                }
             }
         });
     </script>
