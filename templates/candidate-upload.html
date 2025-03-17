@@ -434,6 +434,16 @@
             font-size: 0.875rem;
         }
 
+        .error-message {
+            display: none;
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+
         @media (max-width: 768px) {
             .header {
                 padding: 1rem;
@@ -510,8 +520,8 @@
             <div class="upload-container" id="uploadContainer">
                 <i class="fas fa-file-upload upload-icon"></i>
                 <p class="upload-text">Glissez votre CV ici ou cliquez pour parcourir</p>
-                <p class="upload-hint">Formats acceptés: PDF, DOCX, DOC (taille max: 5MB)</p>
-                <input type="file" class="file-input" id="cvFile" accept=".pdf,.doc,.docx">
+                <p class="upload-hint">Formats acceptés: PDF, DOCX, DOC, JPG, PNG (taille max: 10MB)</p>
+                <input type="file" class="file-input" id="cvFile" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
             </div>
             
             <div class="file-info" id="fileInfo">
@@ -572,6 +582,11 @@
                 Analyse terminée avec succès!
             </div>
             
+            <div class="error-message" id="errorMessage">
+                <i class="fas fa-exclamation-circle"></i>
+                <span id="errorText">Une erreur est survenue lors de l'analyse.</span>
+            </div>
+            
             <div class="or-divider">
                 <div class="or-divider-text">OU</div>
             </div>
@@ -580,7 +595,7 @@
             
             <div class="form-actions">
                 <button type="button" class="btn btn-outline" id="skipBtn">Passer cette étape</button>
-                <button type="button" class="btn btn-primary" id="nextBtn" disabled>Continuer</button>
+                <button type="button" class="btn btn-primary" id="nextBtn">Continuer</button>
             </div>
         </div>
     </div>
@@ -598,9 +613,14 @@
             const loadingIndicator = document.getElementById('loadingIndicator');
             const parsedData = document.getElementById('parsedData');
             const successMessage = document.getElementById('successMessage');
+            const errorMessage = document.getElementById('errorMessage');
+            const errorText = document.getElementById('errorText');
             const nextBtn = document.getElementById('nextBtn');
             const skipBtn = document.getElementById('skipBtn');
             const stepperProgress = document.querySelector('.stepper-progress');
+            
+            // Par défaut, le bouton Continuer est activé
+            nextBtn.disabled = false;
             
             // Mise à jour de la barre de progression
             stepperProgress.style.width = '0%';
@@ -612,8 +632,8 @@
             
             uploadContainer.addEventListener('dragover', function(e) {
                 e.preventDefault();
-                this.style.borderColor = var(--primary-color);
-                this.style.backgroundColor = var(--primary-light);
+                this.style.borderColor = '#7c4dff';
+                this.style.backgroundColor = '#e8e3ff';
             });
             
             uploadContainer.addEventListener('dragleave', function() {
@@ -643,42 +663,72 @@
             });
             
             skipBtn.addEventListener('click', function() {
+                // Aucun CV chargé, on passe à l'étape suivante sans données
+                localStorage.removeItem('parsedCvData');
                 window.location.href = 'candidate-questionnaire.html';
             });
             
             nextBtn.addEventListener('click', function() {
-                // Simulons le stockage des données extraites
-                const parsedData = {
-                    name: document.getElementById('parsedName').textContent,
-                    jobTitle: document.getElementById('parsedJobTitle').textContent,
-                    email: document.getElementById('parsedEmail').textContent,
-                    phone: document.getElementById('parsedPhone').textContent,
-                    skills: document.getElementById('parsedSkills').textContent,
-                    experience: document.getElementById('parsedExperience').textContent
-                };
+                if (fileInfo.style.display === 'flex' && parsedData.style.display === 'block') {
+                    // Un CV a été analysé, on stocke les données
+                    const parsedData = {
+                        name: document.getElementById('parsedName').textContent,
+                        jobTitle: document.getElementById('parsedJobTitle').textContent,
+                        email: document.getElementById('parsedEmail').textContent,
+                        phone: document.getElementById('parsedPhone').textContent,
+                        skills: document.getElementById('parsedSkills').textContent,
+                        experience: document.getElementById('parsedExperience').textContent
+                    };
+                    
+                    // Stockage local des données
+                    localStorage.setItem('parsedCvData', JSON.stringify(parsedData));
+                } else {
+                    // Aucun CV analysé, on continue sans données
+                    localStorage.removeItem('parsedCvData');
+                }
                 
-                // Stockage local des données (à adapter selon vos besoins)
-                localStorage.setItem('parsedCvData', JSON.stringify(parsedData));
-                
-                // Redirection vers l'étape suivante
+                // Redirection vers l'étape suivante dans tous les cas
                 window.location.href = 'candidate-questionnaire.html';
             });
             
             // Fonctions
             function handleFile(file) {
-                // Vérification du type de fichier
-                const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+                // Liste étendue des types de fichiers acceptés
+                const allowedTypes = [
+                    'application/pdf',                                                // PDF
+                    'application/msword',                                             // DOC
+                    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',  // DOCX
+                    'image/jpeg',                                                     // JPG, JPEG
+                    'image/png'                                                       // PNG
+                ];
                 
-                if (!allowedTypes.includes(file.type)) {
-                    alert('Type de fichier non pris en charge. Veuillez charger un fichier PDF, DOC ou DOCX.');
+                // Vérification basée sur l'extension si le type MIME n'est pas reconnu
+                const fileExtension = file.name.split('.').pop().toLowerCase();
+                const allowedExtensions = ['pdf', 'doc', 'docx', 'jpg', 'jpeg', 'png'];
+                
+                let isAllowedType = allowedTypes.includes(file.type) || allowedExtensions.includes(fileExtension);
+                
+                if (!isAllowedType) {
+                    errorText.textContent = 'Type de fichier non pris en charge. Veuillez charger un fichier PDF, DOC, DOCX, JPG ou PNG.';
+                    errorMessage.style.display = 'block';
+                    setTimeout(() => {
+                        errorMessage.style.display = 'none';
+                    }, 5000);
                     return;
                 }
                 
-                // Vérification de la taille du fichier (max 5MB)
-                if (file.size > 5 * 1024 * 1024) {
-                    alert('La taille du fichier dépasse la limite de 5MB.');
+                // Vérification de la taille du fichier (max 10MB)
+                if (file.size > 10 * 1024 * 1024) {
+                    errorText.textContent = 'La taille du fichier dépasse la limite de 10MB.';
+                    errorMessage.style.display = 'block';
+                    setTimeout(() => {
+                        errorMessage.style.display = 'none';
+                    }, 5000);
                     return;
                 }
+                
+                // Masquer message d'erreur s'il était affiché
+                errorMessage.style.display = 'none';
                 
                 // Affichage des informations sur le fichier
                 fileName.textContent = file.name;
@@ -694,11 +744,12 @@
                 // Simulation d'un délai pour l'analyse
                 setTimeout(function() {
                     loadingIndicator.style.display = 'none';
+                    
+                    // Analyse réussie pour tous les types de fichiers
                     parsedData.style.display = 'block';
                     successMessage.style.display = 'block';
-                    nextBtn.disabled = false;
                     
-                    // Simulation des données extraites (à remplacer par votre logique réelle)
+                    // Simulation des données extraites
                     simulateParsedData();
                 }, 2000);
             }
@@ -709,7 +760,7 @@
                 loadingIndicator.style.display = 'none';
                 parsedData.style.display = 'none';
                 successMessage.style.display = 'none';
-                nextBtn.disabled = true;
+                errorMessage.style.display = 'none';
                 stepperProgress.style.width = '0%';
             }
             
@@ -724,7 +775,7 @@
             }
             
             function simulateParsedData() {
-                // Simulation de données extraites d'un CV (à remplacer par votre logique réelle)
+                // Simulation de données extraites d'un CV
                 const names = ['Jean Dupont', 'Marie Dubois', 'Thomas Martin', 'Sophie Lefèvre', 'Alexandre Moreau'];
                 const jobTitles = ['Développeur Full-Stack', 'Développeur Front-End', 'Ingénieur Logiciel', 'Designer UX/UI', 'Chef de Projet IT'];
                 const skills = [
