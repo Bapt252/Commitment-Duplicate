@@ -557,6 +557,16 @@
             100% { transform: rotate(360deg); }
         }
         
+        /* Styles pour les sous-questions sur le temps de trajet */
+        #transport-time-questions {
+            margin-top: 15px;
+            margin-left: 25px;
+        }
+        
+        #transport-time-questions .form-group {
+            margin-bottom: 15px;
+        }
+        
         @media (max-width: 768px) {
             .stepper {
                 flex-direction: column;
@@ -694,21 +704,7 @@
                         <h2 class="form-section-title">Mobilité et préférences</h2>
                         
                         <div class="form-group">
-                            <label for="commute-time" class="form-label required">3) Combien de temps de trajet êtes-vous prêt à faire ?</label>
-                            <select id="commute-time" name="commute-time" class="form-control" required>
-                                <option value="">Sélectionnez une durée</option>
-                                <option value="10">10 minutes</option>
-                                <option value="20">20 minutes</option>
-                                <option value="30">30 minutes</option>
-                                <option value="45">45 minutes</option>
-                                <option value="60">1 heure</option>
-                                <option value="90">1 heure 30</option>
-                                <option value="120">2 heures</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label required">4) Comment vous déplacez-vous ? (plusieurs choix possibles)</label>
+                            <label class="form-label required">3) Comment vous déplacez-vous ? (plusieurs choix possibles)</label>
                             <div class="checkbox-group">
                                 <label class="checkbox-option">
                                     <input type="checkbox" name="transport-method" value="public-transport">
@@ -731,16 +727,19 @@
                                     À pied
                                 </label>
                             </div>
+                            
+                            <!-- Conteneur pour les questions dynamiques sur le temps de trajet -->
+                            <div id="transport-time-questions" style="display: none;"></div>
                         </div>
                         
                         <div class="form-group">
-                            <label for="address" class="form-label required">5) Adresse exacte</label>
+                            <label for="address" class="form-label required">4) Adresse exacte</label>
                             <textarea id="address" name="address" class="form-control" required placeholder="Votre adresse complète (obligatoire pour simuler les temps de trajet)"></textarea>
                             <small class="text-muted">Nous utiliserons cette adresse pour calculer le temps de trajet vers les entreprises</small>
                         </div>
                         
                         <div class="form-group">
-                            <label for="office-preference" class="form-label required">8) Préférez-vous un environnement :</label>
+                            <label for="office-preference" class="form-label required">5) Préférez-vous un environnement :</label>
                             <div class="radio-group">
                                 <label class="radio-option">
                                     <input type="radio" name="office-preference" value="open-space" required>
@@ -839,7 +838,7 @@
                         </div>
                         
                         <div class="form-group">
-                            <label class="form-label">9) Avez-vous une préférence pour un secteur d'activité ?</label>
+                            <label class="form-label">8) Avez-vous une préférence pour un secteur d'activité ?</label>
                             <div class="radio-group">
                                 <label class="radio-option">
                                     <input type="radio" name="has-sector-preference" value="yes" onchange="toggleSectorPreference(this)">
@@ -911,7 +910,7 @@
                         </div>
                         
                         <div class="form-group">
-                            <label for="salary-range" class="form-label required">10) Quelle est votre fourchette de rémunération ?</label>
+                            <label for="salary-range" class="form-label required">9) Quelle est votre fourchette de rémunération ?</label>
                             <input type="text" id="salary-range" name="salary-range" class="form-control" required placeholder="Ex: 35K€ - 45K€ brut annuel">
                         </div>
                         
@@ -932,7 +931,7 @@
                         <h2 class="form-section-title">Disponibilité et situation actuelle</h2>
                         
                         <div class="form-group">
-                            <label for="availability" class="form-label required">11) Quand recherchez-vous à prendre un poste en main ?</label>
+                            <label for="availability" class="form-label required">10) Quand recherchez-vous à prendre un poste en main ?</label>
                             <div class="radio-group">
                                 <label class="radio-option">
                                     <input type="radio" name="availability" value="immediate" required>
@@ -958,7 +957,7 @@
                         </div>
                         
                         <div class="form-group">
-                            <label class="form-label required">12) Êtes-vous actuellement en poste ?</label>
+                            <label class="form-label required">11) Êtes-vous actuellement en poste ?</label>
                             <div class="radio-group">
                                 <label class="radio-option">
                                     <input type="radio" name="currently-employed" value="yes" onchange="toggleEmploymentStatus(this)" required>
@@ -1239,6 +1238,62 @@
                 particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
                 heroParticles.appendChild(particle);
             }
+            
+            // Gestion des moyens de transport et des questions sur le temps de trajet
+            const transportCheckboxes = document.querySelectorAll('input[name="transport-method"]');
+            const transportTimeQuestionsContainer = document.getElementById('transport-time-questions');
+            
+            // Définir les libellés pour chaque moyen de transport
+            const transportLabels = {
+                'public-transport': 'transports en commun',
+                'vehicle': 'véhicule personnel',
+                'bike': 'vélo',
+                'walking': 'à pied'
+            };
+            
+            // Fonction pour mettre à jour les questions sur le temps de trajet
+            function updateTransportTimeQuestions() {
+                transportTimeQuestionsContainer.innerHTML = ''; // Effacer les sous-questions existantes
+                let hasSelectedTransport = false;
+                
+                // Pour chaque moyen de transport coché, ajouter une sous-question
+                transportCheckboxes.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        hasSelectedTransport = true;
+                        const transportType = checkbox.value;
+                        const transportLabel = transportLabels[transportType];
+                        
+                        const subQuestionDiv = document.createElement('div');
+                        subQuestionDiv.className = 'form-group';
+                        
+                        subQuestionDiv.innerHTML = `
+                            <label for="commute-time-${transportType}" class="form-label required">
+                                Combien de temps de trajet êtes-vous prêt à faire en ${transportLabel} ?
+                            </label>
+                            <select id="commute-time-${transportType}" name="commute-time-${transportType}" class="form-control" required>
+                                <option value="">Sélectionnez une durée</option>
+                                <option value="10">10 minutes</option>
+                                <option value="20">20 minutes</option>
+                                <option value="30">30 minutes</option>
+                                <option value="45">45 minutes</option>
+                                <option value="60">1 heure</option>
+                                <option value="90">1 heure 30</option>
+                                <option value="120">2 heures</option>
+                            </select>
+                        `;
+                        
+                        transportTimeQuestionsContainer.appendChild(subQuestionDiv);
+                    }
+                });
+                
+                // Afficher ou masquer le conteneur en fonction de la présence de sous-questions
+                transportTimeQuestionsContainer.style.display = hasSelectedTransport ? 'block' : 'none';
+            }
+            
+            // Ajouter des écouteurs d'événements pour les cases à cocher
+            transportCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', updateTransportTimeQuestions);
+            });
             
             // Gestion des étapes
             const stepperProgress = document.getElementById('stepper-progress');
