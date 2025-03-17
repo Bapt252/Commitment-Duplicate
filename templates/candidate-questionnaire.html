@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Commitment - Questionnaire Candidat</title>
+    <title>Nexten - Questionnaire Candidat</title>
     
     <!-- CSS -->
     <link rel="stylesheet" href="../static/styles/nexten-modern-interactive.css">
@@ -70,7 +70,7 @@
             align-items: center;
             position: relative;
             z-index: 3;
-            width: 20%; /* 5 étapes au lieu de 3 dans le questionnaire client */
+            width: 25%; /* 4 étapes */
         }
 
         .step-circle {
@@ -411,6 +411,48 @@
             box-shadow: 0 8px 25px rgba(124, 58, 237, 0.4);
         }
 
+        /* Priorités de motivation - drag and drop */
+        .motivation-priorities {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .motivation-item {
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: var(--cream);
+            border-radius: 8px;
+            cursor: move;
+            position: relative;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .motivation-item:hover {
+            background-color: var(--cream-dark);
+        }
+
+        .drag-handle {
+            color: var(--gray);
+            margin-right: 10px;
+            cursor: move;
+        }
+
+        .motivation-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background-color: var(--purple);
+            border-radius: 50%;
+            color: white;
+            font-weight: 600;
+            margin-right: 12px;
+        }
+
         /* Notification */
         .notification {
             position: fixed;
@@ -558,7 +600,7 @@
     <header>
         <div class="container">
             <div class="logo">
-                Commit<span>ment</span>
+                Nex<span>ten</span>
             </div>
             
             <button class="menu-toggle" aria-label="Menu principal">
@@ -585,7 +627,7 @@
             <div class="hero-content">
                 <h1>Questionnaire Candidat</h1>
                 <p class="hero-subtitle">
-                    Merci de compléter ce questionnaire pour nous aider à mieux comprendre votre profil, vos compétences et vos attentes professionnelles.
+                    Merci de compléter ce questionnaire pour nous aider à mieux comprendre votre profil et vos attentes professionnelles.
                 </p>
             </div>
         </div>
@@ -605,22 +647,17 @@
                     
                     <div class="step" id="step2">
                         <div class="step-circle">2</div>
-                        <div class="step-label">Expérience professionnelle</div>
+                        <div class="step-label">Mobilité et préférences</div>
                     </div>
                     
                     <div class="step" id="step3">
                         <div class="step-circle">3</div>
-                        <div class="step-label">Formation</div>
+                        <div class="step-label">Motivations et secteurs</div>
                     </div>
                     
                     <div class="step" id="step4">
                         <div class="step-circle">4</div>
-                        <div class="step-label">Motivations</div>
-                    </div>
-                    
-                    <div class="step" id="step5">
-                        <div class="step-circle">5</div>
-                        <div class="step-label">Informations complémentaires</div>
+                        <div class="step-label">Disponibilité et situation</div>
                     </div>
                 </div>
                 
@@ -630,28 +667,14 @@
                         <h2 class="form-section-title">Informations personnelles</h2>
                         
                         <div class="form-group">
-                            <label for="full-name" class="form-label required">Nom complet</label>
+                            <label for="full-name" class="form-label required">1) Nom Prénom</label>
                             <input type="text" id="full-name" name="full-name" class="form-control" required>
                         </div>
                         
                         <div class="form-group">
-                            <label for="email" class="form-label required">Email</label>
-                            <input type="email" id="email" name="email" class="form-control" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="phone" class="form-label required">Téléphone</label>
-                            <input type="tel" id="phone" name="phone" class="form-control" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="address" class="form-label">Adresse</label>
-                            <textarea id="address" name="address" class="form-control"></textarea>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="birth-date" class="form-label">Date de naissance</label>
-                            <input type="date" id="birth-date" name="birth-date" class="form-control">
+                            <label for="job-title" class="form-label required">2) Intitulé de poste souhaité</label>
+                            <input type="text" id="job-title" name="job-title" class="form-control" required>
+                            <small class="text-muted">Nous proposerons des intitulés intelligents en fonction de votre CV.</small>
                         </div>
                         
                         <div class="form-actions">
@@ -666,39 +689,75 @@
                         </div>
                     </div>
                     
-                    <!-- ÉTAPE 2 : EXPÉRIENCE PROFESSIONNELLE -->
+                    <!-- ÉTAPE 2 : MOBILITÉ ET PRÉFÉRENCES -->
                     <div class="form-step" id="form-step2">
-                        <h2 class="form-section-title">Expérience professionnelle</h2>
+                        <h2 class="form-section-title">Mobilité et préférences</h2>
                         
                         <div class="form-group">
-                            <label for="current-position" class="form-label required">Poste actuel</label>
-                            <input type="text" id="current-position" name="current-position" class="form-control" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="current-company" class="form-label required">Entreprise actuelle</label>
-                            <input type="text" id="current-company" name="current-company" class="form-control" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="experience-years" class="form-label required">Années d'expérience</label>
-                            <select id="experience-years" name="experience-years" class="form-control" required>
-                                <option value="">Sélectionnez votre expérience</option>
-                                <option value="0-2">0-2 ans</option>
-                                <option value="3-5">3-5 ans</option>
-                                <option value="6-10">6-10 ans</option>
-                                <option value="10+">Plus de 10 ans</option>
+                            <label for="commute-time" class="form-label required">3) Combien de temps de trajet êtes-vous prêt à faire ?</label>
+                            <select id="commute-time" name="commute-time" class="form-control" required>
+                                <option value="">Sélectionnez une durée</option>
+                                <option value="10">10 minutes</option>
+                                <option value="20">20 minutes</option>
+                                <option value="30">30 minutes</option>
+                                <option value="45">45 minutes</option>
+                                <option value="60">1 heure</option>
+                                <option value="90">1 heure 30</option>
+                                <option value="120">2 heures</option>
                             </select>
                         </div>
                         
                         <div class="form-group">
-                            <label for="skills" class="form-label required">Compétences principales</label>
-                            <textarea id="skills" name="skills" class="form-control" required placeholder="Listez vos compétences principales, séparées par des virgules"></textarea>
+                            <label class="form-label required">4) Comment vous déplacez-vous ? (plusieurs choix possibles)</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-option">
+                                    <input type="checkbox" name="transport-method" value="public-transport">
+                                    <span class="checkbox-checkmark"></span>
+                                    Transports en commun
+                                </label>
+                                <label class="checkbox-option">
+                                    <input type="checkbox" name="transport-method" value="vehicle">
+                                    <span class="checkbox-checkmark"></span>
+                                    Véhicule personnel
+                                </label>
+                                <label class="checkbox-option">
+                                    <input type="checkbox" name="transport-method" value="bike">
+                                    <span class="checkbox-checkmark"></span>
+                                    Vélo
+                                </label>
+                                <label class="checkbox-option">
+                                    <input type="checkbox" name="transport-method" value="walking">
+                                    <span class="checkbox-checkmark"></span>
+                                    À pied
+                                </label>
+                            </div>
                         </div>
                         
                         <div class="form-group">
-                            <label for="achievements" class="form-label">Réalisations significatives</label>
-                            <textarea id="achievements" name="achievements" class="form-control" placeholder="Décrivez brièvement 2-3 réalisations dont vous êtes fier(e)"></textarea>
+                            <label for="address" class="form-label required">5) Adresse exacte</label>
+                            <textarea id="address" name="address" class="form-control" required placeholder="Votre adresse complète (obligatoire pour simuler les temps de trajet)"></textarea>
+                            <small class="text-muted">Nous utiliserons cette adresse pour calculer le temps de trajet vers les entreprises</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="office-preference" class="form-label required">8) Préférez-vous un environnement :</label>
+                            <div class="radio-group">
+                                <label class="radio-option">
+                                    <input type="radio" name="office-preference" value="open-space" required>
+                                    <span class="radio-checkmark"></span>
+                                    Open Space
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="office-preference" value="office">
+                                    <span class="radio-checkmark"></span>
+                                    Bureau
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="office-preference" value="no-preference">
+                                    <span class="radio-checkmark"></span>
+                                    Sans préférence
+                                </label>
+                            </div>
                         </div>
                         
                         <div class="form-actions">
@@ -713,41 +772,147 @@
                         </div>
                     </div>
                     
-                    <!-- ÉTAPE 3 : FORMATION -->
+                    <!-- ÉTAPE 3 : MOTIVATIONS ET SECTEURS -->
                     <div class="form-step" id="form-step3">
-                        <h2 class="form-section-title">Formation et certifications</h2>
+                        <h2 class="form-section-title">Motivations et secteurs</h2>
                         
                         <div class="form-group">
-                            <label for="highest-degree" class="form-label required">Diplôme le plus élevé</label>
-                            <select id="highest-degree" name="highest-degree" class="form-control" required>
-                                <option value="">Sélectionnez votre diplôme</option>
-                                <option value="bac">Baccalauréat</option>
-                                <option value="bac+2">Bac+2 (DUT, BTS, etc.)</option>
-                                <option value="licence">Licence / Bac+3</option>
-                                <option value="master">Master / Bac+5</option>
-                                <option value="doctorat">Doctorat</option>
-                                <option value="autre">Autre</option>
-                            </select>
+                            <label class="form-label required">6) Quels sont vos leviers de motivation ? (classez par ordre d'importance)</label>
+                            <ul class="motivation-priorities" id="motivation-priorities">
+                                <li class="motivation-item" draggable="true" data-value="remuneration">
+                                    <span class="drag-handle"><i class="fas fa-grip-vertical"></i></span>
+                                    <span class="motivation-number">1</span>
+                                    Rémunération
+                                </li>
+                                <li class="motivation-item" draggable="true" data-value="evolution">
+                                    <span class="drag-handle"><i class="fas fa-grip-vertical"></i></span>
+                                    <span class="motivation-number">2</span>
+                                    Perspectives d'évolution
+                                </li>
+                                <li class="motivation-item" draggable="true" data-value="flexibility">
+                                    <span class="drag-handle"><i class="fas fa-grip-vertical"></i></span>
+                                    <span class="motivation-number">3</span>
+                                    Flexibilité
+                                </li>
+                                <li class="motivation-item" draggable="true" data-value="location">
+                                    <span class="drag-handle"><i class="fas fa-grip-vertical"></i></span>
+                                    <span class="motivation-number">4</span>
+                                    Localisation
+                                </li>
+                                <li class="motivation-item" draggable="true" data-value="other">
+                                    <span class="drag-handle"><i class="fas fa-grip-vertical"></i></span>
+                                    <span class="motivation-number">5</span>
+                                    Autre
+                                </li>
+                            </ul>
+                            <input type="hidden" id="motivation-order" name="motivation-order">
+                            <div id="other-motivation-container" style="display: none; margin-top: 15px;">
+                                <label for="other-motivation">Précisez :</label>
+                                <input type="text" id="other-motivation" name="other-motivation" class="form-control">
+                            </div>
                         </div>
                         
                         <div class="form-group">
-                            <label for="institution" class="form-label required">Établissement</label>
-                            <input type="text" id="institution" name="institution" class="form-control" required>
+                            <label for="structure-type" class="form-label required">7) Quel type de structure priorisez-vous ? (plusieurs choix possibles)</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-option">
+                                    <input type="checkbox" name="structure-type" value="startup">
+                                    <span class="checkbox-checkmark"></span>
+                                    Start-up
+                                </label>
+                                <label class="checkbox-option">
+                                    <input type="checkbox" name="structure-type" value="pme">
+                                    <span class="checkbox-checkmark"></span>
+                                    PME
+                                </label>
+                                <label class="checkbox-option">
+                                    <input type="checkbox" name="structure-type" value="group">
+                                    <span class="checkbox-checkmark"></span>
+                                    Grand groupe
+                                </label>
+                                <label class="checkbox-option">
+                                    <input type="checkbox" name="structure-type" value="no-preference">
+                                    <span class="checkbox-checkmark"></span>
+                                    Ça n'a pas d'importance pour moi
+                                </label>
+                            </div>
                         </div>
                         
                         <div class="form-group">
-                            <label for="graduation-year" class="form-label">Année d'obtention</label>
-                            <input type="number" id="graduation-year" name="graduation-year" class="form-control" min="1950" max="2030">
+                            <label class="form-label">9) Avez-vous une préférence pour un secteur d'activité ?</label>
+                            <div class="radio-group">
+                                <label class="radio-option">
+                                    <input type="radio" name="has-sector-preference" value="yes" onchange="toggleSectorPreference(this)">
+                                    <span class="radio-checkmark"></span>
+                                    Oui
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="has-sector-preference" value="no" onchange="toggleSectorPreference(this)" checked>
+                                    <span class="radio-checkmark"></span>
+                                    Non
+                                </label>
+                            </div>
+                            
+                            <div id="sector-preference-container" style="display: none; margin-top: 15px;">
+                                <label for="sector-preference">Sélectionnez les secteurs (plusieurs choix possibles) :</label>
+                                <select id="sector-preference" name="sector-preference[]" class="form-control" multiple size="5">
+                                    <option value="tech">Technologie</option>
+                                    <option value="finance">Finance</option>
+                                    <option value="healthcare">Santé</option>
+                                    <option value="education">Éducation</option>
+                                    <option value="retail">Commerce</option>
+                                    <option value="manufacturing">Industrie</option>
+                                    <option value="energy">Énergie</option>
+                                    <option value="transportation">Transport</option>
+                                    <option value="media">Médias</option>
+                                    <option value="hospitality">Hôtellerie</option>
+                                    <option value="construction">Construction</option>
+                                    <option value="agriculture">Agriculture</option>
+                                    <option value="public">Secteur public</option>
+                                    <option value="nonprofit">Associations</option>
+                                </select>
+                                
+                                <div id="prohibited-sector-container" style="margin-top: 15px;">
+                                    <label class="form-label">Avez-vous un secteur rédhibitoire ?</label>
+                                    <div class="radio-group">
+                                        <label class="radio-option">
+                                            <input type="radio" name="has-prohibited-sector" value="yes" onchange="toggleProhibitedSector(this)">
+                                            <span class="radio-checkmark"></span>
+                                            Oui
+                                        </label>
+                                        <label class="radio-option">
+                                            <input type="radio" name="has-prohibited-sector" value="no" onchange="toggleProhibitedSector(this)" checked>
+                                            <span class="radio-checkmark"></span>
+                                            Non
+                                        </label>
+                                    </div>
+                                    
+                                    <div id="prohibited-sector-selection" style="display: none; margin-top: 15px;">
+                                        <label for="prohibited-sector">Sélectionnez les secteurs à éviter (plusieurs choix possibles) :</label>
+                                        <select id="prohibited-sector" name="prohibited-sector[]" class="form-control" multiple size="5">
+                                            <option value="tech">Technologie</option>
+                                            <option value="finance">Finance</option>
+                                            <option value="healthcare">Santé</option>
+                                            <option value="education">Éducation</option>
+                                            <option value="retail">Commerce</option>
+                                            <option value="manufacturing">Industrie</option>
+                                            <option value="energy">Énergie</option>
+                                            <option value="transportation">Transport</option>
+                                            <option value="media">Médias</option>
+                                            <option value="hospitality">Hôtellerie</option>
+                                            <option value="construction">Construction</option>
+                                            <option value="agriculture">Agriculture</option>
+                                            <option value="public">Secteur public</option>
+                                            <option value="nonprofit">Associations</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         
                         <div class="form-group">
-                            <label for="certifications" class="form-label">Certifications</label>
-                            <textarea id="certifications" name="certifications" class="form-control" placeholder="Listez vos certifications professionnelles, avec l'année d'obtention"></textarea>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="languages" class="form-label">Langues maîtrisées</label>
-                            <textarea id="languages" name="languages" class="form-control" placeholder="Ex: Français (natif), Anglais (courant), Espagnol (intermédiaire)"></textarea>
+                            <label for="salary-range" class="form-label required">10) Quelle est votre fourchette de rémunération ?</label>
+                            <input type="text" id="salary-range" name="salary-range" class="form-control" required placeholder="Ex: 35K€ - 45K€ brut annuel">
                         </div>
                         
                         <div class="form-actions">
@@ -762,132 +927,216 @@
                         </div>
                     </div>
                     
-                    <!-- ÉTAPE 4 : MOTIVATIONS ET ATTENTES -->
+                    <!-- ÉTAPE 4 : DISPONIBILITÉ ET SITUATION -->
                     <div class="form-step" id="form-step4">
-                        <h2 class="form-section-title">Motivations et attentes</h2>
+                        <h2 class="form-section-title">Disponibilité et situation actuelle</h2>
                         
                         <div class="form-group">
-                            <label for="motivation" class="form-label required">Qu'est-ce qui vous motive dans votre recherche d'emploi ?</label>
-                            <textarea id="motivation" name="motivation" class="form-control" required placeholder="Décrivez vos motivations dans votre recherche actuelle"></textarea>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="job-expectations" class="form-label required">Quelles sont vos attentes concernant votre prochain poste ?</label>
-                            <textarea id="job-expectations" name="job-expectations" class="form-control" required placeholder="Environnement de travail, responsabilités, etc."></textarea>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="salary-expectations" class="form-label required">Prétentions salariales</label>
-                            <input type="text" id="salary-expectations" name="salary-expectations" class="form-control" required placeholder="Ex: 35K€ - 45K€ brut annuel">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="availability" class="form-label required">Disponibilité</label>
-                            <select id="availability" name="availability" class="form-control" required>
-                                <option value="">Sélectionnez votre disponibilité</option>
-                                <option value="immediate">Immédiate</option>
-                                <option value="1month">1 mois</option>
-                                <option value="2months">2 mois</option>
-                                <option value="3months">3 mois</option>
-                                <option value="more">Plus de 3 mois</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label">Êtes-vous ouvert(e) au télétravail ?</label>
+                            <label for="availability" class="form-label required">11) Quand recherchez-vous à prendre un poste en main ?</label>
                             <div class="radio-group">
                                 <label class="radio-option">
-                                    <input type="radio" name="remote-work" value="yes" checked>
+                                    <input type="radio" name="availability" value="immediate" required>
                                     <span class="radio-checkmark"></span>
-                                    Oui
+                                    Immédiatement
                                 </label>
                                 <label class="radio-option">
-                                    <input type="radio" name="remote-work" value="no">
+                                    <input type="radio" name="availability" value="1month">
                                     <span class="radio-checkmark"></span>
-                                    Non
+                                    1 mois
                                 </label>
                                 <label class="radio-option">
-                                    <input type="radio" name="remote-work" value="partial">
+                                    <input type="radio" name="availability" value="2months">
                                     <span class="radio-checkmark"></span>
-                                    Partiellement
+                                    2 mois
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="availability" value="3months">
+                                    <span class="radio-checkmark"></span>
+                                    3 mois
                                 </label>
                             </div>
                         </div>
                         
-                        <div class="form-actions">
-                            <button type="button" class="btn-action btn-back" id="back-step3">
-                                <i class="fas fa-arrow-left"></i>
-                                <span>Retour</span>
-                            </button>
-                            <button type="button" class="btn-action btn-next" id="next-step4">
-                                <span>Suivant</span>
-                                <i class="fas fa-arrow-right"></i>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <!-- ÉTAPE 5 : INFORMATIONS COMPLÉMENTAIRES -->
-                    <div class="form-step" id="form-step5">
-                        <h2 class="form-section-title">Informations complémentaires</h2>
-                        
                         <div class="form-group">
-                            <label for="preferred-locations" class="form-label">Lieux de travail préférés</label>
-                            <input type="text" id="preferred-locations" name="preferred-locations" class="form-control" placeholder="Ex: Paris, Lyon, Bordeaux">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="mobility" class="form-label">Mobilité géographique</label>
-                            <select id="mobility" name="mobility" class="form-control">
-                                <option value="">Sélectionnez votre mobilité</option>
-                                <option value="none">Aucune</option>
-                                <option value="regional">Régionale</option>
-                                <option value="national">Nationale</option>
-                                <option value="international">Internationale</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="portfolio" class="form-label">Lien vers votre portfolio ou profil LinkedIn</label>
-                            <input type="url" id="portfolio" name="portfolio" class="form-control" placeholder="https://...">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="references" class="form-label">Références professionnelles</label>
-                            <textarea id="references" name="references" class="form-control" placeholder="Nom, entreprise, poste, coordonnées (optionnel)"></textarea>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="additional-info" class="form-label">Informations complémentaires</label>
-                            <textarea id="additional-info" name="additional-info" class="form-control" placeholder="Toute information supplémentaire que vous souhaitez partager"></textarea>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label required">Comment avez-vous entendu parler de nous ?</label>
+                            <label class="form-label required">12) Êtes-vous actuellement en poste ?</label>
                             <div class="radio-group">
                                 <label class="radio-option">
-                                    <input type="radio" name="referral-source" value="linkedin" required>
+                                    <input type="radio" name="currently-employed" value="yes" onchange="toggleEmploymentStatus(this)" required>
                                     <span class="radio-checkmark"></span>
-                                    LinkedIn
+                                    Oui
                                 </label>
                                 <label class="radio-option">
-                                    <input type="radio" name="referral-source" value="jobboard">
+                                    <input type="radio" name="currently-employed" value="no" onchange="toggleEmploymentStatus(this)">
                                     <span class="radio-checkmark"></span>
-                                    Site d'emploi
+                                    Non
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <!-- Section pour les candidats actuellement en poste -->
+                        <div id="employed-section" style="display: none;">
+                            <div class="form-group">
+                                <label class="form-label required">Pourquoi êtes-vous de nouveau à l'écoute ?</label>
+                                <div class="radio-group">
+                                    <label class="radio-option">
+                                        <input type="radio" name="listening-reason" value="no-fulfillment">
+                                        <span class="radio-checkmark"></span>
+                                        Je ne m'épanouis plus, je souhaite découvrir de nouvelles choses
+                                    </label>
+                                    <label class="radio-option">
+                                        <input type="radio" name="listening-reason" value="no-evolution">
+                                        <span class="radio-checkmark"></span>
+                                        Manque de perspectives d'évolutions
+                                    </label>
+                                    <label class="radio-option">
+                                        <input type="radio" name="listening-reason" value="low-salary">
+                                        <span class="radio-checkmark"></span>
+                                        Rémunération trop faible
+                                    </label>
+                                    <label class="radio-option">
+                                        <input type="radio" name="listening-reason" value="far-location">
+                                        <span class="radio-checkmark"></span>
+                                        Poste trop loin de mon domicile
+                                    </label>
+                                    <label class="radio-option">
+                                        <input type="radio" name="listening-reason" value="no-flexibility">
+                                        <span class="radio-checkmark"></span>
+                                        Manque de flexibilité (pas de TT, RTT)
+                                    </label>
+                                    <label class="radio-option">
+                                        <input type="radio" name="listening-reason" value="internal-issues">
+                                        <span class="radio-checkmark"></span>
+                                        Problème en interne (organisation, management)
+                                    </label>
+                                    <label class="radio-option">
+                                        <input type="radio" name="listening-reason" value="mismatched-position">
+                                        <span class="radio-checkmark"></span>
+                                        Le poste ne coïncide pas avec le poste proposé initialement
+                                    </label>
+                                    <label class="radio-option">
+                                        <input type="radio" name="listening-reason" value="pse">
+                                        <span class="radio-checkmark"></span>
+                                        PSE
+                                    </label>
+                                    <label class="radio-option">
+                                        <input type="radio" name="listening-reason" value="no-comment">
+                                        <span class="radio-checkmark"></span>
+                                        Je ne souhaite pas communiquer
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="notice-period" class="form-label required">Combien de temps est votre préavis ?</label>
+                                <select id="notice-period" name="notice-period" class="form-control">
+                                    <option value="">Sélectionnez votre préavis</option>
+                                    <option value="none">Je n'en ai pas</option>
+                                    <option value="trial">Encore en période d'essai</option>
+                                    <option value="1month">1 mois</option>
+                                    <option value="2months">2 mois</option>
+                                    <option value="3months">3 mois</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label required">Le préavis est-il négociable ?</label>
+                                <div class="radio-group">
+                                    <label class="radio-option">
+                                        <input type="radio" name="notice-negotiable" value="yes">
+                                        <span class="radio-checkmark"></span>
+                                        Oui
+                                    </label>
+                                    <label class="radio-option">
+                                        <input type="radio" name="notice-negotiable" value="no">
+                                        <span class="radio-checkmark"></span>
+                                        Non
+                                    </label>
+                                    <label class="radio-option">
+                                        <input type="radio" name="notice-negotiable" value="unknown">
+                                        <span class="radio-checkmark"></span>
+                                        Je ne sais pas
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Section pour les candidats non en poste -->
+                        <div id="unemployed-section" style="display: none;">
+                            <div class="form-group">
+                                <label class="form-label required">Pourquoi votre dernier contrat s'est arrêté ?</label>
+                                <div class="radio-group">
+                                    <label class="radio-option">
+                                        <input type="radio" name="contract-end-reason" value="no-fulfillment">
+                                        <span class="radio-checkmark"></span>
+                                        Je ne m'épanouissais plus, je souhaite découvrir de nouvelles choses
+                                    </label>
+                                    <label class="radio-option">
+                                        <input type="radio" name="contract-end-reason" value="no-evolution">
+                                        <span class="radio-checkmark"></span>
+                                        Manque de perspectives d'évolutions
+                                    </label>
+                                    <label class="radio-option">
+                                        <input type="radio" name="contract-end-reason" value="low-salary">
+                                        <span class="radio-checkmark"></span>
+                                        Rémunération trop faible
+                                    </label>
+                                    <label class="radio-option">
+                                        <input type="radio" name="contract-end-reason" value="far-location">
+                                        <span class="radio-checkmark"></span>
+                                        Poste trop loin de mon domicile
+                                    </label>
+                                    <label class="radio-option">
+                                        <input type="radio" name="contract-end-reason" value="no-flexibility">
+                                        <span class="radio-checkmark"></span>
+                                        Manque de flexibilité (pas de TT, RTT)
+                                    </label>
+                                    <label class="radio-option">
+                                        <input type="radio" name="contract-end-reason" value="internal-issues">
+                                        <span class="radio-checkmark"></span>
+                                        Problème en interne (organisation, management)
+                                    </label>
+                                    <label class="radio-option">
+                                        <input type="radio" name="contract-end-reason" value="mismatched-position">
+                                        <span class="radio-checkmark"></span>
+                                        Le poste ne coïncide pas avec le poste proposé initialement
+                                    </label>
+                                    <label class="radio-option">
+                                        <input type="radio" name="contract-end-reason" value="pse">
+                                        <span class="radio-checkmark"></span>
+                                        PSE
+                                    </label>
+                                    <label class="radio-option">
+                                        <input type="radio" name="contract-end-reason" value="no-comment">
+                                        <span class="radio-checkmark"></span>
+                                        Je ne souhaite pas communiquer
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Section commune pour tous les candidats -->
+                        <div class="form-group">
+                            <label class="form-label required">Où en êtes-vous dans vos process de recrutement ?</label>
+                            <div class="radio-group">
+                                <label class="radio-option">
+                                    <input type="radio" name="recruitment-status" value="no-leads" required>
+                                    <span class="radio-checkmark"></span>
+                                    Je n'ai pas encore de piste
                                 </label>
                                 <label class="radio-option">
-                                    <input type="radio" name="referral-source" value="recommendation">
+                                    <input type="radio" name="recruitment-status" value="in-progress">
                                     <span class="radio-checkmark"></span>
-                                    Recommandation
+                                    J'avance sur différents entretiens
                                 </label>
                                 <label class="radio-option">
-                                    <input type="radio" name="referral-source" value="search">
+                                    <input type="radio" name="recruitment-status" value="final-process">
                                     <span class="radio-checkmark"></span>
-                                    Moteur de recherche
+                                    Je suis en processus final
                                 </label>
                                 <label class="radio-option">
-                                    <input type="radio" name="referral-source" value="other">
+                                    <input type="radio" name="recruitment-status" value="offers-received">
                                     <span class="radio-checkmark"></span>
-                                    Autre
+                                    On m'a fait des propositions
                                 </label>
                             </div>
                         </div>
@@ -900,7 +1149,7 @@
                         </div>
                         
                         <div class="form-actions">
-                            <button type="button" class="btn-action btn-back" id="back-step4">
+                            <button type="button" class="btn-action btn-back" id="back-step3">
                                 <i class="fas fa-arrow-left"></i>
                                 <span>Retour</span>
                             </button>
@@ -932,7 +1181,7 @@
         <div class="container">
             <div class="footer-content">
                 <div>
-                    <h4 class="footer-heading">Commitment</h4>
+                    <h4 class="footer-heading">Nexten</h4>
                     <p class="footer-description">Agence de recrutement spécialisée dans les métiers du digital.</p>
                     <div class="footer-social">
                         <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
@@ -957,13 +1206,13 @@
                     <div class="footer-contact">
                         <p><i class="fas fa-map-marker-alt"></i> 123 Avenue du Recrutement, 75001 Paris</p>
                         <p><i class="fas fa-phone"></i> +33 1 23 45 67 89</p>
-                        <p><i class="fas fa-envelope"></i> contact@commitment.fr</p>
+                        <p><i class="fas fa-envelope"></i> contact@nexten.fr</p>
                     </div>
                 </div>
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2025 Commitment - Tous droits réservés | <a href="../privacy.html">Politique de confidentialité</a> | <a href="../terms.html">Conditions d'utilisation</a></p>
+                <p>&copy; 2025 Nexten - Tous droits réservés | <a href="../privacy.html">Politique de confidentialité</a> | <a href="../terms.html">Conditions d'utilisation</a></p>
             </div>
         </div>
     </footer>
@@ -993,7 +1242,7 @@
             
             // Gestion des étapes
             const stepperProgress = document.getElementById('stepper-progress');
-            const progressValues = ['0%', '25%', '50%', '75%', '100%'];
+            const progressValues = ['0%', '33%', '66%', '100%'];
             
             // Fonctions pour afficher les notifications
             function showNotification(message, type = 'success') {
@@ -1044,8 +1293,31 @@
                 let firstInvalidField = null;
                 
                 requiredFields.forEach(field => {
-                    if ((field.type === 'checkbox' && !field.checked) || 
-                        (field.type !== 'checkbox' && !field.value.trim())) {
+                    // Pour les groupes de checkbox, vérifier qu'au moins une est cochée
+                    if (field.type === 'checkbox' && field.name === 'transport-method') {
+                        const checkboxGroup = document.querySelectorAll('input[name="transport-method"]');
+                        const anyChecked = Array.from(checkboxGroup).some(cb => cb.checked);
+                        if (!anyChecked) {
+                            isValid = false;
+                            if (!firstInvalidField) {
+                                firstInvalidField = field;
+                            }
+                        }
+                    }
+                    // Pour les groupes de checkbox de type de structure
+                    else if (field.type === 'checkbox' && field.name === 'structure-type') {
+                        const checkboxGroup = document.querySelectorAll('input[name="structure-type"]');
+                        const anyChecked = Array.from(checkboxGroup).some(cb => cb.checked);
+                        if (!anyChecked) {
+                            isValid = false;
+                            if (!firstInvalidField) {
+                                firstInvalidField = field;
+                            }
+                        }
+                    }
+                    // Validation normale pour les autres champs
+                    else if ((field.type === 'checkbox' && !field.checked) || 
+                             (field.type !== 'checkbox' && !field.value.trim())) {
                         isValid = false;
                         field.classList.add('invalid');
                         
@@ -1066,6 +1338,132 @@
                 
                 return isValid;
             }
+            
+            // Drag and drop pour le classement des motivations
+            const motivationsList = document.getElementById('motivation-priorities');
+            const motivationItems = motivationsList.querySelectorAll('.motivation-item');
+            const motivationOrderInput = document.getElementById('motivation-order');
+            let draggedItem = null;
+
+            // Fonction pour mettre à jour les numéros après réorganisation
+            function updateMotivationNumbers() {
+                const items = motivationsList.querySelectorAll('.motivation-item');
+                items.forEach((item, index) => {
+                    const numberSpan = item.querySelector('.motivation-number');
+                    numberSpan.textContent = index + 1;
+                });
+
+                // Mettre à jour le champ caché avec l'ordre actuel
+                const motivationOrder = Array.from(items).map(item => item.dataset.value);
+                motivationOrderInput.value = motivationOrder.join(',');
+                
+                // Si "Autre" est dans le top 3, afficher le champ de saisie
+                const otherIndex = motivationOrder.indexOf('other');
+                if (otherIndex < 3) {
+                    document.getElementById('other-motivation-container').style.display = 'block';
+                    document.getElementById('other-motivation').setAttribute('required', '');
+                } else {
+                    document.getElementById('other-motivation-container').style.display = 'none';
+                    document.getElementById('other-motivation').removeAttribute('required');
+                }
+            }
+
+            motivationItems.forEach(item => {
+                // Event listeners pour le drag and drop
+                item.addEventListener('dragstart', function() {
+                    draggedItem = this;
+                    setTimeout(() => this.classList.add('dragging'), 0);
+                });
+
+                item.addEventListener('dragend', function() {
+                    this.classList.remove('dragging');
+                    draggedItem = null;
+                    updateMotivationNumbers();
+                });
+
+                item.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                });
+
+                item.addEventListener('dragenter', function(e) {
+                    e.preventDefault();
+                    if (this !== draggedItem) {
+                        const draggedRect = draggedItem.getBoundingClientRect();
+                        const targetRect = this.getBoundingClientRect();
+                        
+                        if (draggedRect.top < targetRect.top) {
+                            motivationsList.insertBefore(draggedItem, this.nextSibling);
+                        } else {
+                            motivationsList.insertBefore(draggedItem, this);
+                        }
+                    }
+                });
+            });
+
+            // Initialiser l'ordre des motivations
+            updateMotivationNumbers();
+            
+            // Fonction pour afficher/masquer les sections en fonction des préférences de secteur
+            window.toggleSectorPreference = function(radio) {
+                const container = document.getElementById('sector-preference-container');
+                if (radio.value === 'yes') {
+                    container.style.display = 'block';
+                } else {
+                    container.style.display = 'none';
+                }
+            };
+
+            // Fonction pour afficher/masquer les secteurs rédhibitoires
+            window.toggleProhibitedSector = function(radio) {
+                const container = document.getElementById('prohibited-sector-selection');
+                if (radio.value === 'yes') {
+                    container.style.display = 'block';
+                } else {
+                    container.style.display = 'none';
+                }
+            };
+
+            // Fonction pour afficher/masquer les sections en fonction du statut d'emploi
+            window.toggleEmploymentStatus = function(radio) {
+                const employedSection = document.getElementById('employed-section');
+                const unemployedSection = document.getElementById('unemployed-section');
+                
+                if (radio.value === 'yes') {
+                    employedSection.style.display = 'block';
+                    unemployedSection.style.display = 'none';
+                    
+                    // Rendre les champs de cette section requis
+                    document.querySelectorAll('#employed-section input[type="radio"][name="listening-reason"]').forEach(input => {
+                        input.setAttribute('required', '');
+                    });
+                    document.getElementById('notice-period').setAttribute('required', '');
+                    document.querySelectorAll('#employed-section input[type="radio"][name="notice-negotiable"]').forEach(input => {
+                        input.setAttribute('required', '');
+                    });
+                    
+                    // Rendre les champs de l'autre section non requis
+                    document.querySelectorAll('#unemployed-section input[type="radio"][name="contract-end-reason"]').forEach(input => {
+                        input.removeAttribute('required');
+                    });
+                } else {
+                    employedSection.style.display = 'none';
+                    unemployedSection.style.display = 'block';
+                    
+                    // Rendre les champs de cette section requis
+                    document.querySelectorAll('#unemployed-section input[type="radio"][name="contract-end-reason"]').forEach(input => {
+                        input.setAttribute('required', '');
+                    });
+                    
+                    // Rendre les champs de l'autre section non requis
+                    document.querySelectorAll('#employed-section input[type="radio"][name="listening-reason"]').forEach(input => {
+                        input.removeAttribute('required');
+                    });
+                    document.getElementById('notice-period').removeAttribute('required');
+                    document.querySelectorAll('#employed-section input[type="radio"][name="notice-negotiable"]').forEach(input => {
+                        input.removeAttribute('required');
+                    });
+                }
+            };
             
             // Étape 1 -> Étape 2
             document.getElementById('next-step1').addEventListener('click', function() {
@@ -1106,22 +1504,9 @@
                 document.getElementById('step3').classList.remove('completed');
             });
             
-            // Étape 4 -> Étape 5
-            document.getElementById('next-step4').addEventListener('click', function() {
-                if (validateStep(4)) {
-                    goToStep(4, 5);
-                }
-            });
-            
-            // Étape 5 -> Étape 4
-            document.getElementById('back-step4').addEventListener('click', function() {
-                goToStep(5, 4);
-                document.getElementById('step4').classList.remove('completed');
-            });
-            
             // Soumission du formulaire
             document.getElementById('submit-btn').addEventListener('click', function() {
-                if (validateStep(5)) {
+                if (validateStep(4)) {
                     // Simuler l'envoi du formulaire
                     const submitButton = document.querySelector('.btn-submit');
                     submitButton.disabled = true;
@@ -1137,7 +1522,7 @@
                             document.getElementById('loading-overlay').classList.add('active');
                             
                             setTimeout(() => {
-                                window.location.href = '../candidate-dashboard.html';
+                                window.location.href = 'candidate-dashboard.html';
                             }, 2000);
                         }, 2000);
                     }, 2000);
