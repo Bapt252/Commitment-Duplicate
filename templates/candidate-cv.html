@@ -18,35 +18,41 @@
     <link rel="shortcut icon" href="../static/images/favicon.ico" type="image/x-icon">
     
     <style>
+        /* Styles spécifiques à la page CV - cohérents avec le design système Nexten */
         :root {
             --yellow-light: #FFF8D6;
-            --yellow: #FFDF4F;
         }
         
         .cv-form-container {
-            background-color: var(--yellow-light);
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            background-color: var(--white);
+            border-radius: 8px;
             margin-bottom: 30px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
         
         .cv-section {
-            background-color: white;
-            padding: 25px;
+            background-color: var(--white);
             border-radius: 8px;
             margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            padding: 25px;
+            border-top: 1px solid var(--cream-dark);
+        }
+        
+        .cv-section:first-child {
+            border-top: none;
         }
         
         .cv-section-header {
-            border-bottom: 2px solid var(--yellow);
-            padding-bottom: 15px;
-            margin-bottom: 20px;
-            font-weight: 500;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .cv-section-header h3 {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin: 0;
         }
         
         .cv-form-grid {
@@ -106,12 +112,11 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-top: 20px;
             width: 100%;
             padding: 15px;
-            border: 2px dashed var(--cream-dark);
+            border: 1px dashed var(--cream-dark);
             border-radius: 8px;
-            background: none;
+            background: var(--cream);
             color: var(--purple);
             font-weight: 500;
             cursor: pointer;
@@ -119,8 +124,7 @@
         }
         
         .add-experience-btn:hover {
-            border-color: var(--purple);
-            background-color: var(--cream);
+            background-color: var(--cream-dark);
         }
         
         .add-experience-btn i {
@@ -135,6 +139,7 @@
             margin-bottom: 20px;
             position: relative;
             transition: all 0.3s;
+            background-color: var(--white);
         }
         
         .experience-card:hover {
@@ -146,6 +151,12 @@
             display: flex;
             justify-content: space-between;
             margin-bottom: 15px;
+        }
+        
+        .experience-header h4 {
+            margin: 0;
+            font-weight: 500;
+            font-size: 1.1rem;
         }
         
         .experience-actions {
@@ -161,7 +172,7 @@
             align-items: center;
             justify-content: center;
             padding: 0;
-            background: none;
+            background: var(--white);
             border: 1px solid var(--cream-dark);
             color: var(--gray);
             cursor: pointer;
@@ -314,6 +325,101 @@
             margin-right: 10px;
         }
         
+        /* Progress tracker */
+        .progress-tracker-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            overflow-x: auto;
+            padding: 10px 0;
+        }
+        
+        .progress-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            min-width: 110px;
+        }
+        
+        .progress-step::before {
+            content: "";
+            position: absolute;
+            top: 15px;
+            left: -50%;
+            width: 100%;
+            height: 2px;
+            background-color: var(--cream-dark);
+            z-index: 0;
+        }
+        
+        .progress-step:first-child::before {
+            display: none;
+        }
+        
+        .step-number {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: var(--cream-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .progress-step.active .step-number {
+            background-color: var(--purple);
+            color: var(--white);
+        }
+        
+        .progress-step.completed .step-number {
+            background-color: var(--purple-light);
+            color: var(--white);
+        }
+        
+        .progress-step.active ~ .progress-step .step-number {
+            background-color: var(--cream-dark);
+            color: var(--black);
+        }
+        
+        .progress-step.active::before,
+        .progress-step.completed::before {
+            background-color: var(--purple-light);
+        }
+        
+        .step-label {
+            font-size: 0.8rem;
+            text-align: center;
+            color: var(--gray);
+        }
+        
+        .progress-step.active .step-label {
+            color: var(--black);
+            font-weight: 500;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .section-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .dashboard-btn {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
         /* Animations */
         .fade-in {
             opacity: 0;
@@ -335,6 +441,14 @@
             .experience-header {
                 flex-direction: column;
                 gap: 10px;
+            }
+            
+            .progress-tracker-container {
+                padding-bottom: 5px;
+            }
+            
+            .progress-step {
+                min-width: 80px;
             }
         }
     </style>
@@ -376,9 +490,42 @@
             <span>Travailler mon CV</span>
         </div>
         
+        <!-- Progress tracker -->
+        <div class="progress-tracker-container fade-in">
+            <div class="progress-step">
+                <div class="step-number">1</div>
+                <div class="step-label">Mes opportunités</div>
+            </div>
+            <div class="progress-step">
+                <div class="step-number">2</div>
+                <div class="step-label">Mes offres reçues</div>
+            </div>
+            <div class="progress-step">
+                <div class="step-number">3</div>
+                <div class="step-label">Postuler en un clic</div>
+            </div>
+            <div class="progress-step active">
+                <div class="step-number">4</div>
+                <div class="step-label">Travailler mon CV</div>
+            </div>
+            <div class="progress-step">
+                <div class="step-number">5</div>
+                <div class="step-label">Centre de ressources</div>
+            </div>
+            <div class="progress-step">
+                <div class="step-number">6</div>
+                <div class="step-label">Messagerie</div>
+            </div>
+        </div>
+        
         <!-- Section Travailler mon CV -->
         <div class="candidate-dashboard-section fade-in">
-            <h2 class="section-heading">Travailler mon CV</h2>
+            <div class="section-header">
+                <h2 class="section-heading">Travailler mon CV</h2>
+                <div class="section-actions">
+                    <a href="candidate-dashboard-new.html" class="btn btn-sm btn-outline dashboard-btn"><i class="fas fa-th-large"></i> Tableau de bord</a>
+                </div>
+            </div>
             
             <div class="cv-form-container">
                 <!-- Introduction et Score du CV -->
@@ -744,5 +891,7 @@
             }
         });
     </script>
+    <!-- Script d'amélioration de la navigation -->
+    <script src="../static/services/nav-enhancement.js"></script>
 </body>
 </html>
