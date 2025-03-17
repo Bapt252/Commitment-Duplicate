@@ -30,14 +30,54 @@
             padding: 0 var(--spacing-md);
         }
         
+        /* Titre du tableau de bord */
+        .dashboard-title {
+            margin-bottom: var(--spacing-lg);
+            text-align: left;
+        }
+        
+        .dashboard-title h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            position: relative;
+            display: inline-block;
+            color: var(--black);
+        }
+        
+        .dashboard-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--purple) 0%, var(--purple-light) 100%);
+            border-radius: 2px;
+            transform-origin: left;
+            animation: grow 1s ease-out forwards;
+        }
+        
+        @keyframes grow {
+            from { transform: scaleX(0); }
+            to { transform: scaleX(1); }
+        }
+        
+        .dashboard-title p {
+            color: var(--gray);
+            font-size: 1.1rem;
+            max-width: 600px;
+        }
+        
         /* Section du profil */
         .profile-container {
             background: var(--white);
-            border-radius: 12px;
+            border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
             position: relative;
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            margin-bottom: var(--spacing-xl);
         }
         
         .profile-container:hover {
@@ -46,12 +86,24 @@
         }
         
         .profile-header {
-            display: flex;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: var(--spacing-lg);
             padding: var(--spacing-lg);
             position: relative;
             background: linear-gradient(145deg, var(--purple-glass) 0%, rgba(255, 255, 255, 0.5) 100%);
             backdrop-filter: blur(5px);
-            gap: var(--spacing-lg);
+        }
+        
+        .profile-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.1;
         }
         
         .profile-photo-container {
@@ -66,7 +118,7 @@
             border-radius: 50%;
             background: linear-gradient(145deg, var(--white) 0%, var(--cream) 100%);
             border: 3px solid var(--white);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -85,7 +137,7 @@
         
         .profile-photo:hover {
             transform: scale(1.05);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
         }
         
         .profile-actions {
@@ -95,11 +147,25 @@
         .btn-sm {
             padding: 8px 16px;
             font-size: 0.8rem;
-            border-radius: 6px;
+            border-radius: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-sm:hover {
+            transform: translateY(-3px);
+        }
+        
+        .btn-sm i {
+            font-size: 0.8rem;
         }
         
         .profile-info {
-            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-md);
         }
         
         .info-line {
@@ -114,6 +180,14 @@
             margin-right: var(--spacing-md);
             min-width: 120px;
             position: relative;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .profile-label i {
+            color: var(--purple);
+            font-size: 1rem;
         }
         
         .profile-value {
@@ -126,17 +200,29 @@
             border-top: 1px solid var(--cream);
         }
         
+        .profile-description-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .profile-description-title {
+            margin: 0;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
         /* Statut actif avec badge animé */
         .status-badge {
-            display: inline-block;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
+            display: inline-flex;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 0.9rem;
             font-weight: 500;
-            display: flex;
             align-items: center;
             gap: 8px;
-            box-shadow: 0 3px 10px rgba(124, 58, 237, 0.15);
+            box-shadow: 0 5px 15px rgba(124, 58, 237, 0.15);
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
@@ -172,7 +258,6 @@
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: var(--spacing-md);
-            margin-top: var(--spacing-md);
         }
         
         .stat-item {
@@ -180,26 +265,38 @@
             flex-direction: column;
             align-items: center;
             background: linear-gradient(145deg, var(--white) 0%, var(--cream-dark) 5%);
-            padding: var(--spacing-sm);
-            border-radius: 10px;
+            padding: var(--spacing-md) var(--spacing-sm);
+            border-radius: 16px;
             transition: all 0.3s ease;
             text-align: center;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.03);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
         }
         
         .stat-item:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-icon {
+            font-size: 1.8rem;
+            color: var(--purple);
+            margin-bottom: var(--spacing-xs);
+            transition: all 0.3s ease;
+        }
+        
+        .stat-item:hover .stat-icon {
+            transform: scale(1.2) rotate(5deg);
         }
         
         .stat-value {
-            font-size: 2rem;
-            font-weight: 500;
-            margin-bottom: 5px;
+            font-size: 2.2rem;
+            font-weight: 700;
             background: linear-gradient(135deg, var(--purple) 0%, var(--purple-dark) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            text-fill-color: transparent;
+            margin-bottom: 5px;
             transition: all 0.3s ease;
         }
         
@@ -221,13 +318,13 @@
         
         .dashboard-menu {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: var(--spacing-lg);
         }
         
         .dashboard-menu-item {
             background-color: var(--white);
-            border-radius: 12px;
+            border-radius: 20px;
             padding: var(--spacing-lg);
             transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
             display: flex;
@@ -235,7 +332,7 @@
             position: relative;
             overflow: hidden;
             min-height: 220px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             border-top: 3px solid transparent;
         }
         
@@ -253,13 +350,20 @@
         }
         
         .dashboard-menu-item:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             border-top-color: transparent;
         }
         
         .dashboard-menu-item:hover::before {
             transform: scaleX(1);
+        }
+        
+        .menu-item-content {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--spacing-md);
+            flex: 1;
         }
         
         .menu-icon {
@@ -268,13 +372,14 @@
             justify-content: center;
             width: 60px;
             height: 60px;
-            border-radius: 12px;
+            border-radius: 16px;
             background: linear-gradient(135deg, var(--purple-light) 0%, var(--purple) 100%);
             color: var(--white);
             font-size: 1.5rem;
             margin-bottom: var(--spacing-sm);
             transition: all 0.3s ease;
             box-shadow: 0 5px 15px rgba(124, 58, 237, 0.2);
+            flex-shrink: 0;
         }
         
         .dashboard-menu-item:hover .menu-icon {
@@ -282,9 +387,13 @@
             box-shadow: 0 8px 25px rgba(124, 58, 237, 0.3);
         }
         
+        .menu-text {
+            flex: 1;
+        }
+        
         .dashboard-menu-item h3 {
             font-size: 1.2rem;
-            font-weight: 500;
+            font-weight: 600;
             margin-bottom: var(--spacing-xs);
             transition: color 0.3s ease;
         }
@@ -294,29 +403,29 @@
         }
         
         .dashboard-menu-item p {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             color: var(--gray);
             margin-bottom: var(--spacing-md);
             line-height: 1.6;
-            flex-grow: 1;
         }
         
         .menu-badge {
             position: absolute;
             top: var(--spacing-md);
             right: var(--spacing-md);
-            width: 26px;
+            min-width: 26px;
             height: 26px;
             display: flex;
             align-items: center;
             justify-content: center;
             background-color: var(--purple);
             color: var(--white);
-            border-radius: 50%;
+            border-radius: 20px;
             font-size: 0.8rem;
-            font-weight: 500;
+            font-weight: 600;
             box-shadow: 0 3px 10px rgba(124, 58, 237, 0.2);
             transition: all 0.3s ease;
+            padding: 0 10px;
         }
         
         .dashboard-menu-item:hover .menu-badge {
@@ -334,7 +443,7 @@
             margin-bottom: var(--spacing-lg);
             position: relative;
             display: inline-block;
-            font-weight: 400;
+            font-weight: 600;
         }
         
         .section-heading::after {
@@ -356,13 +465,13 @@
         
         .activity-item {
             background-color: var(--white);
-            border-radius: 12px;
+            border-radius: 16px;
             padding: var(--spacing-md);
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: var(--spacing-md);
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             border-left: 3px solid transparent;
             position: relative;
             overflow: hidden;
@@ -383,7 +492,7 @@
         
         .activity-item:hover {
             transform: translateX(5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
         
         .activity-item:hover::before {
@@ -396,7 +505,7 @@
             justify-content: center;
             width: 50px;
             height: 50px;
-            border-radius: 50%;
+            border-radius: 12px;
             background: linear-gradient(135deg, var(--purple-light) 0%, var(--purple) 100%);
             color: var(--white);
             font-size: 1.2rem;
@@ -416,7 +525,7 @@
         
         .activity-content h4 {
             font-size: 1.1rem;
-            font-weight: 500;
+            font-weight: 600;
             margin-bottom: 5px;
             transition: color 0.3s ease;
         }
@@ -447,12 +556,41 @@
         
         .activity-action {
             flex-shrink: 0;
+            margin-top: auto;
+            margin-bottom: 0;
+        }
+        
+        /* Boutons d'action */
+        .action-btn {
+            font-size: 0.9rem;
+            padding: 8px 16px;
+            border-radius: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            background: rgba(124, 58, 237, 0.1);
+            color: var(--purple);
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-3px);
+            background: var(--purple);
+            color: var(--white);
+            box-shadow: 0 5px 15px rgba(124, 58, 237, 0.2);
+        }
+        
+        .action-btn i {
+            font-size: 0.9rem;
         }
         
         /* Responsive design */
         @media (max-width: 1200px) {
             .dashboard-menu {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             }
         }
         
@@ -460,11 +598,20 @@
             .stats-container {
                 grid-template-columns: repeat(2, 1fr);
             }
+            
+            .profile-info {
+                grid-template-columns: 1fr;
+            }
         }
         
         @media (max-width: 768px) {
             .profile-header {
-                flex-direction: column;
+                grid-template-columns: 1fr;
+                gap: var(--spacing-md);
+            }
+            
+            .profile-photo-container {
+                place-self: center;
             }
             
             .dashboard-menu {
@@ -475,13 +622,12 @@
                 grid-template-columns: 1fr;
             }
             
-            .activity-item {
+            .menu-item-content {
                 flex-direction: column;
-                text-align: center;
             }
             
-            .activity-action {
-                margin-top: var(--spacing-sm);
+            .menu-icon {
+                margin-bottom: var(--spacing-sm);
             }
         }
         
@@ -489,13 +635,39 @@
             .stats-container {
                 grid-template-columns: 1fr;
             }
+            
+            .activity-item {
+                flex-direction: column;
+            }
+            
+            .activity-icon {
+                margin-bottom: var(--spacing-sm);
+            }
+            
+            .activity-action {
+                margin-top: var(--spacing-sm);
+                width: 100%;
+            }
+            
+            .action-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+        
+        /* Particules décoratives */
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(124, 58, 237, 0.1);
+            z-index: 0;
         }
     </style>
 </head>
 <body>
     <!-- Notification bar -->
     <div class="notification-bar">
-        <i class="fas fa-bell-on"></i> Vous avez 2 nouveaux messages et 3 offres d'emploi qui correspondent à votre profil
+        <i class="fas fa-bell"></i> Vous avez 2 nouveaux messages et 3 offres d'emploi qui correspondent à votre profil
     </div>
 
     <!-- Lien d'accessibilité pour sauter au contenu principal -->
@@ -523,35 +695,42 @@
     </header>
 
     <div class="main-container" id="main-content">
+        <!-- Titre du tableau de bord -->
+        <div class="dashboard-title">
+            <h2>Bienvenue sur votre espace candidat</h2>
+            <p>Gérez vos candidatures, suivez vos processus de recrutement et découvrez de nouvelles opportunités.</p>
+        </div>
+        
         <!-- Profil du candidat -->
         <div class="candidate-dashboard-section fade-in">
-            <h2 class="section-heading">Bienvenue sur votre espace candidat</h2>
             <div class="profile-container">
                 <div class="profile-header">
                     <div class="profile-photo-container">
                         <div class="profile-photo"></div>
                         <div class="profile-actions">
-                            <button class="btn btn-sm btn-outline"><i class="fas fa-pen"></i> Modifier</button>
+                            <button class="btn-sm action-btn">
+                                <i class="fas fa-pen"></i> Modifier
+                            </button>
                         </div>
                     </div>
                     <div class="profile-info">
                         <div class="info-line">
-                            <h3 class="profile-label">Profil :</h3>
+                            <h3 class="profile-label"><i class="fas fa-user"></i> Profil :</h3>
                             <p class="profile-value">Prénom Nom</p>
                         </div>
                         <div class="info-line">
-                            <h3 class="profile-label">Réside :</h3>
+                            <h3 class="profile-label"><i class="fas fa-map-marker-alt"></i> Réside :</h3>
                             <p class="profile-value">13 rue du Recrutement, 75015 Paris</p>
                         </div>
                         <div class="info-line">
-                            <h3 class="profile-label">Rémunération :</h3>
+                            <h3 class="profile-label"><i class="fas fa-euro-sign"></i> Rémunération :</h3>
                             <p class="profile-value">40K-45K</p>
                         </div>
                         <div class="info-line">
-                            <h3 class="profile-label">Statut :</h3>
+                            <h3 class="profile-label"><i class="fas fa-briefcase"></i> Statut :</h3>
                             <p class="profile-value">
                                 <span class="status-badge active">
-                                    <i class="fas fa-briefcase"></i> En recherche active
+                                    <i class="fas fa-search"></i> En recherche active
                                 </span>
                             </p>
                         </div>
@@ -559,23 +738,29 @@
                 </div>
 
                 <div class="profile-description">
-                    <h3 style="margin: 0; font-size: 1.2rem; font-weight: 500; margin-bottom: var(--spacing-sm);">Vue d'ensemble de mes processus de recrutement</h3>
+                    <div class="profile-description-header">
+                        <h3 class="profile-description-title">Vue d'ensemble de mes processus de recrutement</h3>
+                    </div>
                     <p>Suivez en temps réel l'avancement de vos candidatures et accédez à vos ressources depuis votre tableau de bord personnalisé.</p>
                     
                     <div class="stats-container">
                         <div class="stat-item">
+                            <i class="fas fa-tasks stat-icon"></i>
                             <span class="stat-value">3</span>
                             <p class="stat-label">Processus actifs</p>
                         </div>
                         <div class="stat-item">
+                            <i class="fas fa-calendar-check stat-icon"></i>
                             <span class="stat-value">2</span>
                             <p class="stat-label">Entretiens prévus</p>
                         </div>
                         <div class="stat-item">
+                            <i class="fas fa-paper-plane stat-icon"></i>
                             <span class="stat-value">10</span>
                             <p class="stat-label">Offres reçues</p>
                         </div>
                         <div class="stat-item">
+                            <i class="fas fa-percentage stat-icon"></i>
                             <span class="stat-value">85%</span>
                             <p class="stat-label">Taux de matching</p>
                         </div>
@@ -586,55 +771,80 @@
 
         <!-- Dashboard Buttons -->
         <div class="dashboard-menu-section fade-in">
+            <h2 class="section-heading">Accès rapides</h2>
             <div class="dashboard-menu">
                 <a href="candidate-opportunities.html" class="dashboard-menu-item">
-                    <div class="menu-icon">
-                        <i class="fas fa-briefcase"></i>
+                    <div class="menu-item-content">
+                        <div class="menu-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <div class="menu-text">
+                            <h3>Mes opportunités sélectionnées</h3>
+                            <p>Suivez en temps réel l'avancement de vos processus de recrutement et gérez vos candidatures</p>
+                        </div>
                     </div>
-                    <h3>Mes opportunités sélectionnées</h3>
-                    <p>Suivez en temps réel l'avancement de vos processus de recrutement et gérez vos candidatures</p>
                     <div class="menu-badge">3</div>
                 </a>
                 
                 <a href="candidate-offers.html" class="dashboard-menu-item">
-                    <div class="menu-icon">
-                        <i class="fas fa-paper-plane"></i>
+                    <div class="menu-item-content">
+                        <div class="menu-icon">
+                            <i class="fas fa-paper-plane"></i>
+                        </div>
+                        <div class="menu-text">
+                            <h3>Mes offres reçues</h3>
+                            <p>Consultez et répondez aux offres d'emploi qui vous correspondent parfaitement</p>
+                        </div>
                     </div>
-                    <h3>Mes offres reçues</h3>
-                    <p>Consultez et répondez aux offres d'emploi qui vous correspondent parfaitement</p>
                     <div class="menu-badge">10</div>
                 </a>
                 
                 <a href="candidate-quick-apply.html" class="dashboard-menu-item">
-                    <div class="menu-icon">
-                        <i class="fas fa-bolt"></i>
+                    <div class="menu-item-content">
+                        <div class="menu-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div class="menu-text">
+                            <h3>Postuler en un clic</h3>
+                            <p>Découvrez de nouvelles opportunités adaptées à votre profil et postulez instantanément</p>
+                        </div>
                     </div>
-                    <h3>Postuler en un clic</h3>
-                    <p>Découvrez de nouvelles opportunités adaptées à votre profil et postulez instantanément</p>
                 </a>
                 
                 <a href="candidate-cv.html" class="dashboard-menu-item">
-                    <div class="menu-icon">
-                        <i class="fas fa-file-alt"></i>
+                    <div class="menu-item-content">
+                        <div class="menu-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <div class="menu-text">
+                            <h3>Travailler mon CV</h3>
+                            <p>Optimisez votre CV avec nos conseils personnalisés pour augmenter vos chances auprès des recruteurs</p>
+                        </div>
                     </div>
-                    <h3>Travailler mon CV</h3>
-                    <p>Optimisez votre CV avec nos conseils personnalisés pour augmenter vos chances auprès des recruteurs</p>
                 </a>
                 
                 <a href="candidate-resources.html" class="dashboard-menu-item">
-                    <div class="menu-icon">
-                        <i class="fas fa-graduation-cap"></i>
+                    <div class="menu-item-content">
+                        <div class="menu-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="menu-text">
+                            <h3>Centre de ressources</h3>
+                            <p>Accédez à des conseils, guides pratiques et astuces pour réussir vos entretiens</p>
+                        </div>
                     </div>
-                    <h3>Centre de ressources</h3>
-                    <p>Accédez à des conseils, guides pratiques et astuces pour réussir vos entretiens</p>
                 </a>
                 
                 <a href="candidate-messaging.html" class="dashboard-menu-item">
-                    <div class="menu-icon">
-                        <i class="fas fa-comments"></i>
+                    <div class="menu-item-content">
+                        <div class="menu-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <div class="menu-text">
+                            <h3>Messagerie</h3>
+                            <p>Échangez directement avec les recruteurs et suivez vos conversations professionnelles</p>
+                        </div>
                     </div>
-                    <h3>Messagerie</h3>
-                    <p>Échangez directement avec les recruteurs et suivez vos conversations professionnelles</p>
                     <div class="menu-badge">4</div>
                 </a>
             </div>
@@ -654,7 +864,9 @@
                         <p class="activity-date"><i class="fas fa-clock"></i> 28 Mars, 14h00</p>
                     </div>
                     <div class="activity-action">
-                        <button class="btn btn-sm btn-outline">Voir détails</button>
+                        <button class="action-btn">
+                            <i class="fas fa-eye"></i> Voir détails
+                        </button>
                     </div>
                 </div>
                 
@@ -668,7 +880,9 @@
                         <p class="activity-date"><i class="fas fa-clock"></i> Hier à 15:30</p>
                     </div>
                     <div class="activity-action">
-                        <button class="btn btn-sm btn-outline">Répondre</button>
+                        <button class="action-btn">
+                            <i class="fas fa-reply"></i> Répondre
+                        </button>
                     </div>
                 </div>
                 
@@ -682,7 +896,9 @@
                         <p class="activity-date"><i class="fas fa-clock"></i> Il y a 2 jours</p>
                     </div>
                     <div class="activity-action">
-                        <button class="btn btn-sm btn-outline">Voir l'offre</button>
+                        <button class="action-btn">
+                            <i class="fas fa-eye"></i> Voir l'offre
+                        </button>
                     </div>
                 </div>
             </div>
@@ -805,7 +1021,7 @@
                 });
             }
             
-            // Ajouter des particules au hero (effet visuel)
+            // Ajouter des particules au profil (effet visuel)
             const addParticles = () => {
                 const colors = ['#7C3AED', '#A78BFA', '#5B21B6'];
                 const sizes = [5, 8, 12, 15, 20];
@@ -843,6 +1059,33 @@
             };
             
             addParticles();
+            
+            // Animation des hover sur menu-items
+            const menuItems = document.querySelectorAll('.dashboard-menu-item');
+            menuItems.forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    this.querySelectorAll('.menu-text h3, .menu-icon').forEach(el => {
+                        el.style.transform = 'translateY(-5px)';
+                    });
+                });
+                
+                item.addEventListener('mouseleave', function() {
+                    this.querySelectorAll('.menu-text h3, .menu-icon').forEach(el => {
+                        el.style.transform = '';
+                    });
+                });
+            });
+            
+            // Animation des statistiques
+            const statItems = document.querySelectorAll('.stat-item');
+            statItems.forEach((item, index) => {
+                setTimeout(() => {
+                    item.classList.add('pulsate');
+                    setTimeout(() => {
+                        item.classList.remove('pulsate');
+                    }, 1000);
+                }, index * 200);
+            });
         });
     </script>
 </body>
