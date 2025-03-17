@@ -518,7 +518,7 @@
                 
                 <div class="step completed">
                     <div class="step-number"><i class="fas fa-check"></i></div>
-                    <div class="step-label">Upload CV</div>
+                    <div class="step-label">Parsing CV</div>
                 </div>
                 
                 <div class="step active">
@@ -1469,6 +1469,26 @@
             document.getElementById('backBtn').addEventListener('click', function() {
                 window.location.href = 'candidate-upload.html';
             });
+
+            // Vérifier s'il y a des données pré-remplies du parsing de CV
+            try {
+                const parsedData = JSON.parse(localStorage.getItem('parsedCvData'));
+                if (parsedData) {
+                    // Pré-remplir le formulaire avec les données parsées
+                    if (parsedData.name) {
+                        document.getElementById('fullname').value = parsedData.name;
+                    }
+                    
+                    if (parsedData.jobTitle) {
+                        selectedJobs.push(parsedData.jobTitle);
+                        updateJobsDisplay();
+                    }
+                    
+                    // Vous pouvez ajouter d'autres champs à pré-remplir ici
+                }
+            } catch (error) {
+                console.error("Erreur lors du chargement des données parsées:", error);
+            }
         });
 
         // Fonction pour ajouter un poste à la liste
