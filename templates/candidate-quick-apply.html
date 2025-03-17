@@ -13,9 +13,594 @@
     <link rel="stylesheet" href="../static/styles/dashboard.css">
     <link rel="stylesheet" href="../static/styles/dashboard-new.css">
     <link rel="stylesheet" href="../static/styles/nav-improvement.css">
+    <link rel="stylesheet" href="../static/styles/quick-apply.css">
     
     <!-- Favicon -->
     <link rel="shortcut icon" href="../static/images/favicon.ico" type="image/x-icon">
+    
+    <style>
+        /* Style spécifique à cette page */
+        :root {
+            --transition-speed: 0.3s;
+        }
+        
+        body {
+            background-color: var(--cream);
+        }
+        
+        .main-container {
+            padding-top: 100px;
+        }
+        
+        .breadcrumb {
+            background-color: transparent;
+            padding: 15px 0;
+            font-size: 0.95rem;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            box-shadow: none;
+        }
+        
+        .quick-apply-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .section-heading-container {
+            position: relative;
+        }
+        
+        .section-heading {
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+            padding-bottom: 0;
+            border: none !important;
+        }
+        
+        .section-description {
+            font-size: 1.1rem;
+            color: var(--gray);
+            max-width: 800px;
+            margin-bottom: 25px;
+        }
+        
+        .section-indicator {
+            height: 4px;
+            width: 60px;
+            background-color: var(--purple);
+            margin-bottom: 20px;
+        }
+        
+        .filter-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--white);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        
+        .filter-group {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .filter-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 400;
+            transition: all var(--transition-speed) ease;
+            cursor: pointer;
+            background-color: var(--cream);
+        }
+        
+        .filter-badge i {
+            font-size: 0.9rem;
+        }
+        
+        .filter-badge.active {
+            background-color: var(--purple);
+            color: var(--white);
+            font-weight: 500;
+        }
+        
+        .filter-badge:hover:not(.active) {
+            background-color: var(--cream-dark);
+            transform: translateY(-2px);
+        }
+        
+        .sort-dropdown {
+            position: relative;
+        }
+        
+        .sort-select {
+            appearance: none;
+            padding: 10px 40px 10px 16px;
+            border-radius: 30px;
+            border: 1px solid var(--cream-dark);
+            background-color: var(--white);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all var(--transition-speed) ease;
+            width: 150px;
+        }
+        
+        .sort-select:hover {
+            border-color: var(--purple-light);
+        }
+        
+        .sort-select:focus {
+            outline: none;
+            border-color: var(--purple);
+            box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.1);
+        }
+        
+        .sort-dropdown::after {
+            content: '\f107';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: var(--gray);
+        }
+        
+        .quick-apply-opportunities {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .quick-apply-card {
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: all var(--transition-speed) ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border-top: 4px solid transparent;
+        }
+        
+        .quick-apply-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            border-top-color: var(--purple);
+        }
+        
+        .quick-apply-card:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--purple) 0%, var(--purple-light) 100%);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+        
+        .quick-apply-card:hover:after {
+            transform: scaleX(1);
+        }
+        
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .job-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 0;
+            color: var(--black);
+            line-height: 1.3;
+        }
+        
+        .job-match {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background-color: var(--purple);
+            color: var(--white);
+            border-radius: 50%;
+            font-weight: 600;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 10px rgba(124, 58, 237, 0.3);
+        }
+        
+        .job-description {
+            font-size: 0.95rem;
+            color: var(--gray);
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .color-link {
+            color: var(--purple);
+            font-weight: 500;
+            transition: all var(--transition-speed) ease;
+        }
+        
+        .color-link:hover {
+            color: var(--purple-dark);
+            text-decoration: underline;
+        }
+        
+        .company-info {
+            display: flex;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--cream-dark);
+        }
+        
+        .logo-placeholder {
+            width: 60px;
+            height: 60px;
+            background-color: var(--cream);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: var(--gray);
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+        
+        .company-details {
+            flex: 1;
+        }
+        
+        .company-name {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin: 0 0 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .small-link {
+            font-size: 0.8rem;
+            color: var(--purple);
+            font-weight: normal;
+        }
+        
+        .small-link:hover {
+            text-decoration: underline;
+        }
+        
+        .job-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        
+        .job-details p {
+            margin: 0;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .job-details i {
+            color: var(--purple);
+            margin-right: 8px;
+            width: 16px;
+            text-align: center;
+        }
+        
+        .job-rating {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .stars {
+            color: #FFD700;
+            font-size: 1rem;
+        }
+        
+        .job-meta {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+        
+        .job-meta span {
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            color: var(--gray);
+        }
+        
+        .job-meta i {
+            margin-right: 8px;
+            width: 16px;
+            text-align: center;
+            color: var(--purple);
+        }
+        
+        .apply-button-container {
+            margin-top: auto;
+        }
+        
+        .btn-block {
+            width: 100%;
+            border-radius: 30px;
+            padding: 14px;
+            font-weight: 500;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all var(--transition-speed) ease;
+        }
+        
+        .btn-block i {
+            font-size: 1.1rem;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(124, 58, 237, 0.3);
+        }
+        
+        .notification-bar {
+            padding: 10px 0;
+            font-weight: 400;
+        }
+        
+        .ten-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            background-color: var(--purple);
+            color: var(--white);
+            border-radius: 50%;
+            font-size: 12px;
+            vertical-align: middle;
+            margin-left: 5px;
+            font-weight: 600;
+        }
+        
+        header {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            margin: 40px 0;
+            position: relative;
+        }
+        
+        .progress-steps::before {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--cream-dark);
+            z-index: 1;
+        }
+        
+        .step {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            text-align: center;
+        }
+        
+        .step-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--white);
+            border: 2px solid var(--cream-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            transition: all var(--transition-speed) ease;
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: var(--gray);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .step-circle.completed {
+            background-color: var(--purple);
+            border-color: var(--purple);
+            color: var(--white);
+        }
+        
+        .step-circle.active {
+            border-color: var(--purple);
+            color: var(--purple);
+            background-color: var(--white);
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(124, 58, 237, 0.2);
+        }
+        
+        .step-text {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--gray);
+            transition: all var(--transition-speed) ease;
+        }
+        
+        .step.active .step-text {
+            color: var(--purple);
+            font-weight: 600;
+        }
+        
+        .step.completed .step-text {
+            color: var(--black);
+        }
+        
+        /* Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s, transform 0.8s;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 30px;
+        }
+        
+        .pagination-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--white);
+            color: var(--black);
+            font-weight: 500;
+            transition: all var(--transition-speed) ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .pagination-link:hover,
+        .pagination-link.active {
+            background-color: var(--purple);
+            color: var(--white);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(124, 58, 237, 0.2);
+        }
+        
+        .pagination-dots {
+            display: flex;
+            align-items: center;
+            color: var(--gray);
+        }
+        
+        .contextual-nav {
+            margin: 40px 0;
+            padding: 20px 0;
+            border-top: 1px solid var(--cream-dark);
+            border-bottom: 1px solid var(--cream-dark);
+        }
+        
+        .previous-page, .next-page, .dashboard-link {
+            padding: 12px 20px;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: all var(--transition-speed) ease;
+        }
+        
+        .previous-page:hover, .next-page:hover, .dashboard-link:hover {
+            background-color: rgba(124, 58, 237, 0.1);
+            transform: translateY(-3px);
+        }
+        
+        .dashboard-link {
+            background-color: var(--cream);
+            color: var(--black);
+        }
+        
+        .dashboard-link:hover {
+            background-color: var(--cream-dark);
+        }
+        
+        /* Responsive design */
+        @media (max-width: 992px) {
+            .quick-apply-opportunities {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .quick-apply-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+            
+            .filter-container {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+            
+            .filter-group {
+                width: 100%;
+                overflow-x: auto;
+                padding-bottom: 5px;
+            }
+            
+            .sort-dropdown {
+                width: 100%;
+            }
+            
+            .sort-select {
+                width: 100%;
+            }
+            
+            .progress-steps {
+                overflow-x: auto;
+                padding-bottom: 10px;
+            }
+            
+            .step {
+                min-width: 100px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .job-details {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-heading {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Notification bar -->
@@ -55,18 +640,54 @@
         
         <!-- Section Postuler en un clic -->
         <div class="candidate-dashboard-section fade-in">
-            <h2 class="section-heading">Postuler en un clic</h2>
+            <div class="quick-apply-header">
+                <div class="section-heading-container">
+                    <h2 class="section-heading">Postuler en un clic</h2>
+                    <div class="section-indicator"></div>
+                </div>
+            </div>
             
             <p class="section-description">Découvrez de nouvelles opportunités correspondant à votre profil et postulez instantanément.</p>
             
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                <div>
-                    <span class="filter-badge active"><i class="fas fa-filter"></i> Toutes</span>
-                    <span class="filter-badge"><i class="fas fa-trophy"></i> Top 3</span>
-                    <span class="filter-badge"><i class="fas fa-clock"></i> &lt; 30min</span>
+            <!-- Progress steps -->
+            <div class="progress-steps">
+                <div class="step completed">
+                    <div class="step-circle completed"><i class="fas fa-check"></i></div>
+                    <div class="step-text">Mes opportunités</div>
                 </div>
-                <div>
-                    <select class="form-control form-control-sm" style="padding: 5px 10px; border-radius: 4px; border: 1px solid var(--cream-dark);">
+                <div class="step completed">
+                    <div class="step-circle completed"><i class="fas fa-check"></i></div>
+                    <div class="step-text">Mes offres reçues</div>
+                </div>
+                <div class="step active">
+                    <div class="step-circle active">3</div>
+                    <div class="step-text">Postuler en un clic</div>
+                </div>
+                <div class="step">
+                    <div class="step-circle">4</div>
+                    <div class="step-text">Travailler mon CV</div>
+                </div>
+                <div class="step">
+                    <div class="step-circle">5</div>
+                    <div class="step-text">Centre de ressources</div>
+                </div>
+                <div class="step">
+                    <div class="step-circle">6</div>
+                    <div class="step-text">Messagerie</div>
+                </div>
+            </div>
+            
+            <!-- Filter controls -->
+            <div class="filter-container">
+                <div class="filter-group">
+                    <div class="filter-badge active"><i class="fas fa-filter"></i> Toutes</div>
+                    <div class="filter-badge"><i class="fas fa-trophy"></i> Top 3</div>
+                    <div class="filter-badge"><i class="fas fa-clock"></i> &lt; 30min</div>
+                    <div class="filter-badge"><i class="fas fa-map-marker-alt"></i> Proximité</div>
+                </div>
+                <div class="sort-dropdown">
+                    <select class="sort-select">
+                        <option>Pertinence</option>
                         <option>Proximité</option>
                         <option>Matching</option>
                         <option>Date</option>
@@ -86,12 +707,12 @@
                     <p class="job-description">Piloter la croissance d'une start-up innovante dans le secteur de la foodtech. <a href="#" class="color-link">Voir plus</a></p>
                     
                     <div class="company-info">
-                        <div class="logo-placeholder"></div>
+                        <div class="logo-placeholder"><i class="fas fa-utensils"></i></div>
                         <div class="company-details">
                             <h4 class="company-name">FoodTech+ <a href="#" class="small-link">Voir l'entreprise</a></h4>
                             <div class="job-details">
-                                <p><i class="fas fa-file-contract"></i> Contrat : CDI</p>
-                                <p><i class="fas fa-euro-sign"></i> Rémunération : 40K-48K</p>
+                                <p><i class="fas fa-file-contract"></i> CDI</p>
+                                <p><i class="fas fa-euro-sign"></i> 40K-48K</p>
                             </div>
                         </div>
                     </div>
@@ -112,7 +733,7 @@
                     </div>
                     
                     <div class="apply-button-container">
-                        <button class="btn btn-primary btn-lg btn-block">Postuler en 1 clic</button>
+                        <button class="btn btn-primary btn-lg btn-block"><i class="fas fa-paper-plane"></i> Postuler en 1 clic</button>
                     </div>
                 </div>
                 
@@ -126,12 +747,12 @@
                     <p class="job-description">Définir et piloter la roadmap produit d'une application B2B en pleine croissance. <a href="#" class="color-link">Voir plus</a></p>
                     
                     <div class="company-info">
-                        <div class="logo-placeholder"></div>
+                        <div class="logo-placeholder"><i class="fas fa-laptop-code"></i></div>
                         <div class="company-details">
                             <h4 class="company-name">ProductLab <a href="#" class="small-link">Voir l'entreprise</a></h4>
                             <div class="job-details">
-                                <p><i class="fas fa-file-contract"></i> Contrat : CDI</p>
-                                <p><i class="fas fa-euro-sign"></i> Rémunération : 45K-55K</p>
+                                <p><i class="fas fa-file-contract"></i> CDI</p>
+                                <p><i class="fas fa-euro-sign"></i> 45K-55K</p>
                             </div>
                         </div>
                     </div>
@@ -152,7 +773,7 @@
                     </div>
                     
                     <div class="apply-button-container">
-                        <button class="btn btn-primary btn-lg btn-block">Postuler en 1 clic</button>
+                        <button class="btn btn-primary btn-lg btn-block"><i class="fas fa-paper-plane"></i> Postuler en 1 clic</button>
                     </div>
                 </div>
                 
@@ -166,12 +787,12 @@
                     <p class="job-description">Élaborer et mettre en œuvre des stratégies marketing pour une entreprise en expansion. <a href="#" class="color-link">Voir plus</a></p>
                     
                     <div class="company-info">
-                        <div class="logo-placeholder"></div>
+                        <div class="logo-placeholder"><i class="fas fa-chart-line"></i></div>
                         <div class="company-details">
                             <h4 class="company-name">MarketBoost <a href="#" class="small-link">Voir l'entreprise</a></h4>
                             <div class="job-details">
-                                <p><i class="fas fa-file-contract"></i> Contrat : CDI</p>
-                                <p><i class="fas fa-euro-sign"></i> Rémunération : 42K-50K</p>
+                                <p><i class="fas fa-file-contract"></i> CDI</p>
+                                <p><i class="fas fa-euro-sign"></i> 42K-50K</p>
                             </div>
                         </div>
                     </div>
@@ -192,10 +813,156 @@
                     </div>
                     
                     <div class="apply-button-container">
-                        <button class="btn btn-primary btn-lg btn-block">Postuler en 1 clic</button>
+                        <button class="btn btn-primary btn-lg btn-block"><i class="fas fa-paper-plane"></i> Postuler en 1 clic</button>
+                    </div>
+                </div>
+                
+                <!-- Nouvelle opportunité 4 -->
+                <div class="quick-apply-card fade-in">
+                    <div class="job-header">
+                        <h3 class="job-title">UX/UI Designer</h3>
+                        <div class="job-match">87%</div>
+                    </div>
+                    
+                    <p class="job-description">Concevoir l'expérience utilisateur et l'interface d'une plateforme digitale innovante. <a href="#" class="color-link">Voir plus</a></p>
+                    
+                    <div class="company-info">
+                        <div class="logo-placeholder"><i class="fas fa-paint-brush"></i></div>
+                        <div class="company-details">
+                            <h4 class="company-name">DesignLab <a href="#" class="small-link">Voir l'entreprise</a></h4>
+                            <div class="job-details">
+                                <p><i class="fas fa-file-contract"></i> CDI</p>
+                                <p><i class="fas fa-euro-sign"></i> 38K-45K</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="job-rating">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                        
+                        <div class="job-meta">
+                            <span><i class="fas fa-walking"></i> Temps de trajet: 20 min <a href="#" class="small-link">Voir sur Maps</a></span>
+                            <span><i class="fas fa-calendar-day"></i> Prise de poste: Juin 2025</span>
+                        </div>
+                    </div>
+                    
+                    <div class="apply-button-container">
+                        <button class="btn btn-primary btn-lg btn-block"><i class="fas fa-paper-plane"></i> Postuler en 1 clic</button>
+                    </div>
+                </div>
+                
+                <!-- Nouvelle opportunité 5 -->
+                <div class="quick-apply-card fade-in">
+                    <div class="job-header">
+                        <h3 class="job-title">Data Analyst</h3>
+                        <div class="job-match">85%</div>
+                    </div>
+                    
+                    <p class="job-description">Analyser les données pour optimiser les processus d'une entreprise en transformation digitale. <a href="#" class="color-link">Voir plus</a></p>
+                    
+                    <div class="company-info">
+                        <div class="logo-placeholder"><i class="fas fa-database"></i></div>
+                        <div class="company-details">
+                            <h4 class="company-name">DataInsight <a href="#" class="small-link">Voir l'entreprise</a></h4>
+                            <div class="job-details">
+                                <p><i class="fas fa-file-contract"></i> CDI</p>
+                                <p><i class="fas fa-euro-sign"></i> 40K-48K</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="job-rating">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                        
+                        <div class="job-meta">
+                            <span><i class="fas fa-walking"></i> Temps de trajet: 35 min <a href="#" class="small-link">Voir sur Maps</a></span>
+                            <span><i class="fas fa-calendar-day"></i> Prise de poste: Mai 2025</span>
+                        </div>
+                    </div>
+                    
+                    <div class="apply-button-container">
+                        <button class="btn btn-primary btn-lg btn-block"><i class="fas fa-paper-plane"></i> Postuler en 1 clic</button>
+                    </div>
+                </div>
+                
+                <!-- Nouvelle opportunité 6 -->
+                <div class="quick-apply-card fade-in">
+                    <div class="job-header">
+                        <h3 class="job-title">Chef de Projet Digital</h3>
+                        <div class="job-match">83%</div>
+                    </div>
+                    
+                    <p class="job-description">Piloter des projets digitaux innovants pour une agence de communication primée. <a href="#" class="color-link">Voir plus</a></p>
+                    
+                    <div class="company-info">
+                        <div class="logo-placeholder"><i class="fas fa-project-diagram"></i></div>
+                        <div class="company-details">
+                            <h4 class="company-name">DigitalWave <a href="#" class="small-link">Voir l'entreprise</a></h4>
+                            <div class="job-details">
+                                <p><i class="fas fa-file-contract"></i> CDI</p>
+                                <p><i class="fas fa-euro-sign"></i> 43K-52K</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="job-rating">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                        
+                        <div class="job-meta">
+                            <span><i class="fas fa-walking"></i> Temps de trajet: 40 min <a href="#" class="small-link">Voir sur Maps</a></span>
+                            <span><i class="fas fa-calendar-day"></i> Prise de poste: Juillet 2025</span>
+                        </div>
+                    </div>
+                    
+                    <div class="apply-button-container">
+                        <button class="btn btn-primary btn-lg btn-block"><i class="fas fa-paper-plane"></i> Postuler en 1 clic</button>
                     </div>
                 </div>
             </div>
+            
+            <!-- Pagination -->
+            <div class="pagination">
+                <a href="#" class="pagination-link"><i class="fas fa-chevron-left"></i></a>
+                <a href="#" class="pagination-link active">1</a>
+                <a href="#" class="pagination-link">2</a>
+                <a href="#" class="pagination-link">3</a>
+                <span class="pagination-dots">...</span>
+                <a href="#" class="pagination-link">6</a>
+                <a href="#" class="pagination-link"><i class="fas fa-chevron-right"></i></a>
+            </div>
+        </div>
+        
+        <!-- Navigation contextuelle -->
+        <div class="contextual-nav">
+            <a href="candidate-received-offers.html?email=jean-olivier.penin%40b-acceptance.com&password=%C3%A9" class="previous-page">
+                <i class="fas fa-arrow-left"></i> Mes offres reçues
+            </a>
+            
+            <a href="candidate-dashboard.html?email=jean-olivier.penin%40b-acceptance.com&password=%C3%A9" class="dashboard-link">
+                <i class="fas fa-th-large"></i> Tableau de bord
+            </a>
+            
+            <a href="candidate-cv.html?email=jean-olivier.penin%40b-acceptance.com&password=%C3%A9" class="next-page">
+                Travailler mon CV <i class="fas fa-arrow-right"></i>
+            </a>
         </div>
     </div>
 
@@ -316,6 +1083,44 @@
                     
                     // Activer le filtre cliqué
                     this.classList.add('active');
+                });
+            });
+            
+            // Simulation d'un loader avant d'afficher le contenu principal
+            setTimeout(() => {
+                document.querySelectorAll('.quick-apply-card').forEach((card, index) => {
+                    setTimeout(() => {
+                        card.classList.add('visible');
+                    }, index * 100);
+                });
+            }, 300);
+            
+            // Boutons de candidature
+            const applyButtons = document.querySelectorAll('.apply-button-container button');
+            
+            applyButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const originalText = this.innerHTML;
+                    this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
+                    this.disabled = true;
+                    
+                    setTimeout(() => {
+                        this.innerHTML = '<i class="fas fa-check"></i> Candidature envoyée !';
+                        this.classList.remove('btn-primary');
+                        this.classList.add('btn-success');
+                        this.style.backgroundColor = '#28a745';
+                        this.style.borderColor = '#28a745';
+                        
+                        // Réinitialiser le bouton après quelques secondes
+                        setTimeout(() => {
+                            this.innerHTML = originalText;
+                            this.classList.add('btn-primary');
+                            this.classList.remove('btn-success');
+                            this.style.backgroundColor = '';
+                            this.style.borderColor = '';
+                            this.disabled = false;
+                        }, 3000);
+                    }, 1500);
                 });
             });
         });
