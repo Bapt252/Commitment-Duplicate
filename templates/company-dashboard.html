@@ -33,15 +33,43 @@
             padding: 0 var(--spacing-md);
         }
         
+        /* Amélioration de la navigation */
+        header {
+            padding: var(--spacing-sm) 0;
+            background-color: rgba(255, 255, 255, 0.95);
+        }
+        
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        nav ul {
+            gap: var(--spacing-md);
+        }
+        
+        nav a {
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        nav a:hover, nav a.active {
+            background-color: var(--purple-glass);
+            color: var(--purple);
+        }
+        
         /* Bannière d'entreprise avec le style moderne */
         .company-banner {
             background: linear-gradient(135deg, var(--purple) 0%, var(--purple-dark) 100%);
             color: var(--white);
             padding: var(--spacing-lg) 0;
-            margin-top: 80px;
+            margin-top: 60px;
             position: relative;
             overflow: hidden;
             box-shadow: 0 5px 25px rgba(124, 58, 237, 0.3);
+            border-radius: 0 0 25px 25px;
         }
         
         .company-banner::before {
@@ -194,6 +222,11 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             text-fill-color: transparent;
+            display: inline-block;
+        }
+        
+        .greeting h2::after {
+            display: none;
         }
         
         .greeting p {
@@ -201,7 +234,7 @@
             color: var(--gray);
         }
         
-        /* Statistiques */
+        /* Statistiques améliorées */
         .stats-overview {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -295,9 +328,8 @@
         }
         
         .company-stat-cards {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: var(--spacing-md);
             margin-bottom: var(--spacing-md);
             position: relative;
@@ -305,8 +337,6 @@
         }
         
         .company-stat-card {
-            flex: 1;
-            min-width: 220px;
             background-color: var(--cream);
             border-radius: 16px;
             padding: var(--spacing-md);
@@ -379,6 +409,7 @@
             background-clip: text;
             text-fill-color: transparent;
             transition: all 0.3s ease;
+            margin-bottom: 0;
         }
         
         .company-stat-card:hover .stat-info p {
@@ -424,10 +455,10 @@
             width: 100%;
         }
         
-        /* Menu du dashboard */
+        /* Menu du dashboard - amélioration de l'espacement et des interactions */
         .dashboard-menu {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: var(--spacing-lg);
             margin-bottom: var(--spacing-xl);
         }
@@ -604,11 +635,30 @@
         .logout-btn:hover span {
             color: var(--white);
         }
+
+        /* Ajout de notification bar amélioré */
+        .notification-bar {
+            padding: var(--spacing-xs) 0;
+            background: linear-gradient(90deg, var(--black) 0%, var(--black-light) 100%);
+            font-size: 0.9rem;
+            font-weight: 400;
+        }
+
+        .notification-bar i {
+            margin-right: 10px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
         
         /* Responsive design */
         @media (max-width: 1200px) {
             .dashboard-menu {
-                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             }
         }
         
@@ -626,10 +676,6 @@
             .user-details {
                 text-align: left;
             }
-            
-            .company-stat-cards {
-                flex-direction: column;
-            }
         }
         
         @media (max-width: 768px) {
@@ -643,6 +689,10 @@
             
             .greeting h2 {
                 font-size: 1.8rem;
+            }
+
+            .company-banner {
+                margin-top: 50px;
             }
         }
         
@@ -659,6 +709,10 @@
             .user-info {
                 flex-direction: column-reverse;
                 align-items: flex-start;
+            }
+
+            .company-stat-cards {
+                grid-template-columns: 1fr;
             }
         }
         
@@ -720,8 +774,6 @@
             <nav>
                 <ul>
                     <li><a href="index.html">Accueil</a></li>
-                    <li><a href="post-job.html">Publier une offre</a></li>
-                    <li><a href="candidate-dashboard.html">Espace candidat</a></li>
                     <li><a href="company-dashboard.html" class="active">Espace entreprise</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
@@ -921,8 +973,6 @@
                     <h4 class="footer-heading">Navigation</h4>
                     <ul class="footer-links">
                         <li><a href="index.html"><i class="fas fa-chevron-right"></i> Accueil</a></li>
-                        <li><a href="post-job.html"><i class="fas fa-chevron-right"></i> Publier une offre</a></li>
-                        <li><a href="candidate-dashboard.html"><i class="fas fa-chevron-right"></i> Espace candidat</a></li>
                         <li><a href="#"><i class="fas fa-chevron-right"></i> À propos</a></li>
                         <li><a href="#contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
                     </ul>
