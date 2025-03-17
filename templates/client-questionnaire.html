@@ -902,7 +902,7 @@
                                 <i class="fas fa-arrow-left"></i>
                                 <span>Retour</span>
                             </button>
-                            <button type="submit" class="btn-action btn-submit">
+                            <button type="button" class="btn-action btn-submit" id="submit-btn">
                                 <i class="fas fa-check-circle"></i>
                                 <span>Soumettre</span>
                             </button>
@@ -1161,10 +1161,8 @@
                 }, 1500);
             });
             
-            // Soumission du formulaire
-            document.getElementById('questionnaire-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                
+            // Utilisation d'un bouton normal (type="button") au lieu d'un bouton de type submit
+            document.getElementById('submit-btn').addEventListener('click', function() {
                 // Récupérer la valeur sélectionnée pour "has-position"
                 const hasPositionValue = document.querySelector('input[name="has-position"]:checked')?.value;
                 
@@ -1179,7 +1177,6 @@
                     showNotification('Formulaire soumis avec succès ! Merci pour vos informations.', 'success');
                     
                     // Redirection vers la page de sélection des candidats si la réponse est "oui"
-                    // Sinon, rediriger vers le tableau de bord
                     setTimeout(() => {
                         if (hasPositionValue === 'yes') {
                             redirectToCandidateSelection();
@@ -1188,6 +1185,12 @@
                         }
                     }, 2000);
                 }, 2000);
+            });
+            
+            // Désactiver la soumission du formulaire par défaut
+            document.getElementById('questionnaire-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                // La soumission est gérée par le bouton submit-btn
             });
             
             // Bouton de retour en haut
