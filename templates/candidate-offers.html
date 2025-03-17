@@ -17,246 +17,271 @@
     <!-- Favicon -->
     <link rel="shortcut icon" href="../static/images/favicon.ico" type="image/x-icon">
     
-    <!-- Nouveau CSS inline pour les améliorations -->
+    <!-- Nouveau CSS inline pour les améliorations UI/UX -->
     <style>
-        /* Améliorations UI/UX pour la page des offres */
-        .job-offers-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
+        /* Variables de couleurs supplémentaires pour plus de nuances */
+        :root {
+            --yellow: #FFC107;
+            --green: #4CAF50;
+            --green-light: #E8F5E9;
+            --red: #F44336;
+            --red-light: #FFEBEE;
+            --blue: #2196F3;
+            --blue-light: #E3F2FD;
+            --surface: #FFFFFF;
+            --surface-variant: #F8F9FA;
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.1);
+            --transition-fast: 0.2s ease;
+            --transition-normal: 0.3s ease;
+            --border-radius-sm: 4px;
+            --border-radius-md: 8px;
+            --border-radius-lg: 12px;
+            --border-radius-xl: 20px;
         }
         
-        .job-offer {
-            display: flex;
-            flex-direction: column;
+        /* Reset supplémentaire pour les boutons */
+        button {
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Layout principal */
+        .main-container {
+            padding-top: 120px;
+            padding-bottom: 60px;
+            max-width: 1440px;
+        }
+        
+        /* Amélioration des animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.5s var(--transition-normal), transform 0.5s var(--transition-normal);
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Barre de progression */
+        .progress-container {
+            height: 3px;
+            background-color: transparent;
+            z-index: 2000;
+        }
+        
+        .progress-bar {
             height: 100%;
-            transition: all 0.3s ease;
-            border-top: 3px solid transparent;
-            position: relative;
-            overflow: hidden;
+            background: linear-gradient(90deg, var(--purple), var(--purple-light));
+            width: 0%;
+            transition: width 0.3s ease;
         }
         
-        .job-offer:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-            border-top: 3px solid var(--purple);
-        }
-        
-        .job-offer-spotlight {
-            position: absolute;
-            top: 0;
-            right: 0;
-            background-color: var(--yellow);
-            color: var(--black);
-            padding: 5px 10px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            clip-path: polygon(0 0, 100% 0, 100% 100%, 10% 100%);
-            width: 120px;
-            text-align: right;
-        }
-        
-        .job-match {
-            width: 50px;
-            height: 50px;
-            font-size: 1rem;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        .job-match[data-score="high"] {
-            background-color: #4CAF50;
-        }
-        
-        .job-match[data-score="medium"] {
-            background-color: var(--purple);
-        }
-        
-        .job-title {
-            font-size: 1.2rem;
-            font-weight: 500;
-            margin-bottom: 10px;
-            line-height: 1.3;
-        }
-        
-        .job-description {
-            flex-grow: 1;
-            margin-bottom: 15px;
-            font-size: 0.9rem;
+        /* Breadcrumb amélioré */
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            margin-bottom: 24px;
+            font-size: 0.875rem;
             color: var(--gray);
-            line-height: 1.5;
         }
         
-        .company-info {
-            margin: 15px 0;
+        .breadcrumb a {
             display: flex;
             align-items: center;
-        }
-        
-        .company-details {
-            flex: 1;
-        }
-        
-        .logo-placeholder {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: var(--cream);
             color: var(--gray);
-            font-size: 1.2rem;
+            transition: color var(--transition-fast);
         }
         
-        .company-name {
-            display: flex;
-            align-items: center;
-            font-size: 1rem;
-            margin-bottom: 5px;
-        }
-        
-        .small-link {
-            margin-left: 8px;
-            font-size: 0.75rem;
-            color: var(--purple);
-            font-weight: normal;
-        }
-        
-        .job-details {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 10px;
-        }
-        
-        .job-details p {
-            margin: 0;
-            font-size: 0.85rem;
-            display: flex;
-            align-items: center;
-        }
-        
-        .job-details i {
-            margin-right: 5px;
+        .breadcrumb a:hover {
             color: var(--purple);
         }
         
-        .offer-actions {
+        .breadcrumb i {
+            margin-right: 6px;
+        }
+        
+        .breadcrumb span {
+            margin: 0 8px;
+            color: var(--gray);
+        }
+        
+        /* Navigation contextuelle */
+        .contextual-nav {
+            margin: 32px 0;
+            padding: 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-top: 1px solid var(--cream-dark);
-            padding-top: 15px;
-            margin-top: auto;
         }
         
-        .answer-buttons {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .action-button {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        .action-button.accept {
-            background-color: #E8F5E9;
-            color: #4CAF50;
-        }
-        
-        .action-button.accept:hover {
-            background-color: #4CAF50;
-            color: white;
-        }
-        
-        .action-button.decline {
-            background-color: #FFEBEE;
-            color: #F44336;
-        }
-        
-        .action-button.decline:hover {
-            background-color: #F44336;
-            color: white;
-        }
-        
-        .action-button.info {
-            background-color: #E3F2FD;
-            color: #2196F3;
-        }
-        
-        .action-button.info:hover {
-            background-color: #2196F3;
-            color: white;
-        }
-        
-        .stars {
-            color: #FFD700;
-            font-size: 0.9rem;
-            margin-right: 10px;
-        }
-        
-        .job-meta {
-            font-size: 0.8rem;
-            color: var(--gray);
+        .page-title {
             display: flex;
             flex-direction: column;
-            gap: 5px;
         }
         
-        .job-meta span {
+        .page-title h1 {
+            font-size: 2rem;
+            font-weight: 500;
+            margin: 0 0 8px 0;
+            letter-spacing: -0.5px;
+        }
+        
+        .page-title p {
+            margin: 0;
+            color: var(--gray);
+            font-size: 0.9rem;
             display: flex;
             align-items: center;
         }
         
-        .job-meta i {
-            margin-right: 5px;
-            width: 16px;
-            text-align: center;
+        .page-title p i {
+            margin-right: 8px;
+            color: var(--purple);
         }
         
+        .nav-controls {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .nav-button {
+            padding: 10px 16px;
+            border-radius: var(--border-radius-xl);
+            background-color: var(--surface-variant);
+            color: var(--black);
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all var(--transition-fast);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .nav-button:hover {
+            background-color: var(--purple);
+            color: var(--white);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+        
+        .nav-button i {
+            font-size: 0.9rem;
+        }
+        
+        /* Section des offres */
+        .candidate-dashboard-section {
+            background-color: var(--surface);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-md);
+            padding: 32px;
+            margin-bottom: 40px;
+        }
+        
+        .section-heading {
+            font-size: 1.4rem;
+            font-weight: 500;
+            margin-bottom: 24px;
+            color: var(--black);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .section-heading .count-badge {
+            font-size: 0.9rem;
+            font-weight: 400;
+            background-color: var(--purple-light);
+            color: var(--purple);
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+        
+        /* Filtres et recherche */
         .filter-toolbar {
+            background-color: var(--surface-variant);
+            border-radius: var(--border-radius-lg);
+            padding: 16px 24px;
+            margin-bottom: 32px;
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
-            gap: 10px;
+            gap: 16px;
         }
         
         .filter-group {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 12px;
+        }
+        
+        .filter-badge {
+            display: flex;
+            align-items: center;
+            padding: 8px 16px;
+            background-color: var(--surface);
+            border-radius: var(--border-radius-xl);
+            font-size: 0.875rem;
+            color: var(--gray);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            font-weight: 500;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .filter-badge i {
+            margin-right: 8px;
+            font-size: 0.8rem;
+        }
+        
+        .filter-badge:hover {
+            background-color: var(--cream-dark);
+            color: var(--black);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .filter-badge.active {
+            background-color: var(--purple);
+            color: var(--white);
         }
         
         .search-container {
             position: relative;
             flex: 1;
-            max-width: 300px;
-            min-width: 200px;
+            max-width: 320px;
+            min-width: 250px;
         }
         
         .search-container input {
             width: 100%;
-            padding: 8px 15px 8px 35px;
-            border-radius: 20px;
-            border: 1px solid var(--cream-dark);
-            background-color: var(--white);
+            padding: 12px 16px 12px 42px;
+            border-radius: var(--border-radius-xl);
+            border: none;
+            background-color: var(--surface);
             font-size: 0.9rem;
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-fast);
+        }
+        
+        .search-container input:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px var(--purple-light);
         }
         
         .search-container i {
             position: absolute;
-            left: 12px;
+            left: 16px;
             top: 50%;
             transform: translateY(-50%);
             color: var(--gray);
+            font-size: 0.9rem;
         }
         
         .sort-container {
@@ -265,12 +290,19 @@
         
         .sort-container select {
             appearance: none;
-            padding: 8px 30px 8px 15px;
-            border-radius: 20px;
-            border: 1px solid var(--cream-dark);
-            background-color: var(--white);
+            padding: 12px 42px 12px 16px;
+            border-radius: var(--border-radius-xl);
+            border: none;
+            background-color: var(--surface);
             font-size: 0.9rem;
             cursor: pointer;
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-fast);
+        }
+        
+        .sort-container select:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px var(--purple-light);
         }
         
         .sort-container::after {
@@ -278,48 +310,123 @@
             font-family: 'Font Awesome 5 Free';
             font-weight: 900;
             position: absolute;
-            right: 15px;
+            right: 16px;
             top: 50%;
             transform: translateY(-50%);
             pointer-events: none;
             color: var(--purple);
         }
         
-        /* Contextual navigation */
-        .contextual-nav {
+        /* Conteneur d'offres amélioré */
+        .job-offers-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 24px;
+            margin-top: 24px;
+        }
+        
+        .job-offer {
+            background-color: var(--surface);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            transition: all var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+            border-top: 3px solid transparent;
+        }
+        
+        .job-offer:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-top: 3px solid var(--purple);
+        }
+        
+        /* Badges et étiquettes */
+        .job-offer-spotlight {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: var(--yellow);
+            color: var(--black);
+            padding: 6px 16px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 10% 100%);
+            width: 140px;
+            text-align: right;
+        }
+        
+        .new-badge {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            background-color: var(--purple);
+            color: white;
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: var(--border-radius-xl);
+            font-weight: 500;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        /* En-tête de l'offre */
+        .job-header {
             display: flex;
             justify-content: space-between;
-            margin: 20px 0;
-            padding: 15px 0;
+            align-items: flex-start;
+            margin-bottom: 16px;
         }
         
-        .nav-controls {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .nav-button {
-            padding: 8px 15px;
-            border-radius: 20px;
-            background-color: var(--cream);
+        .job-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 0;
             color: var(--black);
-            font-size: 0.9rem;
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s ease;
+            line-height: 1.4;
+            flex: 1;
+            padding-right: 16px;
+        }
+        
+        .job-match {
             display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: center;
+            min-width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            box-shadow: var(--shadow-md);
+            flex-shrink: 0;
         }
         
-        .nav-button:hover {
-            background-color: var(--purple);
-            color: var(--white);
+        .job-match[data-score="high"] {
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+        }
+        
+        .job-match[data-score="medium"] {
+            background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+        }
+        
+        /* Description de l'offre */
+        .job-description {
+            font-size: 0.95rem;
+            color: var(--gray);
+            line-height: 1.6;
+            margin-bottom: 20px;
+            flex-grow: 1;
         }
         
         .color-link {
             color: var(--purple);
-            transition: all 0.2s ease;
+            font-weight: 500;
+            transition: all var(--transition-fast);
+            text-decoration: none;
         }
         
         .color-link:hover {
@@ -327,44 +434,165 @@
             text-decoration: underline;
         }
         
-        /* Afficher la barre de progression en haut de la page */
-        .progress-container {
-            width: 100%;
-            height: 5px;
-            background-color: var(--cream-dark);
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 2000;
+        /* Informations sur l'entreprise */
+        .company-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 20px 0;
+            padding: 16px;
+            background-color: var(--surface-variant);
+            border-radius: var(--border-radius-md);
         }
         
-        .progress-bar {
-            height: 100%;
-            background-color: var(--purple);
-            width: 0%;
-            transition: width 0.3s ease;
+        .logo-placeholder {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--border-radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--cream);
+            color: var(--gray);
+            font-size: 1.2rem;
+            flex-shrink: 0;
         }
         
-        /* Amélioration responsive */
-        @media (max-width: 768px) {
-            .job-offers-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .filter-toolbar {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .filter-group, .search-container {
-                width: 100%;
-                max-width: 100%;
-            }
-            
-            .contextual-nav {
-                flex-direction: column;
-                gap: 10px;
-            }
+        .company-details {
+            flex: 1;
+        }
+        
+        .company-name {
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 0 0 6px 0;
+            color: var(--black);
+            display: flex;
+            align-items: center;
+        }
+        
+        .small-link {
+            margin-left: 12px;
+            font-size: 0.8rem;
+            color: var(--purple);
+            font-weight: 500;
+        }
+        
+        .job-details {
+            display: flex;
+            gap: 16px;
+        }
+        
+        .job-details p {
+            margin: 0;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            color: var(--gray);
+        }
+        
+        .job-details i {
+            margin-right: 6px;
+            color: var(--purple);
+        }
+        
+        /* Actions et informations supplémentaires */
+        .offer-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--cream-dark);
+            padding-top: 20px;
+            margin-top: auto;
+        }
+        
+        .answer-buttons {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .action-button {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all var(--transition-fast);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .action-button.accept {
+            background-color: var(--green-light);
+            color: var(--green);
+        }
+        
+        .action-button.accept:hover {
+            background-color: var(--green);
+            color: white;
+            box-shadow: var(--shadow-md);
+            transform: scale(1.05);
+        }
+        
+        .action-button.decline {
+            background-color: var(--red-light);
+            color: var(--red);
+        }
+        
+        .action-button.decline:hover {
+            background-color: var(--red);
+            color: white;
+            box-shadow: var(--shadow-md);
+            transform: scale(1.05);
+        }
+        
+        .action-button.info {
+            background-color: var(--blue-light);
+            color: var(--blue);
+        }
+        
+        .action-button.info:hover {
+            background-color: var(--blue);
+            color: white;
+            box-shadow: var(--shadow-md);
+            transform: scale(1.05);
+        }
+        
+        /* Évaluations et métadonnées */
+        .job-rating {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+        
+        .stars {
+            color: #FFD700;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+        
+        .job-meta {
+            font-size: 0.8rem;
+            color: var(--gray);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            text-align: right;
+        }
+        
+        .job-meta span {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+        
+        .job-meta i {
+            margin-right: 6px;
+            width: 16px;
+            text-align: center;
+            color: var(--purple);
         }
         
         /* Tooltips améliorés */
@@ -375,24 +603,26 @@
         [data-tooltip]::after {
             content: attr(data-tooltip);
             position: absolute;
-            bottom: -35px;
+            bottom: -42px;
             left: 50%;
             transform: translateX(-50%);
-            padding: 5px 10px;
+            padding: 8px 12px;
             background-color: var(--black);
             color: white;
             font-size: 0.8rem;
-            border-radius: 4px;
+            border-radius: var(--border-radius-md);
             white-space: nowrap;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.2s ease;
+            transition: all var(--transition-fast);
             z-index: 100;
+            box-shadow: var(--shadow-md);
         }
         
         [data-tooltip]:hover::after {
             opacity: 1;
             visibility: visible;
+            transform: translateX(-50%) translateY(-5px);
         }
         
         /* Animation pour les nouvelles offres */
@@ -406,17 +636,200 @@
             animation: pulse 2s infinite;
         }
         
-        /* Badge pour les nouvelles offres */
-        .new-badge {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background-color: var(--purple);
-            color: white;
-            font-size: 0.7rem;
-            padding: 3px 8px;
-            border-radius: 10px;
+        /* Pagination améliorée */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+            gap: 8px;
+        }
+        
+        .page-button {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--border-radius-md);
+            background-color: var(--surface);
+            color: var(--black);
             font-weight: 500;
+            transition: all var(--transition-fast);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .page-button:hover:not([disabled]) {
+            background-color: var(--cream-dark);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .page-button.active {
+            background-color: var(--purple);
+            color: var(--white);
+        }
+        
+        .page-button[disabled] {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        /* Responsive design amélioré */
+        @media (max-width: 1200px) {
+            .job-offers-container {
+                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .job-offers-container {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+            
+            .contextual-nav {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+            
+            .nav-controls {
+                width: 100%;
+                justify-content: flex-start;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .main-container {
+                padding-top: 100px;
+            }
+            
+            .candidate-dashboard-section {
+                padding: 24px 16px;
+            }
+            
+            .job-offers-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .filter-toolbar {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 16px;
+            }
+            
+            .filter-group {
+                width: 100%;
+            }
+            
+            .search-container {
+                width: 100%;
+                max-width: 100%;
+            }
+            
+            .sort-container {
+                width: 100%;
+            }
+            
+            .sort-container select {
+                width: 100%;
+            }
+            
+            .job-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+            
+            .job-match {
+                align-self: flex-end;
+                margin-top: -60px;
+            }
+            
+            .nav-button {
+                padding: 8px 12px;
+                font-size: 0.8rem;
+            }
+            
+            .offer-actions {
+                flex-direction: column;
+                gap: 20px;
+                align-items: flex-start;
+            }
+            
+            .job-rating {
+                align-items: flex-start;
+                width: 100%;
+            }
+            
+            .stars {
+                margin-bottom: 12px;
+            }
+            
+            .job-meta {
+                text-align: left;
+            }
+            
+            .job-meta span {
+                justify-content: flex-start;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .filter-badge {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .company-info {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .logo-placeholder {
+                margin-bottom: 12px;
+            }
+        }
+        
+        /* État de l'expansion des offres */
+        .job-offer.expanded .job-description {
+            max-height: none;
+        }
+        
+        /* Skeleton loading pour UX améliorée */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: var(--border-radius-md);
+        }
+        
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        /* Style pour le message de résultat vide */
+        .empty-state {
+            text-align: center;
+            padding: 60px 24px;
+            color: var(--gray);
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+            color: var(--cream-dark);
+            margin-bottom: 16px;
+        }
+        
+        .empty-state h3 {
+            font-size: 1.25rem;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .empty-state p {
+            font-size: 0.95rem;
+            max-width: 400px;
+            margin: 0 auto 24px;
         }
     </style>
 </head>
@@ -456,26 +869,29 @@
     </header>
 
     <div class="container main-container" id="main-content">
-        <!-- Breadcrumb -->
+        <!-- Breadcrumb amélioré -->
         <div class="breadcrumb fade-in">
-            <a href="candidate-dashboard.html?email=jean-olivier.penin%40b-acceptance.com&password=s"><i class="fas fa-home"></i> Tableau de bord</a> &gt; 
+            <a href="candidate-dashboard.html?email=jean-olivier.penin%40b-acceptance.com&password=s">
+                <i class="fas fa-home"></i> Tableau de bord
+            </a>
+            <span>›</span>
             <span>Mes offres reçues</span>
         </div>
         
-        <!-- Navigation contextuelle -->
+        <!-- Navigation contextuelle améliorée -->
         <div class="contextual-nav fade-in">
             <div class="page-title">
-                <h1 style="margin: 0; font-size: 1.8rem; font-weight: 500;">Mes offres reçues</h1>
-                <p style="margin: 5px 0 0 0; color: var(--gray); font-size: 0.9rem;">
+                <h1>Mes offres reçues</h1>
+                <p>
                     <i class="fas fa-info-circle"></i> Des recruteurs intéressés par votre profil vous proposent ces offres d'emploi
                 </p>
             </div>
             <div class="nav-controls">
-                <button class="nav-button">
+                <button class="nav-button" id="refreshBtn">
                     <i class="fas fa-sync-alt"></i> Actualiser
                 </button>
-                <button class="nav-button">
-                    <i class="fas fa-cog"></i> Préférences
+                <button class="nav-button" id="preferencesBtn">
+                    <i class="fas fa-sliders-h"></i> Préférences
                 </button>
                 <a href="candidate-dashboard.html?email=jean-olivier.penin%40b-acceptance.com&password=s" class="nav-button">
                     <i class="fas fa-th-large"></i> Dashboard
@@ -483,37 +899,48 @@
             </div>
         </div>
         
-        <!-- Section Mes offres reçues -->
+        <!-- Section Mes offres reçues améliorée -->
         <div class="candidate-dashboard-section fade-in">
-            <h2 class="section-heading">Vue d'ensemble (10 offres)</h2>
+            <h2 class="section-heading">
+                Vue d'ensemble
+                <span class="count-badge">10 offres</span>
+            </h2>
             
-            <!-- Filtres et recherche -->
+            <!-- Filtres et recherche améliorés -->
             <div class="filter-toolbar">
                 <div class="filter-group">
-                    <span class="filter-badge active" data-tooltip="Afficher toutes les offres"><i class="fas fa-filter"></i> Toutes</span>
-                    <span class="filter-badge" data-tooltip="Afficher les offres avec un matching > 80%"><i class="fas fa-star"></i> Plus de 80%</span>
-                    <span class="filter-badge" data-tooltip="Afficher les offres reçues ces 7 derniers jours"><i class="fas fa-clock"></i> Récentes</span>
-                    <span class="filter-badge" data-tooltip="Afficher vos offres favorites"><i class="fas fa-heart"></i> Favorites</span>
+                    <span class="filter-badge active" data-tooltip="Afficher toutes les offres">
+                        <i class="fas fa-filter"></i> Toutes
+                    </span>
+                    <span class="filter-badge" data-tooltip="Afficher les offres avec un matching > 80%">
+                        <i class="fas fa-star"></i> Plus de 80%
+                    </span>
+                    <span class="filter-badge" data-tooltip="Afficher les offres reçues ces 7 derniers jours">
+                        <i class="fas fa-clock"></i> Récentes
+                    </span>
+                    <span class="filter-badge" data-tooltip="Afficher vos offres favorites">
+                        <i class="fas fa-heart"></i> Favorites
+                    </span>
                 </div>
                 
                 <div class="filter-group">
                     <div class="search-container">
                         <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Rechercher une offre..." aria-label="Rechercher une offre">
+                        <input type="text" placeholder="Rechercher une offre..." aria-label="Rechercher une offre" id="searchInput">
                     </div>
                     
                     <div class="sort-container">
-                        <select aria-label="Trier les offres">
-                            <option>Trier par : Pertinence</option>
-                            <option>Trier par : Date</option>
-                            <option>Trier par : Matching</option>
-                            <option>Trier par : Salaire</option>
+                        <select aria-label="Trier les offres" id="sortSelect">
+                            <option value="relevance">Trier par : Pertinence</option>
+                            <option value="date">Trier par : Date</option>
+                            <option value="matching">Trier par : Matching</option>
+                            <option value="salary">Trier par : Salaire</option>
                         </select>
                     </div>
                 </div>
             </div>
             
-            <!-- Conteneur des offres -->
+            <!-- Conteneur des offres amélioré -->
             <div class="job-offers-container">
                 <!-- Offre 1 - Mise en avant -->
                 <div class="job-offer fade-in new">
@@ -694,7 +1121,6 @@
                     </div>
                 </div>
 
-                <!-- Ajout de 2 offres supplémentaires pour montrer l'effet de grille -->
                 <!-- Offre 5 -->
                 <div class="job-offer fade-in">
                     <div class="job-header">
@@ -784,14 +1210,22 @@
                 </div>
             </div>
             
-            <!-- Pagination -->
-            <div style="display: flex; justify-content: center; margin-top: 30px;">
-                <div style="display: flex; gap: 5px;">
-                    <button class="nav-button" disabled><i class="fas fa-chevron-left"></i></button>
-                    <button class="nav-button" style="background-color: var(--purple); color: white;">1</button>
-                    <button class="nav-button">2</button>
-                    <button class="nav-button"><i class="fas fa-chevron-right"></i></button>
-                </div>
+            <!-- Pagination améliorée -->
+            <div class="pagination">
+                <button class="page-button" disabled><i class="fas fa-chevron-left"></i></button>
+                <button class="page-button active">1</button>
+                <button class="page-button">2</button>
+                <button class="page-button"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            
+            <!-- État vide (caché par défaut) -->
+            <div class="empty-state" style="display: none;">
+                <i class="fas fa-search"></i>
+                <h3>Aucune offre trouvée</h3>
+                <p>Aucune offre ne correspond à votre recherche. Essayez de modifier vos filtres ou effacez votre recherche.</p>
+                <button class="nav-button" id="clearFiltersBtn">
+                    <i class="fas fa-times"></i> Effacer les filtres
+                </button>
             </div>
         </div>
     </div>
@@ -842,7 +1276,7 @@
         </button>
     </footer>
 
-    <!-- JavaScript -->
+    <!-- JavaScript amélioré -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Menu mobile toggle
@@ -856,30 +1290,27 @@
                 });
             }
             
-            // Animation au défilement
+            // Animation au défilement améliorée avec Intersection Observer
             const animatedElements = document.querySelectorAll('.fade-in');
             
-            function checkIfInView() {
-                const windowHeight = window.innerHeight;
-                const windowTop = window.scrollY;
-                const windowBottom = windowTop + windowHeight;
-                
-                animatedElements.forEach(function(element) {
-                    const elementTop = element.getBoundingClientRect().top + windowTop;
-                    const elementBottom = elementTop + element.offsetHeight;
-                    
-                    // Si l'élément est visible dans la fenêtre
-                    if (elementBottom > windowTop && elementTop < windowBottom) {
-                        element.classList.add('visible');
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+            
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
                     }
                 });
-            }
+            }, observerOptions);
             
-            // Vérifier au chargement de la page
-            checkIfInView();
-            
-            // Vérifier lors du défilement
-            window.addEventListener('scroll', checkIfInView);
+            animatedElements.forEach(element => {
+                observer.observe(element);
+            });
             
             // Bouton de retour en haut
             const scrollToTopButton = document.getElementById('scroll-to-top');
@@ -901,12 +1332,68 @@
                 });
             }
             
-            // Interaction avec les filtres
+            // Gestion des filtres améliorée
             const filterBadges = document.querySelectorAll('.filter-badge');
+            const searchInput = document.getElementById('searchInput');
+            const sortSelect = document.getElementById('sortSelect');
+            const jobOffers = document.querySelectorAll('.job-offer');
+            const emptyState = document.querySelector('.empty-state');
+            const clearFiltersBtn = document.getElementById('clearFiltersBtn');
+            
+            // Fonction pour filtrer les offres
+            function filterOffers() {
+                const searchTerm = searchInput.value.toLowerCase();
+                const activeFilter = document.querySelector('.filter-badge.active').textContent.trim();
+                const sortOption = sortSelect.value;
+                
+                let visibleCount = 0;
+                
+                jobOffers.forEach(offer => {
+                    const title = offer.querySelector('.job-title').textContent.toLowerCase();
+                    const description = offer.querySelector('.job-description').textContent.toLowerCase();
+                    const company = offer.querySelector('.company-name').textContent.toLowerCase();
+                    
+                    let matchScore = offer.querySelector('.job-match').textContent;
+                    matchScore = parseInt(matchScore);
+                    
+                    let showOffer = true;
+                    
+                    // Filtre de recherche
+                    if (searchTerm && !title.includes(searchTerm) && !description.includes(searchTerm) && !company.includes(searchTerm)) {
+                        showOffer = false;
+                    }
+                    
+                    // Filtre de catégorie
+                    if (activeFilter.includes('Plus de 80%') && matchScore < 80) {
+                        showOffer = false;
+                    } else if (activeFilter.includes('Récentes') && !offer.classList.contains('new')) {
+                        showOffer = false;
+                    } else if (activeFilter.includes('Favorites') && !offer.classList.contains('favorite')) {
+                        showOffer = false;
+                    }
+                    
+                    if (showOffer) {
+                        offer.style.display = 'flex';
+                        visibleCount++;
+                    } else {
+                        offer.style.display = 'none';
+                    }
+                });
+                
+                // Mettre à jour le compteur d'offres
+                document.querySelector('.count-badge').textContent = `${visibleCount} offres`;
+                
+                // Afficher l'état vide si aucune offre
+                if (visibleCount === 0) {
+                    emptyState.style.display = 'block';
+                } else {
+                    emptyState.style.display = 'none';
+                }
+            }
             
             filterBadges.forEach(badge => {
                 badge.addEventListener('click', function() {
-                    // Dans chaque groupe de filtres, désactiver tous les autres
+                    // Désactiver tous les autres filtres dans ce groupe
                     const parentElement = this.parentElement;
                     parentElement.querySelectorAll('.filter-badge').forEach(b => {
                         b.classList.remove('active');
@@ -914,8 +1401,70 @@
                     
                     // Activer le filtre cliqué
                     this.classList.add('active');
+                    
+                    // Appliquer les filtres
+                    filterOffers();
                 });
             });
+            
+            // Recherche en temps réel
+            if (searchInput) {
+                searchInput.addEventListener('input', filterOffers);
+            }
+            
+            // Tri des offres
+            if (sortSelect) {
+                sortSelect.addEventListener('change', function() {
+                    // Ici, on simule un tri (dans un vrai scénario, on réorganiserait les offres)
+                    console.log(`Tri par: ${this.value}`);
+                    
+                    // Animation de chargement pour simuler le tri
+                    const container = document.querySelector('.job-offers-container');
+                    container.style.opacity = '0.5';
+                    
+                    setTimeout(() => {
+                        container.style.opacity = '1';
+                    }, 500);
+                });
+            }
+            
+            // Bouton pour effacer les filtres
+            if (clearFiltersBtn) {
+                clearFiltersBtn.addEventListener('click', function() {
+                    // Réinitialiser la recherche
+                    searchInput.value = '';
+                    
+                    // Réinitialiser le tri
+                    sortSelect.value = 'relevance';
+                    
+                    // Réinitialiser les filtres
+                    document.querySelector('.filter-badge:first-child').click();
+                    
+                    // Refilter les offres
+                    filterOffers();
+                });
+            }
+            
+            // Bouton d'actualisation
+            const refreshBtn = document.getElementById('refreshBtn');
+            if (refreshBtn) {
+                refreshBtn.addEventListener('click', function() {
+                    // Simuler une actualisation des données
+                    const container = document.querySelector('.job-offers-container');
+                    
+                    // Animation de rotation pour l'icône d'actualisation
+                    this.querySelector('i').style.transition = 'transform 1s';
+                    this.querySelector('i').style.transform = 'rotate(360deg)';
+                    
+                    // Animation de chargement pour le conteneur
+                    container.style.opacity = '0.5';
+                    
+                    setTimeout(() => {
+                        container.style.opacity = '1';
+                        this.querySelector('i').style.transform = 'rotate(0deg)';
+                    }, 1000);
+                });
+            }
             
             // Barre de progression au scroll
             window.addEventListener('scroll', function() {
@@ -926,33 +1475,102 @@
                 document.getElementById('progressBar').style.width = scrolled + '%';
             });
             
-            // Simuler des actions sur les boutons (à des fins de démonstration)
+            // Gestion des actions sur les boutons d'offre
             const actionButtons = document.querySelectorAll('.action-button');
             
             actionButtons.forEach(button => {
                 button.addEventListener('click', function() {
                     const jobOffer = this.closest('.job-offer');
-                    const buttonType = this.classList.contains('accept') ? 'accepté' : this.classList.contains('decline') ? 'refusé' : 'informations';
+                    const buttonType = this.classList.contains('accept') ? 'accepté' : 
+                                      this.classList.contains('decline') ? 'refusé' : 'informations';
                     
-                    if (buttonType === 'accepté' || buttonType === 'refusé') {
-                        // Animation de sortie
+                    if (buttonType === 'accepté') {
+                        // Animation d'acceptation
                         jobOffer.style.transition = 'all 0.5s ease';
-                        jobOffer.style.transform = buttonType === 'accepté' ? 'translateX(100px)' : 'translateX(-100px)';
+                        jobOffer.style.transform = 'translateX(100px)';
                         jobOffer.style.opacity = '0';
                         
-                        // Suppression après animation
+                        // Notification de succès (à améliorer dans une vraie implémentation)
                         setTimeout(() => {
                             jobOffer.style.display = 'none';
+                            
+                            // Mettre à jour le compteur
+                            const visibleCount = document.querySelectorAll('.job-offer[style="display: flex;"]').length - 1;
+                            document.querySelector('.count-badge').textContent = `${visibleCount} offres`;
+                            
+                            // Afficher l'état vide si nécessaire
+                            if (visibleCount === 0) {
+                                emptyState.style.display = 'block';
+                            }
+                        }, 500);
+                    } else if (buttonType === 'refusé') {
+                        // Animation de refus
+                        jobOffer.style.transition = 'all 0.5s ease';
+                        jobOffer.style.transform = 'translateX(-100px)';
+                        jobOffer.style.opacity = '0';
+                        
+                        setTimeout(() => {
+                            jobOffer.style.display = 'none';
+                            
+                            // Mettre à jour le compteur
+                            const visibleCount = document.querySelectorAll('.job-offer[style="display: flex;"]').length - 1;
+                            document.querySelector('.count-badge').textContent = `${visibleCount} offres`;
+                            
+                            // Afficher l'état vide si nécessaire
+                            if (visibleCount === 0) {
+                                emptyState.style.display = 'block';
+                            }
                         }, 500);
                     } else {
-                        // Afficher plus d'informations (animation simple pour la démo)
+                        // Afficher plus d'informations (toggle)
                         jobOffer.classList.toggle('expanded');
+                        
+                        if (jobOffer.classList.contains('expanded')) {
+                            // Simuler le chargement de plus d'informations
+                            const description = jobOffer.querySelector('.job-description');
+                            const originalText = description.innerHTML;
+                            
+                            description.innerHTML = 'Chargement des détails...';
+                            
+                            setTimeout(() => {
+                                description.innerHTML = originalText + '<br><br>' + 
+                                'Informations complémentaires sur le poste:<br>' +
+                                '- Équipe de 5 personnes<br>' +
+                                '- Télétravail 2 jours par semaine<br>' +
+                                '- Mutuelle d\'entreprise<br>' +
+                                '- Tickets restaurant<br>' +
+                                '- Formation continue';
+                            }, 500);
+                        }
                     }
+                });
+            });
+            
+            // Gestion de la pagination
+            const pageButtons = document.querySelectorAll('.page-button');
+            
+            pageButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    if (this.disabled) return;
+                    
+                    // Désactiver le bouton actif
+                    document.querySelector('.page-button.active')?.classList.remove('active');
+                    
+                    // Activer le bouton cliqué s'il a une valeur (pas les flèches)
+                    if (!this.innerHTML.includes('fa-chevron')) {
+                        this.classList.add('active');
+                    }
+                    
+                    // Simuler un changement de page
+                    const container = document.querySelector('.job-offers-container');
+                    container.style.opacity = '0.5';
+                    
+                    setTimeout(() => {
+                        container.style.opacity = '1';
+                    }, 500);
                 });
             });
         });
     </script>
-    <!-- Script d'amélioration de la navigation -->
-    <script src="../static/services/nav-enhancement.js"></script>
 </body>
 </html>
