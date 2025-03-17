@@ -30,8 +30,9 @@
             background-color: var(--white);
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
+            transition: all 0.3s ease;
             overflow: hidden;
+            cursor: pointer;
         }
         
         .job-card:hover {
@@ -45,6 +46,7 @@
             padding: 15px;
             border-bottom: 1px solid var(--cream-dark);
             gap: 15px;
+            position: relative;
         }
         
         .job-title {
@@ -54,21 +56,18 @@
             margin: 0;
         }
         
-        .cta-arrow {
-            margin-left: auto;
-            padding: 10px 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            border: 1px solid var(--purple);
-            border-radius: 5px;
+        .job-header:after {
+            content: "\f054";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            position: absolute;
+            right: 15px;
             color: var(--purple);
-            transition: all 0.3s ease;
+            transition: transform 0.3s ease;
         }
         
-        .cta-arrow:hover {
-            background-color: var(--purple);
-            color: white;
+        .job-card:hover .job-header:after {
+            transform: translateX(5px);
         }
         
         .company-info-widget {
@@ -184,6 +183,16 @@
             display: grid;
             grid-template-columns: 350px 1fr;
             gap: 30px;
+            opacity: 0;
+            height: 0;
+            overflow: hidden;
+            transition: opacity 0.5s ease, height 0.5s ease;
+        }
+        
+        .resources-grid.active {
+            opacity: 1;
+            height: auto;
+            margin-top: 40px;
         }
         
         .preparation-tips {
@@ -198,6 +207,22 @@
             border-radius: 8px;
             margin-bottom: 15px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transform: translateY(20px);
+            opacity: 0;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+        
+        .resources-grid.active .preparation-tip {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .resources-grid.active .preparation-tip:nth-child(2) {
+            transition-delay: 0.1s;
+        }
+        
+        .resources-grid.active .preparation-tip:nth-child(3) {
+            transition-delay: 0.2s;
         }
         
         .tip-title {
@@ -257,37 +282,29 @@
             
             <div class="job-listing-container">
                 <!-- Job Card 1 -->
-                <div class="job-card">
+                <div class="job-card" onclick="toggleJobDetails('job-1')">
                     <div class="job-header">
                         <div class="logo-placeholder" style="width: 60px; height: 60px;"></div>
                         <div>
                             <h3 class="job-title">Intitulé de Poste</h3>
                             <p style="margin: 0; font-size: 0.9rem;">Entreprise</p>
                         </div>
-                        <a href="#job-details" class="cta-arrow">
-                            Call to Action : click et bascule sur la page entreprise
-                            <i class="fas fa-arrow-right"></i>
-                        </a>
                     </div>
                 </div>
                 
                 <!-- Job Card 2 -->
-                <div class="job-card">
+                <div class="job-card" onclick="toggleJobDetails('job-2')">
                     <div class="job-header">
                         <div class="logo-placeholder" style="width: 60px; height: 60px;"></div>
                         <div>
                             <h3 class="job-title">Intitulé de Poste</h3>
                             <p style="margin: 0; font-size: 0.9rem;">Entreprise</p>
                         </div>
-                        <a href="#" class="cta-arrow">
-                            <span>Voir le détail</span>
-                            <i class="fas fa-arrow-right"></i>
-                        </a>
                     </div>
                 </div>
             </div>
             
-            <div class="resources-grid" style="margin-top: 40px;" id="job-details">
+            <div class="resources-grid" id="job-details">
                 <!-- Left Column - Preparation Tips -->
                 <div class="preparation-tips">
                     <h3 style="margin-top: 0;">Préparations aux entretiens : Nos conseils !</h3>
@@ -517,6 +534,24 @@
                 });
             }
         });
+        
+        // Fonction pour afficher/masquer les détails du poste
+        function toggleJobDetails(jobId) {
+            const detailsSection = document.getElementById('job-details');
+            
+            // Faire défiler la page vers les détails avec une animation
+            if (!detailsSection.classList.contains('active')) {
+                detailsSection.classList.add('active');
+                
+                // Ajouter un petit délai pour permettre à l'animation de commencer
+                setTimeout(() => {
+                    detailsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100);
+            } else {
+                // Si les détails sont déjà affichés, juste faire défiler vers eux
+                detailsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
     </script>
     <!-- Script d'amélioration de la navigation -->
     <script src="../static/services/nav-enhancement.js"></script>
