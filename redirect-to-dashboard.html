@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirection vers le tableau de bord</title>
+    <meta http-equiv="refresh" content="0; URL=templates/candidate-dashboard.html?email=jean-olivier.penin%40b-acceptance.com&password=s">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            padding: 40px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #7c3aed;
+            margin-bottom: 20px;
+        }
+        p {
+            color: #4b5563;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        .button {
+            display: inline-block;
+            background-color: #7c3aed;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background-color: #6d28d9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Redirection en cours...</h1>
+        <p>Vous allez être redirigé vers le tableau de bord candidat. Si la redirection ne fonctionne pas automatiquement, veuillez cliquer sur le bouton ci-dessous.</p>
+        <a href="templates/candidate-dashboard.html?email=jean-olivier.penin%40b-acceptance.com&password=s" class="button">Accéder au tableau de bord</a>
+    </div>
+    
+    <!-- Script pour forcer l'actualisation du cache -->
+    <script>
+        // Ajouter un paramètre aléatoire pour contourner le cache
+        window.onload = function() {
+            const timestamp = new Date().getTime();
+            const redirectUrl = `templates/candidate-dashboard.html?email=jean-olivier.penin%40b-acceptance.com&password=s&nocache=${timestamp}`;
+            window.location.href = redirectUrl;
+        };
+    </script>
+</body>
+</html>
