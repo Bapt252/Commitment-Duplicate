@@ -16,6 +16,328 @@
     
     <!-- Favicon -->
     <link rel="shortcut icon" href="../static/images/favicon.ico" type="image/x-icon">
+    
+    <style>
+        :root {
+            --yellow-light: #FFF8D6;
+            --yellow: #FFDF4F;
+        }
+        
+        .cv-form-container {
+            background-color: var(--yellow-light);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+        
+        .cv-section {
+            background-color: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        
+        .cv-section-header {
+            border-bottom: 2px solid var(--yellow);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            font-weight: 500;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .cv-form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--black);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--cream-dark);
+            border-radius: 4px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--purple);
+            outline: none;
+        }
+        
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .form-check {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .form-check-input {
+            margin-right: 10px;
+        }
+        
+        .radio-options {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .add-experience-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+            width: 100%;
+            padding: 15px;
+            border: 2px dashed var(--cream-dark);
+            border-radius: 8px;
+            background: none;
+            color: var(--purple);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .add-experience-btn:hover {
+            border-color: var(--purple);
+            background-color: var(--cream);
+        }
+        
+        .add-experience-btn i {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+        
+        .experience-card {
+            border: 1px solid var(--cream-dark);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .experience-card:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-color: var(--purple-light);
+        }
+        
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        
+        .experience-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            background: none;
+            border: 1px solid var(--cream-dark);
+            color: var(--gray);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn-icon:hover {
+            background-color: var(--cream);
+        }
+        
+        .btn-icon.edit:hover {
+            color: var(--purple);
+            border-color: var(--purple);
+        }
+        
+        .btn-icon.delete:hover {
+            color: #dc3545;
+            border-color: #dc3545;
+        }
+        
+        .ai-suggestions {
+            background-color: var(--cream);
+            border-left: 3px solid var(--purple);
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .ai-suggestions h4 {
+            color: var(--purple);
+            margin-top: 0;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .ai-suggestions h4 i {
+            margin-right: 8px;
+        }
+        
+        .ai-suggestions ul {
+            padding-left: 25px;
+            margin-bottom: 0;
+        }
+        
+        .ai-suggestions li {
+            margin-bottom: 8px;
+        }
+        
+        .ai-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 15px;
+            gap: 10px;
+        }
+        
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 13px;
+        }
+        
+        .progress-bar-container {
+            height: 8px;
+            background-color: var(--cream-dark);
+            border-radius: 4px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background-color: var(--purple);
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+        
+        .cv-status {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .status-indicator {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background-color: #28a745;
+        }
+        
+        .status-indicator.pending {
+            background-color: var(--yellow);
+        }
+        
+        .status-text {
+            font-weight: 500;
+        }
+        
+        .completion-status {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .percentage {
+            font-weight: 600;
+            color: var(--purple);
+        }
+        
+        /* Tag de compétence */
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .skill-tag {
+            background-color: var(--cream);
+            border-radius: 20px;
+            padding: 6px 12px;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            transition: all 0.2s;
+        }
+        
+        .skill-tag:hover {
+            background-color: var(--cream-dark);
+        }
+        
+        .skill-tag i {
+            margin-left: 8px;
+            cursor: pointer;
+            color: var(--gray);
+        }
+        
+        .skill-tag i:hover {
+            color: #dc3545;
+        }
+        
+        .add-skill {
+            display: flex;
+            margin-top: 15px;
+        }
+        
+        .add-skill input {
+            flex: 1;
+            margin-right: 10px;
+        }
+        
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s, transform 0.8s;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Responsivité */
+        @media (max-width: 768px) {
+            .cv-form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .experience-header {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Notification bar -->
@@ -58,112 +380,259 @@
         <div class="candidate-dashboard-section fade-in">
             <h2 class="section-heading">Travailler mon CV</h2>
             
-            <div class="cv-optimization-container" style="background-color: var(--yellow-light); padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-                <div style="padding: 20px; background-color: white; border-radius: 8px;">
-                    <h3 style="margin-top: 0;">Optimisez votre CV pour augmenter vos chances</h3>
-                    <p>Notre outil d'IA analyse votre CV et vous aide à le rendre plus attractif pour les recruteurs.</p>
-                    <div style="text-align: right;">
-                        <button class="btn btn-primary" style="background-color: var(--purple);"><i class="fas fa-cloud-upload-alt"></i> Mettre à jour mon CV</button>
+            <div class="cv-form-container">
+                <!-- Introduction et Score du CV -->
+                <div class="cv-section">
+                    <div class="cv-section-header">
+                        <h3>Analyse de votre CV</h3>
+                        <button class="btn btn-primary"><i class="fas fa-cloud-upload-alt"></i> Mettre à jour mon CV</button>
+                    </div>
+                    
+                    <div class="cv-status">
+                        <div class="status-indicator"></div>
+                        <span class="status-text">Votre CV est complet à 75%</span>
+                    </div>
+                    
+                    <div class="completion-status">
+                        <span>Progression globale</span>
+                        <span class="percentage">75%</span>
+                    </div>
+                    
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" style="width: 75%"></div>
+                    </div>
+                    
+                    <div class="cv-form-grid" style="margin-top: 25px;">
+                        <div>
+                            <h4><i class="fas fa-check-circle" style="color: var(--purple);"></i> Points forts</h4>
+                            <ul>
+                                <li>Structure claire et organisée</li>
+                                <li>Mise en avant des compétences techniques</li>
+                                <li>Informations de contact complètes</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4><i class="fas fa-exclamation-circle" style="color: var(--yellow);"></i> Points à améliorer</h4>
+                            <ul>
+                                <li>Ajouter des résultats quantifiables</li>
+                                <li>Détailler davantage les missions</li>
+                                <li>Enrichir la section formation</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 
-                <div style="padding: 20px; margin-top: 20px; background-color: white; border-radius: 8px;">
-                    <h3 style="margin-top: 0;">Analyse de votre CV</h3>
+                <!-- Expérience professionnelle -->
+                <div class="cv-section">
+                    <div class="cv-section-header">
+                        <h3>L'expérience</h3>
+                        <button class="btn btn-sm btn-outline">
+                            <i class="fas fa-question-circle"></i> Conseils
+                        </button>
+                    </div>
                     
-                    <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 15px;">
-                        <div style="flex: 1; min-width: 200px;">
-                            <div style="display: flex; align-items: center; margin-bottom: 10px;">
-                                <div style="width: 40px; height: 40px; background-color: var(--purple); border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-right: 15px;">
-                                    <i class="fas fa-check" style="color: white;"></i>
-                                </div>
-                                <div>
-                                    <h4 style="margin: 0;">Score de lisibilité</h4>
-                                    <div class="progress-bar-container" style="height: 10px; background-color: #eee; border-radius: 5px; margin-top: 5px;">
-                                        <div class="progress-bar" style="width: 70%; height: 100%; border-radius: 5px; background-color: var(--purple);"></div>
-                                    </div>
-                                </div>
+                    <!-- Expérience existante -->
+                    <div class="experience-card">
+                        <div class="experience-header">
+                            <h4>Chef de projet marketing digital</h4>
+                            <div class="experience-actions">
+                                <button class="btn-icon edit"><i class="fas fa-pencil-alt"></i></button>
+                                <button class="btn-icon delete"><i class="fas fa-trash-alt"></i></button>
                             </div>
                         </div>
                         
-                        <div style="flex: 1; min-width: 200px;">
-                            <div style="display: flex; align-items: center; margin-bottom: 10px;">
-                                <div style="width: 40px; height: 40px; background-color: var(--purple); border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-right: 15px;">
-                                    <i class="fas fa-tag" style="color: white;"></i>
-                                </div>
-                                <div>
-                                    <h4 style="margin: 0;">Mots-clés pertinents</h4>
-                                    <div class="progress-bar-container" style="height: 10px; background-color: #eee; border-radius: 5px; margin-top: 5px;">
-                                        <div class="progress-bar" style="width: 60%; height: 100%; border-radius: 5px; background-color: var(--purple);"></div>
-                                    </div>
-                                </div>
+                        <div class="cv-form-grid">
+                            <div class="form-group">
+                                <label>Date du poste</label>
+                                <div>Janvier 2022 - Présent</div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Entreprise</label>
+                                <div>AgenceXYZ</div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Secteur d'activité</label>
+                                <div>Marketing Digital</div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Type de contrat</label>
+                                <div>CDI</div>
                             </div>
                         </div>
                         
-                        <div style="flex: 1; min-width: 200px;">
-                            <div style="display: flex; align-items: center; margin-bottom: 10px;">
-                                <div style="width: 40px; height: 40px; background-color: var(--purple); border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-right: 15px;">
-                                    <i class="fas fa-chart-line" style="color: white;"></i>
-                                </div>
-                                <div>
-                                    <h4 style="margin: 0;">Impact des réalisations</h4>
-                                    <div class="progress-bar-container" style="height: 10px; background-color: #eee; border-radius: 5px; margin-top: 5px;">
-                                        <div class="progress-bar" style="width: 50%; height: 100%; border-radius: 5px; background-color: var(--purple);"></div>
-                                    </div>
-                                </div>
+                        <div class="form-group">
+                            <label>Missions :</label>
+                            <div>Gestion des campagnes digitales et de la stratégie de contenu. Responsable des réseaux sociaux et de l'acquisition de trafic.</div>
+                        </div>
+                        
+                        <div class="cv-form-grid">
+                            <div class="form-group">
+                                <label>Langues étrangères utilisées</label>
+                                <div>OUI : Anglais - Écrit et Oral</div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Logiciels utilisés</label>
+                                <div>Google Analytics, Facebook Ads Manager, Photoshop, Wordpress</div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Fin de contrat : Contexte</label>
+                            <div>Poste actuel</div>
+                        </div>
+                        
+                        <div class="ai-suggestions">
+                            <h4><i class="fas fa-lightbulb"></i> Suggestions d'amélioration IA</h4>
+                            <ul>
+                                <li>Ajoutez des résultats quantifiables (ex: "augmentation du trafic de 45%")</li>
+                                <li>Précisez le nombre de campagnes gérées</li>
+                                <li>Mentionnez la taille de l'équipe supervisée le cas échéant</li>
+                            </ul>
+                            <div class="ai-actions">
+                                <button class="btn btn-sm btn-outline">Ignorer</button>
+                                <button class="btn btn-sm btn-primary">Appliquer</button>
                             </div>
                         </div>
                     </div>
                     
-                    <div style="margin-top: 30px; padding: 15px; background-color: #f9f9f9; border-radius: 8px;">
-                        <h4 style="margin-top: 0; color: var(--purple);"><i class="fas fa-lightbulb"></i> Conseils d'amélioration</h4>
-                        <ul style="padding-left: 20px;">
-                            <li>Ajoutez des résultats quantifiables à vos expériences professionnelles</li>
-                            <li>Incluez des mots-clés du secteur marketing digital pour augmenter votre visibilité</li>
-                            <li>Faites ressortir davantage vos compétences techniques spécifiques</li>
-                            <li>Réduisez la longueur de certaines descriptions pour améliorer la lisibilité</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Suggestions basées sur l'IA -->
-            <div class="cv-suggestions fade-in" style="margin-top: 30px;">
-                <h3>Suggestions d'amélioration personnalisées par IA</h3>
-                
-                <div style="background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 20px;">
-                    <h4 style="margin-top: 0;">Expérience professionnelle : Chef de projet marketing digital</h4>
-                    <div style="display: flex; gap: 20px;">
-                        <div style="flex: 1; background-color: #f9f9f9; padding: 15px; border-radius: 8px;">
-                            <h5 style="margin-top: 0; color: var(--gray);">Version actuelle :</h5>
-                            <p>Chef de projet marketing digital chez XYZ. Responsable des campagnes digitales et de la stratégie de contenu. Gestion des réseaux sociaux et de l'acquisition de trafic.</p>
-                        </div>
-                        <div style="flex: 1; background-color: #f0f8ff; padding: 15px; border-radius: 8px; border-left: 3px solid var(--purple);">
-                            <h5 style="margin-top: 0; color: var(--purple);">Version optimisée :</h5>
-                            <p>Chef de projet marketing digital chez XYZ. <span style="background-color: rgba(103, 58, 183, 0.1); padding: 0 3px;">Pilotage de campagnes ayant généré +45% de trafic qualifié et un ROI de 320%</span>. Élaboration et exécution de la stratégie éditoriale cross-canal avec <span style="background-color: rgba(103, 58, 183, 0.1); padding: 0 3px;">une croissance organique de 15K abonnés en 6 mois</span>.</p>
-                        </div>
-                    </div>
-                    <div style="text-align: right; margin-top: 10px;">
-                        <button class="btn btn-sm btn-outline">Ignorer</button>
-                        <button class="btn btn-sm btn-primary">Appliquer</button>
-                    </div>
+                    <!-- Bouton ajouter expérience -->
+                    <button class="add-experience-btn">
+                        <i class="fas fa-plus-circle"></i> Ajouter une expérience professionnelle
+                    </button>
                 </div>
                 
-                <div style="background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 20px;">
-                    <h4 style="margin-top: 0;">Compétences techniques</h4>
-                    <div style="display: flex; gap: 20px;">
-                        <div style="flex: 1; background-color: #f9f9f9; padding: 15px; border-radius: 8px;">
-                            <h5 style="margin-top: 0; color: var(--gray);">Version actuelle :</h5>
-                            <p>Marketing digital, SEO, Réseaux sociaux, Google Analytics, Photoshop</p>
+                <!-- Formation et diplômes -->
+                <div class="cv-section">
+                    <div class="cv-section-header">
+                        <h3>Certificats / Diplômes</h3>
+                        <button class="btn btn-sm btn-outline">
+                            <i class="fas fa-question-circle"></i> Conseils
+                        </button>
+                    </div>
+                    
+                    <div class="experience-card">
+                        <div class="experience-header">
+                            <h4>Master Marketing Digital</h4>
+                            <div class="experience-actions">
+                                <button class="btn-icon edit"><i class="fas fa-pencil-alt"></i></button>
+                                <button class="btn-icon delete"><i class="fas fa-trash-alt"></i></button>
+                            </div>
                         </div>
-                        <div style="flex: 1; background-color: #f0f8ff; padding: 15px; border-radius: 8px; border-left: 3px solid var(--purple);">
-                            <h5 style="margin-top: 0; color: var(--purple);">Version optimisée :</h5>
-                            <p>Marketing digital, <span style="background-color: rgba(103, 58, 183, 0.1); padding: 0 3px;">SEO/SEA (Google Ads)</span>, <span style="background-color: rgba(103, 58, 183, 0.1); padding: 0 3px;">Growth Hacking</span>, Réseaux sociaux (stratégie organique et paid), <span style="background-color: rgba(103, 58, 183, 0.1); padding: 0 3px;">Analytics (Data Studio, GA4)</span>, Suite Adobe CC</p>
+                        
+                        <div class="cv-form-grid">
+                            <div class="form-group">
+                                <label>Date d'obtention</label>
+                                <div>2021</div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Établissement</label>
+                                <div>Université Paris-Dauphine</div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Niveau</label>
+                                <div>Bac+5</div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Description</label>
+                            <div>Formation en marketing digital, stratégies de communication et techniques d'acquisition. Spécialisation en analytics et data marketing.</div>
                         </div>
                     </div>
-                    <div style="text-align: right; margin-top: 10px;">
-                        <button class="btn btn-sm btn-outline">Ignorer</button>
-                        <button class="btn btn-sm btn-primary">Appliquer</button>
+                    
+                    <!-- Bouton ajouter diplôme -->
+                    <button class="add-experience-btn">
+                        <i class="fas fa-plus-circle"></i> Ajouter un diplôme ou certificat
+                    </button>
+                </div>
+                
+                <!-- Compétences -->
+                <div class="cv-section">
+                    <div class="cv-section-header">
+                        <h3>Compétences</h3>
+                        <button class="btn btn-sm btn-outline">
+                            <i class="fas fa-question-circle"></i> Conseils
+                        </button>
                     </div>
+                    
+                    <div class="form-group">
+                        <label>Compétences techniques</label>
+                        <div class="skills-container">
+                            <div class="skill-tag">Marketing digital <i class="fas fa-times-circle"></i></div>
+                            <div class="skill-tag">SEO <i class="fas fa-times-circle"></i></div>
+                            <div class="skill-tag">Réseaux sociaux <i class="fas fa-times-circle"></i></div>
+                            <div class="skill-tag">Google Analytics <i class="fas fa-times-circle"></i></div>
+                            <div class="skill-tag">Photoshop <i class="fas fa-times-circle"></i></div>
+                        </div>
+                        
+                        <div class="add-skill">
+                            <input type="text" class="form-control" placeholder="Ajouter une compétence">
+                            <button class="btn btn-outline">Ajouter</button>
+                        </div>
+                    </div>
+                    
+                    <div class="ai-suggestions">
+                        <h4><i class="fas fa-lightbulb"></i> Suggestions d'amélioration IA</h4>
+                        <p>Basé sur votre profil, nous vous suggérons d'ajouter ces compétences :</p>
+                        <div class="skills-container">
+                            <div class="skill-tag">Google Ads <i class="fas fa-plus-circle" style="color: var(--purple);"></i></div>
+                            <div class="skill-tag">Growth Hacking <i class="fas fa-plus-circle" style="color: var(--purple);"></i></div>
+                            <div class="skill-tag">Data Studio <i class="fas fa-plus-circle" style="color: var(--purple);"></i></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Langues -->
+                <div class="cv-section">
+                    <div class="cv-section-header">
+                        <h3>Langues</h3>
+                    </div>
+                    
+                    <div class="cv-form-grid">
+                        <div class="form-group">
+                            <label>Français</label>
+                            <select class="form-control">
+                                <option>Langue maternelle</option>
+                                <option>C2 - Maîtrise</option>
+                                <option>C1 - Avancé</option>
+                                <option>B2 - Intermédiaire supérieur</option>
+                                <option>B1 - Intermédiaire</option>
+                                <option>A2 - Élémentaire</option>
+                                <option>A1 - Débutant</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Anglais</label>
+                            <select class="form-control">
+                                <option>Langue maternelle</option>
+                                <option selected>C2 - Maîtrise</option>
+                                <option>C1 - Avancé</option>
+                                <option>B2 - Intermédiaire supérieur</option>
+                                <option>B1 - Intermédiaire</option>
+                                <option>A2 - Élémentaire</option>
+                                <option>A1 - Débutant</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button class="add-experience-btn">
+                        <i class="fas fa-plus-circle"></i> Ajouter une langue
+                    </button>
+                </div>
+                
+                <!-- Actions finales -->
+                <div class="cv-section" style="text-align: center;">
+                    <button class="btn btn-primary">Enregistrer mon CV</button>
+                    <button class="btn btn-outline">Prévisualiser</button>
+                    <button class="btn btn-outline">Exporter en PDF</button>
                 </div>
             </div>
         </div>
@@ -275,7 +744,5 @@
             }
         });
     </script>
-    <!-- Script d'amélioration de la navigation -->
-    <script src="../static/services/nav-enhancement.js"></script>
 </body>
 </html>
