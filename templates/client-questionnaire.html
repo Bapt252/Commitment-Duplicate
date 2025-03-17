@@ -923,7 +923,7 @@
     <!-- Écran de chargement pour la redirection -->
     <div class="loading-overlay" id="loading-overlay">
         <div class="loading-spinner"></div>
-        <div class="loading-text">Redirection vers la sélection de candidats...</div>
+        <div class="loading-text">Redirection vers les candidats recommandés...</div>
     </div>
 
     <footer id="contact">
@@ -1079,14 +1079,14 @@
                 document.getElementById('step2').classList.remove('completed');
             });
             
-            // Fonction pour rediriger vers la page de sélection des candidats
-            function redirectToCandidateSelection() {
+            // Fonction pour rediriger vers la page de propositions de candidats
+            function redirectToCandidateProposals() {
                 // Afficher l'écran de chargement
                 document.getElementById('loading-overlay').classList.add('active');
                 
                 // Redirection après un délai pour voir l'animation
                 setTimeout(() => {
-                    window.location.href = 'recruiter-candidate-selection.html';
+                    window.location.href = 'recruiter-candidates-proposals.html';
                 }, 1500);
             }
             
@@ -1176,10 +1176,10 @@
                     submitButton.innerHTML = '<i class="fas fa-check-circle"></i> <span>Soumettre</span>';
                     showNotification('Formulaire soumis avec succès ! Merci pour vos informations.', 'success');
                     
-                    // Redirection vers la page de sélection des candidats si la réponse est "oui"
+                    // Redirection vers la page de propositions de candidats si la réponse est "oui"
                     setTimeout(() => {
                         if (hasPositionValue === 'yes') {
-                            redirectToCandidateSelection();
+                            redirectToCandidateProposals();
                         } else {
                             window.location.href = 'company-dashboard.html';
                         }
