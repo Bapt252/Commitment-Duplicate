@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nexten - Messagerie candidat">
+    <title>Nexten - Messagerie</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../static/styles/nexten-modern.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/styles/dashboard.css">
+    <link rel="stylesheet" href="../static/styles/dashboard-new.css">
+    <link rel="stylesheet" href="../static/styles/nav-improvement.css">
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../static/images/favicon.ico" type="image/x-icon">
+    
+    <!-- Style spécifique pour la messagerie -->
+    <style>
+        /* LAYOUT & GLOBALS */
+        body {
+            background-color: var(--cream);
+            color: var(--black);
+        }
+
+        .main-container {
+            padding-top: 120px;
+            padding-bottom: 70px;
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 0.5s ease-in forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        /* SECTION HEADING */
+        .section-heading {
+            color: var(--black);
+            font-weight: 500;
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--purple);
+            padding-bottom: 8px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-heading i {
+            margin-right: 10px;
+            color: var(--purple);
+        }
+
+        .section-description {
+            margin-bottom: 25px;
+            color: var(--gray);
+            max-width: 700px;
+        }
+
+        /* MESSAGING TABS */
+        .messaging-tabs {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .messaging-tab {
+            background: none;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 30px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .messaging-tab i {
+            font-size: 14px;
+        }
+
+        .messaging-tab.active {
+            background-color: var(--purple);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(124, 58, 237, 0.3);
+        }
+
+        .messaging-tab:not(.active) {
+            background-color: var(--white);
+            color: var(--black);
+        }
+        
+        .messaging-tab:not(.active):hover {
+            background-color: var(--cream-dark);
+            transform: translateY(-1px);
+        }
+
+        /* MESSAGING CONTAINER */
+        .messaging-container {
+            display: flex;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            background-color: var(--white);
+            height: 700px;
+            transition: all 0.3s ease;
+        }
+        
+        /* CONVERSATION LIST */
+        .conversation-list {
+            width: 350px;
+            border-right: 1px solid var(--cream-dark);
+            background-color: var(--white);
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+        }
+        
+        /* CONVERSATION FILTERS */
+        .conversation-filters {
+            padding: 15px;
+            border-bottom: 1px solid var(--cream-dark);
+            background-color: var(--white);
+            position: sticky;
+            top: 0;
+            z-index: 5;
+        }
+        
+        .conversation-search {
+            position: relative;
+            margin-bottom: 12px;
+        }
+        
+        .conversation-search input {
+            width: 100%;
+            padding: 10px 15px 10px 40px;
+            border: 1px solid var(--cream-dark);
+            border-radius: 30px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            transition: all 0.3s;
+            background-color: var(--cream);
+        }
+        
+        .conversation-search input:focus {
+            outline: none;
+            border-color: var(--purple);
+            background-color: var(--white);
+            box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.1);
+        }
+        
+        .conversation-search i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+        }
+        
+        .filter-buttons {
+            display: flex;
+            margin-bottom: 10px;
+            margin-top: 10px;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-button {
+            padding: 8px 15px;
+            border: none;
+            background: var(--cream);
+            font-size: 13px;
+            cursor: pointer;
+            border-radius: 20px;
+            transition: all 0.3s;
+            color: var(--gray);
+            font-weight: 500;
+        }
+        
+        .filter-button.active {
+            background-color: var(--purple);
+            color: white;
+        }
+        
+        .filter-button:not(.active):hover {
+            background-color: var(--cream-dark);
+            color: var(--black);
+        }
+
+        /* CONVERSATION ROW */
+        .conversation-row {
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--cream-dark);
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .conversation-row:hover {
+            background-color: var(--cream-light);
+        }
+        
+        .conversation-row.active {
+            background-color: rgba(124, 58, 237, 0.05);
+            border-left: 3px solid var(--purple);
+        }
+        
+        .conversation-row.unread::after {
+            content: '';
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            width: 10px;
+            height: 10px;
+            background-color: var(--purple);
+            border-radius: 50%;
+        }
+        
+        .logo-placeholder {
+            width: 50px;
+            height: 50px;
+            background-color: var(--cream);
+            border-radius: 10px;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+            color: var(--gray);
+            flex-shrink: 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+        
+        .conversation-row:hover .logo-placeholder {
+            transform: scale(1.05);
+        }
+        
+        .conversation-details {
+            flex-grow: 1;
+            min-width: 0; /* Pour gérer le overflow correctement */
+        }
+        
+        .conversation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        
+        .company-name {
+            font-weight: 600;
+            font-size: 15px;
+            margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .status-badge {
+            font-size: 0.7rem;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-weight: 500;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        
+        .status-interview {
+            background-color: rgba(103, 58, 183, 0.1);
+            color: var(--purple);
+        }
+        
+        .status-offer {
+            background-color: rgba(33, 150, 243, 0.1);
+            color: #2196F3;
+        }
+        
+        .job-title {
+            font-size: 13px;
+            margin: 3px 0;
+            font-weight: 400;
+            color: var(--black);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .message-date {
+            font-size: 12px;
+            color: var(--gray);
+            margin: 3px 0;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .message-date i {
+            font-size: 10px;
+        }
+        
+        .status-badge.active {
+            color: #4CAF50;
+            background-color: rgba(76, 175, 80, 0.1);
+        }
+        
+        .status-badge.inactive {
+            color: #f44336;
+            background-color: rgba(244, 67, 54, 0.1);
+        }
+        
+        /* CONVERSATION CONTENT */
+        .message-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--cream);
+        }
+        
+        .company-header {
+            padding: 20px;
+            background-color: white;
+            border-bottom: 1px solid var(--cream-dark);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .company-header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .company-header h2 {
+            margin: 0;
+            margin-bottom: 5px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .company-subheader {
+            color: var(--gray);
+            font-size: 0.85rem;
+        }
+        
+        .company-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .action-btn {
+            background: var(--cream);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: var(--gray);
+        }
+        
+        .action-btn:hover {
+            background: var(--cream-dark);
+            color: var(--black);
+            transform: translateY(-2px);
+        }
+        
+        .action-btn.primary {
+            background: var(--purple);
+            color: white;
+        }
+        
+        .action-btn.primary:hover {
+            background: var(--purple-dark);
+        }
+        
+        /* MESSAGES CONTAINER */
+        .messages-container {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .message-group {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+        
+        .message-group.recruiter {
+            align-items: flex-start;
+        }
+        
+        .message-group.candidate {
+            align-items: flex-end;
+        }
+        
+        .message-bubble {
+            max-width: 75%;
+            padding: 12px 15px;
+            border-radius: 18px;
+            position: relative;
+            line-height: 1.5;
+        }
+        
+        .message-recruiter {
+            background-color: white;
+            color: var(--black);
+            border-bottom-left-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .message-candidate {
+            background-color: var(--purple);
+            color: white;
+            border-bottom-right-radius: 5px;
+        }
+        
+        .message-header {
+            font-size: 0.7rem;
+            margin-bottom: 3px;
+            padding: 0 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .message-header-recruiter {
+            color: var(--gray);
+        }
+        
+        .message-header-candidate {
+            color: rgba(255,255,255,0.7);
+            align-self: flex-end;
+        }
+        
+        .message-time {
+            font-size: 0.7rem;
+            opacity: 0.7;
+            margin-top: 5px;
+            text-align: right;
+        }
+        
+        .day-divider {
+            display: flex;
+            align-items: center;
+            color: var(--gray);
+            font-size: 0.8rem;
+            margin: 25px 0;
+            text-align: center;
+        }
+        
+        .day-divider::before,
+        .day-divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid var(--cream-dark);
+        }
+        
+        .day-divider::before {
+            margin-right: 15px;
+        }
+        
+        .day-divider::after {
+            margin-left: 15px;
+        }
+        
+        /* MESSAGE INPUT CONTAINER */
+        .message-input-container {
+            padding: 20px;
+            background-color: white;
+            border-top: 1px solid var(--cream-dark);
+        }
+        
+        .ai-suggestions {
+            background-color: var(--cream);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+        }
+        
+        .ai-suggestions:hover {
+            background-color: var(--cream-dark);
+        }
+        
+        .suggestions-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .suggestions-title {
+            font-weight: 500;
+            font-size: 0.9rem;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .suggestions-title i {
+            color: var(--purple);
+        }
+        
+        .attachment-upload {
+            display: flex;
+            align-items: center;
+            color: var(--gray);
+            font-size: 0.85rem;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        
+        .attachment-upload:hover {
+            background-color: rgba(0,0,0,0.05);
+            color: var(--black);
+        }
+        
+        .attachment-upload i {
+            margin-right: 5px;
+            font-size: 1.1rem;
+        }
+        
+        .quick-replies {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+        
+        .quick-reply {
+            background-color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            color: var(--black);
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid var(--cream-dark);
+            font-weight: 400;
+            white-space: nowrap;
+        }
+        
+        .quick-reply:hover {
+            background-color: var(--purple);
+            color: white;
+            border-color: var(--purple);
+            transform: translateY(-2px);
+        }
+        
+        .message-input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background-color: var(--cream);
+            border-radius: 25px;
+            padding: 0 5px 0 15px;
+            transition: all 0.3s;
+        }
+        
+        .message-input-wrapper:focus-within {
+            background-color: white;
+            box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.2);
+            border-color: var(--purple);
+        }
+        
+        .message-input {
+            flex: 1;
+            padding: 12px 5px;
+            border: none;
+            background: transparent;
+            outline: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+        }
+        
+        .message-actions {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .message-action-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: none;
+            background: transparent;
+            color: var(--gray);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        
+        .message-action-btn:hover {
+            background-color: rgba(0,0,0,0.05);
+            color: var(--black);
+        }
+        
+        .message-action-btn.send {
+            background-color: var(--purple);
+            color: white;
+        }
+        
+        .message-action-btn.send:hover {
+            background-color: var(--purple-dark);
+        }
+
+        /* RESPONSIVE STYLES */
+        @media (max-width: 992px) {
+            .messaging-container {
+                flex-direction: column;
+                height: auto;
+            }
+            
+            .conversation-list {
+                width: 100%;
+                max-height: 400px;
+            }
+            
+            .message-content {
+                min-height: 500px;
+            }
+            
+            .message-bubble {
+                max-width: 85%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .messaging-tabs {
+                overflow-x: auto;
+                padding-bottom: 5px;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+            }
+            
+            .messaging-tabs::-webkit-scrollbar {
+                display: none;
+            }
+            
+            .company-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .company-actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
+            
+            .quick-replies {
+                overflow-x: auto;
+                padding-bottom: 5px;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+            }
+            
+            .quick-replies::-webkit-scrollbar {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .section-heading {
+                font-size: 1.1rem;
+            }
+            
+            .messaging-tab {
+                padding: 8px 15px;
+                font-size: 13px;
+            }
+            
+            .message-bubble {
+                max-width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Notification bar -->
+    <div class="notification-bar">
+        <i class="fas fa-bell"></i> Votre recrutement change, votre approche aussi : découvrez notre approche TOP <span class="ten-badge">10</span>
+    </div>
+
+    <!-- Lien d'accessibilité pour sauter au contenu principal -->
+    <a href="#main-content" class="skip-to-content">Aller au contenu principal</a>
+
+    <header>
+        <div class="container">
+            <div class="logo">
+                nex<span>ten</span><div class="logo-badge">10</div>
+            </div>
+            
+            <button class="menu-toggle" aria-label="Menu principal">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="candidate-dashboard.html?email=jean-olivier.penin%40b-acceptance.com&password=%C3%A9" class="active">Espace candidat</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container main-container" id="main-content">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb fade-in">
+            <a href="candidate-dashboard.html?email=jean-olivier.penin%40b-acceptance.com&password=%C3%A9"><i class="fas fa-home"></i> Tableau de bord</a> &gt; 
+            <span>Messagerie</span>
+        </div>
+        
+        <!-- Section Messagerie -->
+        <div class="candidate-dashboard-section fade-in">
+            <h2 class="section-heading"><i class="fas fa-comments"></i> MESSAGERIE</h2>
+            <p class="section-description">Échangez directement avec les recruteurs et restez informé de l'avancement de vos candidatures. Notre messagerie sécurisée vous permet de communiquer efficacement tout au long du processus de recrutement.</p>
+            
+            <!-- Onglets de messagerie -->
+            <div class="messaging-tabs">
+                <button class="messaging-tab active"><i class="fas fa-inbox"></i> Tous les messages</button>
+                <button class="messaging-tab"><i class="fas fa-spinner"></i> En cours</button>
+                <button class="messaging-tab"><i class="fas fa-check-circle"></i> Répondus</button>
+                <button class="messaging-tab"><i class="fas fa-star"></i> Favoris</button>
+                <button class="messaging-tab"><i class="fas fa-archive"></i> Archives</button>
+            </div>
+            
+            <div class="messaging-container">
+                <!-- Liste des conversations -->
+                <div class="conversation-list">
+                    <div class="conversation-filters">
+                        <div class="conversation-search">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="Rechercher une conversation...">
+                        </div>
+                        <div class="filter-buttons">
+                            <button class="filter-button active">Tous</button>
+                            <button class="filter-button">Entretiens</button>
+                            <button class="filter-button">Offres</button>
+                            <button class="filter-button">Actifs</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Conversation 1 -->
+                    <div class="conversation-row active unread">
+                        <div class="logo-placeholder">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <div class="conversation-details">
+                            <div class="conversation-header">
+                                <h4 class="company-name">ABC Technologies</h4>
+                                <span class="status-badge status-interview">Entretien</span>
+                            </div>
+                            <p class="job-title">Développeur Full Stack</p>
+                            <p class="message-date"><i class="fas fa-clock"></i> Aujourd'hui, 14:35</p>
+                            <p class="message-date" style="color: #4CAF50;"><i class="fas fa-circle"></i> POSTE ACTIF</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Conversation 2 -->
+                    <div class="conversation-row">
+                        <div class="logo-placeholder">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <div class="conversation-details">
+                            <div class="conversation-header">
+                                <h4 class="company-name">InnovateCorp</h4>
+                                <span class="status-badge status-offer">Offre reçue</span>
+                            </div>
+                            <p class="job-title">Développeur Backend Senior</p>
+                            <p class="message-date"><i class="fas fa-clock"></i> Hier, 09:15</p>
+                            <p class="message-date" style="color: #4CAF50;"><i class="fas fa-circle"></i> POSTE ACTIF</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Conversation 3 -->
+                    <div class="conversation-row">
+                        <div class="logo-placeholder">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <div class="conversation-details">
+                            <div class="conversation-header">
+                                <h4 class="company-name">TechStartup</h4>
+                            </div>
+                            <p class="job-title">Développeur Frontend</p>
+                            <p class="message-date"><i class="fas fa-clock"></i> 25/02/2025</p>
+                            <p class="message-date" style="color: #f44336;"><i class="fas fa-circle"></i> POSTE INACTIF</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Conversation 4 -->
+                    <div class="conversation-row">
+                        <div class="logo-placeholder">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <div class="conversation-details">
+                            <div class="conversation-header">
+                                <h4 class="company-name">DigitalSolutions</h4>
+                            </div>
+                            <p class="job-title">Lead Developer</p>
+                            <p class="message-date"><i class="fas fa-clock"></i> 20/02/2025</p>
+                            <p class="message-date" style="color: #f44336;"><i class="fas fa-circle"></i> POSTE INACTIF</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Conversation 5 -->
+                    <div class="conversation-row">
+                        <div class="logo-placeholder">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <div class="conversation-details">
+                            <div class="conversation-header">
+                                <h4 class="company-name">WebAgency</h4>
+                                <span class="status-badge status-interview">Entretien</span>
+                            </div>
+                            <p class="job-title">Développeur WordPress</p>
+                            <p class="message-date"><i class="fas fa-clock"></i> 18/02/2025</p>
+                            <p class="message-date" style="color: #4CAF50;"><i class="fas fa-circle"></i> POSTE ACTIF</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Contenu des messages -->
+                <div class="message-content">
+                    <div class="company-header">
+                        <div class="company-header-left">
+                            <div class="logo-placeholder">
+                                <i class="fas fa-building"></i>
+                            </div>
+                            <div>
+                                <h2>ABC Technologies</h2>
+                                <span class="company-subheader">Corentin MELON - Responsable RH</span>
+                            </div>
+                        </div>
+                        
+                        <div class="company-actions">
+                            <button class="action-btn" title="Marquer comme favori">
+                                <i class="far fa-star"></i>
+                            </button>
+                            <button class="action-btn" title="Voir l'offre d'emploi">
+                                <i class="fas fa-briefcase"></i>
+                            </button>
+                            <button class="action-btn primary" title="Planifier un entretien">
+                                <i class="fas fa-calendar-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="messages-container">
+                        <div class="day-divider">26 Mars 2025</div>
+                        
+                        <!-- Groupe de messages du recruteur -->
+                        <div class="message-group recruiter">
+                            <div class="message-header message-header-recruiter">
+                                <i class="fas fa-user"></i> Corentin MELON
+                            </div>
+                            <div class="message-bubble message-recruiter">
+                                <p>Bonjour Jean-Olivier,</p>
+                                <p>Suite à l'étude de votre candidature, nous aimerions vous inviter à un entretien pour le poste de Développeur Full Stack.</p>
+                                <div class="message-time">14:35</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Groupe de messages du candidat -->
+                        <div class="message-group candidate">
+                            <div class="message-header message-header-candidate">
+                                <i class="fas fa-user"></i> Vous
+                            </div>
+                            <div class="message-bubble message-candidate">
+                                <p>Bonjour Corentin, merci pour votre message. Je suis très intéressé par cette opportunité !</p>
+                                <div class="message-time">14:40</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Autre groupe de messages du recruteur -->
+                        <div class="message-group recruiter">
+                            <div class="message-bubble message-recruiter">
+                                <p>Parfait ! Êtes-vous disponible pour un échange téléphonique ce jeudi à 15h00 ?</p>
+                                <div class="message-time">15:10</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Autre groupe de messages du candidat -->
+                        <div class="message-group candidate">
+                            <div class="message-bubble message-candidate">
+                                <p>Oui, je suis disponible jeudi à 15h00. Pouvez-vous me préciser sur quel numéro je dois vous joindre ?</p>
+                                <div class="message-time">15:30</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Autre message du recruteur aujourd'hui -->
+                        <div class="day-divider">Aujourd'hui</div>
+                        
+                        <div class="message-group recruiter">
+                            <div class="message-bubble message-recruiter">
+                                <p>Bonjour Jean-Olivier, simplement pour vous rappeler notre entretien téléphonique demain à 15h00. Je vous appellerai directement sur le numéro que vous avez indiqué dans votre candidature.</p>
+                                <div class="message-time">09:15</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="message-input-container">
+                        <div class="ai-suggestions">
+                            <div class="suggestions-header">
+                                <span class="suggestions-title"><i class="fas fa-robot"></i> Réponses suggérées par IA</span>
+                                <span class="attachment-upload">
+                                    <i class="fas fa-paperclip"></i> Joindre un fichier
+                                </span>
+                            </div>
+                            <div class="quick-replies">
+                                <div class="quick-reply">Merci pour le rappel, à demain !</div>
+                                <div class="quick-reply">Parfait, je vous remercie</div>
+                                <div class="quick-reply">Pourriez-vous m'en dire plus sur le poste ?</div>
+                                <div class="quick-reply">Je confirme ma disponibilité</div>
+                            </div>
+                        </div>
+                        
+                        <div class="message-input-wrapper">
+                            <input type="text" class="message-input" placeholder="Écrivez un message...">
+                            <div class="message-actions">
+                                <button class="message-action-btn" title="Emoji">
+                                    <i class="far fa-smile"></i>
+                                </button>
+                                <button class="message-action-btn" title="Pièce jointe">
+                                    <i class="fas fa-paperclip"></i>
+                                </button>
+                                <button class="message-action-btn send" title="Envoyer">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <h4 class="footer-heading">Nexten</h4>
+                    <p class="footer-description">Notre plateforme utilise l'intelligence artificielle pour révolutionner le processus de recrutement, offrant 10 correspondances personnalisées pour les candidats et les recruteurs.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="footer-heading">Navigation</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Accueil</a></li>
+                        <li><a href="candidate-dashboard.html?email=jean-olivier.penin%40b-acceptance.com&password=%C3%A9"><i class="fas fa-chevron-right"></i> Espace candidat</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> À propos</a></li>
+                        <li><a href="#contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="footer-heading">Contact</h4>
+                    <div class="footer-contact">
+                        <p><i class="fas fa-map-marker-alt"></i> 123 Avenue de l'Innovation, 75001 Paris</p>
+                        <p><i class="fas fa-phone"></i> +33 1 23 45 67 89</p>
+                        <p><i class="fas fa-envelope"></i> contact@nexten.fr</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Nexten - Tous droits réservés | <a href="#">Politique de confidentialité</a> | <a href="#">Conditions d'utilisation</a></p>
+            </div>
+        </div>
+        
+        <!-- Bouton de retour en haut -->
+        <button id="scroll-to-top" class="scroll-to-top" aria-label="Retour en haut">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Menu mobile toggle
+            const menuToggle = document.querySelector('.menu-toggle');
+            const nav = document.querySelector('nav');
+            
+            if (menuToggle && nav) {
+                menuToggle.addEventListener('click', function() {
+                    nav.classList.toggle('active');
+                    this.classList.toggle('active');
+                });
+            }
+            
+            // Animation au défilement
+            const animatedElements = document.querySelectorAll('.fade-in');
+            
+            function checkIfInView() {
+                const windowHeight = window.innerHeight;
+                const windowTop = window.scrollY;
+                const windowBottom = windowTop + windowHeight;
+                
+                animatedElements.forEach(function(element) {
+                    const elementTop = element.getBoundingClientRect().top + windowTop;
+                    const elementBottom = elementTop + element.offsetHeight;
+                    
+                    // Si l'élément est visible dans la fenêtre
+                    if (elementBottom > windowTop && elementTop < windowBottom) {
+                        element.classList.add('visible');
+                    }
+                });
+            }
+            
+            // Vérifier au chargement de la page
+            checkIfInView();
+            
+            // Vérifier lors du défilement
+            window.addEventListener('scroll', checkIfInView);
+            
+            // Bouton de retour en haut
+            const scrollToTopButton = document.getElementById('scroll-to-top');
+            
+            if (scrollToTopButton) {
+                window.addEventListener('scroll', function() {
+                    if (window.scrollY > 500) {
+                        scrollToTopButton.classList.add('visible');
+                    } else {
+                        scrollToTopButton.classList.remove('visible');
+                    }
+                });
+                
+                scrollToTopButton.addEventListener('click', function() {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+            
+            // Interaction avec les onglets de messagerie
+            const messagingTabs = document.querySelectorAll('.messaging-tab');
+            
+            messagingTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Désactiver tous les onglets
+                    messagingTabs.forEach(t => {
+                        t.classList.remove('active');
+                    });
+                    
+                    // Activer l'onglet cliqué
+                    this.classList.add('active');
+                });
+            });
+            
+            // Interaction avec les filtres
+            const filterButtons = document.querySelectorAll('.filter-button');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Désactiver tous les boutons
+                    filterButtons.forEach(b => {
+                        b.classList.remove('active');
+                    });
+                    
+                    // Activer le bouton cliqué
+                    this.classList.add('active');
+                });
+            });
+            
+            // Interaction avec les conversations
+            const conversationRows = document.querySelectorAll('.conversation-row');
+            
+            conversationRows.forEach(row => {
+                row.addEventListener('click', function() {
+                    // Désactiver toutes les conversations
+                    conversationRows.forEach(r => {
+                        r.classList.remove('active');
+                    });
+                    
+                    // Activer la conversation cliquée
+                    this.classList.add('active');
+                    
+                    // Enlever le statut non lu
+                    this.classList.remove('unread');
+                });
+            });
+            
+            // Interaction avec les réponses rapides
+            const quickReplies = document.querySelectorAll('.quick-reply');
+            const messageInput = document.querySelector('.message-input');
+            
+            quickReplies.forEach(reply => {
+                reply.addEventListener('click', function() {
+                    messageInput.value = this.textContent;
+                    messageInput.focus();
+                });
+            });
+            
+            // Simuler l'envoi d'un message
+            const sendButton = document.querySelector('.message-action-btn.send');
+            const messagesContainer = document.querySelector('.messages-container');
+            
+            sendButton.addEventListener('click', function() {
+                const messageText = messageInput.value.trim();
+                
+                if (messageText) {
+                    // Créer un nouveau groupe de messages
+                    const messageGroup = document.createElement('div');
+                    messageGroup.className = 'message-group candidate';
+                    
+                    // Créer l'en-tête du message
+                    const messageHeader = document.createElement('div');
+                    messageHeader.className = 'message-header message-header-candidate';
+                    messageHeader.innerHTML = '<i class="fas fa-user"></i> Vous';
+                    
+                    // Créer la bulle de message
+                    const messageBubble = document.createElement('div');
+                    messageBubble.className = 'message-bubble message-candidate';
+                    
+                    // Ajouter le texte du message
+                    const messageContent = document.createElement('p');
+                    messageContent.textContent = messageText;
+                    messageBubble.appendChild(messageContent);
+                    
+                    // Ajouter l'heure
+                    const messageTime = document.createElement('div');
+                    messageTime.className = 'message-time';
+                    const now = new Date();
+                    messageTime.textContent = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+                    messageBubble.appendChild(messageTime);
+                    
+                    // Assembler le message
+                    messageGroup.appendChild(messageHeader);
+                    messageGroup.appendChild(messageBubble);
+                    
+                    // Ajouter à la conversation
+                    messagesContainer.appendChild(messageGroup);
+                    
+                    // Vider l'input
+                    messageInput.value = '';
+                    
+                    // Défiler automatiquement vers le bas
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                }
+            });
+            
+            // Permettre l'envoi avec la touche Entrée
+            messageInput.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    sendButton.click();
+                    event.preventDefault();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
