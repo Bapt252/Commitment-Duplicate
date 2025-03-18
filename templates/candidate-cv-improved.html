@@ -322,13 +322,279 @@
             opacity: 1;
         }
         
+        /* Form controls */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            font-size: 15px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(129, 73, 255, 0.1);
+        }
+        
+        textarea.form-control {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .form-check {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .form-check input[type="checkbox"] {
+            margin-right: 10px;
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary-color);
+        }
+        
+        .experience-card {
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+        
+        .experience-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        
+        .experience-info {
+            flex: 1;
+        }
+        
+        .experience-title {
+            font-weight: 600;
+            font-size: 17px;
+            margin-bottom: 5px;
+        }
+        
+        .company-name {
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+        
+        .experience-date, .contract-type {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .experience-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .experience-details {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .section-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .section-title i {
+            color: var(--primary-color);
+            font-size: 14px;
+        }
+        
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .tag {
+            background-color: var(--primary-light);
+            color: var(--primary-color);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        
+        .tag i {
+            margin-right: 5px;
+            font-size: 12px;
+        }
+        
+        .international-context {
+            background-color: #f0f8ff;
+            border-left: 3px solid #0077cc;
+            padding: 12px;
+            margin-top: 15px;
+            border-radius: 0 var(--radius) var(--radius) 0;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: var(--radius);
+            width: 90%;
+            max-width: 700px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            animation: modalFadeIn 0.3s forwards;
+        }
+        
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .modal-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 22px;
+            cursor: pointer;
+            color: #777;
+            transition: color 0.3s;
+        }
+        
+        .close-modal:hover {
+            color: #333;
+        }
+        
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .diploma-card {
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+        
+        .diploma-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .diploma-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        
+        .diploma-info {
+            flex: 1;
+        }
+        
+        .diploma-title {
+            font-weight: 600;
+            font-size: 17px;
+            margin-bottom: 5px;
+        }
+        
+        .institution-name {
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+        
+        .diploma-date {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .diploma-details {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border-color);
+        }
+        
         @media (max-width: 768px) {
-            .strength-weakness {
+            .strength-weakness, .form-row {
                 grid-template-columns: 1fr;
             }
             
             .nav-menu {
                 gap: 15px;
+            }
+            
+            .experience-header {
+                flex-direction: column;
+            }
+            
+            .experience-actions {
+                margin-top: 10px;
             }
         }
         
@@ -407,9 +673,9 @@
                 <h2 class="card-title">
                     <i class="fas fa-chart-line"></i> Analyse de votre CV
                 </h2>
-                <a href="#" class="btn btn-primary">
+                <button id="update-cv-btn" class="btn btn-primary">
                     <i class="fas fa-sync-alt"></i> Mettre à jour mon CV
-                </a>
+                </button>
             </div>
             
             <div>
@@ -471,25 +737,299 @@
                 <h2 class="card-title">
                     <i class="fas fa-briefcase"></i> Expérience professionnelle
                 </h2>
-                <a href="#" class="btn btn-outline">
-                    <i class="fas fa-lightbulb"></i> Conseils
-                </a>
+                <button id="add-experience-btn" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Ajouter une expérience
+                </button>
             </div>
             
             <div id="experience-container">
-                <!-- Cette section sera remplie dynamiquement -->
-                <p style="text-align: center; color: #777; padding: 30px 0;">
-                    <i class="fas fa-info-circle" style="font-size: 24px; margin-bottom: 10px; display: block;"></i>
-                    Cliquez sur "Mettre à jour mon CV" pour ajouter ou modifier vos expériences professionnelles
-                </p>
+                <!-- Exemple d'expérience professionnelle -->
+                <div class="experience-card">
+                    <div class="experience-header">
+                        <div class="experience-info">
+                            <div class="experience-title">Développeur Full-Stack</div>
+                            <div class="company-name">Tech Solutions</div>
+                            <div class="experience-date">Janvier 2022 - Présent</div>
+                            <div class="contract-type">CDI</div>
+                        </div>
+                        <div class="experience-actions">
+                            <button class="btn btn-outline edit-experience">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-outline delete-experience">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="experience-details">
+                        <div class="section-title">
+                            <i class="fas fa-tasks"></i> Missions
+                        </div>
+                        <p>Développement d'applications web responsives, conception d'API RESTful, optimisation des performances et résolution des problèmes techniques. Participation aux réunions d'équipe et collaboration avec les équipes de design et les clients.</p>
+                        
+                        <div class="section-title" style="margin-top: 15px;">
+                            <i class="fas fa-laptop-code"></i> Technologies utilisées
+                        </div>
+                        <div class="tag-container">
+                            <span class="tag"><i class="fab fa-react"></i> React</span>
+                            <span class="tag"><i class="fab fa-node-js"></i> Node.js</span>
+                            <span class="tag"><i class="fas fa-database"></i> MongoDB</span>
+                            <span class="tag"><i class="fab fa-aws"></i> AWS</span>
+                        </div>
+                        
+                        <div class="international-context">
+                            <div class="section-title">
+                                <i class="fas fa-globe"></i> Contexte international
+                            </div>
+                            <p>Travail avec des équipes internationales basées en Europe et aux États-Unis.</p>
+                            <div class="tag-container">
+                                <span class="tag"><i class="fas fa-comments"></i> Anglais à l'oral</span>
+                                <span class="tag"><i class="fas fa-file-alt"></i> Anglais à l'écrit</span>
+                                <span class="tag"><i class="fas fa-users"></i> Réunions internationales</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Deuxième exemple d'expérience -->
+                <div class="experience-card">
+                    <div class="experience-header">
+                        <div class="experience-info">
+                            <div class="experience-title">Développeur Front-End</div>
+                            <div class="company-name">Innovate Digital</div>
+                            <div class="experience-date">Mars 2020 - Décembre 2021</div>
+                            <div class="contract-type">CDD</div>
+                        </div>
+                        <div class="experience-actions">
+                            <button class="btn btn-outline edit-experience">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-outline delete-experience">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="experience-details">
+                        <div class="section-title">
+                            <i class="fas fa-tasks"></i> Missions
+                        </div>
+                        <p>Développement d'interfaces utilisateur modernes et responsives, intégration de maquettes design, amélioration de l'expérience utilisateur et optimisation des performances front-end.</p>
+                        
+                        <div class="section-title" style="margin-top: 15px;">
+                            <i class="fas fa-laptop-code"></i> Technologies utilisées
+                        </div>
+                        <div class="tag-container">
+                            <span class="tag"><i class="fab fa-js"></i> JavaScript</span>
+                            <span class="tag"><i class="fab fa-vuejs"></i> Vue.js</span>
+                            <span class="tag"><i class="fab fa-sass"></i> SASS</span>
+                            <span class="tag"><i class="fab fa-github"></i> Git</span>
+                        </div>
+                    </div>
+                </div>
             </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">
+                    <i class="fas fa-graduation-cap"></i> Formation
+                </h2>
+                <button id="add-diploma-btn" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Ajouter une formation
+                </button>
+            </div>
+            
+            <div id="diploma-container">
+                <!-- Exemple de diplôme -->
+                <div class="diploma-card">
+                    <div class="diploma-header">
+                        <div class="diploma-info">
+                            <div class="diploma-title">Master en Développement Web</div>
+                            <div class="institution-name">Université de Paris</div>
+                            <div class="diploma-date">2018 - 2020</div>
+                        </div>
+                        <div class="experience-actions">
+                            <button class="btn btn-outline edit-diploma">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-outline delete-diploma">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="diploma-details">
+                        <div class="section-title">
+                            <i class="fas fa-info-circle"></i> Description
+                        </div>
+                        <p>Formation spécialisée dans le développement d'applications web modernes, avec un accent sur les frameworks JavaScript et les principes de conception UI/UX. Projets réalisés en équipe et stage de 6 mois en entreprise.</p>
+                        
+                        <div class="section-title" style="margin-top: 15px;">
+                            <i class="fas fa-star"></i> Compétences acquises
+                        </div>
+                        <div class="tag-container">
+                            <span class="tag">Frameworks JavaScript</span>
+                            <span class="tag">API RESTful</span>
+                            <span class="tag">Bases de données</span>
+                            <span class="tag">UI/UX Design</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal pour ajouter/éditer une expérience -->
+    <div id="experience-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Ajouter une expérience</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            
+            <form id="experience-form">
+                <div class="form-group">
+                    <label for="job-title">Intitulé du poste *</label>
+                    <input type="text" id="job-title" class="form-control" placeholder="Ex: Développeur Full-Stack" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="company-name">Entreprise *</label>
+                    <input type="text" id="company-name" class="form-control" placeholder="Ex: Tech Solutions" required>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="start-date">Date de début *</label>
+                        <input type="month" id="start-date" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="end-date">Date de fin</label>
+                        <input type="month" id="end-date" class="form-control">
+                        <div class="form-check" style="margin-top: 10px;">
+                            <input type="checkbox" id="current-job">
+                            <label for="current-job">Poste actuel</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="contract-type">Type de contrat *</label>
+                    <select id="contract-type" class="form-control" required>
+                        <option value="">Sélectionner un type de contrat</option>
+                        <option value="CDI">CDI</option>
+                        <option value="CDD">CDD</option>
+                        <option value="Freelance">Freelance</option>
+                        <option value="Stage">Stage</option>
+                        <option value="Alternance">Alternance</option>
+                        <option value="Intérim">Intérim</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="job-missions">Missions et responsabilités *</label>
+                    <textarea id="job-missions" class="form-control" placeholder="Décrivez vos principales missions et réalisations..." required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="job-technologies">Technologies et outils utilisés</label>
+                    <input type="text" id="job-technologies" class="form-control" placeholder="Ex: React, Node.js, MongoDB, AWS">
+                    <small style="color: #777; display: block; margin-top: 5px;">Séparez les technologies par des virgules</small>
+                </div>
+                
+                <div class="form-group">
+                    <label>Contexte international</label>
+                    <div class="form-check">
+                        <input type="checkbox" id="international-context">
+                        <label for="international-context">J'ai travaillé dans un contexte international</label>
+                    </div>
+                </div>
+                
+                <div id="international-details" style="display: none; padding: 15px; background-color: #f8f9fa; border-radius: var(--radius); margin-top: 10px;">
+                    <div class="form-check">
+                        <input type="checkbox" id="english-spoken">
+                        <label for="english-spoken">Anglais à l'oral</label>
+                    </div>
+                    
+                    <div class="form-check">
+                        <input type="checkbox" id="english-written">
+                        <label for="english-written">Anglais à l'écrit</label>
+                    </div>
+                    
+                    <div class="form-group" style="margin-top: 10px;">
+                        <label for="international-context-details">Contexte d'utilisation</label>
+                        <textarea id="international-context-details" class="form-control" placeholder="Ex: Réunions quotidiennes avec l'équipe américaine, documentation en anglais..."></textarea>
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" id="cancel-experience">Annuler</button>
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Modal pour ajouter/éditer une formation -->
+    <div id="diploma-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Ajouter une formation</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            
+            <form id="diploma-form">
+                <div class="form-group">
+                    <label for="diploma-title">Intitulé du diplôme *</label>
+                    <input type="text" id="diploma-title" class="form-control" placeholder="Ex: Master en Développement Web" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="institution-name">Établissement *</label>
+                    <input type="text" id="institution-name" class="form-control" placeholder="Ex: Université de Paris" required>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="diploma-start-date">Date de début *</label>
+                        <input type="month" id="diploma-start-date" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="diploma-end-date">Date de fin *</label>
+                        <input type="month" id="diploma-end-date" class="form-control" required>
+                        <div class="form-check" style="margin-top: 10px;">
+                            <input type="checkbox" id="current-studies">
+                            <label for="current-studies">En cours</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="diploma-description">Description de la formation *</label>
+                    <textarea id="diploma-description" class="form-control" placeholder="Décrivez le contenu de votre formation, les matières principales, les projets..." required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="diploma-skills">Compétences acquises</label>
+                    <input type="text" id="diploma-skills" class="form-control" placeholder="Ex: Frameworks JavaScript, API RESTful, Bases de données">
+                    <small style="color: #777; display: block; margin-top: 5px;">Séparez les compétences par des virgules</small>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" id="cancel-diploma">Annuler</button>
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                </div>
+            </form>
         </div>
     </div>
 
     <script>
-        // Simulation d'interaction
         document.addEventListener('DOMContentLoaded', function() {
-            // Animation au survol des boutons
+            // Gestion des effets de survol des boutons
             const buttons = document.querySelectorAll('.btn');
             buttons.forEach(button => {
                 button.addEventListener('mouseenter', function() {
@@ -521,6 +1061,138 @@
                         ripple.remove();
                     }, 600);
                 }
+            });
+            
+            // Gestion du modal d'expérience
+            const experienceModal = document.getElementById('experience-modal');
+            const addExperienceBtn = document.getElementById('add-experience-btn');
+            const cancelExperienceBtn = document.getElementById('cancel-experience');
+            const closeModalBtns = document.querySelectorAll('.close-modal');
+            
+            // Gestion du modal de diplôme
+            const diplomaModal = document.getElementById('diploma-modal');
+            const addDiplomaBtn = document.getElementById('add-diploma-btn');
+            const cancelDiplomaBtn = document.getElementById('cancel-diploma');
+            
+            // Afficher le modal d'expérience
+            addExperienceBtn.addEventListener('click', function() {
+                experienceModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+            
+            // Masquer le modal d'expérience
+            cancelExperienceBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                experienceModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+            
+            // Afficher le modal de diplôme
+            addDiplomaBtn.addEventListener('click', function() {
+                diplomaModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+            
+            // Masquer le modal de diplôme
+            cancelDiplomaBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                diplomaModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+            
+            // Fermer les modals avec le bouton X
+            closeModalBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    experienceModal.classList.remove('active');
+                    diplomaModal.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                });
+            });
+            
+            // Gérer l'affichage du contexte international
+            const internationalContext = document.getElementById('international-context');
+            const internationalDetails = document.getElementById('international-details');
+            
+            internationalContext.addEventListener('change', function() {
+                if (this.checked) {
+                    internationalDetails.style.display = 'block';
+                } else {
+                    internationalDetails.style.display = 'none';
+                }
+            });
+            
+            // Gérer la logique du "poste actuel"
+            const currentJobCheckbox = document.getElementById('current-job');
+            const endDateInput = document.getElementById('end-date');
+            
+            currentJobCheckbox.addEventListener('change', function() {
+                if (this.checked) {
+                    endDateInput.value = '';
+                    endDateInput.disabled = true;
+                } else {
+                    endDateInput.disabled = false;
+                }
+            });
+            
+            // Gérer la logique des "études en cours"
+            const currentStudiesCheckbox = document.getElementById('current-studies');
+            const diplomaEndDateInput = document.getElementById('diploma-end-date');
+            
+            currentStudiesCheckbox.addEventListener('change', function() {
+                if (this.checked) {
+                    diplomaEndDateInput.value = '';
+                    diplomaEndDateInput.disabled = true;
+                } else {
+                    diplomaEndDateInput.disabled = false;
+                }
+            });
+            
+            // Boutons d'édition d'expérience
+            const editExperienceBtns = document.querySelectorAll('.edit-experience');
+            editExperienceBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    experienceModal.classList.add('active');
+                    document.querySelector('#experience-modal .modal-title').textContent = 'Modifier une expérience';
+                    document.body.style.overflow = 'hidden';
+                    
+                    // Dans un cas réel, on pourrait ici pré-remplir le formulaire avec les données existantes
+                });
+            });
+            
+            // Boutons d'édition de diplôme
+            const editDiplomaBtns = document.querySelectorAll('.edit-diploma');
+            editDiplomaBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    diplomaModal.classList.add('active');
+                    document.querySelector('#diploma-modal .modal-title').textContent = 'Modifier une formation';
+                    document.body.style.overflow = 'hidden';
+                    
+                    // Dans un cas réel, on pourrait ici pré-remplir le formulaire avec les données existantes
+                });
+            });
+            
+            // Traitement des formulaires (simulation)
+            const experienceForm = document.getElementById('experience-form');
+            const diplomaForm = document.getElementById('diploma-form');
+            
+            experienceForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                // Ici on traiterait l'envoi du formulaire, par exemple via AJAX
+                experienceModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+                
+                // Notification de succès (simulation)
+                alert('Expérience enregistrée avec succès !');
+            });
+            
+            diplomaForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                // Ici on traiterait l'envoi du formulaire, par exemple via AJAX
+                diplomaModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+                
+                // Notification de succès (simulation)
+                alert('Formation enregistrée avec succès !');
             });
         });
     </script>
