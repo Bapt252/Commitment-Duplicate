@@ -17,6 +17,81 @@
     
     <!-- Favicon -->
     <link rel="shortcut icon" href="../static/images/favicon.ico" type="image/x-icon">
+    
+    <style>
+        /* Flèches de navigation entre les pages */
+        .contextual-nav {
+            margin: 16px 0 32px;
+            padding: 15px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--cream-dark);
+        }
+        
+        .previous-page, .next-page, .dashboard-link {
+            display: flex;
+            align-items: center;
+            color: var(--gray);
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 30px;
+            transition: all 0.2s ease;
+            background-color: var(--surface-variant);
+            text-decoration: none;
+        }
+        
+        .previous-page:hover, .next-page:hover, .dashboard-link:hover {
+            background-color: var(--purple);
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+        }
+        
+        .previous-page i, .next-page i {
+            font-size: 0.8rem;
+        }
+        
+        .previous-page i {
+            margin-right: 8px;
+        }
+        
+        .next-page i {
+            margin-left: 8px;
+        }
+        
+        .dashboard-link i {
+            margin-right: 8px;
+        }
+        
+        [data-tooltip] {
+            position: relative;
+        }
+        
+        [data-tooltip]::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 5px 10px;
+            background-color: var(--black);
+            color: white;
+            font-size: 0.8rem;
+            border-radius: 4px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s ease;
+            z-index: 100;
+        }
+        
+        [data-tooltip]:hover::after {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
 </head>
 <body>
     <!-- Notification bar -->
@@ -40,7 +115,7 @@
             <nav>
                 <ul>
                     <li><a href="index.html">Accueil</a></li>
-                    <li><a href="candidate-dashboard.html?email=sahar.elsalad%40gmail.com&password=dezd" class="active">Espace candidat</a></li>
+                    <li><a href="candidate-dashboard.html?email=jean-olivier.penin%40b-acceptance.com&password=s" class="active">Espace candidat</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </nav>
@@ -50,8 +125,23 @@
     <div class="container main-container" id="main-content">
         <!-- Breadcrumb -->
         <div class="breadcrumb fade-in">
-            <a href="candidate-dashboard.html?email=sahar.elsalad%40gmail.com&password=dezd"><i class="fas fa-home"></i> Tableau de bord</a> &gt; 
+            <a href="candidate-dashboard.html?email=jean-olivier.penin%40b-acceptance.com&password=s"><i class="fas fa-home"></i> Tableau de bord</a> &gt; 
             <span>Mes opportunités sélectionnées</span>
+        </div>
+        
+        <!-- Navigation contextuelle avec flèches pour changer de page -->
+        <div class="contextual-nav fade-in">
+            <a href="candidate-dashboard.html?email=jean-olivier.penin%40b-acceptance.com&password=s" class="previous-page" data-tooltip="Retour au tableau de bord">
+                <i class="fas fa-chevron-left"></i> Tableau de bord
+            </a>
+            
+            <a href="candidate-dashboard.html?email=jean-olivier.penin%40b-acceptance.com&password=s" class="dashboard-link" data-tooltip="Retour au tableau de bord">
+                <i class="fas fa-th-large"></i> Tableau de bord
+            </a>
+            
+            <a href="candidate-offers.html?email=jean-olivier.penin%40b-acceptance.com&password=s" class="next-page" data-tooltip="Page suivante">
+                Mes offres reçues <i class="fas fa-chevron-right"></i>
+            </a>
         </div>
         
         <!-- Section progress tracker -->
@@ -358,7 +448,7 @@
                     <h4 class="footer-heading">Navigation</h4>
                     <ul class="footer-links">
                         <li><a href="index.html"><i class="fas fa-chevron-right"></i> Accueil</a></li>
-                        <li><a href="candidate-dashboard.html?email=sahar.elsalad%40gmail.com&password=dezd"><i class="fas fa-chevron-right"></i> Espace candidat</a></li>
+                        <li><a href="candidate-dashboard.html?email=jean-olivier.penin%40b-acceptance.com&password=s"><i class="fas fa-chevron-right"></i> Espace candidat</a></li>
                         <li><a href="#"><i class="fas fa-chevron-right"></i> À propos</a></li>
                         <li><a href="#contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
                     </ul>
