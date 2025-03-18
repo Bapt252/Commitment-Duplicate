@@ -13,346 +13,11 @@
     <link rel="stylesheet" href="../static/styles/dashboard.css">
     <link rel="stylesheet" href="../static/styles/dashboard-new.css">
     <link rel="stylesheet" href="../static/styles/nav-improvement.css">
-    <link rel="stylesheet" href="../static/styles/quick-apply.css">
+    <!-- Nouveau CSS moderne -->
+    <link rel="stylesheet" href="../static/styles/quick-apply-modern.css">
     
     <!-- Favicon -->
     <link rel="shortcut icon" href="../static/images/favicon.ico" type="image/x-icon">
-    
-    <style>
-        /* Style spécifique à cette page */
-        :root {
-            --transition-speed: 0.3s;
-            --border-radius: 12px;
-            --card-shadow: 0 8px 20px rgba(0,0,0,0.05);
-        }
-        
-        body {
-            background-color: #f5f5f7;
-        }
-        
-        .main-container {
-            padding-top: 80px;
-        }
-        
-        /* Header amélioré */
-        header {
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-            border-bottom: none;
-            background-color: rgba(255, 255, 255, 0.85);
-        }
-        
-        .section-heading {
-            font-size: 2rem;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: var(--black);
-        }
-        
-        .section-description {
-            font-size: 1.1rem;
-            color: var(--gray);
-            max-width: 800px;
-            margin-bottom: 2rem;
-            line-height: 1.6;
-        }
-        
-        .section-indicator {
-            height: 5px;
-            width: 70px;
-            background: linear-gradient(90deg, var(--purple) 0%, var(--purple-light) 100%);
-            margin-bottom: 20px;
-            border-radius: 10px;
-        }
-        
-        /* Style du filtre amélioré */
-        .filter-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: var(--white);
-            padding: 1.25rem;
-            border-radius: var(--border-radius);
-            margin-bottom: 30px;
-            box-shadow: var(--card-shadow);
-            transition: all 0.3s ease;
-        }
-        
-        .filter-badge {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 12px 18px;
-            border-radius: 30px;
-            font-size: 0.95rem;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            background-color: #f5f5f7;
-        }
-        
-        .filter-badge.active {
-            background-color: var(--purple);
-            color: var(--white);
-            box-shadow: 0 5px 15px rgba(124, 58, 237, 0.2);
-        }
-        
-        .filter-badge:hover:not(.active) {
-            background-color: #eaeaef;
-            transform: translateY(-3px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        }
-        
-        .sort-select {
-            appearance: none;
-            padding: 12px 40px 12px 18px;
-            border-radius: 30px;
-            border: 1px solid #eaeaef;
-            background-color: var(--white);
-            font-family: 'Inter', sans-serif;
-            font-size: 0.95rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            width: 180px;
-        }
-        
-        /* Cartes d'opportunités améliorées */
-        .quick-apply-opportunities {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 40px;
-        }
-        
-        .quick-apply-card {
-            background-color: var(--white);
-            border-radius: var(--border-radius);
-            padding: 1.5rem;
-            box-shadow: var(--card-shadow);
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            border: none;
-        }
-        
-        .quick-apply-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-        }
-        
-        .quick-apply-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, var(--purple) 0%, var(--purple-light) 100%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
-        .quick-apply-card:hover::before {
-            opacity: 1;
-        }
-        
-        .job-title {
-            font-size: 1.4rem;
-            font-weight: 600;
-            margin: 0;
-            color: var(--black);
-            line-height: 1.3;
-        }
-        
-        .job-match {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 54px;
-            height: 54px;
-            background: linear-gradient(135deg, var(--purple) 0%, var(--purple-dark) 100%);
-            color: var(--white);
-            border-radius: 50%;
-            font-weight: 600;
-            font-size: 1.1rem;
-            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
-            transition: all 0.3s ease;
-        }
-        
-        .quick-apply-card:hover .job-match {
-            transform: scale(1.05);
-            box-shadow: 0 6px 18px rgba(124, 58, 237, 0.4);
-        }
-        
-        .job-description {
-            font-size: 1rem;
-            color: var(--gray);
-            margin-bottom: 1.25rem;
-            line-height: 1.6;
-        }
-        
-        .color-link {
-            color: var(--purple);
-            font-weight: 500;
-            transition: all 0.3s ease;
-            text-decoration: none;
-        }
-        
-        .color-link:hover {
-            color: var(--purple-dark);
-            text-decoration: underline;
-        }
-        
-        .company-info {
-            display: flex;
-            margin-bottom: 1.25rem;
-            padding-bottom: 1.25rem;
-            border-bottom: 1px solid #eaeaef;
-        }
-        
-        .logo-placeholder {
-            width: 60px;
-            height: 60px;
-            background-color: #f5f5f7;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 1rem;
-            color: var(--gray);
-            font-size: 1.5rem;
-            flex-shrink: 0;
-            transition: all 0.3s ease;
-        }
-        
-        .quick-apply-card:hover .logo-placeholder {
-            background-color: #eaeaef;
-            color: var(--purple);
-        }
-        
-        .job-rating {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .stars {
-            color: #FFD700;
-            font-size: 1rem;
-            letter-spacing: 2px;
-        }
-        
-        .btn-block {
-            width: 100%;
-            border-radius: 30px;
-            padding: 15px;
-            font-weight: 500;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, var(--purple) 0%, var(--purple-dark) 100%);
-            border: none;
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(124, 58, 237, 0.3);
-        }
-        
-        /* Pagination améliorée */
-        .pagination {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 2.5rem;
-        }
-        
-        .pagination-link {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background-color: var(--white);
-            color: var(--black);
-            font-weight: 500;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        }
-        
-        .pagination-link:hover,
-        .pagination-link.active {
-            background-color: var(--purple);
-            color: var(--white);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(124, 58, 237, 0.2);
-        }
-        
-        /* Animation */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.8s, transform 0.8s;
-        }
-        
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        /* Responsive */
-        @media (max-width: 992px) {
-            .quick-apply-opportunities {
-                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .filter-container {
-                flex-direction: column;
-                gap: 15px;
-                align-items: flex-start;
-            }
-            
-            .filter-group {
-                width: 100%;
-                overflow-x: auto;
-                padding-bottom: 5px;
-                display: flex;
-                gap: 10px;
-            }
-            
-            .sort-dropdown {
-                width: 100%;
-            }
-            
-            .sort-select {
-                width: 100%;
-            }
-        }
-        
-        @media (max-width: 576px) {
-            .job-details {
-                grid-template-columns: 1fr;
-            }
-            
-            .section-heading {
-                font-size: 1.75rem;
-            }
-        }
-    </style>
 </head>
 <body>
     <!-- Lien d'accessibilité pour sauter au contenu principal -->
@@ -391,17 +56,17 @@
             <!-- Filter controls -->
             <div class="filter-container">
                 <div class="filter-group">
-                    <div class="filter-badge active"><i class="fas fa-filter"></i> Toutes</div>
-                    <div class="filter-badge"><i class="fas fa-trophy"></i> Top 3</div>
-                    <div class="filter-badge"><i class="fas fa-clock"></i> &lt; 30min</div>
-                    <div class="filter-badge"><i class="fas fa-map-marker-alt"></i> Proximité</div>
+                    <div class="filter-badge active" data-filter="all"><i class="fas fa-filter"></i> Toutes</div>
+                    <div class="filter-badge" data-filter="top"><i class="fas fa-trophy"></i> Top 3</div>
+                    <div class="filter-badge" data-filter="quick"><i class="fas fa-clock"></i> &lt; 30min</div>
+                    <div class="filter-badge" data-filter="near"><i class="fas fa-map-marker-alt"></i> Proximité</div>
                 </div>
                 <div class="sort-dropdown">
-                    <select class="sort-select">
-                        <option>Pertinence</option>
-                        <option>Proximité</option>
-                        <option>Matching</option>
-                        <option>Date</option>
+                    <select class="sort-select" id="sort-options">
+                        <option value="relevance">Pertinence</option>
+                        <option value="proximity">Proximité</option>
+                        <option value="matching">Matching</option>
+                        <option value="date">Date</option>
                     </select>
                 </div>
             </div>
@@ -409,10 +74,10 @@
             <!-- Liste des opportunités -->
             <div class="quick-apply-opportunities">
                 <!-- Opportunité 1 -->
-                <div class="quick-apply-card fade-in">
+                <div class="quick-apply-card fade-in" data-match="94" data-filter="top,near" data-commute="15">
                     <div class="job-header">
                         <h3 class="job-title">Growth Manager</h3>
-                        <div class="job-match">94%</div>
+                        <div class="job-match pulse">94%</div>
                     </div>
                     
                     <p class="job-description">Piloter la croissance d'une start-up innovante dans le secteur de la foodtech. <a href="#" class="color-link">Voir plus</a></p>
@@ -444,15 +109,24 @@
                     </div>
                     
                     <div class="apply-button-container">
-                        <button class="btn btn-primary btn-lg btn-block"><i class="fas fa-paper-plane"></i> Postuler en 1 clic</button>
+                        <button class="btn btn-primary btn-lg btn-block apply-button"><i class="fas fa-paper-plane"></i> Postuler en 1 clic</button>
+                    </div>
+                    
+                    <!-- Badge de confirmation (caché par défaut) -->
+                    <div class="confirmation-badge">
+                        <div class="confirmation-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div class="confirmation-text">Candidature envoyée !</div>
+                        <div class="confirmation-subtext">L'entreprise vous recontactera bientôt</div>
                     </div>
                 </div>
                 
                 <!-- Opportunité 2 -->
-                <div class="quick-apply-card fade-in">
+                <div class="quick-apply-card fade-in" data-match="91" data-filter="top,quick" data-commute="25">
                     <div class="job-header">
                         <h3 class="job-title">Product Manager</h3>
-                        <div class="job-match">91%</div>
+                        <div class="job-match pulse">91%</div>
                     </div>
                     
                     <p class="job-description">Définir et piloter la roadmap produit d'une application B2B en pleine croissance. <a href="#" class="color-link">Voir plus</a></p>
@@ -484,12 +158,21 @@
                     </div>
                     
                     <div class="apply-button-container">
-                        <button class="btn btn-primary btn-lg btn-block"><i class="fas fa-paper-plane"></i> Postuler en 1 clic</button>
+                        <button class="btn btn-primary btn-lg btn-block apply-button"><i class="fas fa-paper-plane"></i> Postuler en 1 clic</button>
+                    </div>
+                    
+                    <!-- Badge de confirmation (caché par défaut) -->
+                    <div class="confirmation-badge">
+                        <div class="confirmation-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div class="confirmation-text">Candidature envoyée !</div>
+                        <div class="confirmation-subtext">L'entreprise vous recontactera bientôt</div>
                     </div>
                 </div>
                 
                 <!-- Opportunité 3 -->
-                <div class="quick-apply-card fade-in">
+                <div class="quick-apply-card fade-in" data-match="89" data-filter="top" data-commute="30">
                     <div class="job-header">
                         <h3 class="job-title">Marketing Manager</h3>
                         <div class="job-match">89%</div>
@@ -524,12 +207,21 @@
                     </div>
                     
                     <div class="apply-button-container">
-                        <button class="btn btn-primary btn-lg btn-block"><i class="fas fa-paper-plane"></i> Postuler en 1 clic</button>
+                        <button class="btn btn-primary btn-lg btn-block apply-button"><i class="fas fa-paper-plane"></i> Postuler en 1 clic</button>
+                    </div>
+                    
+                    <!-- Badge de confirmation (caché par défaut) -->
+                    <div class="confirmation-badge">
+                        <div class="confirmation-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div class="confirmation-text">Candidature envoyée !</div>
+                        <div class="confirmation-subtext">L'entreprise vous recontactera bientôt</div>
                     </div>
                 </div>
                 
                 <!-- Opportunité 4 -->
-                <div class="quick-apply-card fade-in">
+                <div class="quick-apply-card fade-in" data-match="87" data-filter="quick,near" data-commute="20">
                     <div class="job-header">
                         <h3 class="job-title">UX/UI Designer</h3>
                         <div class="job-match">87%</div>
@@ -564,12 +256,21 @@
                     </div>
                     
                     <div class="apply-button-container">
-                        <button class="btn btn-primary btn-lg btn-block"><i class="fas fa-paper-plane"></i> Postuler en 1 clic</button>
+                        <button class="btn btn-primary btn-lg btn-block apply-button"><i class="fas fa-paper-plane"></i> Postuler en 1 clic</button>
+                    </div>
+                    
+                    <!-- Badge de confirmation (caché par défaut) -->
+                    <div class="confirmation-badge">
+                        <div class="confirmation-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div class="confirmation-text">Candidature envoyée !</div>
+                        <div class="confirmation-subtext">L'entreprise vous recontactera bientôt</div>
                     </div>
                 </div>
                 
                 <!-- Opportunité 5 -->
-                <div class="quick-apply-card fade-in">
+                <div class="quick-apply-card fade-in" data-match="85" data-filter="quick" data-commute="35">
                     <div class="job-header">
                         <h3 class="job-title">Data Analyst</h3>
                         <div class="job-match">85%</div>
@@ -604,12 +305,21 @@
                     </div>
                     
                     <div class="apply-button-container">
-                        <button class="btn btn-primary btn-lg btn-block"><i class="fas fa-paper-plane"></i> Postuler en 1 clic</button>
+                        <button class="btn btn-primary btn-lg btn-block apply-button"><i class="fas fa-paper-plane"></i> Postuler en 1 clic</button>
+                    </div>
+                    
+                    <!-- Badge de confirmation (caché par défaut) -->
+                    <div class="confirmation-badge">
+                        <div class="confirmation-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div class="confirmation-text">Candidature envoyée !</div>
+                        <div class="confirmation-subtext">L'entreprise vous recontactera bientôt</div>
                     </div>
                 </div>
                 
                 <!-- Opportunité 6 -->
-                <div class="quick-apply-card fade-in">
+                <div class="quick-apply-card fade-in" data-match="83" data-filter="" data-commute="40">
                     <div class="job-header">
                         <h3 class="job-title">Chef de Projet Digital</h3>
                         <div class="job-match">83%</div>
@@ -644,7 +354,16 @@
                     </div>
                     
                     <div class="apply-button-container">
-                        <button class="btn btn-primary btn-lg btn-block"><i class="fas fa-paper-plane"></i> Postuler en 1 clic</button>
+                        <button class="btn btn-primary btn-lg btn-block apply-button"><i class="fas fa-paper-plane"></i> Postuler en 1 clic</button>
+                    </div>
+                    
+                    <!-- Badge de confirmation (caché par défaut) -->
+                    <div class="confirmation-badge">
+                        <div class="confirmation-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div class="confirmation-text">Candidature envoyée !</div>
+                        <div class="confirmation-subtext">L'entreprise vous recontactera bientôt</div>
                     </div>
                 </div>
             </div>
@@ -746,6 +465,16 @@
             // Vérifier lors du défilement
             window.addEventListener('scroll', checkIfInView);
             
+            // Header animé au défilement
+            window.addEventListener('scroll', function() {
+                const header = document.querySelector('header');
+                if (window.scrollY > 100) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+            
             // Bouton de retour en haut
             const scrollToTopButton = document.getElementById('scroll-to-top');
             
@@ -766,21 +495,74 @@
                 });
             }
             
-            // Interaction avec les filtres
+            // Système de filtrage
             const filterBadges = document.querySelectorAll('.filter-badge');
+            const cards = document.querySelectorAll('.quick-apply-card');
+            let activeFilter = 'all';
+            
+            function filterCards() {
+                cards.forEach(card => {
+                    if (activeFilter === 'all') {
+                        card.style.display = 'flex';
+                    } else {
+                        const cardFilters = card.dataset.filter ? card.dataset.filter.split(',') : [];
+                        if (cardFilters.includes(activeFilter)) {
+                            card.style.display = 'flex';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    }
+                });
+            }
+            
+            // Système de tri
+            const sortSelect = document.getElementById('sort-options');
+            
+            function sortCards() {
+                const sortValue = sortSelect.value;
+                const cardsArray = Array.from(cards);
+                
+                cardsArray.sort((a, b) => {
+                    if (sortValue === 'matching') {
+                        // Tri par match
+                        return parseInt(b.dataset.match) - parseInt(a.dataset.match);
+                    } else if (sortValue === 'proximity') {
+                        // Tri par temps de trajet
+                        return parseInt(a.dataset.commute) - parseInt(b.dataset.commute);
+                    }
+                    // Par défaut, pertinence (déjà triés)
+                    return 0;
+                });
+                
+                const container = document.querySelector('.quick-apply-opportunities');
+                cardsArray.forEach(card => container.appendChild(card));
+            }
             
             filterBadges.forEach(badge => {
                 badge.addEventListener('click', function() {
                     // Dans chaque groupe de filtres, désactiver tous les autres
-                    const parentElement = this.parentElement;
-                    parentElement.querySelectorAll('.filter-badge').forEach(b => {
-                        b.classList.remove('active');
-                    });
+                    filterBadges.forEach(b => b.classList.remove('active'));
                     
                     // Activer le filtre cliqué
                     this.classList.add('active');
+                    activeFilter = this.dataset.filter;
+                    
+                    // Appliquer le filtre
+                    filterCards();
+                    
+                    // Ajouter une animation
+                    cards.forEach(card => {
+                        if (card.style.display !== 'none') {
+                            card.classList.remove('visible');
+                            setTimeout(() => {
+                                card.classList.add('visible');
+                            }, 50);
+                        }
+                    });
                 });
             });
+            
+            sortSelect.addEventListener('change', sortCards);
             
             // Animation des cartes
             setTimeout(() => {
@@ -791,38 +573,46 @@
                 });
             }, 300);
             
-            // Interaction avec les boutons de candidature
-            const applyButtons = document.querySelectorAll('.apply-button-container button');
+            // Gestion des boutons de candidature
+            const applyButtons = document.querySelectorAll('.apply-button');
             
             applyButtons.forEach(button => {
                 button.addEventListener('click', function() {
-                    const originalText = this.innerHTML;
+                    const card = this.closest('.quick-apply-card');
+                    const confirmationBadge = card.querySelector('.confirmation-badge');
+                    
                     this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
                     this.disabled = true;
                     
                     setTimeout(() => {
-                        this.innerHTML = '<i class="fas fa-check"></i> Candidature envoyée !';
-                        this.classList.remove('btn-primary');
-                        this.classList.add('btn-success');
-                        this.style.backgroundColor = '#38b2ac';
-                        this.style.borderColor = '#38b2ac';
+                        // Afficher le badge de confirmation
+                        confirmationBadge.classList.add('visible');
                         
-                        // Effet de confetti ou animation pour célébrer
-                        const card = this.closest('.quick-apply-card');
-                        card.style.boxShadow = '0 15px 30px rgba(56, 178, 172, 0.3)';
-                        
-                        // Réinitialiser le bouton après quelques secondes
+                        // Masquer le badge après quelques secondes
                         setTimeout(() => {
-                            this.innerHTML = originalText;
-                            this.classList.add('btn-primary');
-                            this.classList.remove('btn-success');
-                            this.style.backgroundColor = '';
-                            this.style.borderColor = '';
-                            this.disabled = false;
-                            card.style.boxShadow = '';
+                            confirmationBadge.classList.remove('visible');
+                            this.innerHTML = '<i class="fas fa-check"></i> Candidature envoyée !';
+                            this.classList.remove('btn-primary');
+                            this.classList.add('btn-success');
+                            
+                            // Réinitialiser après un certain temps
+                            setTimeout(() => {
+                                this.innerHTML = '<i class="fas fa-paper-plane"></i> Postuler en 1 clic';
+                                this.classList.add('btn-primary');
+                                this.classList.remove('btn-success');
+                                this.disabled = false;
+                            }, 5000);
                         }, 3000);
                     }, 1500);
                 });
+            });
+            
+            // Activer l'animation de pulsation sur les matches les plus élevés
+            document.querySelectorAll('.job-match').forEach(match => {
+                const matchValue = parseInt(match.textContent);
+                if (matchValue >= 90) {
+                    match.classList.add('pulse');
+                }
             });
         });
     </script>
