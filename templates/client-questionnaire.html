@@ -1090,28 +1090,6 @@
                 }, 1500);
             }
             
-            // Affichage conditionnel des sections et redirection si réponse "Non"
-            const hasPositionRadios = document.querySelectorAll('input[name="has-position"]');
-            const recruitmentDetails = document.getElementById('recruitment-details');
-            
-            hasPositionRadios.forEach(radio => {
-                radio.addEventListener('change', function() {
-                    if (this.value === 'yes') {
-                        recruitmentDetails.style.display = 'block';
-                    } else {
-                        recruitmentDetails.style.display = 'none';
-                        
-                        // Afficher une notification et rediriger vers le tableau de bord
-                        showNotification('Votre profil a été enregistré. Vous allez être redirigé vers votre espace entreprise.', 'success');
-                        
-                        // Redirection après un délai pour laisser le temps de voir la notification
-                        setTimeout(() => {
-                            window.location.href = 'company-dashboard.html';
-                        }, 2000);
-                    }
-                });
-            });
-            
             // Gestion du préavis
             const noticeRadios = document.querySelectorAll('input[name="can-handle-notice"]');
             const noticeDuration = document.getElementById('notice-duration');
@@ -1219,6 +1197,157 @@
                 nav.classList.toggle('active');
                 menuToggle.classList.toggle('active');
             });
+
+            // ===== INTÉGRATION DU PARSING DE FICHE DE POSTE =====
+            
+            // Vérifier si l'utilisateur revient de la page de parsing
+            const fromParser = sessionStorage.getItem('fromJobParser');
+            
+            if (fromParser === 'true') {
+                // Revenir à l'étape 2 du questionnaire
+                if (document.getElementById('step1').classList.contains('active') && 
+                    document.getElementById('form-step1').classList.contains('active')) {
+                    
+                    // Masquer l'étape 1
+                    document.getElementById('form-step1').classList.remove('active');
+                    document.getElementById('step1').classList.remove('active');
+                    document.getElementById('step1').classList.add('completed');
+                    
+                    // Afficher l'étape 2
+                    document.getElementById('form-step2').classList.add('active');
+                    document.getElementById('step2').classList.add('active');
+                    
+                    // Mettre à jour la barre de progression
+                    stepperProgress.style.width = '50%';
+                    
+                    // Simuler la sélection du bouton radio "Oui"
+                    const yesRadio = document.querySelector('input[name="has-position"][value="yes"]');
+                    if (yesRadio) {
+                        yesRadio.checked = true;
+                        
+                        // Afficher les détails de recrutement
+                        document.getElementById('recruitment-details').style.display = 'block';
+                    }
+                    
+                    // Scroll vers le haut du formulaire
+                    document.querySelector('.form-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+                
+                // Supprimer le marqueur après avoir restauré l'état
+                sessionStorage.removeItem('fromJobParser');
+            }
+            
+            // Affichage conditionnel des sections et intégration du parsing de fiche de poste
+            const hasPositionRadios = document.querySelectorAll('input[name="has-position"]');
+            const recruitmentDetails = document.getElementById('recruitment-details');
+            
+            hasPositionRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    if (this.value === 'yes') {
+                        // Afficher les détails de recrutement (comportement normal)
+                        recruitmentDetails.style.display = 'block';
+                        
+                        // Ajouter un bouton pour aller vers l'analyse de fiche de poste
+                        const recruitmentDetails = document.getElementById('recruitment-details');
+                        
+                        // Vérifier si le bouton existe déjà pour éviter les doublons
+                        if (!document.getElementById('parse-job-description-btn')) {
+                            const parseButton = document.createElement('button');
+                            parseButton.id = 'parse-job-description-btn';
+                            parseButton.type = 'button';
+                            parseButton.className = 'btn-generate';
+                            parseButton.innerHTML = '<i class="fas fa-file-import"></i> Analyser une fiche de poste';
+                            parseButton.style.marginTop = 'var(--spacing-md)';
+                            parseButton.style.marginBottom = 'var(--spacing-sm)';
+                            
+                            parseButton.addEventListener('click', function() {
+                                // Rediriger vers la page de parsing de fiche de poste
+                                sessionStorage.setItem('fromQuestionnaire', 'true');
+                                window.location.href = 'job-description-parser.html';
+                            });
+                            
+                            recruitmentDetails.prepend(parseButton);
+                        }
+                    } else {
+                        // Comportement par défaut pour "Non"
+                        recruitmentDetails.style.display = 'none';
+                        
+                        // Supprimer le bouton d'analyse s'il existe
+                        const parseButton = document.getElementById('parse-job-description-btn');
+                        if (parseButton) {
+                            parseButton.remove();
+                        }
+                        
+                        // Afficher une notification et rediriger vers le tableau de bord
+                        showNotification('Votre profil a été enregistré. Vous allez être redirigé vers votre espace entreprise.', 'success');
+                        
+                        // Redirection après un délai pour laisser le temps de voir la notification
+                        setTimeout(() => {
+                            window.location.href = 'company-dashboard.html';
+                        }, 2000);
+                    }
+                });
+            });
+            
+            // Observer les changements d'étape pour pré-remplir les champs au bon moment
+            const jobData = localStorage.getItem('jobDescriptionData');
+            
+            if (jobData) {
+                const parsedData = JSON.parse(jobData);
+                
+                // Observer l'étape 3 pour pré-remplir les champs
+                const observer = new MutationObserver(function(mutations) {
+                    mutations.forEach(function(mutation) {
+                        if (mutation.target.classList.contains('active')) {
+                            // Vérifier si les éléments existent avant de tenter de les remplir
+                            const contractTypeInput = document.getElementById('contract-type');
+                            const compensationInput = document.getElementById('compensation');
+                            const experienceSelect = document.getElementById('required-experience');
+                            
+                            // Pré-remplir les champs avec les données d'analyse
+                            if (contractTypeInput && parsedData.contractType) {
+                                contractTypeInput.value = parsedData.contractType;
+                            }
+                            
+                            if (compensationInput && parsedData.salary) {
+                                compensationInput.value = parsedData.salary;
+                            }
+                            
+                            // Sélectionner le niveau d'expérience approprié
+                            if (experienceSelect && parsedData.experience) {
+                                // Analyse basique du texte d'expérience pour déterminer la valeur à sélectionner
+                                let experienceValue = '';
+                                
+                                if (parsedData.experience.includes('Junior') || parsedData.experience.includes('0-2')) {
+                                    experienceValue = 'junior';
+                                } else if (parsedData.experience.includes('2-3') || parsedData.experience.includes('2 ans')) {
+                                    experienceValue = '2-3years';
+                                } else if (parsedData.experience.includes('5-10') || parsedData.experience.includes('5 ans')) {
+                                    experienceValue = '5-10years';
+                                } else if (parsedData.experience.includes('10+') || parsedData.experience.includes('10 ans')) {
+                                    experienceValue = '10+years';
+                                }
+                                
+                                if (experienceValue) {
+                                    experienceSelect.value = experienceValue;
+                                }
+                            }
+                            
+                            // Afficher une notification
+                            showNotification('Les informations de la fiche de poste ont été automatiquement intégrées au formulaire.');
+                            
+                            // Arrêter l'observation après le premier remplissage
+                            observer.disconnect();
+                        }
+                    });
+                });
+                
+                // Observer les changements sur l'étape 3
+                const formStep3 = document.getElementById('form-step3');
+                if (formStep3) {
+                    observer.observe(formStep3, { attributes: true, attributeFilter: ['class'] });
+                }
+            }
         });
     </script>
 </body>
