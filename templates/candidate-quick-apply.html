@@ -396,91 +396,137 @@
             -webkit-backdrop-filter: blur(10px);
         }
         
-        .progress-steps {
+        /* Styles pour le parcours candidat (progress tracker) */
+        .progress-tracker-container {
+            background-color: var(--surface);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-md);
+            padding: 20px;
+            margin-bottom: 30px;
             display: flex;
-            justify-content: space-between;
-            margin: 40px 0;
-            position: relative;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 15px;
         }
         
-        .progress-steps::before {
-            content: '';
-            position: absolute;
-            top: 25px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background-color: var(--cream-dark);
-            z-index: 1;
-        }
-        
-        .step {
-            position: relative;
-            z-index: 2;
+        .progress-step {
             display: flex;
             flex-direction: column;
             align-items: center;
-            flex: 1;
             text-align: center;
+            position: relative;
+            padding: 0 10px;
+            flex: 1;
+            min-width: 120px;
+            max-width: 180px;
+            transition: all var(--transition-normal);
         }
         
-        .step-circle {
+        .step-number {
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            background-color: var(--white);
-            border: 2px solid var(--cream-dark);
+            background-color: var(--cream);
+            color: var(--gray);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 10px;
-            transition: all var(--transition-speed) ease;
             font-weight: 600;
             font-size: 1.2rem;
-            color: var(--gray);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 10px;
+            transition: all var(--transition-normal);
         }
         
-        .step-circle.completed {
-            background-color: var(--purple);
-            border-color: var(--purple);
-            color: var(--white);
-        }
-        
-        .step-circle.active {
-            border-color: var(--purple);
-            color: var(--purple);
-            background-color: var(--white);
-            transform: scale(1.1);
-            box-shadow: 0 5px 15px rgba(124, 58, 237, 0.2);
-        }
-        
-        .step-text {
+        .step-label {
             font-size: 0.9rem;
-            font-weight: 500;
             color: var(--gray);
-            transition: all var(--transition-speed) ease;
+            font-weight: 500;
+            transition: all var(--transition-normal);
         }
         
-        .step.active .step-text {
+        .progress-step.active .step-number {
+            background-color: var(--purple);
+            color: var(--white);
+            box-shadow: 0 0 15px rgba(124, 58, 237, 0.5);
+            transform: scale(1.1);
+        }
+        
+        .progress-step.active .step-label {
             color: var(--purple);
             font-weight: 600;
         }
         
-        .step.completed .step-text {
-            color: var(--black);
+        /* Flèches de navigation entre les pages */
+        .contextual-nav {
+            margin: 16px 0 32px;
+            padding: 15px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--cream-dark);
         }
         
-        /* Animation */
-        .fade-in {
+        .previous-page, .next-page, .dashboard-link {
+            display: flex;
+            align-items: center;
+            color: var(--gray);
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 30px;
+            transition: all 0.2s ease;
+            background-color: var(--surface-variant);
+            text-decoration: none;
+        }
+        
+        .previous-page:hover, .next-page:hover, .dashboard-link:hover {
+            background-color: var(--purple);
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+        }
+        
+        .previous-page i, .next-page i {
+            font-size: 0.8rem;
+        }
+        
+        .previous-page i {
+            margin-right: 8px;
+        }
+        
+        .next-page i {
+            margin-left: 8px;
+        }
+        
+        .dashboard-link i {
+            margin-right: 8px;
+        }
+        
+        [data-tooltip] {
+            position: relative;
+        }
+        
+        [data-tooltip]::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 5px 10px;
+            background-color: var(--black);
+            color: white;
+            font-size: 0.8rem;
+            border-radius: 4px;
+            white-space: nowrap;
             opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.8s, transform 0.8s;
+            visibility: hidden;
+            transition: all 0.2s ease;
+            z-index: 100;
         }
         
-        .fade-in.visible {
+        [data-tooltip]:hover::after {
             opacity: 1;
-            transform: translateY(0);
+            visibility: visible;
         }
         
         /* Pagination */
@@ -519,32 +565,16 @@
             color: var(--gray);
         }
         
-        .contextual-nav {
-            margin: 40px 0;
-            padding: 20px 0;
-            border-top: 1px solid var(--cream-dark);
-            border-bottom: 1px solid var(--cream-dark);
+        /* Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s, transform 0.8s;
         }
         
-        .previous-page, .next-page, .dashboard-link {
-            padding: 12px 20px;
-            border-radius: 30px;
-            font-weight: 500;
-            transition: all var(--transition-speed) ease;
-        }
-        
-        .previous-page:hover, .next-page:hover, .dashboard-link:hover {
-            background-color: rgba(124, 58, 237, 0.1);
-            transform: translateY(-3px);
-        }
-        
-        .dashboard-link {
-            background-color: var(--cream);
-            color: var(--black);
-        }
-        
-        .dashboard-link:hover {
-            background-color: var(--cream-dark);
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
         
         /* Responsive design */
@@ -581,13 +611,24 @@
                 width: 100%;
             }
             
-            .progress-steps {
+            .progress-tracker-container {
                 overflow-x: auto;
                 padding-bottom: 10px;
             }
             
-            .step {
+            .progress-step {
                 min-width: 100px;
+            }
+            
+            .contextual-nav {
+                flex-wrap: wrap;
+                gap: 10px;
+                justify-content: center;
+            }
+            
+            .previous-page, .next-page, .dashboard-link {
+                font-size: 0.8rem;
+                padding: 8px 12px;
             }
         }
         
@@ -624,7 +665,7 @@
             <nav>
                 <ul>
                     <li><a href="index.html">Accueil</a></li>
-                    <li><a href="candidate-dashboard.html?email=jean-olivier.penin%40b-acceptance.com&password=%C3%A9" class="active">Espace candidat</a></li>
+                    <li><a href="candidate-dashboard.html?email=jean-olivier.penin%40b-acceptance.com&password=s" class="active">Espace candidat</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </nav>
@@ -634,8 +675,51 @@
     <div class="container main-container" id="main-content">
         <!-- Breadcrumb -->
         <div class="breadcrumb fade-in">
-            <a href="candidate-dashboard.html?email=jean-olivier.penin%40b-acceptance.com&password=%C3%A9"><i class="fas fa-home"></i> Tableau de bord</a> &gt; 
+            <a href="candidate-dashboard.html?email=jean-olivier.penin%40b-acceptance.com&password=s"><i class="fas fa-home"></i> Tableau de bord</a> &gt; 
             <span>Postuler en un clic</span>
+        </div>
+        
+        <!-- Navigation contextuelle avec flèches pour changer de page -->
+        <div class="contextual-nav fade-in">
+            <a href="candidate-offers.html?email=jean-olivier.penin%40b-acceptance.com&password=s" class="previous-page" data-tooltip="Page précédente">
+                <i class="fas fa-chevron-left"></i> Mes offres reçues
+            </a>
+            
+            <a href="candidate-dashboard.html?email=jean-olivier.penin%40b-acceptance.com&password=s" class="dashboard-link" data-tooltip="Retour au tableau de bord">
+                <i class="fas fa-th-large"></i> Tableau de bord
+            </a>
+            
+            <a href="candidate-cv.html?email=jean-olivier.penin%40b-acceptance.com&password=s" class="next-page" data-tooltip="Page suivante">
+                Travailler mon CV <i class="fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+        <!-- Parcours candidat -->
+        <div class="progress-tracker-container fade-in">
+            <div class="progress-step">
+                <div class="step-number">1</div>
+                <div class="step-label">Mes opportunités</div>
+            </div>
+            <div class="progress-step">
+                <div class="step-number">2</div>
+                <div class="step-label">Mes offres reçues</div>
+            </div>
+            <div class="progress-step active">
+                <div class="step-number">3</div>
+                <div class="step-label">Postuler en un clic</div>
+            </div>
+            <div class="progress-step">
+                <div class="step-number">4</div>
+                <div class="step-label">Travailler mon CV</div>
+            </div>
+            <div class="progress-step">
+                <div class="step-number">5</div>
+                <div class="step-label">Centre de ressources</div>
+            </div>
+            <div class="progress-step">
+                <div class="step-number">6</div>
+                <div class="step-label">Messagerie</div>
+            </div>
         </div>
         
         <!-- Section Postuler en un clic -->
@@ -648,34 +732,6 @@
             </div>
             
             <p class="section-description">Découvrez de nouvelles opportunités correspondant à votre profil et postulez instantanément.</p>
-            
-            <!-- Progress steps -->
-            <div class="progress-steps">
-                <div class="step completed">
-                    <div class="step-circle completed"><i class="fas fa-check"></i></div>
-                    <div class="step-text">Mes opportunités</div>
-                </div>
-                <div class="step completed">
-                    <div class="step-circle completed"><i class="fas fa-check"></i></div>
-                    <div class="step-text">Mes offres reçues</div>
-                </div>
-                <div class="step active">
-                    <div class="step-circle active">3</div>
-                    <div class="step-text">Postuler en un clic</div>
-                </div>
-                <div class="step">
-                    <div class="step-circle">4</div>
-                    <div class="step-text">Travailler mon CV</div>
-                </div>
-                <div class="step">
-                    <div class="step-circle">5</div>
-                    <div class="step-text">Centre de ressources</div>
-                </div>
-                <div class="step">
-                    <div class="step-circle">6</div>
-                    <div class="step-text">Messagerie</div>
-                </div>
-            </div>
             
             <!-- Filter controls -->
             <div class="filter-container">
@@ -949,21 +1005,6 @@
                 <a href="#" class="pagination-link"><i class="fas fa-chevron-right"></i></a>
             </div>
         </div>
-        
-        <!-- Navigation contextuelle -->
-        <div class="contextual-nav">
-            <a href="candidate-received-offers.html?email=jean-olivier.penin%40b-acceptance.com&password=%C3%A9" class="previous-page">
-                <i class="fas fa-arrow-left"></i> Mes offres reçues
-            </a>
-            
-            <a href="candidate-dashboard.html?email=jean-olivier.penin%40b-acceptance.com&password=%C3%A9" class="dashboard-link">
-                <i class="fas fa-th-large"></i> Tableau de bord
-            </a>
-            
-            <a href="candidate-cv.html?email=jean-olivier.penin%40b-acceptance.com&password=%C3%A9" class="next-page">
-                Travailler mon CV <i class="fas fa-arrow-right"></i>
-            </a>
-        </div>
     </div>
 
     <footer id="contact">
@@ -984,7 +1025,7 @@
                     <h4 class="footer-heading">Navigation</h4>
                     <ul class="footer-links">
                         <li><a href="index.html"><i class="fas fa-chevron-right"></i> Accueil</a></li>
-                        <li><a href="candidate-dashboard.html?email=jean-olivier.penin%40b-acceptance.com&password=%C3%A9"><i class="fas fa-chevron-right"></i> Espace candidat</a></li>
+                        <li><a href="candidate-dashboard.html?email=jean-olivier.penin%40b-acceptance.com&password=s"><i class="fas fa-chevron-right"></i> Espace candidat</a></li>
                         <li><a href="#"><i class="fas fa-chevron-right"></i> À propos</a></li>
                         <li><a href="#contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
                     </ul>
