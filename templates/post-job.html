@@ -409,6 +409,79 @@
             transition: width 0.8s ease;
         }
 
+        /* Nouvelle fonctionnalité: Steps visuels */
+        .form-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-xl);
+            position: relative;
+        }
+
+        .form-steps::before {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--gray-light);
+            z-index: 1;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+            transition: all var(--transition-normal);
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--white);
+            border: 2px solid var(--gray-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-bottom: 8px;
+            transition: all var(--transition-normal);
+            position: relative;
+        }
+
+        .step-text {
+            font-size: 0.85rem;
+            color: var(--gray);
+            text-align: center;
+            transition: all var(--transition-normal);
+        }
+
+        .step.active .step-number {
+            background-color: var(--purple);
+            border-color: var(--purple);
+            color: var(--white);
+            box-shadow: 0 0 0 4px var(--primary-light);
+        }
+
+        .step.active .step-text {
+            color: var(--purple);
+            font-weight: 500;
+        }
+
+        .step.completed .step-number {
+            background-color: var(--purple-light);
+            border-color: var(--purple-light);
+            color: var(--white);
+        }
+
+        .step.completed .step-number::after {
+            content: '✓';
+            position: absolute;
+        }
+
         /* Form container */
         .form-container {
             display: grid;
@@ -427,6 +500,228 @@
             .form-container {
                 grid-template-columns: 1fr;
             }
+        }
+
+        /* Parsing de fiche de poste */
+        .job-description-parser {
+            background-color: var(--white);
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-lg);
+            margin-top: var(--spacing-md);
+            box-shadow: var(--box-shadow-sm);
+            display: none;
+            transition: all var(--transition-normal);
+        }
+
+        .job-description-parser.visible {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .parser-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .parser-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .parser-title i {
+            color: var(--purple);
+        }
+
+        .file-upload-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--primary-light);
+            color: var(--purple);
+            border: 1px dashed var(--purple);
+            padding: 8px 16px;
+            border-radius: var(--border-radius-md);
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .file-upload-btn:hover {
+            background: var(--purple-light);
+            color: var(--white);
+            border-style: solid;
+        }
+
+        .file-upload-input {
+            display: none;
+        }
+        
+        .parser-content {
+            min-height: 120px;
+            position: relative;
+        }
+
+        .parser-dropzone {
+            border: 2px dashed var(--gray-light);
+            border-radius: var(--border-radius-md);
+            padding: var(--spacing-xl);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: all var(--transition-normal);
+            cursor: pointer;
+        }
+
+        .parser-dropzone:hover, .parser-dropzone.dragover {
+            border-color: var(--purple);
+            background-color: var(--primary-light);
+        }
+
+        .parser-dropzone i {
+            font-size: 2rem;
+            color: var(--gray);
+            margin-bottom: var(--spacing-sm);
+            transition: all var(--transition-normal);
+        }
+
+        .parser-dropzone:hover i {
+            color: var(--purple);
+            transform: scale(1.1);
+        }
+
+        .parser-dropzone p {
+            margin-bottom: var(--spacing-xs);
+            color: var(--gray);
+        }
+
+        .parser-dropzone span {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        .parser-results {
+            margin-top: var(--spacing-md);
+            display: none;
+        }
+
+        .parser-results.visible {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .result-item {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-sm) 0;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-label {
+            min-width: 120px;
+            font-weight: 500;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .result-value {
+            flex: 1;
+            padding: 0.25rem 0.5rem;
+            background-color: var(--primary-light);
+            border-radius: var(--border-radius-sm);
+            font-size: 0.9rem;
+            position: relative;
+        }
+
+        .result-actions {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin-top: var(--spacing-md);
+        }
+        
+        .apply-results-btn {
+            background: linear-gradient(135deg, var(--purple) 0%, var(--purple-dark) 100%);
+            color: var(--white);
+            border: none;
+            padding: 8px 16px;
+            border-radius: var(--border-radius-md);
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all var(--transition-normal);
+            box-shadow: 0 4px 10px rgba(124, 58, 237, 0.2);
+        }
+
+        .apply-results-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(124, 58, 237, 0.3);
+        }
+
+        .parsing-loader {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.7);
+            z-index: 10;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+
+        .parsing-loader.visible {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .parsing-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--gray-light);
+            border-radius: 50%;
+            border-top-color: var(--purple);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .parsing-text {
+            font-size: 0.9rem;
+            color: var(--gray);
         }
 
         /* Form cards with modern design */
@@ -648,12 +943,14 @@
             background-color: #f8fafc;
             border-radius: var(--border-radius-md);
             transition: all var(--transition-normal);
+            border: 1px solid transparent;
         }
 
         .flow-step:hover {
             background-color: #f1f5f9;
             transform: translateY(-3px);
             box-shadow: var(--box-shadow-sm);
+            border-color: var(--gray-light);
         }
 
         .flow-step-icon {
@@ -847,6 +1144,36 @@
         .delay-2 { transition-delay: 0.2s; }
         .delay-3 { transition-delay: 0.3s; }
 
+        /* Toggle button - nouveau style */
+        .toggle-parser-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: none;
+            border: none;
+            padding: 6px 12px;
+            font-size: 0.85rem;
+            color: var(--purple);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            margin-top: 8px;
+            border-radius: var(--border-radius-sm);
+        }
+
+        .toggle-parser-btn:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        .toggle-parser-btn i {
+            transition: transform var(--transition-normal);
+        }
+
+        .toggle-parser-btn.active i {
+            transform: rotate(180deg);
+        }
+
         /* Footer */
         footer {
             background-color: var(--dark);
@@ -1035,6 +1362,15 @@
             .footer-content {
                 grid-template-columns: 1fr 1fr;
             }
+            
+            .form-steps {
+                overflow-x: auto;
+                padding-bottom: var(--spacing-sm);
+            }
+            
+            .form-steps .step {
+                min-width: 100px;
+            }
         }
         
         @media (max-width: 768px) {
@@ -1107,6 +1443,11 @@
                 flex-direction: column-reverse;
                 align-items: flex-start;
             }
+            
+            .toggle-content-btn {
+                width: 100%;
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -1175,6 +1516,30 @@
             </div>
         </div>
         
+        <!-- Nouveau: Étapes visuelles du processus -->
+        <div class="form-steps fade-in">
+            <div class="step active">
+                <div class="step-number">1</div>
+                <div class="step-text">Informations<br>Basiques</div>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-text">Contexte<br>de recrutement</div>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-text">Environnement<br>de travail</div>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-text">Processus<br>d'embauche</div>
+            </div>
+            <div class="step">
+                <div class="step-number">5</div>
+                <div class="step-text">Révision<br>& Publication</div>
+            </div>
+        </div>
+        
         <form id="create-job-form">
             <div class="form-container">
                 <!-- Première colonne du formulaire -->
@@ -1189,6 +1554,62 @@
                     <div class="form-group">
                         <label for="job-description" class="form-label">Tâches et descriptif</label>
                         <textarea id="job-description" name="job-description" class="form-control" rows="4" placeholder="Décrivez les principales tâches et responsabilités du poste"></textarea>
+                        
+                        <!-- Nouveau: toggle pour le parsing de fiche de poste -->
+                        <button type="button" class="toggle-parser-btn" id="toggle-parser-btn">
+                            <i class="fas fa-magic"></i> Utiliser le parsing de fiche de poste
+                        </button>
+                        
+                        <!-- Nouveau: section de parsing de fiche de poste -->
+                        <div class="job-description-parser" id="job-description-parser">
+                            <div class="parser-header">
+                                <div class="parser-title">
+                                    <i class="fas fa-robot"></i> Analyse automatique de la fiche de poste
+                                </div>
+                                <label class="file-upload-btn">
+                                    <i class="fas fa-file-upload"></i> Importer un fichier
+                                    <input type="file" class="file-upload-input" id="job-description-file" accept=".pdf,.doc,.docx,.txt">
+                                </label>
+                            </div>
+                            
+                            <div class="parser-content">
+                                <div class="parser-dropzone" id="parser-dropzone">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <p>Glissez-déposez votre fiche de poste ici</p>
+                                    <span>ou collez directement le texte dans le champ de descriptif</span>
+                                </div>
+                                
+                                <div class="parsing-loader" id="parsing-loader">
+                                    <div class="parsing-spinner"></div>
+                                    <div class="parsing-text">Analyse en cours...</div>
+                                </div>
+                                
+                                <div class="parser-results" id="parser-results">
+                                    <div class="result-item">
+                                        <div class="result-label">Titre du poste:</div>
+                                        <div class="result-value" id="parsed-title">Développeur Full-Stack Senior</div>
+                                    </div>
+                                    <div class="result-item">
+                                        <div class="result-label">Secteur d'activité:</div>
+                                        <div class="result-value" id="parsed-sector">Technologies et informatique</div>
+                                    </div>
+                                    <div class="result-item">
+                                        <div class="result-label">Expérience requise:</div>
+                                        <div class="result-value" id="parsed-experience">5 ans - 10 ans</div>
+                                    </div>
+                                    <div class="result-item">
+                                        <div class="result-label">Type de poste:</div>
+                                        <div class="result-value" id="parsed-type">Création de poste</div>
+                                    </div>
+                                    
+                                    <div class="result-actions">
+                                        <button type="button" class="apply-results-btn" id="apply-results-btn">
+                                            <i class="fas fa-check-circle"></i> Appliquer les résultats
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="form-group">
@@ -1718,6 +2139,193 @@
                 });
             });
             
+            // Nouvelle fonctionnalité: Toggle de la section de parsing
+            const toggleParserBtn = document.getElementById('toggle-parser-btn');
+            const jobDescriptionParser = document.getElementById('job-description-parser');
+            
+            toggleParserBtn.addEventListener('click', function() {
+                this.classList.toggle('active');
+                jobDescriptionParser.classList.toggle('visible');
+            });
+            
+            // Nouvelle fonctionnalité: Parsing de fiche de poste
+            const parserDropzone = document.getElementById('parser-dropzone');
+            const jobDescriptionFile = document.getElementById('job-description-file');
+            const parsingLoader = document.getElementById('parsing-loader');
+            const parserResults = document.getElementById('parser-results');
+            const applyResultsBtn = document.getElementById('apply-results-btn');
+            
+            // Gestion du glisser-déposer
+            parserDropzone.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.classList.add('dragover');
+            });
+            
+            parserDropzone.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                this.classList.remove('dragover');
+            });
+            
+            parserDropzone.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.classList.remove('dragover');
+                
+                if (e.dataTransfer.files.length > 0) {
+                    const file = e.dataTransfer.files[0];
+                    handleFileUpload(file);
+                }
+            });
+            
+            parserDropzone.addEventListener('click', function() {
+                jobDescriptionFile.click();
+            });
+            
+            jobDescriptionFile.addEventListener('change', function() {
+                if (this.files.length > 0) {
+                    handleFileUpload(this.files[0]);
+                }
+            });
+            
+            // Gestion du parsing du texte
+            const jobDescriptionTextarea = document.getElementById('job-description');
+            
+            jobDescriptionTextarea.addEventListener('input', debounce(function() {
+                if (this.value.length > 100 && jobDescriptionParser.classList.contains('visible')) {
+                    parseJobDescription(this.value);
+                }
+            }, 1000));
+            
+            function handleFileUpload(file) {
+                // Simuler un parsing de fichier
+                parsingLoader.classList.add('visible');
+                parserDropzone.style.display = 'none';
+                
+                // Simuler un délai de parsing
+                setTimeout(function() {
+                    parsingLoader.classList.remove('visible');
+                    parserResults.classList.add('visible');
+                }, 2000);
+            }
+            
+            function parseJobDescription(text) {
+                // Simuler un parsing de texte
+                parsingLoader.classList.add('visible');
+                parserDropzone.style.display = 'none';
+                
+                // Simuler un délai de parsing
+                setTimeout(function() {
+                    parsingLoader.classList.remove('visible');
+                    parserResults.classList.add('visible');
+                    
+                    // Analyser le texte et remplir les résultats (simulation)
+                    // Dans une implémentation réelle, on utiliserait un algorithme NLP
+                    let title = "Développeur Full-Stack Senior";
+                    let sector = "Technologies et informatique";
+                    let experience = "5 ans - 10 ans";
+                    let type = "Création de poste";
+                    
+                    if (text.toLowerCase().includes('junior')) {
+                        experience = "Profil Junior";
+                    } else if (text.toLowerCase().includes('mid')) {
+                        experience = "2 ans - 3 ans";
+                    }
+                    
+                    if (text.toLowerCase().includes('remplacement')) {
+                        type = "Remplacement";
+                    } else if (text.toLowerCase().includes('renfort') || text.toLowerCase().includes('accroiss')) {
+                        type = "Accroissement d'activité / Renfort";
+                    }
+                    
+                    // Mise à jour des résultats
+                    document.getElementById('parsed-title').textContent = title;
+                    document.getElementById('parsed-sector').textContent = sector;
+                    document.getElementById('parsed-experience').textContent = experience;
+                    document.getElementById('parsed-type').textContent = type;
+                }, 1500);
+            }
+            
+            // Appliquer les résultats du parsing
+            applyResultsBtn.addEventListener('click', function() {
+                const parsedTitle = document.getElementById('parsed-title').textContent;
+                const parsedSector = document.getElementById('parsed-sector').textContent;
+                const parsedExperience = document.getElementById('parsed-experience').textContent;
+                const parsedType = document.getElementById('parsed-type').textContent;
+                
+                // Appliquer au formulaire
+                document.getElementById('job-title').value = parsedTitle;
+                
+                // Sélectionner le type de recrutement
+                if (parsedType === "Création de poste") {
+                    document.querySelector('input[name="recruitment-context"][value="creation"]').checked = true;
+                } else if (parsedType === "Remplacement") {
+                    document.querySelector('input[name="recruitment-context"][value="replacement"]').checked = true;
+                } else if (parsedType === "Accroissement d'activité / Renfort") {
+                    document.querySelector('input[name="recruitment-context"][value="growth"]').checked = true;
+                }
+                
+                // Sélectionner l'expérience
+                if (parsedExperience === "Profil Junior") {
+                    document.querySelector('input[name="experience-required"][value="junior"]').checked = true;
+                } else if (parsedExperience === "2 ans - 3 ans") {
+                    document.querySelector('input[name="experience-required"][value="2-3years"]').checked = true;
+                } else if (parsedExperience === "5 ans - 10 ans") {
+                    document.querySelector('input[name="experience-required"][value="5-10years"]').checked = true;
+                } else if (parsedExperience === "10 ans et plus") {
+                    document.querySelector('input[name="experience-required"][value="10plusyears"]').checked = true;
+                }
+                
+                // Activer le secteur d'activité
+                document.querySelector('input[name="sector-knowledge"][value="yes"]').checked = true;
+                sectorContainer.style.display = 'block';
+                
+                // Sélectionner le secteur
+                const sectorSelect = document.getElementById('business-sector');
+                for (let i = 0; i < sectorSelect.options.length; i++) {
+                    if (sectorSelect.options[i].text === parsedSector) {
+                        sectorSelect.selectedIndex = i;
+                        break;
+                    }
+                }
+                
+                // Mettre à jour les cartes de choix sélectionnées
+                document.querySelectorAll('input[type="radio"]:checked').forEach(function(radio) {
+                    const card = radio.closest('.choice-card');
+                    if (card) {
+                        card.classList.add('selected');
+                    }
+                });
+                
+                // Fermer la section de parsing
+                jobDescriptionParser.classList.remove('visible');
+                toggleParserBtn.classList.remove('active');
+                
+                // Notification de succès
+                const notification = document.createElement('div');
+                notification.className = 'alert alert-success';
+                notification.style.position = 'fixed';
+                notification.style.top = '20px';
+                notification.style.right = '20px';
+                notification.style.padding = '10px 20px';
+                notification.style.backgroundColor = 'rgba(124, 58, 237, 0.2)';
+                notification.style.color = 'var(--purple-dark)';
+                notification.style.borderRadius = 'var(--border-radius-md)';
+                notification.style.boxShadow = 'var(--box-shadow-md)';
+                notification.style.zIndex = '9999';
+                notification.innerHTML = '<i class="fas fa-check-circle"></i> Les informations ont été appliquées avec succès!';
+                document.body.appendChild(notification);
+                
+                setTimeout(function() {
+                    notification.style.opacity = '0';
+                    notification.style.transition = 'opacity 0.5s ease';
+                    setTimeout(function() {
+                        document.body.removeChild(notification);
+                    }, 500);
+                }, 3000);
+                
+                // Mise à jour de la barre de progression
+                updateProgressBar();
+            });
+            
             // Gestion des étapes du processus
             const addStepBtn = document.querySelector('.add-step-btn');
             const flowContainer = document.querySelector('.flow-container');
@@ -1772,6 +2380,39 @@
                 
                 document.getElementById('progress-fill').style.width = progressPercentage + '%';
                 document.querySelector('.progress-text').textContent = `Progression: ${progressPercentage}%`;
+                
+                // Mettre à jour l'indicateur d'étape
+                updateStepProgress(progressPercentage);
+            }
+            
+            function updateStepProgress(percentage) {
+                const steps = document.querySelectorAll('.form-steps .step');
+                
+                steps.forEach((step, index) => {
+                    step.classList.remove('active', 'completed');
+                });
+                
+                if (percentage < 25) {
+                    steps[0].classList.add('active');
+                } else if (percentage < 50) {
+                    steps[0].classList.add('completed');
+                    steps[1].classList.add('active');
+                } else if (percentage < 75) {
+                    steps[0].classList.add('completed');
+                    steps[1].classList.add('completed');
+                    steps[2].classList.add('active');
+                } else if (percentage < 90) {
+                    steps[0].classList.add('completed');
+                    steps[1].classList.add('completed');
+                    steps[2].classList.add('completed');
+                    steps[3].classList.add('active');
+                } else {
+                    steps[0].classList.add('completed');
+                    steps[1].classList.add('completed');
+                    steps[2].classList.add('completed');
+                    steps[3].classList.add('completed');
+                    steps[4].classList.add('active');
+                }
             }
             
             // Surveiller les changements dans le formulaire
@@ -1820,6 +2461,19 @@
                         behavior: 'smooth'
                     });
                 });
+            }
+            
+            // Fonction utilitaire pour debouncer
+            function debounce(func, delay) {
+                let timeoutId;
+                return function() {
+                    const context = this;
+                    const args = arguments;
+                    clearTimeout(timeoutId);
+                    timeoutId = setTimeout(function() {
+                        func.apply(context, args);
+                    }, delay);
+                };
             }
         });
     </script>
