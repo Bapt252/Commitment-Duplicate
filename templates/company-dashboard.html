@@ -951,6 +951,34 @@
             }
         }
 
+        /* Messagerie buttons */
+        .messagerie-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .messagerie-btn {
+            background-color: var(--white);
+            color: var(--purple);
+            border: 1px solid var(--purple-light);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .messagerie-btn:hover {
+            background-color: var(--purple-glass);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-sm);
+        }
+
         /* Responsive Design */
         @media (max-width: 992px) {
             .profile-header {
@@ -1283,7 +1311,7 @@
                     </div>
                 </div>
                 
-                <!-- 5. Messagerie -->
+                <!-- 5. Messagerie - MODIFIÉ POUR AJOUTER LES LIENS -->
                 <div class="dashboard-card fade-in delay-5">
                     <div class="card-badge">3 non lus</div>
                     <div class="card-content">
@@ -1293,6 +1321,14 @@
                         <div class="card-text">
                             <h3>Messagerie</h3>
                             <p>Communiquez avec les candidats et votre équipe de recrutement de manière centralisée</p>
+                            <div class="messagerie-buttons">
+                                <a href="messagerie-interne.html" class="messagerie-btn">
+                                    <i class="fas fa-users"></i> Messagerie interne
+                                </a>
+                                <a href="messagerie-candidat.html" class="messagerie-btn">
+                                    <i class="fas fa-user-tie"></i> Messagerie candidat
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
