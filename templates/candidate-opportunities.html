@@ -147,6 +147,181 @@
             font-weight: 600;
         }
         
+        /* Améliorations du processus de recrutement */
+        .recruitment-stages {
+            position: relative;
+            margin-bottom: 30px;
+        }
+        
+        .stages-line {
+            position: absolute;
+            top: 15px;
+            left: 30px;
+            right: 30px;
+            height: 2px;
+            background-color: var(--cream-dark);
+            z-index: 1;
+        }
+        
+        .stages-progress {
+            position: absolute;
+            top: 15px;
+            left: 30px;
+            height: 2px;
+            background-color: var(--purple);
+            z-index: 2;
+            transition: width 0.6s ease;
+        }
+        
+        .stages-wrapper {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            z-index: 3;
+        }
+        
+        .stage {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 20%;
+        }
+        
+        .stage-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: var(--white);
+            border: 2px solid var(--cream-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .stage.completed .stage-icon {
+            background-color: var(--purple);
+            border-color: var(--purple);
+            color: var(--white);
+        }
+        
+        .stage.active .stage-icon {
+            background-color: var(--green);
+            border-color: var(--green);
+            color: var(--white);
+            transform: scale(1.2);
+            box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.2);
+        }
+        
+        .interviewer-card {
+            display: none;
+            position: absolute;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--white);
+            border-radius: var(--border-radius-md);
+            padding: 15px;
+            min-width: 200px;
+            box-shadow: var(--shadow-md);
+            z-index: 10;
+        }
+        
+        .stage.active .interviewer-card {
+            display: block;
+        }
+        
+        .interviewer-name {
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 5px;
+        }
+        
+        .interviewer-title {
+            text-align: center;
+            color: var(--gray);
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+        }
+        
+        .interview-date {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--purple);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .interview-date i {
+            margin-right: 5px;
+        }
+        
+        /* Animation hover sur les cartes */
+        .opportunity-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .opportunity-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        }
+        
+        /* Animations interactives */
+        .btn {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+        
+        .btn:hover::after {
+            animation: ripple 0.6s ease-out;
+        }
+        
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(30, 30);
+                opacity: 0;
+            }
+        }
+
+        /* Amélioration des indicateurs d'étape */
+        .match-percentage {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .match-percentage::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 30%;
+            transform: rotate(45deg);
+        }
+        
         [data-tooltip] {
             position: relative;
         }
@@ -287,7 +462,9 @@
                 <div class="opportunity-card fade-in" data-status="in-progress">
                     <div class="opportunity-header">
                         <div class="opportunity-company">
-                            <div class="logo-placeholder"></div>
+                            <div class="logo-placeholder">
+                                <i class="fas fa-building"></i>
+                            </div>
                             <div class="company-details">
                                 <h3 class="company-name">Entreprise Alpha</h3>
                                 <h4 class="job-title">Chef de Projet Digital</h4>
@@ -302,7 +479,7 @@
                     
                     <div class="opportunity-status">
                         <div class="status-info">
-                            <span class="status-label"><i class="fas fa-info-circle"></i> Statut: Entretien présentiel</span>
+                            <span class="status-label"><i class="fas fa-info-circle"></i> Statut: <strong>Entretien présentiel</strong></span>
                             <span class="travel-time"><i class="fas fa-map-marker-alt"></i> Temps de trajet: <a href="#" class="map-link">25 min <span class="text-nowrap">(voir sur Maps)</span></a></span>
                         </div>
                         
@@ -312,30 +489,51 @@
                     </div>
                     
                     <div class="recruitment-stages">
-                        <div class="stage completed">
-                            <div class="stage-icon"><i class="fas fa-check-circle"></i></div>
-                            <div class="stage-label">En cours de validation</div>
-                        </div>
-                        <div class="stage completed">
-                            <div class="stage-icon"><i class="fas fa-check-circle"></i></div>
-                            <div class="stage-label">Call prise de contact</div>
-                        </div>
-                        <div class="stage completed">
-                            <div class="stage-icon"><i class="fas fa-check-circle"></i></div>
-                            <div class="stage-label">Entretien visio</div>
-                        </div>
-                        <div class="stage active">
-                            <div class="stage-icon"><i class="fas fa-circle"></i></div>
-                            <div class="stage-label">Entretien Présentiel</div>
-                            <div class="interviewer">
-                                <p class="interviewer-name">Thomas MARTIN</p>
-                                <p class="interviewer-title">Directeur Administratif et Financier</p>
-                                <p class="interview-date"><i class="fas fa-calendar-alt"></i> 28 Mars, 14h00</p>
+                        <div class="stages-line"></div>
+                        <div class="stages-progress" style="width: 70%;"></div>
+                        
+                        <div class="stages-wrapper">
+                            <div class="stage completed">
+                                <div class="stage-icon">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                                <div class="stage-label">En cours de validation</div>
                             </div>
-                        </div>
-                        <div class="stage">
-                            <div class="stage-icon"><i class="far fa-circle"></i></div>
-                            <div class="stage-label">Acceptation</div>
+                            
+                            <div class="stage completed">
+                                <div class="stage-icon">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                                <div class="stage-label">Call prise de contact</div>
+                            </div>
+                            
+                            <div class="stage completed">
+                                <div class="stage-icon">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                                <div class="stage-label">Entretien visio</div>
+                            </div>
+                            
+                            <div class="stage active">
+                                <div class="stage-icon">
+                                    <i class="fas fa-circle"></i>
+                                </div>
+                                <div class="stage-label">Entretien Présentiel</div>
+                                <div class="interviewer-card">
+                                    <div class="interviewer-name">Thomas MARTIN</div>
+                                    <div class="interviewer-title">Directeur Administratif et Financier</div>
+                                    <div class="interview-date">
+                                        <i class="fas fa-calendar-alt"></i> 28 Mars, 14h00
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="stage">
+                                <div class="stage-icon">
+                                    <i class="far fa-circle"></i>
+                                </div>
+                                <div class="stage-label">Acceptation</div>
+                            </div>
                         </div>
                     </div>
                     
@@ -351,7 +549,7 @@
                                 <span>Note personnelle: </span>
                                 <div class="note-input-container">
                                     <input type="text" class="form-control" placeholder="Ajouter un rappel...">
-                                    <button class="btn-save" aria-label="Sauvegarder la note"><i class="fas fa-save"></i></button>
+                                    <button class="btn-save" aria-label="Sauvegarder la note"><i class="fas fa-bell"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -362,7 +560,9 @@
                 <div class="opportunity-card fade-in" data-status="in-progress">
                     <div class="opportunity-header">
                         <div class="opportunity-company">
-                            <div class="logo-placeholder"></div>
+                            <div class="logo-placeholder">
+                                <i class="fas fa-building"></i>
+                            </div>
                             <div class="company-details">
                                 <h3 class="company-name">Entreprise Beta</h3>
                                 <h4 class="job-title">Business Developer</h4>
@@ -377,7 +577,7 @@
                     
                     <div class="opportunity-status">
                         <div class="status-info">
-                            <span class="status-label"><i class="fas fa-info-circle"></i> Statut: Entretien visio</span>
+                            <span class="status-label"><i class="fas fa-info-circle"></i> Statut: <strong>Entretien visio</strong></span>
                             <span class="travel-time"><i class="fas fa-map-marker-alt"></i> Temps de trajet: <a href="#" class="map-link">35 min <span class="text-nowrap">(voir sur Maps)</span></a></span>
                         </div>
                         
@@ -387,30 +587,51 @@
                     </div>
                     
                     <div class="recruitment-stages">
-                        <div class="stage completed">
-                            <div class="stage-icon"><i class="fas fa-check-circle"></i></div>
-                            <div class="stage-label">En cours de validation</div>
-                        </div>
-                        <div class="stage completed">
-                            <div class="stage-icon"><i class="fas fa-check-circle"></i></div>
-                            <div class="stage-label">Call prise de contact</div>
-                        </div>
-                        <div class="stage active">
-                            <div class="stage-icon"><i class="fas fa-circle"></i></div>
-                            <div class="stage-label">Entretien visio</div>
-                            <div class="interviewer">
-                                <p class="interviewer-name">Sophie DUBOIS</p>
-                                <p class="interviewer-title">Directrice RH</p>
-                                <p class="interview-date"><i class="fas fa-calendar-alt"></i> 25 Mars, 10h30</p>
+                        <div class="stages-line"></div>
+                        <div class="stages-progress" style="width: 50%;"></div>
+                        
+                        <div class="stages-wrapper">
+                            <div class="stage completed">
+                                <div class="stage-icon">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                                <div class="stage-label">En cours de validation</div>
                             </div>
-                        </div>
-                        <div class="stage">
-                            <div class="stage-icon"><i class="far fa-circle"></i></div>
-                            <div class="stage-label">Entretien Présentiel</div>
-                        </div>
-                        <div class="stage">
-                            <div class="stage-icon"><i class="far fa-circle"></i></div>
-                            <div class="stage-label">Acceptation</div>
+                            
+                            <div class="stage completed">
+                                <div class="stage-icon">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                                <div class="stage-label">Call prise de contact</div>
+                            </div>
+                            
+                            <div class="stage active">
+                                <div class="stage-icon">
+                                    <i class="fas fa-circle"></i>
+                                </div>
+                                <div class="stage-label">Entretien visio</div>
+                                <div class="interviewer-card">
+                                    <div class="interviewer-name">Sophie DUBOIS</div>
+                                    <div class="interviewer-title">Directrice RH</div>
+                                    <div class="interview-date">
+                                        <i class="fas fa-calendar-alt"></i> 25 Mars, 10h30
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="stage">
+                                <div class="stage-icon">
+                                    <i class="far fa-circle"></i>
+                                </div>
+                                <div class="stage-label">Entretien Présentiel</div>
+                            </div>
+                            
+                            <div class="stage">
+                                <div class="stage-icon">
+                                    <i class="far fa-circle"></i>
+                                </div>
+                                <div class="stage-label">Acceptation</div>
+                            </div>
                         </div>
                     </div>
                     
@@ -426,7 +647,7 @@
                                 <span>Note personnelle: </span>
                                 <div class="note-input-container">
                                     <input type="text" class="form-control" placeholder="Ajouter un rappel...">
-                                    <button class="btn-save" aria-label="Sauvegarder la note"><i class="fas fa-save"></i></button>
+                                    <button class="btn-save" aria-label="Sauvegarder la note"><i class="fas fa-bell"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -437,7 +658,9 @@
                 <div class="opportunity-card fade-in" data-status="in-progress">
                     <div class="opportunity-header">
                         <div class="opportunity-company">
-                            <div class="logo-placeholder"></div>
+                            <div class="logo-placeholder">
+                                <i class="fas fa-building"></i>
+                            </div>
                             <div class="company-details">
                                 <h3 class="company-name">Entreprise Gamma</h3>
                                 <h4 class="job-title">Product Owner</h4>
@@ -452,7 +675,7 @@
                     
                     <div class="opportunity-status">
                         <div class="status-info">
-                            <span class="status-label"><i class="fas fa-info-circle"></i> Statut: En cours de validation</span>
+                            <span class="status-label"><i class="fas fa-info-circle"></i> Statut: <strong>En cours de validation</strong></span>
                             <span class="travel-time"><i class="fas fa-map-marker-alt"></i> Temps de trajet: <a href="#" class="map-link">20 min <span class="text-nowrap">(voir sur Maps)</span></a></span>
                         </div>
                         
@@ -462,25 +685,44 @@
                     </div>
                     
                     <div class="recruitment-stages">
-                        <div class="stage active">
-                            <div class="stage-icon"><i class="fas fa-circle"></i></div>
-                            <div class="stage-label">En cours de validation</div>
-                        </div>
-                        <div class="stage">
-                            <div class="stage-icon"><i class="far fa-circle"></i></div>
-                            <div class="stage-label">Call prise de contact</div>
-                        </div>
-                        <div class="stage">
-                            <div class="stage-icon"><i class="far fa-circle"></i></div>
-                            <div class="stage-label">Entretien visio</div>
-                        </div>
-                        <div class="stage">
-                            <div class="stage-icon"><i class="far fa-circle"></i></div>
-                            <div class="stage-label">Entretien Présentiel</div>
-                        </div>
-                        <div class="stage">
-                            <div class="stage-icon"><i class="far fa-circle"></i></div>
-                            <div class="stage-label">Acceptation</div>
+                        <div class="stages-line"></div>
+                        <div class="stages-progress" style="width: 20%;"></div>
+                        
+                        <div class="stages-wrapper">
+                            <div class="stage active">
+                                <div class="stage-icon">
+                                    <i class="fas fa-circle"></i>
+                                </div>
+                                <div class="stage-label">En cours de validation</div>
+                            </div>
+                            
+                            <div class="stage">
+                                <div class="stage-icon">
+                                    <i class="far fa-circle"></i>
+                                </div>
+                                <div class="stage-label">Call prise de contact</div>
+                            </div>
+                            
+                            <div class="stage">
+                                <div class="stage-icon">
+                                    <i class="far fa-circle"></i>
+                                </div>
+                                <div class="stage-label">Entretien visio</div>
+                            </div>
+                            
+                            <div class="stage">
+                                <div class="stage-icon">
+                                    <i class="far fa-circle"></i>
+                                </div>
+                                <div class="stage-label">Entretien Présentiel</div>
+                            </div>
+                            
+                            <div class="stage">
+                                <div class="stage-icon">
+                                    <i class="far fa-circle"></i>
+                                </div>
+                                <div class="stage-label">Acceptation</div>
+                            </div>
                         </div>
                     </div>
                     
@@ -495,7 +737,7 @@
                                 <span>Note personnelle: </span>
                                 <div class="note-input-container">
                                     <input type="text" class="form-control" placeholder="Ajouter un rappel...">
-                                    <button class="btn-save" aria-label="Sauvegarder la note"><i class="fas fa-save"></i></button>
+                                    <button class="btn-save" aria-label="Sauvegarder la note"><i class="fas fa-bell"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -680,6 +922,34 @@
                         }, 1500);
                     }
                 });
+            });
+            
+            // Animation des cartes d'opportunité
+            const opportunityCards = document.querySelectorAll('.opportunity-card');
+            opportunityCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px)';
+                    this.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.08)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = 'var(--card-shadow)';
+                });
+            });
+            
+            // Effet de pulsation sur l'étape active
+            const activeStageIcons = document.querySelectorAll('.stage.active .stage-icon');
+            activeStageIcons.forEach(icon => {
+                setInterval(() => {
+                    icon.style.transform = 'scale(1.2)';
+                    icon.style.boxShadow = '0 0 0 4px rgba(76, 175, 80, 0.2)';
+                    
+                    setTimeout(() => {
+                        icon.style.transform = 'scale(1.15)';
+                        icon.style.boxShadow = '0 0 0 3px rgba(76, 175, 80, 0.15)';
+                    }, 1000);
+                }, 2000);
             });
         });
     </script>
