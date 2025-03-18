@@ -1,98 +1,46 @@
-# Commitment - Plateforme de Recrutement
+# Commitment - Solution de Recrutement
 
-Une plateforme moderne de recrutement qui met en relation candidats et recruteurs grâce à l'intelligence artificielle.
+Ce projet présente une interface web pour Nexten, une solution innovante de recrutement basée sur l'IA qui propose 10 correspondances personnalisées pour les candidats et les recruteurs.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+## Nouvelle fonctionnalité : Analyse de fiche de poste
 
-## Structure du Projet
+Une nouvelle fonctionnalité a été ajoutée : l'analyse automatique des fiches de poste. Elle permet aux recruteurs de télécharger ou coller leur fiche de poste pour extraire automatiquement les informations clés qui seront utilisées dans le processus de recrutement.
 
-- `templates/` : Contient les fichiers HTML
-- `static/` : Contient les ressources statiques
-  - `styles/` : Feuilles de style CSS
-  - `services/` : Scripts JavaScript pour la logique métier
-  - `components/` : Scripts JavaScript pour les composants réutilisables
-  - `images/` : Images et ressources graphiques
+### Pour tester cette fonctionnalité :
 
-## Pages Principales
+1. Accédez à la page du questionnaire client : [client-questionnaire.html](https://bapt252.github.io/Commitment-/templates/client-questionnaire.html)
+2. Remplissez les informations de l'entreprise à l'étape 1 et passez à l'étape 2
+3. À la question "Avez-vous un poste sur lequel vous souhaitez recruter ?", sélectionnez "Oui"
+4. Utilisez le bouton "Analyser une fiche de poste" qui apparaît (s'il n'apparaît pas, consultez la note ci-dessous)
+5. Sur la page d'analyse, téléchargez un fichier ou collez du texte, puis cliquez sur "Analyser"
+6. Après l'analyse, cliquez sur "Continuer" pour revenir au questionnaire avec les champs pré-remplis
 
-### Côté Candidat
-- Page d'accueil (`index.html`)
-- Connexion candidat (`candidate-login.html`)
-- Tableau de bord candidat (`candidate-dashboard.html`)
-- Téléchargement CV (`candidate-upload.html`)
-- Questionnaire candidat (`candidate-questionnaire.html`)
-- Sélection d'emploi (`candidate-job-selection.html`)
-- Correspondances candidat (`candidate-matches.html`)
-- Candidatures (`candidate-applications.html`)
+> **Note importante** : Si le bouton "Analyser une fiche de poste" n'apparaît pas après avoir sélectionné "Oui", vous pouvez accéder directement à la page d'analyse via ce lien : [job-description-parser.html](https://bapt252.github.io/Commitment-/templates/job-description-parser.html)
 
-### Côté Recruteur
-- Connexion recruteur (`recruiter-login.html`)
-- Tableau de bord recruteur (`recruiter-dashboard.html`)
-- Publication d'offre (`post-job.html`)
-- Questionnaire recruteur (`recruiter-questionnaire.html`)
-- Matching de questionnaire (`recruiter-questionnaire-matching.html`)
-- Sélection de candidat (`recruiter-candidate-selection.html`)
-- Correspondances recruteur (`recruiter-matches.html`)
+## Problèmes connus
 
-### Fonctionnalités Supplémentaires
-- Planificateur (`scheduler.html`)
-- Nouveau questionnaire candidat (`new-candidate-questionnaire.html`)
+En raison du cache de GitHub Pages, la dernière version du site peut ne pas être immédiatement disponible. Si vous rencontrez des problèmes :
 
-## Comment exécuter
-
-Pour exécuter ce projet localement :
-
-1. Clonez ce dépôt
-2. Ouvrez le fichier `templates/index.html` dans votre navigateur
-
-Pour un environnement de développement complet, vous pourriez utiliser un serveur local comme Live Server dans VS Code.
+1. Essayez d'accéder directement à la version corrigée : [client-questionnaire-fixed.html](https://bapt252.github.io/Commitment-/templates/client-questionnaire-fixed.html)
+2. Ou effectuez un hard refresh de la page (Ctrl+F5 ou Cmd+Shift+R)
 
 ## Technologies utilisées
 
 - HTML5
 - CSS3
 - JavaScript (ES6+)
-- Font Awesome pour les icônes
-- Inter (Google Fonts) pour la typographie
+- LocalStorage et SessionStorage pour la gestion de l'état entre les pages
 
-## Sécurité
+## Fonctionnalités
 
-Ce projet implémente plusieurs mesures de sécurité :
+- Questionnaire client interactif en plusieurs étapes
+- Analyse automatique de fiches de poste
+- Extraction d'informations clés (compétences, expérience, salaire, etc.)
+- Pré-remplissage intelligent des formulaires
 
-- Fichier `.gitignore` pour éviter de publier des données sensibles
-- Politique de sécurité définie dans `SECURITY.md`
-- Licence MIT pour la protection du code
-- Aucune information sensible (identifiants, clés API, etc.) ne doit être stockée dans le code
+## Structure des fichiers
 
-### Bonnes pratiques
-
-- Ne jamais stocker de clés API, secrets ou identifiants dans le code source
-- Utiliser des variables d'environnement pour les configurations sensibles (quand le backend sera implémenté)
-- Mettre en place une validation des entrées côté client et serveur
-- Mettre en œuvre une protection CSRF pour les formulaires
-
-## Contribution
-
-Les contributions sont les bienvenues ! Pour contribuer :
-
-1. Forkez le projet
-2. Créez votre branche de fonctionnalité (`git checkout -b feature/amazing-feature`)
-3. Committez vos changements (`git commit -m 'Ajout d'une fonctionnalité'`)
-4. Poussez vers la branche (`git push origin feature/amazing-feature`)
-5. Ouvrez une Pull Request
-
-Veuillez consulter notre fichier `CONTRIBUTING.md` pour plus de détails sur notre code de conduite et le processus de soumission de pull requests.
-
-## Remarque
-
-Ce projet est actuellement une maquette statique. Pour une application complète, il faudrait implémenter :
-- Un backend (Node.js, Python, etc.)
-- Une base de données (MongoDB, PostgreSQL, etc.)
-- Un système d'authentification
-- API pour la gestion des données
-- Algorithmes d'IA pour le matching
-- Mesures de sécurité supplémentaires pour protéger les données utilisateur
-
-## Licence
-
-Ce projet est sous licence MIT - voir le fichier [LICENSE](LICENSE) pour plus de détails.
+- `/templates/` - Pages HTML du site
+- `/static/styles/` - Feuilles de style CSS
+- `/static/scripts/` - Scripts JavaScript
+- `/assets/` - Images et autres ressources
