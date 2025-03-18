@@ -41,7 +41,11 @@
             --border-radius-xl: 20px;
         }
         
-        /* Flèches de navigation entre les pages */
+        /* Styles modernes et améliorés */
+        body {
+            background-color: #f9f9fb;
+        }
+        
         .contextual-nav {
             margin: 16px 0 32px;
             padding: 15px 0;
@@ -87,192 +91,88 @@
             margin-right: 8px;
         }
         
-        /* Progress Tracker */
-        .progress-tracker-container {
-            background-color: var(--surface);
-            border-radius: var(--border-radius-lg);
-            box-shadow: var(--shadow-md);
-            padding: 20px;
-            margin-bottom: 30px;
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-        
-        .progress-step {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            position: relative;
-            padding: 0 10px;
-            flex: 1;
-            min-width: 120px;
-            max-width: 180px;
-            transition: all var(--transition-normal);
-        }
-        
-        .step-number {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: var(--cream);
-            color: var(--gray);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-            transition: all var(--transition-normal);
-        }
-        
-        .step-label {
-            font-size: 0.9rem;
-            color: var(--gray);
-            font-weight: 500;
-            transition: all var(--transition-normal);
-        }
-        
-        .progress-step.active .step-number {
-            background-color: var(--purple);
-            color: var(--white);
-            box-shadow: 0 0 15px rgba(124, 58, 237, 0.5);
-            transform: scale(1.1);
-        }
-        
-        .progress-step.active .step-label {
-            color: var(--purple);
-            font-weight: 600;
-        }
-        
-        /* Améliorations du processus de recrutement */
-        .recruitment-stages {
-            position: relative;
-            margin-bottom: 30px;
-        }
-        
-        .stages-line {
-            position: absolute;
-            top: 15px;
-            left: 30px;
-            right: 30px;
-            height: 2px;
-            background-color: var(--cream-dark);
-            z-index: 1;
-        }
-        
-        .stages-progress {
-            position: absolute;
-            top: 15px;
-            left: 30px;
-            height: 2px;
-            background-color: var(--purple);
-            z-index: 2;
-            transition: width 0.6s ease;
-        }
-        
-        .stages-wrapper {
-            display: flex;
-            justify-content: space-between;
-            position: relative;
-            z-index: 3;
-        }
-        
-        .stage {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 20%;
-        }
-        
-        .stage-icon {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background-color: var(--white);
-            border: 2px solid var(--cream-dark);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 10px;
-            position: relative;
-            transition: all 0.3s ease;
-        }
-        
-        .stage.completed .stage-icon {
-            background-color: var(--purple);
-            border-color: var(--purple);
-            color: var(--white);
-        }
-        
-        .stage.active .stage-icon {
-            background-color: var(--green);
-            border-color: var(--green);
-            color: var(--white);
-            transform: scale(1.2);
-            box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.2);
-        }
-        
-        .interviewer-card {
-            display: none;
-            position: absolute;
-            top: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: var(--white);
-            border-radius: var(--border-radius-md);
-            padding: 15px;
-            min-width: 200px;
-            box-shadow: var(--shadow-md);
-            z-index: 10;
-        }
-        
-        .stage.active .interviewer-card {
-            display: block;
-        }
-        
-        .interviewer-name {
-            font-weight: 600;
-            text-align: center;
-            margin-bottom: 5px;
-        }
-        
-        .interviewer-title {
-            text-align: center;
-            color: var(--gray);
-            font-size: 0.85rem;
-            margin-bottom: 10px;
-        }
-        
-        .interview-date {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--purple);
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-        
-        .interview-date i {
-            margin-right: 5px;
-        }
-        
-        /* Animation hover sur les cartes */
+        /* Améliorations pour les cartes d'opportunités */
         .opportunity-card {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+            border-left: 5px solid var(--purple);
         }
         
         .opportunity-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
         }
         
-        /* Animations interactives */
+        /* Amélioration des indicateurs d'étape */
+        .match-percentage {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .match-percentage:hover {
+            transform: scale(1.05);
+        }
+        
+        .match-percentage::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 30%;
+            transform: rotate(45deg);
+        }
+        
+        /* Améliorations des tooltips */
+        [data-tooltip] {
+            position: relative;
+        }
+        
+        [data-tooltip]::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%) scale(0.8);
+            padding: 8px 12px;
+            background-color: var(--black);
+            color: white;
+            font-size: 0.8rem;
+            border-radius: 6px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s ease;
+            z-index: 100;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        
+        [data-tooltip]:hover::after {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) scale(1);
+        }
+        
+        /* Animation pour les boutons */
         .btn {
             position: relative;
             overflow: hidden;
+            transform: translateY(0);
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
         }
         
         .btn::after {
@@ -303,50 +203,71 @@
                 opacity: 0;
             }
         }
-
-        /* Amélioration des indicateurs d'étape */
-        .match-percentage {
-            position: relative;
-            overflow: hidden;
-        }
         
-        .match-percentage::before {
-            content: '';
-            position: absolute;
-            top: -15px;
-            left: -15px;
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 30%;
-            transform: rotate(45deg);
-        }
-        
-        [data-tooltip] {
+        /* Amélioration des stages de recrutement */
+        .recruitment-stages {
             position: relative;
         }
         
-        [data-tooltip]::after {
-            content: attr(data-tooltip);
+        .stages-line {
             position: absolute;
-            bottom: -30px;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 5px 10px;
-            background-color: var(--black);
+            top: 15px;
+            left: 30px;
+            right: 30px;
+            height: 3px;
+            background-color: var(--cream-dark);
+            z-index: 1;
+            border-radius: 3px;
+        }
+        
+        .stages-progress {
+            position: absolute;
+            top: 15px;
+            left: 30px;
+            height: 3px;
+            background-color: var(--purple);
+            z-index: 2;
+            transition: width 0.6s ease;
+            border-radius: 3px;
+        }
+        
+        .stage.active .stage-icon {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4);
+            }
+            70% {
+                transform: scale(1.1);
+                box-shadow: 0 0 0 10px rgba(76, 175, 80, 0);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
+            }
+        }
+        
+        /* Amélioration des badges de filtre */
+        .filter-badge {
+            transition: all 0.3s ease;
+            border-radius: 20px;
+            border: none;
+            background-color: #f0f0f0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .filter-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .filter-badge.active {
+            background-color: var(--purple);
             color: white;
-            font-size: 0.8rem;
-            border-radius: 4px;
-            white-space: nowrap;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.2s ease;
-            z-index: 100;
-        }
-        
-        [data-tooltip]:hover::after {
-            opacity: 1;
-            visibility: visible;
+            box-shadow: 0 4px 8px rgba(124,58,237,0.3);
         }
     </style>
 </head>
@@ -394,48 +315,12 @@
             <a href="candidate-dashboard.html?email=demo.utilisateur%40nexten.fr&password=s" class="previous-page" data-tooltip="Retour au tableau de bord">
                 <i class="fas fa-chevron-left"></i> Tableau de bord
             </a>
-            
-            <a href="candidate-dashboard.html?email=demo.utilisateur%40nexten.fr&password=s" class="dashboard-link" data-tooltip="Retour au tableau de bord">
-                <i class="fas fa-th-large"></i> Tableau de bord
-            </a>
-            
-            <a href="candidate-offers.html?email=demo.utilisateur%40nexten.fr&password=s" class="next-page" data-tooltip="Page suivante">
-                Mes offres reçues <i class="fas fa-chevron-right"></i>
-            </a>
-        </div>
-        
-        <!-- Section progress tracker -->
-        <div class="progress-tracker-container fade-in">
-            <div class="progress-step active">
-                <div class="step-number">1</div>
-                <div class="step-label">Mes opportunités</div>
-            </div>
-            <div class="progress-step">
-                <div class="step-number">2</div>
-                <div class="step-label">Mes offres reçues</div>
-            </div>
-            <div class="progress-step">
-                <div class="step-number">3</div>
-                <div class="step-label">Postuler en un clic</div>
-            </div>
-            <div class="progress-step">
-                <div class="step-number">4</div>
-                <div class="step-label">Travailler mon CV</div>
-            </div>
-            <div class="progress-step">
-                <div class="step-number">5</div>
-                <div class="step-label">Centre de ressources</div>
-            </div>
-            <div class="progress-step">
-                <div class="step-number">6</div>
-                <div class="step-label">Messagerie</div>
-            </div>
         </div>
         
         <!-- Section Mes opportunités selectionnées -->
         <div class="candidate-dashboard-section fade-in">
             <div class="section-header">
-                <h2 class="section-heading">Mes opportunités sélectionnées</h2>
+                <h2 class="section-heading">MES OPPORTUNITÉS SÉLECTIONNÉES</h2>
             </div>
             
             <div class="filter-section">
@@ -929,7 +814,7 @@
             opportunityCards.forEach(card => {
                 card.addEventListener('mouseenter', function() {
                     this.style.transform = 'translateY(-5px)';
-                    this.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.08)';
+                    this.style.boxShadow = '0 12px 30px rgba(0, 0, 0, 0.1)';
                 });
                 
                 card.addEventListener('mouseleave', function() {
