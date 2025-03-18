@@ -18,262 +18,344 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     
     <style>
-        /* Styles spécifiques au dashboard entreprise */
+        :root {
+            --purple: #7c3aed;
+            --purple-dark: #5b21b6;
+            --purple-light: #a78bfa;
+            --purple-glass: rgba(124, 58, 237, 0.1);
+            --black: #1f2937;
+            --black-light: #4b5563;
+            --gray: #6b7280;
+            --gray-light: #e5e7eb;
+            --white: #ffffff;
+            --cream: #f9fafb;
+            --cream-dark: #f3f4f6;
+            --green: #10b981;
+            --green-light: rgba(16, 185, 129, 0.1);
+            --red: #f43f5e;
+            --red-light: rgba(244, 63, 94, 0.1);
+            --blue: #3b82f6;
+            --blue-light: rgba(59, 130, 246, 0.1);
+            --yellow: #f59e0b;
+            --yellow-light: rgba(245, 158, 11, 0.1);
+            --border-radius-sm: 8px;
+            --border-radius-md: 12px;
+            --border-radius-lg: 16px;
+            --border-radius-xl: 24px;
+            --spacing-xs: 8px;
+            --spacing-sm: 12px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-xxl: 48px;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.1);
+            --transition-sm: all 0.2s ease;
+            --transition-md: all 0.3s ease;
+            --transition-lg: all 0.5s ease;
+        }
+        
         body {
+            font-family: 'Inter', sans-serif;
             background-color: var(--cream);
+            margin: 0;
+            padding: 0;
+            color: var(--black);
+            line-height: 1.6;
         }
-        
-        #main-content {
-            padding-top: 40px;
-        }
-        
-        .main-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 var(--spacing-md);
-        }
-        
-        /* Amélioration de la navigation */
-        header {
+
+        /* Header & Navigation */
+        .navbar {
+            background-color: var(--white);
+            box-shadow: var(--shadow-sm);
             padding: var(--spacing-sm) 0;
-            background-color: rgba(255, 255, 255, 0.95);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
         }
-        
-        header .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: var(--black);
         }
-        
-        nav ul {
-            gap: var(--spacing-md);
+
+        .navbar-brand span {
+            color: var(--purple);
         }
-        
-        nav a {
-            padding: var(--spacing-xs) var(--spacing-sm);
-            border-radius: 8px;
-            transition: all 0.3s ease;
+
+        .navbar-brand .badge {
+            background-color: var(--purple);
+            color: var(--white);
+            font-size: 0.7rem;
+            padding: 3px 6px;
+            border-radius: 10px;
+            margin-left: 2px;
+            position: relative;
+            top: -8px;
         }
-        
-        nav a:hover, nav a.active {
+
+        .navbar-nav .nav-link {
+            color: var(--black);
+            font-weight: 500;
+            padding: var(--spacing-xs) var(--spacing-md);
+            border-radius: var(--border-radius-sm);
+            transition: var(--transition-md);
+        }
+
+        .navbar-nav .nav-link:hover, 
+        .navbar-nav .nav-link.active {
             background-color: var(--purple-glass);
             color: var(--purple);
         }
-        
-        /* Bannière d'entreprise avec le style moderne */
-        .company-banner {
-            background: linear-gradient(135deg, var(--purple) 0%, var(--purple-dark) 100%);
-            color: var(--white);
-            padding: var(--spacing-lg) 0;
-            margin-top: 60px;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 5px 25px rgba(124, 58, 237, 0.3);
-            border-radius: 0 0 25px 25px;
-        }
-        
-        .company-banner::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 100%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
-            transform: rotate(30deg);
-        }
-        
-        .company-banner::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, var(--purple-light) 0%, transparent 100%);
-            opacity: 0.5;
-        }
-        
-        .company-banner-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 var(--spacing-md);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .company-info {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-md);
-        }
-        
-        .company-logo {
-            width: 80px;
-            height: 80px;
-            border-radius: 16px;
+
+        /* Main Info Card */
+        .info-card {
             background-color: var(--white);
-            padding: 10px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
-            overflow: hidden;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-md);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
             position: relative;
+            overflow: hidden;
         }
-        
-        .company-logo:hover {
-            transform: scale(1.1) rotate(5deg);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
-        }
-        
-        .company-logo::after {
+
+        .info-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
+            width: 6px;
             height: 100%;
-            background: linear-gradient(135deg, transparent, rgba(255,255,255,0.3), transparent);
-            transform: translateX(-100%);
-            transition: transform 0.6s ease;
+            background: linear-gradient(to bottom, var(--purple) 0%, var(--purple-dark) 100%);
         }
-        
-        .company-logo:hover::after {
-            transform: translateX(100%);
+
+        .company-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-md);
+            flex-wrap: wrap;
+            gap: var(--spacing-md);
         }
-        
-        .company-logo img {
-            width: 100%;
-            height: auto;
-            object-fit: contain;
-        }
-        
-        .company-name {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 5px;
-        }
-        
-        .company-category {
-            font-size: 1rem;
-            color: rgba(255, 255, 255, 0.8);
-        }
-        
-        .user-info {
+
+        .company-logo-name {
             display: flex;
             align-items: center;
             gap: var(--spacing-md);
         }
-        
-        .user-details {
-            text-align: right;
-        }
-        
-        .user-fullname {
-            font-size: 1.2rem;
-            font-weight: 500;
-            margin-bottom: 5px;
-        }
-        
-        .user-position {
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.8);
-        }
-        
-        .user-avatar {
-            width: 60px;
-            height: 60px;
-            background-color: rgba(255, 255, 255, 0.15);
-            border-radius: 50%;
+
+        .company-logo {
+            width: 80px;
+            height: 80px;
+            border-radius: var(--border-radius-md);
+            background-color: var(--white);
+            padding: 10px;
+            box-shadow: var(--shadow-md);
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: var(--transition-md);
+            overflow: hidden;
+        }
+
+        .company-logo:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .company-name-details h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: var(--black);
+        }
+
+        .company-category {
+            color: var(--gray);
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+
+        .company-location {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--black-light);
+            font-size: 0.9rem;
+        }
+
+        .company-location i {
+            color: var(--purple);
+        }
+
+        .recruiter-info {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            padding: var(--spacing-md);
+            background-color: var(--cream);
+            border-radius: var(--border-radius-md);
+            transition: var(--transition-md);
+        }
+
+        .recruiter-info:hover {
+            background-color: var(--purple-glass);
+            transform: translateY(-5px);
+        }
+
+        .recruiter-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--purple-glass);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--purple);
             font-weight: 700;
             font-size: 1.2rem;
-            color: var(--white);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
+            border: 2px solid var(--purple-light);
         }
-        
-        .user-avatar:hover {
-            transform: scale(1.1) rotate(10deg);
-            background-color: rgba(255, 255, 255, 0.25);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
-        }
-        
-        /* Section d'accueil */
-        .greeting {
-            margin-bottom: var(--spacing-xl);
-        }
-        
-        .greeting h2 {
-            font-size: 2.2rem;
+
+        .recruiter-details h3 {
+            font-size: 1.1rem;
             font-weight: 600;
-            margin-bottom: var(--spacing-xs);
+            margin-bottom: 4px;
+        }
+
+        .recruiter-details p {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+
+        .recruitment-status {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-md);
+        }
+
+        .status-card {
+            flex: 1;
+            min-width: 200px;
+            padding: var(--spacing-md);
+            background-color: var(--cream);
+            border-radius: var(--border-radius-md);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            transition: var(--transition-md);
+        }
+
+        .status-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .status-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: var(--border-radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .status-card:nth-child(1) .status-icon {
+            background-color: var(--purple-glass);
+            color: var(--purple);
+        }
+
+        .status-card:nth-child(2) .status-icon {
+            background-color: var(--green-light);
+            color: var(--green);
+        }
+
+        .status-card:nth-child(3) .status-icon {
+            background-color: var(--blue-light);
+            color: var(--blue);
+        }
+
+        .status-info h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--gray);
+        }
+
+        .status-info p {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0;
             background: linear-gradient(90deg, var(--black) 0%, var(--purple) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            text-fill-color: transparent;
-            display: inline-block;
         }
-        
-        .greeting h2::after {
-            display: none;
+
+        /* Statistics Overview */
+        .stats-heading {
+            margin-bottom: var(--spacing-md);
         }
-        
-        .greeting p {
-            font-size: 1.1rem;
+
+        .stats-heading h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--black);
+            margin-bottom: 8px;
+        }
+
+        .stats-heading p {
             color: var(--gray);
+            font-size: 1rem;
+            margin-bottom: 0;
         }
-        
-        /* Statistiques améliorées */
+
         .stats-overview {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: var(--spacing-md);
             margin-bottom: var(--spacing-xl);
         }
-        
+
         .stat-card {
             background-color: var(--white);
-            border-radius: 16px;
+            border-radius: var(--border-radius-lg);
             padding: var(--spacing-lg);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition-lg);
             position: relative;
             overflow: hidden;
-            border-left: 4px solid transparent;
+            border-top: 4px solid transparent;
         }
-        
+
         .stat-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
-            width: 4px;
-            height: 100%;
-            background: linear-gradient(to bottom, var(--purple) 0%, var(--purple-dark) 100%);
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, var(--purple) 0%, var(--purple-light) 100%);
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: var(--transition-md);
         }
-        
+
         .stat-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow-lg);
         }
-        
+
         .stat-card:hover::before {
             opacity: 1;
         }
-        
+
         .stat-card h3 {
             font-size: 0.9rem;
             font-weight: 600;
@@ -282,7 +364,7 @@
             color: var(--gray);
             margin-bottom: var(--spacing-sm);
         }
-        
+
         .stat-value {
             font-size: 2.5rem;
             font-weight: 700;
@@ -290,194 +372,42 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            text-fill-color: transparent;
             margin-bottom: var(--spacing-xs);
-            transition: all 0.3s ease;
+            transition: var(--transition-md);
         }
-        
+
         .stat-card:hover .stat-value {
             transform: scale(1.1);
         }
-        
+
         .stat-description {
             font-size: 0.9rem;
             color: var(--gray);
         }
-        
-        /* Statistiques de l'entreprise */
-        .company-stats-section {
-            background-color: var(--white);
-            border-radius: 20px;
-            padding: var(--spacing-xl);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            margin-bottom: var(--spacing-xl);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .company-stats-section::before {
-            content: '';
-            position: absolute;
-            right: -10%;
-            bottom: -10%;
-            width: 500px;
-            height: 500px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, rgba(124, 58, 237, 0.05) 0%, rgba(91, 33, 182, 0.02) 100%);
-            z-index: 1;
-        }
-        
-        .company-stat-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: var(--spacing-md);
-            margin-bottom: var(--spacing-md);
-            position: relative;
-            z-index: 2;
-        }
-        
-        .company-stat-card {
-            background-color: var(--cream);
-            border-radius: 16px;
-            padding: var(--spacing-md);
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-md);
-            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
-            overflow: hidden;
-            position: relative;
-        }
-        
-        .company-stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--purple) 0%, var(--purple-light) 100%);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.5s ease;
-        }
-        
-        .company-stat-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
-            background-color: var(--primary-light);
-        }
-        
-        .company-stat-card:hover::before {
-            transform: scaleX(1);
-        }
-        
-        .stat-icon {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--white) 0%, var(--cream-dark) 100%);
-            border-radius: 16px;
-            font-size: 1.5rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
-        }
-        
-        .company-stat-card:hover .stat-icon {
-            transform: scale(1.1) rotate(10deg);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-        }
-        
-        .stat-info {
-            flex: 1;
-        }
-        
-        .stat-info h4 {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--gray);
-            margin-bottom: 5px;
-        }
-        
-        .stat-info p {
-            font-size: 1.8rem;
-            font-weight: 700;
-            background: linear-gradient(90deg, var(--black) 0%, var(--purple) 70%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-fill-color: transparent;
-            transition: all 0.3s ease;
-            margin-bottom: 0;
-        }
-        
-        .company-stat-card:hover .stat-info p {
-            transform: scale(1.05);
-        }
-        
-        .edit-profile-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: transparent;
-            color: var(--purple);
-            border: 2px solid var(--purple);
-            font-weight: 500;
-            padding: var(--spacing-sm) var(--spacing-lg);
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            position: relative;
-            overflow: hidden;
-            z-index: 2;
-        }
-        
-        .edit-profile-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 0%;
-            height: 100%;
-            background: linear-gradient(135deg, var(--purple) 0%, var(--purple-dark) 100%);
-            transition: width 0.3s ease;
-            z-index: -1;
-        }
-        
-        .edit-profile-btn:hover {
-            color: var(--white);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(124, 58, 237, 0.2);
-        }
-        
-        .edit-profile-btn:hover::before {
-            width: 100%;
-        }
-        
-        /* Menu du dashboard - amélioration de l'espacement et des interactions */
+
+        /* Dashboard Menu */
         .dashboard-menu {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: var(--spacing-lg);
             margin-bottom: var(--spacing-xl);
         }
-        
+
         .menu-item {
             background-color: var(--white);
-            border-radius: 20px;
+            border-radius: var(--border-radius-lg);
             padding: var(--spacing-xl) var(--spacing-lg);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            box-shadow: var(--shadow-sm);
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
-            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: var(--transition-lg);
             cursor: pointer;
             position: relative;
             overflow: hidden;
         }
-        
+
         .menu-item::before {
             content: '';
             position: absolute;
@@ -488,49 +418,49 @@
             background: linear-gradient(135deg, var(--purple) 0%, var(--purple-dark) 100%);
             z-index: 0;
             opacity: 0;
-            transition: opacity 0.4s ease;
+            transition: var(--transition-md);
         }
-        
+
         .menu-item:hover {
             transform: translateY(-15px);
-            box-shadow: 0 20px 40px rgba(124, 58, 237, 0.15);
+            box-shadow: var(--shadow-lg);
         }
-        
+
         .menu-item:hover::before {
             opacity: 1;
         }
-        
+
         .menu-icon {
-            background-color: var(--primary-light);
-            border-radius: 20px;
+            background-color: var(--purple-glass);
+            border-radius: var(--border-radius-lg);
             width: 80px;
             height: 80px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: var(--spacing-md);
-            transition: all 0.3s ease;
+            transition: var(--transition-md);
             position: relative;
             z-index: 1;
-            box-shadow: 0 5px 15px rgba(124, 58, 237, 0.1);
+            box-shadow: var(--shadow-sm);
         }
-        
+
         .menu-item:hover .menu-icon {
             background-color: rgba(255, 255, 255, 0.2);
             transform: scale(1.1) rotate(5deg);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            box-shadow: var(--shadow-md);
         }
-        
+
         .menu-icon i {
             font-size: 2rem;
             color: var(--purple);
-            transition: all 0.3s ease;
+            transition: var(--transition-md);
         }
-        
+
         .menu-item:hover .menu-icon i {
             color: var(--white);
         }
-        
+
         .menu-item h3 {
             font-size: 1.3rem;
             font-weight: 600;
@@ -538,23 +468,23 @@
             color: var(--black);
             position: relative;
             z-index: 1;
-            transition: all 0.3s ease;
+            transition: var(--transition-md);
         }
-        
+
         .menu-item p {
             color: var(--gray);
             font-size: 0.95rem;
             line-height: 1.6;
             position: relative;
             z-index: 1;
-            transition: all 0.3s ease;
+            transition: var(--transition-md);
         }
-        
+
         .menu-item:hover h3,
         .menu-item:hover p {
             color: var(--white);
         }
-        
+
         .notification-badge {
             position: absolute;
             top: var(--spacing-md);
@@ -567,85 +497,221 @@
             font-weight: 600;
             opacity: 0;
             transform: scale(0.8);
-            transition: all 0.3s ease;
+            transition: var(--transition-md);
             z-index: 2;
             box-shadow: 0 5px 15px rgba(124, 58, 237, 0.2);
         }
-        
+
         .menu-item:hover .notification-badge {
             opacity: 1;
             transform: scale(1.1);
         }
-        
-        /* Bouton de déconnexion */
-        .logout-btn {
+
+        /* Quick Actions */
+        .quick-actions {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-xl);
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 10px;
             background-color: var(--white);
             border: none;
-            color: #f44336;
             padding: var(--spacing-sm) var(--spacing-lg);
-            border-radius: 12px;
+            border-radius: var(--border-radius-md);
             font-weight: 500;
             cursor: pointer;
-            margin: var(--spacing-xl) auto;
-            width: fit-content;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            position: relative;
-            overflow: hidden;
+            transition: var(--transition-md);
+            box-shadow: var(--shadow-sm);
         }
-        
-        .logout-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 0%;
-            height: 100%;
-            background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
-            transition: width 0.3s ease;
-            z-index: 0;
-        }
-        
-        .logout-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(244, 67, 54, 0.2);
-        }
-        
-        .logout-btn:hover::before {
-            width: 100%;
-        }
-        
-        .logout-btn i {
-            position: relative;
-            z-index: 1;
-            transition: all 0.3s ease;
-        }
-        
-        .logout-btn span {
-            position: relative;
-            z-index: 1;
-            transition: all 0.3s ease;
-        }
-        
-        .logout-btn:hover i,
-        .logout-btn:hover span {
+
+        .action-btn.primary {
+            background-color: var(--purple);
             color: var(--white);
         }
 
-        /* Ajout de notification bar amélioré */
-        .notification-bar {
-            padding: var(--spacing-xs) 0;
-            background: linear-gradient(90deg, var(--black) 0%, var(--black-light) 100%);
-            font-size: 0.9rem;
-            font-weight: 400;
+        .action-btn.primary:hover {
+            background-color: var(--purple-dark);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
         }
 
-        .notification-bar i {
-            margin-right: 10px;
+        .action-btn.secondary {
+            background-color: var(--white);
+            color: var(--purple);
+            border: 1px solid var(--purple);
+        }
+
+        .action-btn.secondary:hover {
+            background-color: var(--purple-glass);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .action-btn.danger {
+            color: var(--red);
+        }
+
+        .action-btn.danger:hover {
+            background-color: var(--red-light);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--black);
+            color: var(--white);
+            padding: var(--spacing-xl) 0;
+            margin-top: var(--spacing-xxl);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .footer-heading {
+            color: var(--white);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .footer-description {
+            color: var(--gray-light);
+            font-size: 0.9rem;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+
+        .footer-social a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            border-radius: 50%;
+            transition: var(--transition-md);
+        }
+
+        .footer-social a:hover {
+            background-color: var(--purple);
+            transform: translateY(-5px);
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .footer-links a {
+            color: var(--gray-light);
+            text-decoration: none;
+            transition: var(--transition-sm);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-links a:hover {
+            color: var(--purple-light);
+            transform: translateX(5px);
+        }
+
+        .footer-contact p {
+            color: var(--gray-light);
+            margin-bottom: var(--spacing-sm);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-contact i {
+            color: var(--purple);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: var(--spacing-lg);
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--gray-light);
+        }
+
+        .footer-bottom a {
+            color: var(--purple-light);
+            text-decoration: none;
+            transition: var(--transition-sm);
+        }
+
+        .footer-bottom a:hover {
+            color: var(--white);
+        }
+
+        /* Scroll to top button */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--purple);
+            color: var(--white);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(80px);
+            transition: var(--transition-md);
+            box-shadow: var(--shadow-md);
+            z-index: 999;
+        }
+
+        .scroll-to-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scroll-to-top:hover {
+            background-color: var(--purple-dark);
+            transform: translateY(-5px) scale(1.1);
+        }
+
+        /* Alert bar */
+        .alert-bar {
+            background-color: var(--purple-glass);
+            color: var(--purple);
+            padding: var(--spacing-sm);
+            border-radius: var(--border-radius-md);
+            margin-bottom: var(--spacing-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            font-weight: 500;
+        }
+
+        .alert-bar i {
             animation: pulse 2s infinite;
         }
 
@@ -654,30 +720,49 @@
             50% { transform: scale(1.2); }
             100% { transform: scale(1); }
         }
-        
+
+        /* Main content container */
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 100px var(--spacing-lg) var(--spacing-lg);
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+        .delay-4 { transition-delay: 0.4s; }
+        .delay-5 { transition-delay: 0.5s; }
+        .delay-6 { transition-delay: 0.6s; }
+
         /* Responsive design */
-        @media (max-width: 1200px) {
-            .dashboard-menu {
-                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            }
-        }
-        
         @media (max-width: 992px) {
-            .company-banner-content {
+            .company-header {
                 flex-direction: column;
-                gap: var(--spacing-lg);
+                align-items: flex-start;
             }
             
-            .user-info {
+            .recruiter-info {
                 width: 100%;
-                justify-content: flex-start;
             }
-            
-            .user-details {
-                text-align: left;
+
+            .main-container {
+                padding-top: 80px;
             }
         }
-        
+
         @media (max-width: 768px) {
             .stats-overview {
                 grid-template-columns: 1fr;
@@ -686,131 +771,144 @@
             .dashboard-menu {
                 grid-template-columns: 1fr;
             }
-            
-            .greeting h2 {
-                font-size: 1.8rem;
-            }
 
-            .company-banner {
-                margin-top: 50px;
-            }
-        }
-        
-        @media (max-width: 576px) {
-            .company-info {
+            .recruitment-status {
                 flex-direction: column;
-                align-items: flex-start;
-            }
-            
-            .company-stats-section {
-                padding: var(--spacing-lg);
-            }
-            
-            .user-info {
-                flex-direction: column-reverse;
-                align-items: flex-start;
             }
 
-            .company-stat-cards {
-                grid-template-columns: 1fr;
+            .status-card {
+                width: 100%;
             }
         }
-        
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        @keyframes slideUp {
-            from { 
-                opacity: 0;
-                transform: translateY(30px);
+
+        @media (max-width: 576px) {
+            .company-logo-name {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                width: 100%;
             }
-            to { 
-                opacity: 1;
-                transform: translateY(0);
+
+            .company-name-details {
+                text-align: center;
+            }
+
+            .recruiter-info {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .quick-actions {
+                flex-direction: column;
+            }
+
+            .action-btn {
+                width: 100%;
+                justify-content: center;
             }
         }
-        
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease-out;
-        }
-        
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .delay-1 { transition-delay: 0.1s; }
-        .delay-2 { transition-delay: 0.2s; }
-        .delay-3 { transition-delay: 0.3s; }
-        .delay-4 { transition-delay: 0.4s; }
-        .delay-5 { transition-delay: 0.5s; }
-        .delay-6 { transition-delay: 0.6s; }
     </style>
 </head>
 <body>
-    <!-- Notification bar -->
-    <div class="notification-bar">
-        <i class="fas fa-bell"></i> Vous avez 5 nouveaux candidats correspondant à vos offres et 2 entretiens programmés aujourd'hui
-    </div>
-
-    <!-- Lien d'accessibilité pour sauter au contenu principal -->
-    <a href="#main-content" class="skip-to-content">Aller au contenu principal</a>
-
-    <header>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
         <div class="container">
-            <div class="logo">
-                nex<span>ten</span><div class="logo-badge">10</div>
-            </div>
+            <a class="navbar-brand" href="index.html">
+                nex<span>ten</span><sup class="badge">10</sup>
+            </a>
             
-            <button class="menu-toggle" aria-label="Menu principal">
-                <i class="fas fa-bars"></i>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
             </button>
             
-            <nav>
-                <ul>
-                    <li><a href="index.html">Accueil</a></li>
-                    <li><a href="company-dashboard.html" class="active">Espace entreprise</a></li>
-                    <li><a href="#contact">Contact</a></li>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="company-dashboard.html">Espace entreprise</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
                 </ul>
-            </nav>
-        </div>
-    </header>
-    
-    <div class="company-banner">
-        <div class="company-banner-content">
-            <div class="company-info">
-                <div class="company-logo">
-                    <img src="https://via.placeholder.com/90x90?text=Logo" alt="Logo InnovTech">
-                </div>
-                <div>
-                    <h2 class="company-name">InnovTech</h2>
-                    <p class="company-category">Technologie & Innovation</p>
-                </div>
-            </div>
-            <div class="user-info">
-                <div class="user-details">
-                    <h3 class="user-fullname">Thomas Martin</h3>
-                    <p class="user-position">Directeur des Ressources Humaines</p>
-                </div>
-                <div class="user-avatar">
-                    <span>TM</span>
-                </div>
             </div>
         </div>
-    </div>
+    </nav>
     
     <main class="main-container" id="main-content">
-        <section class="greeting fade-in">
+        <!-- Alerte avec nouvelles candidatures -->
+        <div class="alert-bar fade-in visible">
+            <i class="fas fa-bell"></i>
+            <span>Vous avez 5 nouvelles candidatures correspondant à vos offres et 2 entretiens programmés aujourd'hui</span>
+        </div>
+        
+        <!-- Carte d'information principale -->
+        <section class="info-card fade-in visible">
+            <div class="company-header">
+                <div class="company-logo-name">
+                    <div class="company-logo">
+                        <img src="https://via.placeholder.com/90x90?text=IT" alt="Logo InnovTech">
+                    </div>
+                    <div class="company-name-details">
+                        <h1>InnovTech</h1>
+                        <p class="company-category">Technologie & Innovation</p>
+                        <p class="company-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>123 Avenue de l'Innovation, 75001 Paris</span>
+                        </p>
+                    </div>
+                </div>
+                <div class="recruiter-info">
+                    <div class="recruiter-avatar">
+                        <span>TM</span>
+                    </div>
+                    <div class="recruiter-details">
+                        <h3>Thomas Martin</h3>
+                        <p>Directeur des Ressources Humaines</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="recruitment-status">
+                <div class="status-card">
+                    <div class="status-icon">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <div class="status-info">
+                        <h4>Postes ouverts</h4>
+                        <p>3</p>
+                    </div>
+                </div>
+                <div class="status-card">
+                    <div class="status-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="status-info">
+                        <h4>Recrutements en cours</h4>
+                        <p>2</p>
+                    </div>
+                </div>
+                <div class="status-card">
+                    <div class="status-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="status-info">
+                        <h4>Recrutements finalisés</h4>
+                        <p>14</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Statistiques générales -->
+        <section class="stats-heading fade-in delay-1">
             <h2>Tableau de bord 📊</h2>
             <p>Voici le récapitulatif de vos activités de recrutement</p>
         </section>
         
-        <section class="stats-overview fade-in delay-1">
+        <section class="stats-overview fade-in delay-2">
             <div class="stat-card">
                 <h3>Vues de vos offres</h3>
                 <div class="stat-value">2,459</div>
@@ -833,51 +931,27 @@
             </div>
         </section>
         
-        <section class="company-stats-section fade-in delay-2">
-            <div class="company-stat-cards">
-                <div class="company-stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-clipboard-list"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h4>Postes ouverts</h4>
-                        <p>3</p>
-                    </div>
-                </div>
-                <div class="company-stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h4>Recrutements en cours</h4>
-                        <p>2</p>
-                    </div>
-                </div>
-                <div class="company-stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h4>Taux de complétion</h4>
-                        <p>68%</p>
-                    </div>
-                </div>
-                <div class="company-stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h4>Recrutements finalisés</h4>
-                        <p>14</p>
-                    </div>
-                </div>
-            </div>
-            <button class="edit-profile-btn">
+        <!-- Accès rapides -->
+        <section class="quick-actions fade-in delay-3">
+            <button class="action-btn primary">
+                <i class="fas fa-plus"></i>
+                <span>Créer un poste</span>
+            </button>
+            <button class="action-btn secondary">
                 <i class="fas fa-pen"></i>
                 <span>Éditer le profil</span>
             </button>
+            <button class="action-btn secondary">
+                <i class="fas fa-chart-bar"></i>
+                <span>Rapports détaillés</span>
+            </button>
+            <button class="action-btn danger">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Déconnexion</span>
+            </button>
         </section>
         
+        <!-- Menu principal dashboard -->
         <section class="dashboard-menu">
             <!-- 1. Créer un poste -->
             <div class="menu-item fade-in delay-1" onclick="window.location.href='post-job.html'">
@@ -927,16 +1001,6 @@
                 </div>
                 <h3>Messagerie</h3>
                 <p>Communiquez avec les candidats et votre équipe de recrutement de manière centralisée</p>
-                
-                <!-- Sous-menu de messagerie -->
-                <div class="messagerie-submenu mt-3" style="z-index: 2; position: relative;">
-                    <a href="messagerie-candidat.html" class="btn btn-sm btn-outline-light mb-2 w-100">
-                        <i class="fas fa-user-graduate me-2"></i> Avec candidats
-                    </a>
-                    <a href="messagerie-interne.html" class="btn btn-sm btn-outline-light w-100">
-                        <i class="fas fa-building me-2"></i> En interne
-                    </a>
-                </div>
             </div>
             
             <!-- 6. Organisation -->
@@ -948,11 +1012,6 @@
                 <p>Gérez la structure de votre entreprise, les permissions et les workflows de recrutement</p>
             </div>
         </section>
-        
-        <button class="logout-btn">
-            <i class="fas fa-sign-out-alt"></i>
-            <span>Déconnexion</span>
-        </button>
     </main>
     
     <footer id="contact">
@@ -989,7 +1048,7 @@
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2025 Nexten - Tous droits réservés | <a href="#">Politique de confidentialité</a> | <a href="#">Conditions d'utilisation</a></p>
+                <p>© 2025 Nexten - Tous droits réservés | <a href="#">Politique de confidentialité</a> | <a href="#">Conditions d'utilisation</a></p>
             </div>
         </div>
     </footer>
@@ -1005,17 +1064,6 @@
     <!-- Scripts personnalisés -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Menu mobile toggle
-            const menuToggle = document.querySelector('.menu-toggle');
-            const nav = document.querySelector('nav');
-            
-            if (menuToggle && nav) {
-                menuToggle.addEventListener('click', function() {
-                    nav.classList.toggle('active');
-                    this.classList.toggle('active');
-                });
-            }
-            
             // Animation au défilement
             const animatedElements = document.querySelectorAll('.fade-in');
             
@@ -1041,15 +1089,22 @@
             // Vérifier lors du défilement
             window.addEventListener('scroll', checkIfInView);
             
-            // Header change on scroll
-            const header = document.querySelector('header');
+            // Bouton de retour en haut
+            const scrollToTopButton = document.getElementById('scroll-to-top');
             
             window.addEventListener('scroll', function() {
-                if (window.scrollY > 10) {
-                    header.classList.add('scrolled');
+                if (window.scrollY > 300) {
+                    scrollToTopButton.classList.add('visible');
                 } else {
-                    header.classList.remove('scrolled');
+                    scrollToTopButton.classList.remove('visible');
                 }
+            });
+            
+            scrollToTopButton.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
             });
             
             // Animation des cartes de statistiques
@@ -1066,53 +1121,19 @@
             // Animation au survol des badges de notification
             const menuItems = document.querySelectorAll('.menu-item');
             menuItems.forEach(item => {
-                item.addEventListener('mouseover', function() {
-                    const badge = this.querySelector('.notification-badge');
-                    if (badge) {
+                const badge = item.querySelector('.notification-badge');
+                if (badge) {
+                    item.addEventListener('mouseover', function() {
                         badge.style.opacity = '1';
                         badge.style.transform = 'scale(1.1)';
-                    }
-                });
-                
-                item.addEventListener('mouseleave', function() {
-                    const badge = this.querySelector('.notification-badge');
-                    if (badge) {
+                    });
+                    
+                    item.addEventListener('mouseleave', function() {
                         badge.style.opacity = '';
                         badge.style.transform = '';
-                    }
-                });
-            });
-            
-            // Gestion du sous-menu messagerie
-            const messagerieItem = document.querySelector('.menu-item:nth-child(5)');
-            if (messagerieItem) {
-                messagerieItem.addEventListener('click', function(e) {
-                    // Si on clique sur un lien du sous-menu, ne pas exécuter l'action du parent
-                    if (e.target.tagName === 'A' || e.target.closest('a')) {
-                        e.stopPropagation();
-                    }
-                });
-            }
-            
-            // Bouton de retour en haut
-            const scrollToTopButton = document.getElementById('scroll-to-top');
-            
-            if (scrollToTopButton) {
-                window.addEventListener('scroll', function() {
-                    if (window.scrollY > 500) {
-                        scrollToTopButton.classList.add('visible');
-                    } else {
-                        scrollToTopButton.classList.remove('visible');
-                    }
-                });
-                
-                scrollToTopButton.addEventListener('click', function() {
-                    window.scrollTo({
-                        top: 0,
-                        behavior: 'smooth'
                     });
-                });
-            }
+                }
+            });
         });
     </script>
 </body>
