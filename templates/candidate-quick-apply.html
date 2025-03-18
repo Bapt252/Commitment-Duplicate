@@ -22,194 +22,146 @@
         /* Style spécifique à cette page */
         :root {
             --transition-speed: 0.3s;
+            --border-radius: 12px;
+            --card-shadow: 0 8px 20px rgba(0,0,0,0.05);
         }
         
         body {
-            background-color: var(--cream);
+            background-color: #f5f5f7;
         }
         
         .main-container {
-            padding-top: 100px;
+            padding-top: 80px;
         }
         
-        .breadcrumb {
-            background-color: transparent;
-            padding: 15px 0;
-            font-size: 0.95rem;
-            margin-bottom: 30px;
-            display: flex;
-            align-items: center;
-            box-shadow: none;
-        }
-        
-        .quick-apply-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-        
-        .section-heading-container {
-            position: relative;
+        /* Header amélioré */
+        header {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            border-bottom: none;
+            background-color: rgba(255, 255, 255, 0.85);
         }
         
         .section-heading {
-            font-size: 1.8rem;
-            font-weight: 500;
+            font-size: 2rem;
+            font-weight: 600;
             margin-bottom: 8px;
-            padding-bottom: 0;
-            border: none !important;
+            color: var(--black);
         }
         
         .section-description {
             font-size: 1.1rem;
             color: var(--gray);
             max-width: 800px;
-            margin-bottom: 25px;
+            margin-bottom: 2rem;
+            line-height: 1.6;
         }
         
         .section-indicator {
-            height: 4px;
-            width: 60px;
-            background-color: var(--purple);
+            height: 5px;
+            width: 70px;
+            background: linear-gradient(90deg, var(--purple) 0%, var(--purple-light) 100%);
             margin-bottom: 20px;
+            border-radius: 10px;
         }
         
+        /* Style du filtre amélioré */
         .filter-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
             background-color: var(--white);
-            padding: 20px;
-            border-radius: 10px;
+            padding: 1.25rem;
+            border-radius: var(--border-radius);
             margin-bottom: 30px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        }
-        
-        .filter-group {
-            display: flex;
-            gap: 10px;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
         }
         
         .filter-badge {
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 10px 16px;
+            padding: 12px 18px;
             border-radius: 30px;
-            font-size: 0.9rem;
-            font-weight: 400;
-            transition: all var(--transition-speed) ease;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
             cursor: pointer;
-            background-color: var(--cream);
-        }
-        
-        .filter-badge i {
-            font-size: 0.9rem;
+            background-color: #f5f5f7;
         }
         
         .filter-badge.active {
             background-color: var(--purple);
             color: var(--white);
-            font-weight: 500;
+            box-shadow: 0 5px 15px rgba(124, 58, 237, 0.2);
         }
         
         .filter-badge:hover:not(.active) {
-            background-color: var(--cream-dark);
-            transform: translateY(-2px);
-        }
-        
-        .sort-dropdown {
-            position: relative;
+            background-color: #eaeaef;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
         
         .sort-select {
             appearance: none;
-            padding: 10px 40px 10px 16px;
+            padding: 12px 40px 12px 18px;
             border-radius: 30px;
-            border: 1px solid var(--cream-dark);
+            border: 1px solid #eaeaef;
             background-color: var(--white);
             font-family: 'Inter', sans-serif;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+            font-weight: 500;
             cursor: pointer;
-            transition: all var(--transition-speed) ease;
-            width: 150px;
+            transition: all 0.3s ease;
+            width: 180px;
         }
         
-        .sort-select:hover {
-            border-color: var(--purple-light);
-        }
-        
-        .sort-select:focus {
-            outline: none;
-            border-color: var(--purple);
-            box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.1);
-        }
-        
-        .sort-dropdown::after {
-            content: '\f107';
-            font-family: 'Font Awesome 5 Free';
-            font-weight: 900;
-            position: absolute;
-            right: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            pointer-events: none;
-            color: var(--gray);
-        }
-        
+        /* Cartes d'opportunités améliorées */
         .quick-apply-opportunities {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 1.5rem;
             margin-bottom: 40px;
         }
         
         .quick-apply-card {
             background-color: var(--white);
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            transition: all var(--transition-speed) ease;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--card-shadow);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
             position: relative;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            border-top: 4px solid transparent;
+            border: none;
         }
         
         .quick-apply-card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-10px);
             box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-            border-top-color: var(--purple);
         }
         
-        .quick-apply-card:after {
+        .quick-apply-card::before {
             content: '';
             position: absolute;
-            bottom: 0;
+            top: 0;
             left: 0;
             width: 100%;
             height: 5px;
             background: linear-gradient(90deg, var(--purple) 0%, var(--purple-light) 100%);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.5s ease;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
         
-        .quick-apply-card:hover:after {
-            transform: scaleX(1);
-        }
-        
-        .job-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 15px;
+        .quick-apply-card:hover::before {
+            opacity: 1;
         }
         
         .job-title {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             font-weight: 600;
             margin: 0;
             color: var(--black);
@@ -220,27 +172,34 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 50px;
-            height: 50px;
-            background-color: var(--purple);
+            width: 54px;
+            height: 54px;
+            background: linear-gradient(135deg, var(--purple) 0%, var(--purple-dark) 100%);
             color: var(--white);
             border-radius: 50%;
             font-weight: 600;
             font-size: 1.1rem;
-            box-shadow: 0 4px 10px rgba(124, 58, 237, 0.3);
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .quick-apply-card:hover .job-match {
+            transform: scale(1.05);
+            box-shadow: 0 6px 18px rgba(124, 58, 237, 0.4);
         }
         
         .job-description {
-            font-size: 0.95rem;
+            font-size: 1rem;
             color: var(--gray);
-            margin-bottom: 20px;
-            line-height: 1.5;
+            margin-bottom: 1.25rem;
+            line-height: 1.6;
         }
         
         .color-link {
             color: var(--purple);
             font-weight: 500;
-            transition: all var(--transition-speed) ease;
+            transition: all 0.3s ease;
+            text-decoration: none;
         }
         
         .color-link:hover {
@@ -250,305 +209,87 @@
         
         .company-info {
             display: flex;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid var(--cream-dark);
+            margin-bottom: 1.25rem;
+            padding-bottom: 1.25rem;
+            border-bottom: 1px solid #eaeaef;
         }
         
         .logo-placeholder {
             width: 60px;
             height: 60px;
-            background-color: var(--cream);
-            border-radius: 10px;
+            background-color: #f5f5f7;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: 15px;
+            margin-right: 1rem;
             color: var(--gray);
             font-size: 1.5rem;
             flex-shrink: 0;
+            transition: all 0.3s ease;
         }
         
-        .company-details {
-            flex: 1;
-        }
-        
-        .company-name {
-            font-size: 1.1rem;
-            font-weight: 500;
-            margin: 0 0 8px 0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .small-link {
-            font-size: 0.8rem;
+        .quick-apply-card:hover .logo-placeholder {
+            background-color: #eaeaef;
             color: var(--purple);
-            font-weight: normal;
-        }
-        
-        .small-link:hover {
-            text-decoration: underline;
-        }
-        
-        .job-details {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-        
-        .job-details p {
-            margin: 0;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-        }
-        
-        .job-details i {
-            color: var(--purple);
-            margin-right: 8px;
-            width: 16px;
-            text-align: center;
         }
         
         .job-rating {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            margin-bottom: 20px;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
         }
         
         .stars {
             color: #FFD700;
             font-size: 1rem;
-        }
-        
-        .job-meta {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 10px;
-        }
-        
-        .job-meta span {
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            color: var(--gray);
-        }
-        
-        .job-meta i {
-            margin-right: 8px;
-            width: 16px;
-            text-align: center;
-            color: var(--purple);
-        }
-        
-        .apply-button-container {
-            margin-top: auto;
+            letter-spacing: 2px;
         }
         
         .btn-block {
             width: 100%;
             border-radius: 30px;
-            padding: 14px;
+            padding: 15px;
             font-weight: 500;
             font-size: 1rem;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
-            transition: all var(--transition-speed) ease;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
         
-        .btn-block i {
-            font-size: 1.1rem;
+        .btn-primary {
+            background: linear-gradient(135deg, var(--purple) 0%, var(--purple-dark) 100%);
+            border: none;
         }
         
         .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 15px rgba(124, 58, 237, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(124, 58, 237, 0.3);
         }
         
-        .notification-bar {
-            padding: 10px 0;
-            font-weight: 400;
-        }
-        
-        .ten-badge {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 22px;
-            height: 22px;
-            background-color: var(--purple);
-            color: var(--white);
-            border-radius: 50%;
-            font-size: 12px;
-            vertical-align: middle;
-            margin-left: 5px;
-            font-weight: 600;
-        }
-        
-        header {
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-        
-        /* Styles pour le parcours candidat (progress tracker) */
-        .progress-tracker-container {
-            background-color: var(--surface);
-            border-radius: var(--border-radius-lg);
-            box-shadow: var(--shadow-md);
-            padding: 20px;
-            margin-bottom: 30px;
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-        
-        .progress-step {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            position: relative;
-            padding: 0 10px;
-            flex: 1;
-            min-width: 120px;
-            max-width: 180px;
-            transition: all var(--transition-normal);
-        }
-        
-        .step-number {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: var(--cream);
-            color: var(--gray);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-            transition: all var(--transition-normal);
-        }
-        
-        .step-label {
-            font-size: 0.9rem;
-            color: var(--gray);
-            font-weight: 500;
-            transition: all var(--transition-normal);
-        }
-        
-        .progress-step.active .step-number {
-            background-color: var(--purple);
-            color: var(--white);
-            box-shadow: 0 0 15px rgba(124, 58, 237, 0.5);
-            transform: scale(1.1);
-        }
-        
-        .progress-step.active .step-label {
-            color: var(--purple);
-            font-weight: 600;
-        }
-        
-        /* Flèches de navigation entre les pages */
-        .contextual-nav {
-            margin: 16px 0 32px;
-            padding: 15px 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--cream-dark);
-        }
-        
-        .previous-page, .next-page, .dashboard-link {
-            display: flex;
-            align-items: center;
-            color: var(--gray);
-            font-size: 0.9rem;
-            font-weight: 500;
-            padding: 8px 16px;
-            border-radius: 30px;
-            transition: all 0.2s ease;
-            background-color: var(--surface-variant);
-            text-decoration: none;
-        }
-        
-        .previous-page:hover, .next-page:hover, .dashboard-link:hover {
-            background-color: var(--purple);
-            color: var(--white);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
-        }
-        
-        .previous-page i, .next-page i {
-            font-size: 0.8rem;
-        }
-        
-        .previous-page i {
-            margin-right: 8px;
-        }
-        
-        .next-page i {
-            margin-left: 8px;
-        }
-        
-        .dashboard-link i {
-            margin-right: 8px;
-        }
-        
-        [data-tooltip] {
-            position: relative;
-        }
-        
-        [data-tooltip]::after {
-            content: attr(data-tooltip);
-            position: absolute;
-            bottom: -30px;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 5px 10px;
-            background-color: var(--black);
-            color: white;
-            font-size: 0.8rem;
-            border-radius: 4px;
-            white-space: nowrap;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.2s ease;
-            z-index: 100;
-        }
-        
-        [data-tooltip]:hover::after {
-            opacity: 1;
-            visibility: visible;
-        }
-        
-        /* Pagination */
+        /* Pagination améliorée */
         .pagination {
             display: flex;
             justify-content: center;
             gap: 10px;
-            margin-top: 30px;
+            margin-top: 2.5rem;
         }
         
         .pagination-link {
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             background-color: var(--white);
             color: var(--black);
             font-weight: 500;
-            transition: all var(--transition-speed) ease;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
         
         .pagination-link:hover,
@@ -556,13 +297,7 @@
             background-color: var(--purple);
             color: var(--white);
             transform: translateY(-3px);
-            box-shadow: 0 5px 10px rgba(124, 58, 237, 0.2);
-        }
-        
-        .pagination-dots {
-            display: flex;
-            align-items: center;
-            color: var(--gray);
+            box-shadow: 0 6px 15px rgba(124, 58, 237, 0.2);
         }
         
         /* Animation */
@@ -577,20 +312,14 @@
             transform: translateY(0);
         }
         
-        /* Responsive design */
+        /* Responsive */
         @media (max-width: 992px) {
             .quick-apply-opportunities {
-                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             }
         }
         
         @media (max-width: 768px) {
-            .quick-apply-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 20px;
-            }
-            
             .filter-container {
                 flex-direction: column;
                 gap: 15px;
@@ -601,6 +330,8 @@
                 width: 100%;
                 overflow-x: auto;
                 padding-bottom: 5px;
+                display: flex;
+                gap: 10px;
             }
             
             .sort-dropdown {
@@ -610,26 +341,6 @@
             .sort-select {
                 width: 100%;
             }
-            
-            .progress-tracker-container {
-                overflow-x: auto;
-                padding-bottom: 10px;
-            }
-            
-            .progress-step {
-                min-width: 100px;
-            }
-            
-            .contextual-nav {
-                flex-wrap: wrap;
-                gap: 10px;
-                justify-content: center;
-            }
-            
-            .previous-page, .next-page, .dashboard-link {
-                font-size: 0.8rem;
-                padding: 8px 12px;
-            }
         }
         
         @media (max-width: 576px) {
@@ -638,17 +349,12 @@
             }
             
             .section-heading {
-                font-size: 1.5rem;
+                font-size: 1.75rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Notification bar -->
-    <div class="notification-bar">
-        <i class="fas fa-bell"></i> Votre recrutement change, votre approche aussi : découvrez notre approche TOP <span class="ten-badge">10</span>
-    </div>
-
     <!-- Lien d'accessibilité pour sauter au contenu principal -->
     <a href="#main-content" class="skip-to-content">Aller au contenu principal</a>
 
@@ -673,62 +379,11 @@
     </header>
 
     <div class="container main-container" id="main-content">
-        <!-- Breadcrumb -->
-        <div class="breadcrumb fade-in">
-            <a href="candidate-dashboard.html?email=jean-olivier.penin%40b-acceptance.com&password=s"><i class="fas fa-home"></i> Tableau de bord</a> &gt; 
-            <span>Postuler en un clic</span>
-        </div>
-        
-        <!-- Navigation contextuelle avec flèches pour changer de page -->
-        <div class="contextual-nav fade-in">
-            <a href="candidate-offers.html?email=jean-olivier.penin%40b-acceptance.com&password=s" class="previous-page" data-tooltip="Page précédente">
-                <i class="fas fa-chevron-left"></i> Mes offres reçues
-            </a>
-            
-            <a href="candidate-dashboard.html?email=jean-olivier.penin%40b-acceptance.com&password=s" class="dashboard-link" data-tooltip="Retour au tableau de bord">
-                <i class="fas fa-th-large"></i> Tableau de bord
-            </a>
-            
-            <a href="candidate-cv.html?email=jean-olivier.penin%40b-acceptance.com&password=s" class="next-page" data-tooltip="Page suivante">
-                Travailler mon CV <i class="fas fa-chevron-right"></i>
-            </a>
-        </div>
-        
-        <!-- Parcours candidat -->
-        <div class="progress-tracker-container fade-in">
-            <div class="progress-step">
-                <div class="step-number">1</div>
-                <div class="step-label">Mes opportunités</div>
-            </div>
-            <div class="progress-step">
-                <div class="step-number">2</div>
-                <div class="step-label">Mes offres reçues</div>
-            </div>
-            <div class="progress-step active">
-                <div class="step-number">3</div>
-                <div class="step-label">Postuler en un clic</div>
-            </div>
-            <div class="progress-step">
-                <div class="step-number">4</div>
-                <div class="step-label">Travailler mon CV</div>
-            </div>
-            <div class="progress-step">
-                <div class="step-number">5</div>
-                <div class="step-label">Centre de ressources</div>
-            </div>
-            <div class="progress-step">
-                <div class="step-number">6</div>
-                <div class="step-label">Messagerie</div>
-            </div>
-        </div>
-        
         <!-- Section Postuler en un clic -->
         <div class="candidate-dashboard-section fade-in">
-            <div class="quick-apply-header">
-                <div class="section-heading-container">
-                    <h2 class="section-heading">Postuler en un clic</h2>
-                    <div class="section-indicator"></div>
-                </div>
+            <div class="section-heading-container">
+                <h2 class="section-heading">Postuler en un clic</h2>
+                <div class="section-indicator"></div>
             </div>
             
             <p class="section-description">Découvrez de nouvelles opportunités correspondant à votre profil et postulez instantanément.</p>
@@ -873,7 +528,7 @@
                     </div>
                 </div>
                 
-                <!-- Nouvelle opportunité 4 -->
+                <!-- Opportunité 4 -->
                 <div class="quick-apply-card fade-in">
                     <div class="job-header">
                         <h3 class="job-title">UX/UI Designer</h3>
@@ -913,7 +568,7 @@
                     </div>
                 </div>
                 
-                <!-- Nouvelle opportunité 5 -->
+                <!-- Opportunité 5 -->
                 <div class="quick-apply-card fade-in">
                     <div class="job-header">
                         <h3 class="job-title">Data Analyst</h3>
@@ -953,7 +608,7 @@
                     </div>
                 </div>
                 
-                <!-- Nouvelle opportunité 6 -->
+                <!-- Opportunité 6 -->
                 <div class="quick-apply-card fade-in">
                     <div class="job-header">
                         <h3 class="job-title">Chef de Projet Digital</h3>
@@ -1127,16 +782,16 @@
                 });
             });
             
-            // Simulation d'un loader avant d'afficher le contenu principal
+            // Animation des cartes
             setTimeout(() => {
                 document.querySelectorAll('.quick-apply-card').forEach((card, index) => {
                     setTimeout(() => {
                         card.classList.add('visible');
-                    }, index * 100);
+                    }, index * 150);
                 });
             }, 300);
             
-            // Boutons de candidature
+            // Interaction avec les boutons de candidature
             const applyButtons = document.querySelectorAll('.apply-button-container button');
             
             applyButtons.forEach(button => {
@@ -1149,8 +804,12 @@
                         this.innerHTML = '<i class="fas fa-check"></i> Candidature envoyée !';
                         this.classList.remove('btn-primary');
                         this.classList.add('btn-success');
-                        this.style.backgroundColor = '#28a745';
-                        this.style.borderColor = '#28a745';
+                        this.style.backgroundColor = '#38b2ac';
+                        this.style.borderColor = '#38b2ac';
+                        
+                        // Effet de confetti ou animation pour célébrer
+                        const card = this.closest('.quick-apply-card');
+                        card.style.boxShadow = '0 15px 30px rgba(56, 178, 172, 0.3)';
                         
                         // Réinitialiser le bouton après quelques secondes
                         setTimeout(() => {
@@ -1160,13 +819,12 @@
                             this.style.backgroundColor = '';
                             this.style.borderColor = '';
                             this.disabled = false;
+                            card.style.boxShadow = '';
                         }, 3000);
                     }, 1500);
                 });
             });
         });
     </script>
-    <!-- Script d'amélioration de la navigation -->
-    <script src="../static/services/nav-enhancement.js"></script>
 </body>
 </html>
