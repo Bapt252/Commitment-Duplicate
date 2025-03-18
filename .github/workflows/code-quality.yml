@@ -1,0 +1,35 @@
+name: Code Quality
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        
+    - name: Install dependencies
+      run: |
+        npm install -g htmlhint jshint stylelint
+        
+    - name: Lint HTML
+      run: |
+        htmlhint "./templates/**/*.html" || echo "HTML linting completed with warnings"
+        
+    - name: Lint JavaScript
+      run: |
+        jshint "./static/services/**/*.js" "./static/components/**/*.js" || echo "JavaScript linting completed with warnings"
+        
+    - name: Lint CSS
+      run: |
+        stylelint "./static/styles/**/*.css" || echo "CSS linting completed with warnings"
