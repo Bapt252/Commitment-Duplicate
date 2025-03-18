@@ -2,6 +2,8 @@
 
 Une plateforme moderne de recrutement qui met en relation candidats et recruteurs grâce à l'intelligence artificielle.
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 ## Structure du Projet
 
 - `templates/` : Contient les fichiers HTML
@@ -53,6 +55,34 @@ Pour un environnement de développement complet, vous pourriez utiliser un serve
 - Font Awesome pour les icônes
 - Inter (Google Fonts) pour la typographie
 
+## Sécurité
+
+Ce projet implémente plusieurs mesures de sécurité :
+
+- Fichier `.gitignore` pour éviter de publier des données sensibles
+- Politique de sécurité définie dans `SECURITY.md`
+- Licence MIT pour la protection du code
+- Aucune information sensible (identifiants, clés API, etc.) ne doit être stockée dans le code
+
+### Bonnes pratiques
+
+- Ne jamais stocker de clés API, secrets ou identifiants dans le code source
+- Utiliser des variables d'environnement pour les configurations sensibles (quand le backend sera implémenté)
+- Mettre en place une validation des entrées côté client et serveur
+- Mettre en œuvre une protection CSRF pour les formulaires
+
+## Contribution
+
+Les contributions sont les bienvenues ! Pour contribuer :
+
+1. Forkez le projet
+2. Créez votre branche de fonctionnalité (`git checkout -b feature/amazing-feature`)
+3. Committez vos changements (`git commit -m 'Ajout d'une fonctionnalité'`)
+4. Poussez vers la branche (`git push origin feature/amazing-feature`)
+5. Ouvrez une Pull Request
+
+Veuillez consulter notre fichier `CONTRIBUTING.md` pour plus de détails sur notre code de conduite et le processus de soumission de pull requests.
+
 ## Remarque
 
 Ce projet est actuellement une maquette statique. Pour une application complète, il faudrait implémenter :
@@ -61,3 +91,8 @@ Ce projet est actuellement une maquette statique. Pour une application complète
 - Un système d'authentification
 - API pour la gestion des données
 - Algorithmes d'IA pour le matching
+- Mesures de sécurité supplémentaires pour protéger les données utilisateur
+
+## Licence
+
+Ce projet est sous licence MIT - voir le fichier [LICENSE](LICENSE) pour plus de détails.
