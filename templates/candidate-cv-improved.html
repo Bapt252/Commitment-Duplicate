@@ -1,0 +1,2323 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nexten - Travailler mon CV">
+    <title>Nexten - Travailler mon CV</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../static/styles/nexten-modern.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/styles/dashboard.css">
+    <link rel="stylesheet" href="../static/styles/dashboard-new.css">
+    <link rel="stylesheet" href="../static/styles/nav-improvement.css">
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../static/images/favicon.ico" type="image/x-icon">
+    
+    <style>
+        /* Styles spécifiques à la page CV - améliorations UI/UX */
+        :root {
+            --yellow-light: #FFF8D6;
+            --success-color: #10B981;
+            --warning-color: #F59E0B;
+            --danger-color: #EF4444;
+            --progress-bg: #E5E7EB;
+            --neutral-bg: #F9FAFB;
+            --transition-default: all 0.3s ease;
+            --border-radius-sm: 6px;
+            --border-radius-md: 8px;
+            --border-radius-lg: 12px;
+            --box-shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --box-shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+            --box-shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+        }
+        
+        body {
+            background-color: var(--cream);
+        }
+        
+        /* Amélioration des conteneurs */
+        .cv-form-container {
+            background-color: transparent;
+            border-radius: var(--border-radius-lg);
+            margin-bottom: 30px;
+        }
+        
+        .cv-section {
+            background-color: var(--white);
+            border-radius: var(--border-radius-md);
+            margin-bottom: 24px;
+            padding: 30px;
+            border: none;
+            box-shadow: var(--box-shadow-sm);
+            transition: var(--transition-default);
+        }
+        
+        .cv-section:hover {
+            box-shadow: var(--box-shadow-md);
+        }
+        
+        .cv-section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--cream-dark);
+        }
+        
+        .cv-section-header h3 {
+            font-size: 1.25rem;
+            font-weight: 500;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .cv-section-header h3 i {
+            color: var(--purple);
+        }
+        
+        /* Grilles et formulaires améliorés */
+        .cv-form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+        
+        .form-group {
+            margin-bottom: 24px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--black);
+            font-size: 0.95rem;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid var(--cream-dark);
+            border-radius: var(--border-radius-sm);
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            transition: var(--transition-default);
+            background-color: var(--white);
+        }
+        
+        .form-control:focus {
+            border-color: var(--purple);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+        }
+        
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        /* Amélioration des checkboxes et radios */
+        .form-check {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            cursor: pointer;
+        }
+        
+        .form-check-input {
+            margin-right: 12px;
+            width: 18px;
+            height: 18px;
+            accent-color: var(--purple);
+        }
+        
+        .radio-options {
+            display: flex;
+            gap: 20px;
+        }
+        
+        /* Bouton d'ajout amélioré */
+        .add-experience-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 16px;
+            border: 2px dashed var(--cream-dark);
+            border-radius: var(--border-radius-md);
+            background: var(--cream);
+            color: var(--purple);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition-default);
+        }
+        
+        .add-experience-btn:hover {
+            background-color: var(--white);
+            border-color: var(--purple-light);
+            transform: translateY(-2px);
+        }
+        
+        .add-experience-btn i {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+        
+        /* Cartes d'expérience améliorées */
+        .experience-card {
+            border: 1px solid var(--cream-dark);
+            border-radius: var(--border-radius-md);
+            padding: 24px;
+            margin-bottom: 24px;
+            position: relative;
+            transition: var(--transition-default);
+            background-color: var(--white);
+        }
+        
+        .experience-card:hover {
+            box-shadow: var(--box-shadow-md);
+            border-color: var(--purple-light);
+            transform: translateY(-3px);
+        }
+        
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--cream-dark);
+        }
+        
+        .experience-header h4 {
+            margin: 0;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--black);
+        }
+        
+        .experience-actions {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .btn-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            background: var(--white);
+            border: 1px solid var(--cream-dark);
+            color: var(--gray);
+            cursor: pointer;
+            transition: var(--transition-default);
+        }
+        
+        .btn-icon:hover {
+            background-color: var(--cream);
+            transform: scale(1.1);
+        }
+        
+        .btn-icon.edit:hover {
+            color: var(--purple);
+            border-color: var(--purple);
+        }
+        
+        .btn-icon.delete:hover {
+            color: var(--danger-color);
+            border-color: var(--danger-color);
+        }
+        
+        /* Suggestions IA améliorées */
+        .ai-suggestions {
+            background-color: var(--cream);
+            border-left: 4px solid var(--purple);
+            padding: 20px;
+            margin-top: 24px;
+            border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0;
+            box-shadow: var(--box-shadow-sm);
+        }
+        
+        .ai-suggestions h4 {
+            color: var(--purple);
+            margin-top: 0;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+        }
+        
+        .ai-suggestions h4 i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .ai-suggestions ul {
+            padding-left: 25px;
+            margin-bottom: 16px;
+        }
+        
+        .ai-suggestions li {
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+        
+        .ai-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 16px;
+            gap: 12px;
+        }
+        
+        /* Améliorations des petits boutons */
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 13px;
+            border-radius: var(--border-radius-sm);
+        }
+        
+        /* Barre de progression améliorée */
+        .progress-bar-container {
+            height: 10px;
+            background-color: var(--progress-bg);
+            border-radius: 20px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background-color: var(--purple);
+            border-radius: 20px;
+            transition: width 0.5s ease-in-out;
+        }
+        
+        /* Status du CV amélioré */
+        .cv-status {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .status-indicator {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: var(--success-color);
+        }
+        
+        .status-indicator.pending {
+            background-color: var(--warning-color);
+        }
+        
+        .status-text {
+            font-weight: 500;
+            font-size: 1rem;
+        }
+        
+        .completion-status {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .percentage {
+            font-weight: 600;
+            color: var(--purple);
+            font-size: 1rem;
+        }
+        
+        /* Tags de compétences améliorés */
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 15px;
+        }
+        
+        .skill-tag {
+            background-color: var(--cream);
+            border-radius: 30px;
+            padding: 8px 16px;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            transition: var(--transition-default);
+            border: 1px solid transparent;
+        }
+        
+        .skill-tag:hover {
+            background-color: var(--cream-dark);
+            border-color: var(--purple-light);
+            transform: translateY(-2px);
+        }
+        
+        .skill-tag i {
+            margin-left: 8px;
+            cursor: pointer;
+            color: var(--gray);
+            transition: var(--transition-default);
+        }
+        
+        .skill-tag i:hover {
+            color: var(--danger-color);
+            transform: scale(1.2);
+        }
+        
+        .add-skill {
+            display: flex;
+            margin-top: 20px;
+            gap: 12px;
+        }
+        
+        .add-skill input {
+            flex: 1;
+        }
+        
+        /* Tracker de progression amélioré */
+        .progress-tracker-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            overflow-x: auto;
+            padding: 20px 10px;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            background-color: var(--white);
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--box-shadow-sm);
+        }
+        
+        .progress-tracker-container::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .progress-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            min-width: 120px;
+        }
+        
+        .progress-step::before {
+            content: "";
+            position: absolute;
+            top: 15px;
+            left: -50%;
+            width: 100%;
+            height: 3px;
+            background-color: var(--cream-dark);
+            z-index: 0;
+        }
+        
+        .progress-step:first-child::before {
+            display: none;
+        }
+        
+        .step-number {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background-color: var(--cream-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+            transition: var(--transition-default);
+        }
+        
+        .progress-step.active .step-number {
+            background-color: var(--purple);
+            color: var(--white);
+            box-shadow: 0 0 0 5px rgba(124, 58, 237, 0.2);
+        }
+        
+        .progress-step.completed .step-number {
+            background-color: var(--purple-light);
+            color: var(--white);
+        }
+        
+        .progress-step.active ~ .progress-step .step-number {
+            background-color: var(--cream-dark);
+            color: var(--black);
+        }
+        
+        .progress-step.active::before,
+        .progress-step.completed::before {
+            background-color: var(--purple-light);
+        }
+        
+        .step-label {
+            font-size: 0.85rem;
+            text-align: center;
+            color: var(--gray);
+            transition: var(--transition-default);
+        }
+        
+        .progress-step.active .step-label {
+            color: var(--black);
+            font-weight: 500;
+        }
+        
+        /* En-têtes de section améliorés */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--cream-dark);
+        }
+        
+        .section-actions {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .dashboard-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* Style des points forts/faibles */
+        .feature-list h4 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
+            font-weight: 500;
+        }
+        
+        .feature-list ul {
+            padding-left: 36px;
+        }
+        
+        .feature-list li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        
+        /* Notification de sauvegarde */
+        .save-notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--success-color);
+            color: white;
+            padding: 12px 20px;
+            border-radius: var(--border-radius-sm);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: var(--box-shadow-md);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: transform 0.3s, opacity 0.3s;
+            z-index: 1000;
+        }
+        
+        .save-notification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        /* Formulaire d'édition d'expérience amélioré */
+        .experience-form {
+            background-color: var(--white);
+            border: 1px solid var(--cream-dark);
+            border-radius: var(--border-radius-md);
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: var(--box-shadow-md);
+        }
+        
+        .experience-form-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--cream-dark);
+        }
+        
+        .experience-form-header h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        /* Tags et badges */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px 10px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 500;
+            background-color: var(--cream);
+            color: var(--gray);
+        }
+        
+        .badge-success {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--success-color);
+        }
+        
+        .badge-warning {
+            background-color: rgba(245, 158, 11, 0.1);
+            color: var(--warning-color);
+        }
+        
+        .badge-info {
+            background-color: rgba(59, 130, 246, 0.1);
+            color: #3B82F6;
+        }
+        
+        /* Switch pour le contexte international */
+        .switch-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        
+        .switch-container label {
+            margin-bottom: 0;
+        }
+        
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 48px;
+            height: 24px;
+        }
+        
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--cream-dark);
+            transition: .4s;
+            border-radius: 24px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: var(--purple);
+        }
+        
+        input:focus + .slider {
+            box-shadow: 0 0 1px var(--purple);
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(24px);
+        }
+        
+        /* Tooltips améliores */
+        .tooltip-container {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .tooltip-text {
+            visibility: hidden;
+            width: 200px;
+            background-color: var(--black);
+            color: var(--white);
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 12px;
+            pointer-events: none;
+        }
+        
+        .tooltip-container:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        /* Overlay et modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal {
+            background-color: var(--white);
+            border-radius: var(--border-radius-md);
+            padding: 24px;
+            box-shadow: var(--box-shadow-lg);
+            width: 90%;
+            max-width: 700px;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: translateY(20px);
+            transition: transform 0.3s;
+        }
+        
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--cream-dark);
+        }
+        
+        .modal-header h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+            transition: color 0.3s;
+        }
+        
+        .modal-close:hover {
+            color: var(--danger-color);
+        }
+        
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 24px;
+            padding-top: 15px;
+            border-top: 1px solid var(--cream-dark);
+        }
+        
+        /* Prévisualisation du PDF */
+        .preview-container {
+            background-color: var(--neutral-bg);
+            border-radius: var(--border-radius-md);
+            padding: 24px;
+            margin-top: 24px;
+            border: 1px solid var(--cream-dark);
+        }
+        
+        .preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .preview-actions {
+            display: flex;
+            gap: 12px;
+        }
+        
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Améliorations responsive */
+        @media (max-width: 768px) {
+            .cv-form-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            
+            .experience-header, 
+            .experience-form-header,
+            .modal-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .experience-actions {
+                align-self: flex-end;
+            }
+            
+            .progress-tracker-container {
+                padding-bottom: 10px;
+            }
+            
+            .progress-step {
+                min-width: 100px;
+            }
+            
+            .step-label {
+                font-size: 0.75rem;
+            }
+            
+            .cv-section {
+                padding: 20px;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .add-skill {
+                flex-direction: column;
+            }
+            
+            .modal {
+                width: 95%;
+                padding: 16px;
+            }
+            
+            .switch-container {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Notification bar -->
+    <div class="notification-bar">
+        <i class="fas fa-bell"></i> Votre recrutement change, votre approche aussi : découvrez notre approche TOP <span class="ten-badge">10</span>
+    </div>
+
+    <!-- Lien d'accessibilité pour sauter au contenu principal -->
+    <a href="#main-content" class="skip-to-content">Aller au contenu principal</a>
+
+    <header>
+        <div class="container">
+            <div class="logo">
+                nex<span>ten</span><div class="logo-badge">10</div>
+            </div>
+            
+            <button class="menu-toggle" aria-label="Menu principal">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="candidate-dashboard.html" class="active">Espace candidat</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container main-container" id="main-content">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb fade-in">
+            <a href="candidate-dashboard.html"><i class="fas fa-home"></i> Tableau de bord</a> &gt; 
+            <span>Travailler mon CV</span>
+        </div>
+        
+        <!-- Progress tracker -->
+        <div class="progress-tracker-container fade-in">
+            <div class="progress-step completed">
+                <div class="step-number"><i class="fas fa-check"></i></div>
+                <div class="step-label">Mes opportunités</div>
+            </div>
+            <div class="progress-step completed">
+                <div class="step-number"><i class="fas fa-check"></i></div>
+                <div class="step-label">Mes offres reçues</div>
+            </div>
+            <div class="progress-step completed">
+                <div class="step-number"><i class="fas fa-check"></i></div>
+                <div class="step-label">Postuler en un clic</div>
+            </div>
+            <div class="progress-step active">
+                <div class="step-number">4</div>
+                <div class="step-label">Travailler mon CV</div>
+            </div>
+            <div class="progress-step">
+                <div class="step-number">5</div>
+                <div class="step-label">Centre de ressources</div>
+            </div>
+            <div class="progress-step">
+                <div class="step-number">6</div>
+                <div class="step-label">Messagerie</div>
+            </div>
+        </div>
+        
+        <!-- Section Travailler mon CV -->
+        <div class="candidate-dashboard-section fade-in">
+            <div class="section-header">
+                <h2 class="section-heading">Travailler mon CV</h2>
+                <div class="section-actions">
+                    <a href="candidate-dashboard.html" class="btn btn-sm btn-outline dashboard-btn">
+                        <i class="fas fa-th-large"></i> Tableau de bord
+                    </a>
+                </div>
+            </div>
+            
+            <div class="cv-form-container">
+                <!-- Introduction et Score du CV -->
+                <div class="cv-section">
+                    <div class="cv-section-header">
+                        <h3><i class="fas fa-chart-line"></i> Analyse de votre CV</h3>
+                        <button class="btn btn-primary" id="upload-cv-btn"><i class="fas fa-cloud-upload-alt"></i> Mettre à jour mon CV</button>
+                    </div>
+                    
+                    <div class="cv-status">
+                        <div class="status-indicator"></div>
+                        <span class="status-text">Votre CV est complet à 75%</span>
+                    </div>
+                    
+                    <div class="completion-status">
+                        <span>Progression globale</span>
+                        <span class="percentage">75%</span>
+                    </div>
+                    
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" style="width: 75%"></div>
+                    </div>
+                    
+                    <div class="recommendation-container">
+                        <div class="recommendation-title"><i class="fas fa-magic"></i> Recommandation IA</div>
+                        <p>Ajoutez davantage de réalisations concrètes et de résultats chiffrés à vos expériences pour augmenter vos chances de décrocher un entretien.</p>
+                    </div>
+                    
+                    <div class="cv-form-grid" style="margin-top: 25px;">
+                        <div class="feature-list">
+                            <h4><i class="fas fa-check-circle" style="color: var(--success-color);"></i> Points forts</h4>
+                            <ul>
+                                <li>Structure claire et organisée</li>
+                                <li>Mise en avant des compétences techniques</li>
+                                <li>Informations de contact complètes</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="feature-list">
+                            <h4><i class="fas fa-exclamation-circle" style="color: var(--warning-color);"></i> Points à améliorer</h4>
+                            <ul>
+                                <li>Ajouter des résultats quantifiables</li>
+                                <li>Détailler davantage les missions</li>
+                                <li>Enrichir la section formation</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Expérience professionnelle -->
+                <div class="cv-section">
+                    <div class="cv-section-header">
+                        <h3><i class="fas fa-briefcase"></i> Expérience professionnelle</h3>
+                        <button class="btn btn-sm btn-outline tooltip-container" id="exp-tips-btn">
+                            <i class="fas fa-question-circle"></i> Conseils
+                            <span class="tooltip-text">Ajoutez des détails sur vos responsabilités et résultats</span>
+                        </button>
+                    </div>
+                    
+                    <div id="experiences-container">
+                        <!-- Les expériences seront chargées ici dynamiquement -->
+                    </div>
+                    
+                    <!-- Bouton ajouter expérience -->
+                    <button class="add-experience-btn" id="add-experience-btn">
+                        <i class="fas fa-plus-circle"></i> Ajouter une expérience professionnelle
+                    </button>
+                </div>
+                
+                <!-- Formation et diplômes -->
+                <div class="cv-section">
+                    <div class="cv-section-header">
+                        <h3><i class="fas fa-graduation-cap"></i> Certificats & Diplômes</h3>
+                        <button class="btn btn-sm btn-outline tooltip-container">
+                            <i class="fas fa-question-circle"></i> Conseils
+                            <span class="tooltip-text">Mettez en avant vos spécialisations et projets académiques</span>
+                        </button>
+                    </div>
+                    
+                    <div id="education-container">
+                        <!-- Les formations seront chargées ici dynamiquement -->
+                    </div>
+                    
+                    <!-- Bouton ajouter diplôme -->
+                    <button class="add-experience-btn" id="add-education-btn">
+                        <i class="fas fa-plus-circle"></i> Ajouter un diplôme ou certificat
+                    </button>
+                </div>
+                
+                <!-- Compétences -->
+                <div class="cv-section">
+                    <div class="cv-section-header">
+                        <h3><i class="fas fa-tools"></i> Compétences</h3>
+                        <button class="btn btn-sm btn-outline tooltip-container">
+                            <i class="fas fa-question-circle"></i> Conseils
+                            <span class="tooltip-text">Ajoutez des compétences pertinentes pour les postes ciblés</span>
+                        </button>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Compétences techniques</label>
+                        <div class="skills-container" id="skills-container">
+                            <!-- Les compétences seront chargées ici dynamiquement -->
+                        </div>
+                        
+                        <div class="add-skill">
+                            <input type="text" class="form-control" id="new-skill-input" placeholder="Ajouter une compétence">
+                            <button class="btn btn-outline" id="add-skill-btn">Ajouter</button>
+                        </div>
+                    </div>
+                    
+                    <div class="ai-suggestions">
+                        <h4><i class="fas fa-lightbulb"></i> Suggestions d'amélioration IA</h4>
+                        <p>Basé sur votre profil, nous vous suggérons d'ajouter ces compétences :</p>
+                        <div class="skills-container" id="suggested-skills">
+                            <!-- Les compétences suggérées seront chargées ici dynamiquement -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Langues -->
+                <div class="cv-section">
+                    <div class="cv-section-header">
+                        <h3><i class="fas fa-language"></i> Langues</h3>
+                    </div>
+                    
+                    <div id="languages-container">
+                        <!-- Les langues seront chargées ici dynamiquement -->
+                    </div>
+                    
+                    <button class="add-experience-btn" id="add-language-btn">
+                        <i class="fas fa-plus-circle"></i> Ajouter une langue
+                    </button>
+                </div>
+                
+                <!-- Actions finales -->
+                <div class="cv-section" style="text-align: center;">
+                    <button class="btn btn-primary" id="save-cv"><i class="fas fa-save"></i> Enregistrer mon CV</button>
+                    <button class="btn btn-outline" id="preview-cv-btn"><i class="fas fa-eye"></i> Prévisualiser</button>
+                    <button class="btn btn-outline" id="export-pdf-btn"><i class="fas fa-file-pdf"></i> Exporter en PDF</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modale Ajouter/Modifier Expérience -->
+    <div class="modal-overlay" id="experience-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="experience-modal-title">Ajouter une expérience professionnelle</h3>
+                <button class="modal-close" id="close-experience-modal">&times;</button>
+            </div>
+            <form id="experience-form">
+                <input type="hidden" id="experience-id">
+                
+                <div class="form-group">
+                    <label for="job-title">Intitulé du poste *</label>
+                    <input type="text" id="job-title" class="form-control" required>
+                </div>
+                
+                <div class="cv-form-grid">
+                    <div class="form-group">
+                        <label for="company-name">Entreprise *</label>
+                        <input type="text" id="company-name" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="industry-sector">Secteur d'activité</label>
+                        <input type="text" id="industry-sector" class="form-control">
+                    </div>
+                </div>
+                
+                <div class="cv-form-grid">
+                    <div class="form-group">
+                        <label for="start-date">Date de début *</label>
+                        <input type="month" id="start-date" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="end-date">Date de fin</label>
+                        <input type="month" id="end-date" class="form-control">
+                        <div class="form-check" style="margin-top: 10px;">
+                            <input class="form-check-input" type="checkbox" id="current-job">
+                            <label for="current-job">Poste actuel</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="contract-type">Type de contrat</label>
+                    <select id="contract-type" class="form-control">
+                        <option value="">Sélectionner</option>
+                        <option value="CDI">CDI</option>
+                        <option value="CDD">CDD</option>
+                        <option value="Freelance">Freelance</option>
+                        <option value="Stage">Stage</option>
+                        <option value="Alternance">Alternance</option>
+                        <option value="Intérim">Intérim</option>
+                        <option value="Autre">Autre</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="job-missions">Missions et responsabilités *</label>
+                    <textarea id="job-missions" class="form-control" rows="4" required></textarea>
+                </div>
+                
+                <div class="switch-container">
+                    <label for="international-context">Contexte international</label>
+                    <label class="switch">
+                        <input type="checkbox" id="international-context">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                
+                <div id="international-details" style="display: none;">
+                    <div class="form-group">
+                        <label for="languages-used">Langues utilisées</label>
+                        <input type="text" id="languages-used" class="form-control" placeholder="Ex: Anglais (écrit et oral), Espagnol (notions)">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="software-used">Logiciels utilisés</label>
+                    <input type="text" id="software-used" class="form-control" placeholder="Ex: Excel, Photoshop, SAP">
+                </div>
+                
+                <div class="form-group">
+                    <label for="end-context">Contexte de fin de contrat</label>
+                    <select id="end-context" class="form-control">
+                        <option value="">Sélectionner</option>
+                        <option value="Fin de CDD">Fin de CDD</option>
+                        <option value="Démission">Démission</option>
+                        <option value="Licenciement économique">Licenciement économique</option>
+                        <option value="Licenciement personnel">Licenciement personnel</option>
+                        <option value="Rupture conventionnelle">Rupture conventionnelle</option>
+                        <option value="Fin de mission">Fin de mission</option>
+                        <option value="Poste actuel">Poste actuel</option>
+                        <option value="Autre">Autre</option>
+                    </select>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" id="cancel-experience">Annuler</button>
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Modale Ajouter/Modifier Formation -->
+    <div class="modal-overlay" id="education-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="education-modal-title">Ajouter un diplôme ou certificat</h3>
+                <button class="modal-close" id="close-education-modal">&times;</button>
+            </div>
+            <form id="education-form">
+                <input type="hidden" id="education-id">
+                
+                <div class="form-group">
+                    <label for="diploma-title">Intitulé du diplôme *</label>
+                    <input type="text" id="diploma-title" class="form-control" required>
+                </div>
+                
+                <div class="cv-form-grid">
+                    <div class="form-group">
+                        <label for="school-name">Établissement *</label>
+                        <input type="text" id="school-name" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="education-level">Niveau</label>
+                        <select id="education-level" class="form-control">
+                            <option value="">Sélectionner</option>
+                            <option value="Bac">Bac</option>
+                            <option value="Bac+2">Bac+2</option>
+                            <option value="Bac+3">Bac+3</option>
+                            <option value="Bac+4">Bac+4</option>
+                            <option value="Bac+5">Bac+5</option>
+                            <option value="Bac+8">Bac+8</option>
+                            <option value="Certification">Certification</option>
+                            <option value="Autre">Autre</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="cv-form-grid">
+                    <div class="form-group">
+                        <label for="diploma-year">Année d'obtention *</label>
+                        <input type="number" id="diploma-year" class="form-control" min="1950" max="2030" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="diploma-location">Lieu</label>
+                        <input type="text" id="diploma-location" class="form-control" placeholder="Ville, Pays">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="diploma-description">Description</label>
+                    <textarea id="diploma-description" class="form-control" rows="3"></textarea>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" id="cancel-education">Annuler</button>
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Modale Ajouter/Modifier Langue -->
+    <div class="modal-overlay" id="language-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="language-modal-title">Ajouter une langue</h3>
+                <button class="modal-close" id="close-language-modal">&times;</button>
+            </div>
+            <form id="language-form">
+                <input type="hidden" id="language-id">
+                
+                <div class="form-group">
+                    <label for="language-name">Langue *</label>
+                    <input type="text" id="language-name" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="language-level">Niveau *</label>
+                    <select id="language-level" class="form-control" required>
+                        <option value="">Sélectionner</option>
+                        <option value="langue-maternelle">Langue maternelle</option>
+                        <option value="c2">C2 - Maîtrise</option>
+                        <option value="c1">C1 - Avancé</option>
+                        <option value="b2">B2 - Intermédiaire supérieur</option>
+                        <option value="b1">B1 - Intermédiaire</option>
+                        <option value="a2">A2 - Élémentaire</option>
+                        <option value="a1">A1 - Débutant</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="language-details">Informations complémentaires</label>
+                    <input type="text" id="language-details" class="form-control" placeholder="Ex: Certificat TOEIC 850 points">
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" id="cancel-language">Annuler</button>
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Modale Prévisualisation CV -->
+    <div class="modal-overlay" id="preview-modal">
+        <div class="modal" style="max-width: 800px;">
+            <div class="modal-header">
+                <h3>Prévisualisation de votre CV</h3>
+                <button class="modal-close" id="close-preview-modal">&times;</button>
+            </div>
+            
+            <div class="preview-container" id="cv-preview">
+                <!-- La prévisualisation sera chargée ici dynamiquement -->
+            </div>
+            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline" id="close-preview">Fermer</button>
+                <button type="button" class="btn btn-primary" id="export-preview"><i class="fas fa-file-pdf"></i> Exporter en PDF</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification de sauvegarde -->
+    <div class="save-notification" id="save-notification">
+        <i class="fas fa-check-circle"></i> <span id="notification-message">Votre CV a été enregistré avec succès !</span>
+    </div>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <h4 class="footer-heading">Nexten</h4>
+                    <p class="footer-description">Notre plateforme utilise l'intelligence artificielle pour révolutionner le processus de recrutement, offrant 10 correspondances personnalisées pour les candidats et les recruteurs.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="footer-heading">Navigation</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Accueil</a></li>
+                        <li><a href="candidate-dashboard.html"><i class="fas fa-chevron-right"></i> Espace candidat</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> À propos</a></li>
+                        <li><a href="#contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="footer-heading">Contact</h4>
+                    <div class="footer-contact">
+                        <p><i class="fas fa-map-marker-alt"></i> 123 Avenue de l'Innovation, 75001 Paris</p>
+                        <p><i class="fas fa-phone"></i> +33 1 23 45 67 89</p>
+                        <p><i class="fas fa-envelope"></i> contact@nexten.fr</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Nexten - Tous droits réservés | <a href="#">Politique de confidentialité</a> | <a href="#">Conditions d'utilisation</a></p>
+            </div>
+        </div>
+        
+        <!-- Bouton de retour en haut -->
+        <button id="scroll-to-top" class="scroll-to-top" aria-label="Retour en haut">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Données exemple
+        let experiences = [
+            {
+                id: 1,
+                jobTitle: "Chef de projet marketing digital",
+                company: "AgenceXYZ",
+                startDate: "2022-01",
+                endDate: "",
+                currentJob: true,
+                contractType: "CDI",
+                sector: "Marketing Digital",
+                missions: "Gestion des campagnes digitales et de la stratégie de contenu. Responsable des réseaux sociaux et de l'acquisition de trafic.",
+                international: true,
+                languages: "Anglais - Écrit et Oral",
+                software: "Google Analytics, Facebook Ads Manager, Photoshop, Wordpress",
+                endContext: "Poste actuel"
+            }
+        ];
+        
+        let education = [
+            {
+                id: 1,
+                title: "Master Marketing Digital",
+                school: "Université Paris-Dauphine",
+                year: 2021,
+                level: "Bac+5",
+                location: "Paris, France",
+                description: "Formation en marketing digital, stratégies de communication et techniques d'acquisition. Spécialisation en analytics et data marketing."
+            }
+        ];
+        
+        let skills = [
+            "Marketing digital",
+            "SEO",
+            "Réseaux sociaux",
+            "Google Analytics",
+            "Photoshop"
+        ];
+        
+        let suggestedSkills = [
+            "Google Ads",
+            "Growth Hacking",
+            "Data Studio"
+        ];
+        
+        let languages = [
+            {
+                id: 1,
+                name: "Français",
+                level: "langue-maternelle",
+                details: ""
+            },
+            {
+                id: 2,
+                name: "Anglais",
+                level: "c2",
+                details: "TOEIC 950 points"
+            }
+        ];
+        
+        // Fonctions d'initialisation et d'affichage
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialisation de l'interface
+            renderExperiences();
+            renderEducation();
+            renderSkills();
+            renderSuggestedSkills();
+            renderLanguages();
+            initEventListeners();
+            initAnimations();
+        });
+        
+        // Affichage des expériences
+        function renderExperiences() {
+            const container = document.getElementById('experiences-container');
+            container.innerHTML = '';
+            
+            experiences.forEach(exp => {
+                const dateStr = exp.currentJob 
+                    ? `${formatMonth(exp.startDate)} - Présent` 
+                    : `${formatMonth(exp.startDate)} - ${formatMonth(exp.endDate)}`;
+                
+                const card = document.createElement('div');
+                card.className = 'experience-card';
+                card.innerHTML = `
+                    <div class="experience-header">
+                        <h4>${exp.jobTitle}</h4>
+                        <div class="experience-actions">
+                            <button class="btn-icon edit edit-experience" data-id="${exp.id}" aria-label="Modifier cette expérience">
+                                <i class="fas fa-pencil-alt"></i>
+                            </button>
+                            <button class="btn-icon delete delete-experience" data-id="${exp.id}" aria-label="Supprimer cette expérience">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="cv-form-grid">
+                        <div class="form-group">
+                            <label>Date du poste</label>
+                            <div>${dateStr}</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Entreprise</label>
+                            <div>${exp.company}</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Secteur d'activité</label>
+                            <div>${exp.sector || '-'}</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Type de contrat</label>
+                            <div>${exp.contractType || '-'}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Missions :</label>
+                        <div>${exp.missions}</div>
+                    </div>
+                    
+                    ${exp.international ? `
+                    <div class="cv-form-grid">
+                        <div class="form-group">
+                            <label>Langues étrangères utilisées</label>
+                            <div>${exp.languages}</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Logiciels utilisés</label>
+                            <div>${exp.software || '-'}</div>
+                        </div>
+                    </div>
+                    ` : `
+                    <div class="form-group">
+                        <label>Logiciels utilisés</label>
+                        <div>${exp.software || '-'}</div>
+                    </div>
+                    `}
+                    
+                    <div class="form-group">
+                        <label>Fin de contrat : Contexte</label>
+                        <div>${exp.endContext || '-'}</div>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+            
+            // Ajouter les écouteurs d'événements après le rendu
+            document.querySelectorAll('.edit-experience').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = parseInt(this.getAttribute('data-id'));
+                    editExperience(id);
+                });
+            });
+            
+            document.querySelectorAll('.delete-experience').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = parseInt(this.getAttribute('data-id'));
+                    deleteExperience(id);
+                });
+            });
+        }
+        
+        // Affichage des formations
+        function renderEducation() {
+            const container = document.getElementById('education-container');
+            container.innerHTML = '';
+            
+            education.forEach(edu => {
+                const card = document.createElement('div');
+                card.className = 'experience-card';
+                card.innerHTML = `
+                    <div class="experience-header">
+                        <h4>${edu.title}</h4>
+                        <div class="experience-actions">
+                            <button class="btn-icon edit edit-education" data-id="${edu.id}" aria-label="Modifier ce diplôme">
+                                <i class="fas fa-pencil-alt"></i>
+                            </button>
+                            <button class="btn-icon delete delete-education" data-id="${edu.id}" aria-label="Supprimer ce diplôme">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="cv-form-grid">
+                        <div class="form-group">
+                            <label>Date d'obtention</label>
+                            <div>${edu.year}</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Établissement</label>
+                            <div>${edu.school}</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Niveau</label>
+                            <div>${edu.level || '-'}</div>
+                        </div>
+                        
+                        ${edu.location ? `
+                        <div class="form-group">
+                            <label>Lieu</label>
+                            <div>${edu.location}</div>
+                        </div>
+                        ` : ''}
+                    </div>
+                    
+                    ${edu.description ? `
+                    <div class="form-group">
+                        <label>Description</label>
+                        <div>${edu.description}</div>
+                    </div>
+                    ` : ''}
+                `;
+                
+                container.appendChild(card);
+            });
+            
+            // Ajouter les écouteurs d'événements après le rendu
+            document.querySelectorAll('.edit-education').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = parseInt(this.getAttribute('data-id'));
+                    editEducation(id);
+                });
+            });
+            
+            document.querySelectorAll('.delete-education').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = parseInt(this.getAttribute('data-id'));
+                    deleteEducation(id);
+                });
+            });
+        }
+        
+        // Affichage des compétences
+        function renderSkills() {
+            const container = document.getElementById('skills-container');
+            container.innerHTML = '';
+            
+            skills.forEach(skill => {
+                const tag = document.createElement('div');
+                tag.className = 'skill-tag';
+                tag.innerHTML = `${skill} <i class="fas fa-times-circle"></i>`;
+                
+                tag.querySelector('i').addEventListener('click', function() {
+                    removeSkill(skill);
+                });
+                
+                container.appendChild(tag);
+            });
+        }
+        
+        // Affichage des compétences suggérées
+        function renderSuggestedSkills() {
+            const container = document.getElementById('suggested-skills');
+            container.innerHTML = '';
+            
+            suggestedSkills.forEach(skill => {
+                const tag = document.createElement('div');
+                tag.className = 'skill-tag';
+                tag.innerHTML = `${skill} <i class="fas fa-plus-circle" style="color: var(--purple);"></i>`;
+                
+                tag.querySelector('i').addEventListener('click', function() {
+                    addSuggestedSkill(skill);
+                });
+                
+                container.appendChild(tag);
+            });
+        }
+        
+        // Affichage des langues
+        function renderLanguages() {
+            const container = document.getElementById('languages-container');
+            container.innerHTML = '';
+            
+            languages.forEach(lang => {
+                const levelDisplay = getLevelDisplay(lang.level);
+                const dotsHTML = generateLevelDots(lang.level);
+                
+                const langElement = document.createElement('div');
+                langElement.className = 'cv-form-grid';
+                langElement.innerHTML = `
+                    <div class="form-group">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <label>${lang.name}</label>
+                            <div class="experience-actions">
+                                <button class="btn-icon edit edit-language" data-id="${lang.id}" style="width: 30px; height: 30px;" aria-label="Modifier cette langue">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </button>
+                                <button class="btn-icon delete delete-language" data-id="${lang.id}" style="width: 30px; height: 30px;" aria-label="Supprimer cette langue">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+                            <span>${levelDisplay}</span>
+                            ${lang.details ? `<span class="badge badge-info">${lang.details}</span>` : ''}
+                        </div>
+                        <div class="language-level-indicator">
+                            ${dotsHTML}
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(langElement);
+            });
+            
+            // Ajouter les écouteurs d'événements après le rendu
+            document.querySelectorAll('.edit-language').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = parseInt(this.getAttribute('data-id'));
+                    editLanguage(id);
+                });
+            });
+            
+            document.querySelectorAll('.delete-language').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = parseInt(this.getAttribute('data-id'));
+                    deleteLanguage(id);
+                });
+            });
+        }
+        
+        // Utilitaires
+        function formatMonth(dateString) {
+            if (!dateString) return '';
+            
+            const [year, month] = dateString.split('-');
+            const months = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
+            
+            return `${months[parseInt(month) - 1]} ${year}`;
+        }
+        
+        function getLevelDisplay(level) {
+            const levels = {
+                'langue-maternelle': 'Langue maternelle',
+                'c2': 'C2 - Maîtrise',
+                'c1': 'C1 - Avancé',
+                'b2': 'B2 - Intermédiaire supérieur',
+                'b1': 'B1 - Intermédiaire',
+                'a2': 'A2 - Élémentaire',
+                'a1': 'A1 - Débutant'
+            };
+            
+            return levels[level] || level;
+        }
+        
+        function generateLevelDots(level) {
+            const levelMap = {
+                'langue-maternelle': 6,
+                'c2': 6,
+                'c1': 5,
+                'b2': 4,
+                'b1': 3,
+                'a2': 2,
+                'a1': 1
+            };
+            
+            const dotsCount = levelMap[level] || 0;
+            let dotsHTML = '';
+            
+            for (let i = 0; i < 6; i++) {
+                dotsHTML += `<div class="level-dot${i < dotsCount ? ' active' : ''}"></div>`;
+            }
+            
+            return dotsHTML;
+        }
+        
+        // Gestion des événements
+        function initEventListeners() {
+            // Modèle d'expérience
+            document.getElementById('add-experience-btn').addEventListener('click', function() {
+                openExperienceModal();
+            });
+            
+            document.getElementById('close-experience-modal').addEventListener('click', function() {
+                closeExperienceModal();
+            });
+            
+            document.getElementById('cancel-experience').addEventListener('click', function() {
+                closeExperienceModal();
+            });
+            
+            document.getElementById('experience-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                saveExperience();
+            });
+            
+            // Switch contexte international
+            document.getElementById('international-context').addEventListener('change', function() {
+                const details = document.getElementById('international-details');
+                details.style.display = this.checked ? 'block' : 'none';
+            });
+            
+            // Checkbox poste actuel
+            document.getElementById('current-job').addEventListener('change', function() {
+                const endDateInput = document.getElementById('end-date');
+                endDateInput.disabled = this.checked;
+                if (this.checked) {
+                    endDateInput.value = '';
+                    document.getElementById('end-context').value = 'Poste actuel';
+                }
+            });
+            
+            // Modèle de formation
+            document.getElementById('add-education-btn').addEventListener('click', function() {
+                openEducationModal();
+            });
+            
+            document.getElementById('close-education-modal').addEventListener('click', function() {
+                closeEducationModal();
+            });
+            
+            document.getElementById('cancel-education').addEventListener('click', function() {
+                closeEducationModal();
+            });
+            
+            document.getElementById('education-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                saveEducation();
+            });
+            
+            // Modèle de langue
+            document.getElementById('add-language-btn').addEventListener('click', function() {
+                openLanguageModal();
+            });
+            
+            document.getElementById('close-language-modal').addEventListener('click', function() {
+                closeLanguageModal();
+            });
+            
+            document.getElementById('cancel-language').addEventListener('click', function() {
+                closeLanguageModal();
+            });
+            
+            document.getElementById('language-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                saveLanguage();
+            });
+            
+            // Ajout de compétence
+            document.getElementById('add-skill-btn').addEventListener('click', function() {
+                addSkill();
+            });
+            
+            document.getElementById('new-skill-input').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    addSkill();
+                }
+            });
+            
+            // Prévisualisation
+            document.getElementById('preview-cv-btn').addEventListener('click', function() {
+                openPreviewModal();
+            });
+            
+            document.getElementById('close-preview-modal').addEventListener('click', function() {
+                closePreviewModal();
+            });
+            
+            document.getElementById('close-preview').addEventListener('click', function() {
+                closePreviewModal();
+            });
+            
+            // Sauvegarde
+            document.getElementById('save-cv').addEventListener('click', function() {
+                saveCV();
+            });
+            
+            // Export PDF
+            document.getElementById('export-pdf-btn').addEventListener('click', function() {
+                exportPDF();
+            });
+            
+            document.getElementById('export-preview').addEventListener('click', function() {
+                exportPDF();
+            });
+        }
+        
+        // Gestion des modales
+        function openExperienceModal(experienceId = null) {
+            const modal = document.getElementById('experience-modal');
+            const form = document.getElementById('experience-form');
+            const title = document.getElementById('experience-modal-title');
+            
+            // Réinitialiser le formulaire
+            form.reset();
+            document.getElementById('international-details').style.display = 'none';
+            
+            if (experienceId) {
+                // Mode édition
+                const experience = experiences.find(exp => exp.id === experienceId);
+                if (experience) {
+                    title.textContent = 'Modifier une expérience professionnelle';
+                    document.getElementById('experience-id').value = experience.id;
+                    document.getElementById('job-title').value = experience.jobTitle;
+                    document.getElementById('company-name').value = experience.company;
+                    document.getElementById('industry-sector').value = experience.sector || '';
+                    document.getElementById('start-date').value = experience.startDate;
+                    document.getElementById('end-date').value = experience.endDate || '';
+                    document.getElementById('current-job').checked = experience.currentJob;
+                    document.getElementById('end-date').disabled = experience.currentJob;
+                    document.getElementById('contract-type').value = experience.contractType || '';
+                    document.getElementById('job-missions').value = experience.missions;
+                    document.getElementById('international-context').checked = experience.international;
+                    document.getElementById('international-details').style.display = experience.international ? 'block' : 'none';
+                    document.getElementById('languages-used').value = experience.languages || '';
+                    document.getElementById('software-used').value = experience.software || '';
+                    document.getElementById('end-context').value = experience.endContext || '';
+                }
+            } else {
+                // Mode ajout
+                title.textContent = 'Ajouter une expérience professionnelle';
+                document.getElementById('experience-id').value = '';
+            }
+            
+            modal.classList.add('active');
+        }
+        
+        function closeExperienceModal() {
+            document.getElementById('experience-modal').classList.remove('active');
+        }
+        
+        function openEducationModal(educationId = null) {
+            const modal = document.getElementById('education-modal');
+            const form = document.getElementById('education-form');
+            const title = document.getElementById('education-modal-title');
+            
+            // Réinitialiser le formulaire
+            form.reset();
+            
+            if (educationId) {
+                // Mode édition
+                const edu = education.find(e => e.id === educationId);
+                if (edu) {
+                    title.textContent = 'Modifier un diplôme ou certificat';
+                    document.getElementById('education-id').value = edu.id;
+                    document.getElementById('diploma-title').value = edu.title;
+                    document.getElementById('school-name').value = edu.school;
+                    document.getElementById('education-level').value = edu.level || '';
+                    document.getElementById('diploma-year').value = edu.year;
+                    document.getElementById('diploma-location').value = edu.location || '';
+                    document.getElementById('diploma-description').value = edu.description || '';
+                }
+            } else {
+                // Mode ajout
+                title.textContent = 'Ajouter un diplôme ou certificat';
+                document.getElementById('education-id').value = '';
+            }
+            
+            modal.classList.add('active');
+        }
+        
+        function closeEducationModal() {
+            document.getElementById('education-modal').classList.remove('active');
+        }
+        
+        function openLanguageModal(languageId = null) {
+            const modal = document.getElementById('language-modal');
+            const form = document.getElementById('language-form');
+            const title = document.getElementById('language-modal-title');
+            
+            // Réinitialiser le formulaire
+            form.reset();
+            
+            if (languageId) {
+                // Mode édition
+                const lang = languages.find(l => l.id === languageId);
+                if (lang) {
+                    title.textContent = 'Modifier une langue';
+                    document.getElementById('language-id').value = lang.id;
+                    document.getElementById('language-name').value = lang.name;
+                    document.getElementById('language-level').value = lang.level;
+                    document.getElementById('language-details').value = lang.details || '';
+                }
+            } else {
+                // Mode ajout
+                title.textContent = 'Ajouter une langue';
+                document.getElementById('language-id').value = '';
+            }
+            
+            modal.classList.add('active');
+        }
+        
+        function closeLanguageModal() {
+            document.getElementById('language-modal').classList.remove('active');
+        }
+        
+        function openPreviewModal() {
+            const modal = document.getElementById('preview-modal');
+            const previewContainer = document.getElementById('cv-preview');
+            
+            // Générer la prévisualisation
+            previewContainer.innerHTML = generateCVPreview();
+            
+            modal.classList.add('active');
+        }
+        
+        function closePreviewModal() {
+            document.getElementById('preview-modal').classList.remove('active');
+        }
+        
+        // Génération de la prévisualisation du CV
+        function generateCVPreview() {
+            // Ici, vous pouvez créer une représentation HTML du CV
+            let html = `
+                <div class="preview-header">
+                    <h2>Jean-Olivier Penin</h2>
+                    <div class="preview-actions">
+                        <span class="badge badge-success">CV à jour</span>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 30px;">
+                    <p><i class="fas fa-envelope"></i> jean-olivier.penin@b-acceptance.com &nbsp; | &nbsp;
+                    <i class="fas fa-phone"></i> +33 6 12 34 56 78 &nbsp; | &nbsp;
+                    <i class="fas fa-map-marker-alt"></i> Paris, France</p>
+                </div>
+                
+                <h3 style="border-bottom: 1px solid #ddd; padding-bottom: 10px; margin-bottom: 20px;">
+                    <i class="fas fa-briefcase"></i> Expérience professionnelle
+                </h3>
+            `;
+            
+            // Ajouter les expériences
+            experiences.forEach(exp => {
+                const dateStr = exp.currentJob 
+                    ? `${formatMonth(exp.startDate)} - Présent` 
+                    : `${formatMonth(exp.startDate)} - ${formatMonth(exp.endDate)}`;
+                
+                html += `
+                    <div style="margin-bottom: 20px;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <h4 style="margin: 0;">${exp.jobTitle}</h4>
+                            <span>${dateStr}</span>
+                        </div>
+                        <div style="margin-bottom: 10px;">
+                            <strong>${exp.company}</strong> ${exp.sector ? `- ${exp.sector}` : ''}
+                            ${exp.contractType ? `<span class="badge">${exp.contractType}</span>` : ''}
+                        </div>
+                        <p>${exp.missions}</p>
+                        ${exp.international ? `<p><strong>Contexte international:</strong> ${exp.languages}</p>` : ''}
+                        ${exp.software ? `<p><strong>Logiciels:</strong> ${exp.software}</p>` : ''}
+                    </div>
+                `;
+            });
+            
+            // Ajouter la formation
+            html += `
+                <h3 style="border-bottom: 1px solid #ddd; padding-bottom: 10px; margin: 30px 0 20px;">
+                    <i class="fas fa-graduation-cap"></i> Formation
+                </h3>
+            `;
+            
+            education.forEach(edu => {
+                html += `
+                    <div style="margin-bottom: 20px;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <h4 style="margin: 0;">${edu.title}</h4>
+                            <span>${edu.year}</span>
+                        </div>
+                        <div style="margin-bottom: 10px;">
+                            <strong>${edu.school}</strong> ${edu.location ? `- ${edu.location}` : ''}
+                            ${edu.level ? `<span class="badge">${edu.level}</span>` : ''}
+                        </div>
+                        ${edu.description ? `<p>${edu.description}</p>` : ''}
+                    </div>
+                `;
+            });
+            
+            // Ajouter les compétences
+            html += `
+                <h3 style="border-bottom: 1px solid #ddd; padding-bottom: 10px; margin: 30px 0 20px;">
+                    <i class="fas fa-tools"></i> Compétences
+                </h3>
+                <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+            `;
+            
+            skills.forEach(skill => {
+                html += `<span class="skill-tag">${skill}</span>`;
+            });
+            
+            html += `
+                </div>
+                
+                <h3 style="border-bottom: 1px solid #ddd; padding-bottom: 10px; margin: 30px 0 20px;">
+                    <i class="fas fa-language"></i> Langues
+                </h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px;">
+            `;
+            
+            languages.forEach(lang => {
+                const levelDisplay = getLevelDisplay(lang.level);
+                html += `
+                    <div>
+                        <strong>${lang.name}</strong> - ${levelDisplay}
+                        ${lang.details ? `<br><span class="badge badge-info">${lang.details}</span>` : ''}
+                    </div>
+                `;
+            });
+            
+            html += `</div>`;
+            
+            return html;
+        }
+        
+        // Gestion des expériences
+        function saveExperience() {
+            const id = document.getElementById('experience-id').value;
+            const isCurrentJob = document.getElementById('current-job').checked;
+            
+            const experience = {
+                jobTitle: document.getElementById('job-title').value,
+                company: document.getElementById('company-name').value,
+                startDate: document.getElementById('start-date').value,
+                endDate: isCurrentJob ? '' : document.getElementById('end-date').value,
+                currentJob: isCurrentJob,
+                contractType: document.getElementById('contract-type').value,
+                sector: document.getElementById('industry-sector').value,
+                missions: document.getElementById('job-missions').value,
+                international: document.getElementById('international-context').checked,
+                languages: document.getElementById('languages-used').value,
+                software: document.getElementById('software-used').value,
+                endContext: document.getElementById('end-context').value
+            };
+            
+            if (id) {
+                // Mode édition
+                const index = experiences.findIndex(exp => exp.id === parseInt(id));
+                if (index !== -1) {
+                    experience.id = parseInt(id);
+                    experiences[index] = experience;
+                }
+            } else {
+                // Mode ajout
+                experience.id = experiences.length > 0 ? Math.max(...experiences.map(e => e.id)) + 1 : 1;
+                experiences.push(experience);
+            }
+            
+            renderExperiences();
+            closeExperienceModal();
+            showNotification('Expérience professionnelle enregistrée avec succès !');
+        }
+        
+        function editExperience(id) {
+            openExperienceModal(id);
+        }
+        
+        function deleteExperience(id) {
+            if (confirm('Êtes-vous sûr de vouloir supprimer cette expérience ?')) {
+                experiences = experiences.filter(exp => exp.id !== id);
+                renderExperiences();
+                showNotification('Expérience professionnelle supprimée avec succès !');
+            }
+        }
+        
+        // Gestion des formations
+        function saveEducation() {
+            const id = document.getElementById('education-id').value;
+            
+            const edu = {
+                title: document.getElementById('diploma-title').value,
+                school: document.getElementById('school-name').value,
+                year: parseInt(document.getElementById('diploma-year').value),
+                level: document.getElementById('education-level').value,
+                location: document.getElementById('diploma-location').value,
+                description: document.getElementById('diploma-description').value
+            };
+            
+            if (id) {
+                // Mode édition
+                const index = education.findIndex(e => e.id === parseInt(id));
+                if (index !== -1) {
+                    edu.id = parseInt(id);
+                    education[index] = edu;
+                }
+            } else {
+                // Mode ajout
+                edu.id = education.length > 0 ? Math.max(...education.map(e => e.id)) + 1 : 1;
+                education.push(edu);
+            }
+            
+            renderEducation();
+            closeEducationModal();
+            showNotification('Formation enregistrée avec succès !');
+        }
+        
+        function editEducation(id) {
+            openEducationModal(id);
+        }
+        
+        function deleteEducation(id) {
+            if (confirm('Êtes-vous sûr de vouloir supprimer cette formation ?')) {
+                education = education.filter(edu => edu.id !== id);
+                renderEducation();
+                showNotification('Formation supprimée avec succès !');
+            }
+        }
+        
+        // Gestion des langues
+        function saveLanguage() {
+            const id = document.getElementById('language-id').value;
+            
+            const lang = {
+                name: document.getElementById('language-name').value,
+                level: document.getElementById('language-level').value,
+                details: document.getElementById('language-details').value
+            };
+            
+            if (id) {
+                // Mode édition
+                const index = languages.findIndex(l => l.id === parseInt(id));
+                if (index !== -1) {
+                    lang.id = parseInt(id);
+                    languages[index] = lang;
+                }
+            } else {
+                // Mode ajout
+                lang.id = languages.length > 0 ? Math.max(...languages.map(l => l.id)) + 1 : 1;
+                languages.push(lang);
+            }
+            
+            renderLanguages();
+            closeLanguageModal();
+            showNotification('Langue enregistrée avec succès !');
+        }
+        
+        function editLanguage(id) {
+            openLanguageModal(id);
+        }
+        
+        function deleteLanguage(id) {
+            if (confirm('Êtes-vous sûr de vouloir supprimer cette langue ?')) {
+                languages = languages.filter(lang => lang.id !== id);
+                renderLanguages();
+                showNotification('Langue supprimée avec succès !');
+            }
+        }
+        
+        // Gestion des compétences
+        function addSkill() {
+            const input = document.getElementById('new-skill-input');
+            const skill = input.value.trim();
+            
+            if (skill && !skills.includes(skill)) {
+                skills.push(skill);
+                renderSkills();
+                input.value = '';
+                showNotification('Compétence ajoutée avec succès !');
+            }
+        }
+        
+        function removeSkill(skill) {
+            skills = skills.filter(s => s !== skill);
+            renderSkills();
+        }
+        
+        function addSuggestedSkill(skill) {
+            if (!skills.includes(skill)) {
+                skills.push(skill);
+                suggestedSkills = suggestedSkills.filter(s => s !== skill);
+                renderSkills();
+                renderSuggestedSkills();
+                showNotification('Compétence ajoutée avec succès !');
+            }
+        }
+        
+        // Sauvegarde du CV
+        function saveCV() {
+            // Simuler la sauvegarde du CV
+            showNotification('Votre CV a été enregistré avec succès !');
+            
+            // Mise à jour de la progression
+            updateProgress();
+        }
+        
+        function updateProgress() {
+            // Simuler le calcul de la progression
+            const total = 100;
+            const current = 75 + Math.floor(Math.random() * 5); // Entre 75 et 79 pour la démo
+            
+            document.querySelector('.progress-bar').style.width = `${current}%`;
+            document.querySelector('.percentage').textContent = `${current}%`;
+            document.querySelector('.status-text').textContent = `Votre CV est complet à ${current}%`;
+        }
+        
+        function exportPDF() {
+            // Simuler l'export PDF
+            showNotification('Votre CV a été exporté en PDF avec succès !');
+        }
+        
+        // Notification
+        function showNotification(message) {
+            const notification = document.getElementById('save-notification');
+            document.getElementById('notification-message').textContent = message;
+            
+            notification.classList.add('show');
+            
+            setTimeout(function() {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Animations
+        function initAnimations() {
+            // Animation au défilement
+            const animatedElements = document.querySelectorAll('.fade-in');
+            
+            function checkIfInView() {
+                const windowHeight = window.innerHeight;
+                const windowTop = window.scrollY;
+                const windowBottom = windowTop + windowHeight;
+                
+                animatedElements.forEach(function(element) {
+                    const elementTop = element.getBoundingClientRect().top + windowTop;
+                    const elementBottom = elementTop + element.offsetHeight;
+                    
+                    // Si l'élément est visible dans la fenêtre
+                    if (elementBottom > windowTop && elementTop < windowBottom) {
+                        element.classList.add('visible');
+                    }
+                });
+            }
+            
+            // Vérifier au chargement de la page
+            checkIfInView();
+            
+            // Vérifier lors du défilement
+            window.addEventListener('scroll', checkIfInView);
+            
+            // Menu mobile toggle
+            const menuToggle = document.querySelector('.menu-toggle');
+            const nav = document.querySelector('nav');
+            
+            if (menuToggle && nav) {
+                menuToggle.addEventListener('click', function() {
+                    nav.classList.toggle('active');
+                    this.classList.toggle('active');
+                });
+            }
+            
+            // Bouton de retour en haut
+            const scrollToTopButton = document.getElementById('scroll-to-top');
+            
+            if (scrollToTopButton) {
+                window.addEventListener('scroll', function() {
+                    if (window.scrollY > 500) {
+                        scrollToTopButton.classList.add('visible');
+                    } else {
+                        scrollToTopButton.classList.remove('visible');
+                    }
+                });
+                
+                scrollToTopButton.addEventListener('click', function() {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+        }
+    </script>
+</body>
+</html>
