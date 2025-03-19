@@ -269,6 +269,32 @@
             color: white;
             box-shadow: 0 4px 8px rgba(124,58,237,0.3);
         }
+        
+        /* Améliorations UI/UX */
+        .page-title {
+            margin-bottom: 1.5rem;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--purple);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .page-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 50px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--purple) 0%, var(--purple-light) 100%);
+            border-radius: 2px;
+        }
+        
+        .section-header {
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
     </style>
 </head>
 <body>
@@ -310,7 +336,7 @@
             <span>Mes opportunités sélectionnées</span>
         </div>
         
-        <!-- Navigation contextuelle avec flèches pour changer de page -->
+        <!-- Navigation contextuelle avec flèche pour retour au tableau de bord -->
         <div class="contextual-nav fade-in">
             <a href="candidate-dashboard.html?email=demo.utilisateur%40nexten.fr&password=s" class="previous-page" data-tooltip="Retour au tableau de bord">
                 <i class="fas fa-chevron-left"></i> Tableau de bord
