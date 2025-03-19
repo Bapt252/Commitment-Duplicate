@@ -18,1023 +18,6 @@
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <style>
-        :root {
-            --purple: #7c3aed;
-            --purple-light: #ede9fe;
-            --purple-dark: #5b21b6;
-            --yellow: #fef9c3;
-            --yellow-dark: #ca8a04;
-            --green: #10b981;
-            --green-light: #d1fae5;
-            --red: #ef4444;
-            --red-light: #fee2e2;
-            --blue: #3b82f6;
-            --blue-light: #dbeafe;
-            --cream: #f8fafc;
-            --white: #ffffff;
-            --black: #0f172a;
-            --gray: #64748b;
-            --gray-light: #e2e8f0;
-            --gray-dark: #334155;
-            --radius-sm: 6px;
-            --radius-md: 10px;
-            --radius-lg: 16px;
-            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
-            --shadow-md: 0 8px 16px rgba(0,0,0,0.1);
-            --shadow-lg: 0 12px 24px rgba(0,0,0,0.15);
-            --transition: all 0.3s ease;
-            --spacing-xs: 4px;
-            --spacing-sm: 8px;
-            --spacing-md: 16px;
-            --spacing-lg: 24px;
-            --spacing-xl: 32px;
-        }
-        
-        /* Améliorations pour le système Kanban */
-        .kanban-container {
-            display: flex;
-            overflow-x: auto;
-            padding-bottom: 16px;
-            min-height: calc(100vh - 400px);
-            gap: 20px;
-            scroll-behavior: smooth;
-            scrollbar-width: thin;
-            scrollbar-color: var(--gray) var(--gray-light);
-        }
-
-        .kanban-container::-webkit-scrollbar {
-            height: 8px;
-        }
-
-        .kanban-container::-webkit-scrollbar-track {
-            background: var(--gray-light);
-            border-radius: 10px;
-        }
-
-        .kanban-container::-webkit-scrollbar-thumb {
-            background-color: var(--gray);
-            border-radius: 10px;
-        }
-
-        .kanban-column {
-            flex: 0 0 300px;
-            background-color: var(--gray-light);
-            border-radius: var(--radius-md);
-            padding: 16px;
-            display: flex;
-            flex-direction: column;
-            max-height: calc(100vh - 350px);
-            transition: background-color 0.2s ease;
-        }
-
-        .kanban-column-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid rgba(0,0,0,0.1);
-        }
-
-        .kanban-column-title {
-            font-weight: 600;
-            font-size: 1rem;
-            color: var(--gray-dark);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .kanban-column-count {
-            background-color: var(--white);
-            color: var(--purple);
-            border-radius: 50%;
-            width: 25px;
-            height: 25px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .kanban-column-content {
-            overflow-y: auto;
-            flex-grow: 1;
-            padding-right: 4px;
-        }
-
-        .kanban-column-content::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .kanban-column-content::-webkit-scrollbar-track {
-            background: rgba(0,0,0,0.05);
-            border-radius: 10px;
-        }
-
-        .kanban-column-content::-webkit-scrollbar-thumb {
-            background: rgba(0,0,0,0.1);
-            border-radius: 10px;
-        }
-
-        .kanban-column-content::-webkit-scrollbar-thumb:hover {
-            background: rgba(0,0,0,0.2);
-        }
-
-        .kanban-card {
-            background-color: var(--white);
-            border-radius: var(--radius-md);
-            padding: 16px;
-            margin-bottom: 12px;
-            box-shadow: var(--shadow-sm);
-            transition: var(--transition);
-            border-left: 4px solid var(--purple);
-            cursor: grab;
-            position: relative; /* Pour les badges de position */
-            animation: fadeIn 0.3s ease-out forwards;
-        }
-
-        .kanban-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .kanban-card:active {
-            cursor: grabbing;
-        }
-
-        .kanban-card-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-        }
-
-        .kanban-card-title {
-            font-weight: 600;
-            font-size: 1rem;
-            color: var(--black);
-        }
-
-        .kanban-card-job {
-            font-size: 0.8rem;
-            color: var(--gray);
-            margin-bottom: 10px;
-        }
-
-        .kanban-card-info {
-            font-size: 0.8rem;
-            margin-bottom: 12px;
-        }
-
-        .kanban-card-info p {
-            display: flex;
-            align-items: center;
-            margin-bottom: 5px;
-            gap: 8px;
-        }
-
-        .kanban-card-info i {
-            color: var(--purple);
-            width: 16px;
-        }
-
-        .kanban-card-actions {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 10px;
-        }
-
-        .kanban-add-card {
-            background-color: rgba(255, 255, 255, 0.8);
-            border: 2px dashed var(--gray-light);
-            border-radius: var(--radius-md);
-            padding: 10px;
-            margin-top: 10px;
-            text-align: center;
-            color: var(--gray);
-            transition: var(--transition);
-            cursor: pointer;
-        }
-
-        .kanban-add-card:hover {
-            background-color: var(--white);
-            border-color: var(--purple-light);
-            color: var(--purple);
-        }
-
-        /* Drag & Drop styles */
-        .kanban-card.dragging {
-            opacity: 0.5;
-            transform: scale(0.95);
-        }
-
-        .kanban-column.drag-over {
-            background-color: var(--purple-light);
-        }
-        
-        /* Styles pour les filtres et recherche améliorés */
-        .search-filter-bar {
-            background-color: var(--white);
-            border-radius: var(--radius-lg);
-            padding: 16px;
-            margin-bottom: 24px;
-            box-shadow: var(--shadow-sm);
-            transition: var(--transition);
-        }
-
-        .search-filter-bar:hover {
-            box-shadow: var(--shadow-md);
-        }
-
-        .search-input-group {
-            display: flex;
-            background-color: var(--cream);
-            border-radius: 50px;
-            padding: 6px 6px 6px 16px;
-            align-items: center;
-            border: 1px solid var(--gray-light);
-        }
-
-        .search-input-group:focus-within {
-            border-color: var(--purple);
-            box-shadow: 0 0 0 3px var(--purple-light);
-        }
-
-        .search-input-group input {
-            border: none;
-            background: transparent;
-            padding: 8px;
-            flex-grow: 1;
-            outline: none;
-        }
-
-        .search-input-group button {
-            border-radius: 50px;
-            margin-left: 8px;
-        }
-
-        .filter-badges {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 12px;
-        }
-
-        .filter-badge {
-            background-color: var(--purple-light);
-            color: var(--purple-dark);
-            border-radius: 50px;
-            padding: 6px 12px;
-            font-size: 0.8rem;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: var(--transition);
-            cursor: pointer;
-        }
-
-        .filter-badge:hover {
-            background-color: var(--purple);
-            color: var(--white);
-        }
-
-        .filter-badge i.fa-xmark {
-            font-size: 0.7rem;
-        }
-        
-        /* Styles pour la barre de statistiques */
-        .stats-summary {
-            display: flex;
-            justify-content: space-between;
-            background-color: var(--white);
-            border-radius: var(--radius-lg);
-            padding: 16px 24px;
-            margin-bottom: 24px;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .stats-item {
-            text-align: center;
-            padding: 0 16px;
-            border-right: 1px solid var(--gray-light);
-            flex: 1;
-        }
-
-        .stats-item:last-child {
-            border-right: none;
-        }
-
-        .stats-value {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 4px;
-            background: linear-gradient(90deg, var(--purple), var(--purple-dark));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .stats-label {
-            font-size: 0.9rem;
-            color: var(--gray);
-        }
-        
-        /* Styles pour l'indicateur de priorité */
-        .priority-indicator {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            font-size: 0.75rem;
-            padding: 2px 8px;
-            border-radius: 50px;
-        }
-
-        .priority-high {
-            background-color: var(--red-light);
-            color: var(--red);
-        }
-
-        .priority-medium {
-            background-color: var(--yellow);
-            color: var(--yellow-dark);
-        }
-
-        .priority-low {
-            background-color: var(--green-light);
-            color: var(--green);
-        }
-        
-        /* Styles pour les postes */
-        .job-tag {
-            display: inline-block;
-            background-color: var(--blue-light);
-            color: var(--blue);
-            border-radius: 50px;
-            padding: 2px 8px;
-            font-size: 0.75rem;
-            margin-right: 4px;
-        }
-        
-        /* Animation pour les cartes */
-        @keyframes slideInUp {
-            from {
-                transform: translateY(20px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-        
-        .animate-card {
-            animation: slideInUp 0.3s ease-out forwards;
-        }
-        
-        /* Styles pour les détails du candidat */
-        .candidate-details-panel {
-            position: fixed;
-            top: 0;
-            right: -450px;
-            width: 400px;
-            height: 100vh;
-            background-color: var(--white);
-            z-index: 1050;
-            box-shadow: var(--shadow-lg);
-            transition: right 0.3s ease-in-out;
-            padding: 24px;
-            overflow-y: auto;
-        }
-        
-        .candidate-details-panel.open {
-            right: 0;
-        }
-        
-        .panel-close-btn {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            background: none;
-            border: none;
-            font-size: 1.2rem;
-            color: var(--gray);
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        
-        .panel-close-btn:hover {
-            color: var(--black);
-            transform: rotate(90deg);
-        }
-        
-        .candidate-profile {
-            text-align: center;
-            margin-bottom: 24px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid var(--gray-light);
-        }
-        
-        .candidate-avatar {
-            width: 100px;
-            height: 100px;
-            background-color: var(--purple-light);
-            color: var(--purple);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            font-weight: 600;
-            margin: 0 auto 16px;
-        }
-        
-        .candidate-name {
-            font-size: 1.4rem;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-        
-        .candidate-position {
-            color: var(--gray);
-            margin-bottom: 16px;
-        }
-        
-        .candidate-actions-panel {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-bottom: 16px;
-        }
-        
-        .panel-section {
-            margin-bottom: 24px;
-        }
-        
-        .panel-section-title {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .panel-section-title i {
-            color: var(--purple);
-        }
-        
-        .timeline-item {
-            padding-left: 24px;
-            position: relative;
-            margin-bottom: 16px;
-            padding-bottom: 16px;
-            border-bottom: 1px dashed var(--gray-light);
-        }
-        
-        .timeline-item:last-child {
-            border-bottom: none;
-        }
-        
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background-color: var(--purple);
-        }
-        
-        .timeline-item::after {
-            content: '';
-            position: absolute;
-            left: 5px;
-            top: 12px;
-            width: 2px;
-            height: calc(100% - 12px);
-            background-color: var(--gray-light);
-        }
-        
-        .timeline-date {
-            font-size: 0.8rem;
-            color: var(--gray);
-            margin-bottom: 4px;
-        }
-        
-        .timeline-title {
-            font-weight: 500;
-            margin-bottom: 4px;
-        }
-        
-        .timeline-desc {
-            font-size: 0.9rem;
-            color: var(--gray-dark);
-        }
-        
-        /* Overlay pour le panel */
-        .panel-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 1040;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease-in-out;
-        }
-        
-        .panel-overlay.open {
-            opacity: 1;
-            visibility: visible;
-        }
-        
-        /* Améliorations des boutons */
-        .btn-add {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--purple), var(--purple-dark));
-            color: var(--white);
-            font-size: 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: var(--shadow-lg);
-            border: none;
-            z-index: 100;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-add:hover {
-            transform: scale(1.1) rotate(90deg);
-            box-shadow: 0 8px 25px rgba(124, 58, 237, 0.4);
-        }
-        
-        .btn-add-menu {
-            position: fixed;
-            bottom: 100px;
-            right: 30px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            z-index: 99;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.3s ease;
-            pointer-events: none;
-        }
-        
-        .btn-add-menu.open {
-            opacity: 1;
-            transform: translateY(0);
-            pointer-events: all;
-        }
-        
-        .btn-add-item {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: var(--white);
-            color: var(--purple);
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: var(--shadow-md);
-            border: 2px solid var(--purple-light);
-            transition: all 0.3s ease;
-        }
-        
-        .btn-add-item:hover {
-            background-color: var(--purple);
-            color: var(--white);
-            transform: scale(1.1);
-        }
-        
-        .btn-add-menu-label {
-            position: absolute;
-            right: 70px;
-            background-color: var(--white);
-            color: var(--black);
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            box-shadow: var(--shadow-sm);
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.2s ease;
-            white-space: nowrap;
-        }
-        
-        .btn-add-item:hover .btn-add-menu-label {
-            opacity: 1;
-        }
-        
-        /* Améliorations pour la navigation */
-        .nav-tabs {
-            border-bottom: none;
-            gap: 10px;
-        }
-        
-        .nav-tabs .nav-link {
-            border-radius: var(--radius-md);
-            transition: all 0.3s ease;
-            font-weight: 500;
-            color: var(--gray);
-            border: 1px solid var(--gray-light);
-            padding: 10px 20px;
-            margin-bottom: 0;
-        }
-        
-        .nav-tabs .nav-link.active {
-            background-color: var(--purple-light);
-            color: var(--purple);
-            border-color: var(--purple);
-            box-shadow: 0 4px 10px rgba(124, 58, 237, 0.1);
-        }
-        
-        .nav-tabs .nav-link:hover:not(.active) {
-            background-color: var(--cream);
-            color: var(--purple);
-            transform: translateY(-2px);
-        }
-        
-        /* Responsive design amélioré */
-        @media (max-width: 992px) {
-            .stats-summary {
-                flex-wrap: wrap;
-            }
-            
-            .stats-item {
-                flex: 1 0 calc(50% - 1px);
-                margin-bottom: 16px;
-                border-right: none;
-                border-bottom: 1px solid var(--gray-light);
-            }
-            
-            .stats-item:nth-last-child(-n+2) {
-                border-bottom: none;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .stats-item {
-                flex: 1 0 100%;
-            }
-            
-            .stats-item:nth-last-child(-n+2) {
-                border-bottom: 1px solid var(--gray-light);
-            }
-            
-            .stats-item:last-child {
-                border-bottom: none;
-            }
-            
-            .search-filter-bar .row {
-                flex-direction: column;
-            }
-            
-            .candidate-details-panel {
-                width: 100%;
-                right: -100%;
-            }
-        }
-        
-        /* Animation pour l'icône de notification */
-        @keyframes shake {
-            0% { transform: rotate(0deg); }
-            25% { transform: rotate(5deg); }
-            50% { transform: rotate(0eg); }
-            75% { transform: rotate(-5deg); }
-            100% { transform: rotate(0deg); }
-        }
-
-        .fa-shake {
-            animation: shake 0.8s infinite;
-        }
-        
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .fade-in {
-            animation: fadeIn 0.5s ease-out forwards;
-        }
-
-        /* ----- NOUVELLES FONCTIONNALITÉS ----- */
-
-        /* Sélecteur d'offres */
-        .job-offers-selector {
-            margin-bottom: 20px;
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .job-offer-tab {
-            flex: 1;
-            min-width: 200px;
-            padding: 12px 16px;
-            background-color: var(--white);
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-sm);
-            text-align: center;
-            cursor: pointer;
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-            border: 2px solid transparent;
-        }
-
-        .job-offer-tab:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .job-offer-tab.active {
-            background-color: var(--white);
-            border-color: var(--purple);
-            box-shadow: 0 5px 15px rgba(124, 58, 237, 0.2);
-        }
-
-        .job-offer-tab.active::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--purple), var(--purple-dark));
-        }
-
-        .job-offer-title {
-            font-weight: 600;
-            color: var(--black);
-            margin-bottom: 5px;
-        }
-
-        .job-offer-stats {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.8rem;
-            color: var(--gray);
-        }
-
-        .job-offer-stat {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .job-offer-stat i {
-            color: var(--purple);
-        }
-
-        /* Membres de l'organisation */
-        .team-members-container {
-            position: relative;
-        }
-
-        .team-members-dropdown {
-            position: absolute;
-            z-index: 10;
-            top: 100%;
-            left: 0;
-            width: 250px;
-            background-color: var(--white);
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-md);
-            padding: 15px;
-            display: none;
-        }
-
-        .team-members-dropdown.show {
-            display: block;
-            animation: fadeIn 0.3s ease-out forwards;
-        }
-
-        .team-member-list {
-            max-height: 300px;
-            overflow-y: auto;
-        }
-
-        .team-member-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 8px 10px;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .team-member-item:hover {
-            background-color: var(--purple-light);
-        }
-
-        .team-member-avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background-color: var(--purple-light);
-            color: var(--purple);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        .team-member-info {
-            flex: 1;
-        }
-
-        .team-member-name {
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: var(--black);
-            margin-bottom: 2px;
-        }
-
-        .team-member-role {
-            font-size: 0.75rem;
-            color: var(--gray);
-        }
-
-        .team-member-checkbox {
-            width: 18px;
-            height: 18px;
-            accent-color: var(--purple);
-        }
-
-        .team-members-search {
-            position: relative;
-            margin-bottom: 10px;
-        }
-
-        .team-members-search input {
-            width: 100%;
-            padding: 8px 15px 8px 35px;
-            border: 1px solid var(--gray-light);
-            border-radius: 20px;
-            font-size: 0.9rem;
-            transition: var(--transition);
-        }
-
-        .team-members-search input:focus {
-            border-color: var(--purple);
-            box-shadow: 0 0 0 3px var(--purple-light);
-            outline: none;
-        }
-
-        .team-members-search i {
-            position: absolute;
-            left: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--gray);
-            font-size: 0.9rem;
-        }
-
-        /* Collaborateurs dans les cartes Kanban */
-        .assigned-members {
-            display: flex;
-            align-items: center;
-            margin-top: 10px;
-        }
-
-        .assigned-members-avatars {
-            display: flex;
-            margin-right: 8px;
-        }
-
-        .member-avatar {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background-color: var(--purple-light);
-            color: var(--purple);
-            font-size: 0.7rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px solid white;
-            margin-left: -8px;
-            transition: var(--transition);
-        }
-
-        .member-avatar:first-child {
-            margin-left: 0;
-        }
-
-        .member-avatar:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-            z-index: 1;
-        }
-
-        .member-avatar-count {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background-color: var(--gray-light);
-            color: var(--gray);
-            font-size: 0.7rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px solid white;
-            margin-left: -8px;
-        }
-
-        .add-member-btn {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            border: 1px dashed var(--gray);
-            background-color: transparent;
-            color: var(--gray);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-left: 5px;
-            transition: var(--transition);
-            cursor: pointer;
-        }
-
-        .add-member-btn:hover {
-            border-color: var(--purple);
-            color: var(--purple);
-            transform: rotate(90deg);
-        }
-
-        /* Paramètres d'étape améliorés */
-        .column-settings-dropdown {
-            position: absolute;
-            top: 40px;
-            right: 0;
-            width: 240px;
-            background-color: var(--white);
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-md);
-            z-index: 10;
-            display: none;
-            padding: 12px;
-        }
-
-        .column-settings-dropdown.show {
-            display: block;
-            animation: fadeIn 0.3s ease-out forwards;
-        }
-
-        .column-settings-dropdown h6 {
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: var(--gray-dark);
-            padding-bottom: 10px;
-            border-bottom: 1px solid var(--gray-light);
-        }
-
-        .column-settings-item {
-            padding: 8px 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            border-radius: var(--radius-sm);
-            transition: var(--transition);
-        }
-
-        .column-settings-item:hover {
-            background-color: var(--purple-light);
-        }
-
-        .column-settings-item i {
-            color: var(--purple);
-            font-size: 0.9rem;
-            width: 16px;
-        }
-
-        .column-actions {
-            position: relative;
-        }
-    </style>
 </head>
 <body>
     <!-- Notification bar avec animation -->
@@ -1121,7 +104,46 @@
             </div>
         </div>
         
-        <!-- NOUVEAU: Sélecteur d'offres d'emploi -->
+        <!-- NOUVEAU: Progress bar pour les étapes de recrutement -->
+        <div class="recruitment-progress">
+            <div class="progress-line">
+                <div class="progress-line-filled" style="width: 40%;"></div>
+            </div>
+            <div class="progress-steps">
+                <div class="progress-step">
+                    <div class="step-circle completed">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="step-label">En cours de validation</div>
+                </div>
+                <div class="progress-step">
+                    <div class="step-circle completed">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="step-label">Call prise de contact</div>
+                </div>
+                <div class="progress-step">
+                    <div class="step-circle active">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <div class="step-label">Visioconférence</div>
+                </div>
+                <div class="progress-step">
+                    <div class="step-circle">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="step-label">Entretien présentiel</div>
+                </div>
+                <div class="progress-step">
+                    <div class="step-circle">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="step-label">Acceptation</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sélecteur d'offres d'emploi -->
         <div class="job-offers-selector">
             <div class="job-offer-tab active" data-job-id="comptabilite">
                 <div class="job-offer-title">Comptabilité général</div>
@@ -1172,8 +194,11 @@
                             <li><hr class="dropdown-divider"></li>
                             <li><h6 class="dropdown-header">Par étape</h6></li>
                             <li><a class="dropdown-item" href="#"><i class="fas fa-check text-purple me-2"></i>Tous les statuts</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="far fa-square text-gray me-2"></i>En attente</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="far fa-square text-gray me-2"></i>Entretien planifié</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="far fa-square text-gray me-2"></i>En cours de validation</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="far fa-square text-gray me-2"></i>Call prise de contact</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="far fa-square text-gray me-2"></i>Visioconférence</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="far fa-square text-gray me-2"></i>Entretien présentiel</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="far fa-square text-gray me-2"></i>Acceptation</a></li>
                         </ul>
                     </div>
                     <div class="dropdown filter-dropdown">
@@ -1188,7 +213,7 @@
                             <li><a class="dropdown-item" href="#"><i class="far fa-square text-gray me-2"></i>Matching (descendant)</a></li>
                         </ul>
                     </div>
-                    <!-- NOUVEAU: Menu team members -->
+                    <!-- Menu team members -->
                     <div class="dropdown filter-dropdown team-members-container">
                         <button class="btn btn-light dropdown-toggle" type="button" id="teamDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fas fa-users"></i> Équipe
@@ -1228,22 +253,6 @@
                                     <div class="team-member-info">
                                         <div class="team-member-name">Claire Leroy</div>
                                         <div class="team-member-role">Responsable financier</div>
-                                    </div>
-                                    <input type="checkbox" class="team-member-checkbox">
-                                </div>
-                                <div class="team-member-item">
-                                    <div class="team-member-avatar">PD</div>
-                                    <div class="team-member-info">
-                                        <div class="team-member-name">Philippe Duval</div>
-                                        <div class="team-member-role">Chef de projet</div>
-                                    </div>
-                                    <input type="checkbox" class="team-member-checkbox">
-                                </div>
-                                <div class="team-member-item">
-                                    <div class="team-member-avatar">AM</div>
-                                    <div class="team-member-info">
-                                        <div class="team-member-name">Anne Martin</div>
-                                        <div class="team-member-role">Assistante RH</div>
                                     </div>
                                     <input type="checkbox" class="team-member-checkbox">
                                 </div>
@@ -1300,18 +309,17 @@
             <!-- Onglet Kanban (amélioré) -->
             <div class="tab-pane fade show active" id="kanban" role="tabpanel" aria-labelledby="kanban-tab">
                 <div class="kanban-container">
-                    <!-- Colonne: Candidatures -->
-                    <div class="kanban-column" data-stage="new">
+                    <!-- Colonne: En cours de validation -->
+                    <div class="kanban-column" data-stage="validation">
                         <div class="kanban-column-header">
                             <div class="kanban-column-title">
-                                <i class="fas fa-file-alt"></i> Candidatures
+                                <i class="fas fa-clipboard-check"></i> En cours de validation
                                 <div class="kanban-column-count">3</div>
                             </div>
                             <div class="kanban-column-actions column-actions">
                                 <button class="btn btn-sm btn-light settings-btn">
                                     <i class="fas fa-ellipsis-v"></i>
                                 </button>
-                                <!-- NOUVEAU: Menu de paramètres de colonne -->
                                 <div class="column-settings-dropdown">
                                     <h6>Options d'étape</h6>
                                     <div class="column-settings-item">
@@ -1326,20 +334,16 @@
                                         <i class="fas fa-clock"></i>
                                         <span>Définir SLA</span>
                                     </div>
-                                    <div class="column-settings-item">
-                                        <i class="fas fa-bell"></i>
-                                        <span>Configurer alertes</span>
-                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="kanban-column-content">
-                            <!-- Carte candidat 1 (avec membres assignés) -->
+                            <!-- Carte candidat 1 -->
                             <div class="kanban-card" draggable="true" data-candidate-id="1">
                                 <div class="kanban-card-header">
                                     <div class="kanban-card-title">Prénom N.</div>
-                                    <div class="priority-indicator priority-medium">
-                                        <i class="fas fa-flag"></i> Moyen
+                                    <div class="priority-indicator priority-90">
+                                        <i class="fas fa-percentage"></i> 90%
                                     </div>
                                 </div>
                                 <div class="kanban-card-job">
@@ -1350,7 +354,6 @@
                                     <p><i class="fas fa-map-marker-alt"></i> Paris (25 min)</p>
                                     <p><i class="fas fa-clock"></i> Disponible immédiatement</p>
                                 </div>
-                                <!-- NOUVEAU: Membres assignés -->
                                 <div class="assigned-members">
                                     <div class="assigned-members-avatars">
                                         <div class="member-avatar">TM</div>
@@ -1375,12 +378,12 @@
                                 </div>
                             </div>
                             
-                            <!-- Carte candidat 2 (avec membres assignés) -->
+                            <!-- Carte candidat 2 -->
                             <div class="kanban-card" draggable="true" data-candidate-id="2">
                                 <div class="kanban-card-header">
                                     <div class="kanban-card-title">Prénom N.</div>
-                                    <div class="priority-indicator priority-high">
-                                        <i class="fas fa-flag"></i> Élevé
+                                    <div class="priority-indicator priority-85">
+                                        <i class="fas fa-percentage"></i> 85%
                                     </div>
                                 </div>
                                 <div class="kanban-card-job">
@@ -1391,12 +394,10 @@
                                     <p><i class="fas fa-map-marker-alt"></i> Lyon (15 min)</p>
                                     <p><i class="fas fa-clock"></i> Disponible sous 2 semaines</p>
                                 </div>
-                                <!-- NOUVEAU: Membres assignés -->
                                 <div class="assigned-members">
                                     <div class="assigned-members-avatars">
                                         <div class="member-avatar">TM</div>
                                         <div class="member-avatar">JB</div>
-                                        <div class="member-avatar-count">+1</div>
                                     </div>
                                     <button class="add-member-btn">
                                         <i class="fas fa-plus"></i>
@@ -1424,18 +425,17 @@
                         </div>
                     </div>
                     
-                    <!-- Colonne: Call prise -->
+                    <!-- Colonne: Call prise de contact -->
                     <div class="kanban-column" data-stage="call">
                         <div class="kanban-column-header">
                             <div class="kanban-column-title">
-                                <i class="fas fa-phone"></i> Call prise
+                                <i class="fas fa-phone"></i> Call prise de contact
                                 <div class="kanban-column-count">2</div>
                             </div>
                             <div class="kanban-column-actions column-actions">
                                 <button class="btn btn-sm btn-light settings-btn">
                                     <i class="fas fa-ellipsis-v"></i>
                                 </button>
-                                <!-- Menu de paramètres de colonne -->
                                 <div class="column-settings-dropdown">
                                     <h6>Options d'étape</h6>
                                     <div class="column-settings-item">
@@ -1446,24 +446,16 @@
                                         <i class="fas fa-cog"></i>
                                         <span>Configurer l'étape</span>
                                     </div>
-                                    <div class="column-settings-item">
-                                        <i class="fas fa-clock"></i>
-                                        <span>Définir SLA</span>
-                                    </div>
-                                    <div class="column-settings-item">
-                                        <i class="fas fa-bell"></i>
-                                        <span>Configurer alertes</span>
-                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="kanban-column-content">
-                            <!-- Carte candidat 3 (avec membres assignés) -->
+                            <!-- Carte candidat 3 -->
                             <div class="kanban-card" draggable="true" data-candidate-id="3">
                                 <div class="kanban-card-header">
                                     <div class="kanban-card-title">Prénom N.</div>
-                                    <div class="priority-indicator priority-high">
-                                        <i class="fas fa-flag"></i> Élevé
+                                    <div class="priority-indicator priority-90">
+                                        <i class="fas fa-percentage"></i> 90%
                                     </div>
                                 </div>
                                 <div class="kanban-card-job">
@@ -1474,7 +466,6 @@
                                     <p><i class="fas fa-map-marker-alt"></i> Paris (30 min)</p>
                                     <p><i class="fas fa-clock"></i> Disponible immédiatement</p>
                                 </div>
-                                <!-- Membres assignés -->
                                 <div class="assigned-members">
                                     <div class="assigned-members-avatars">
                                         <div class="member-avatar">TM</div>
@@ -1498,7 +489,77 @@
                                 </div>
                             </div>
                             
-                            <!-- Les autres cartes kanban continueraient ici avec la même structure -->
+                            <!-- Ajouter une carte -->
+                            <div class="kanban-add-card">
+                                <i class="fas fa-plus"></i> Ajouter un candidat
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Colonne: Visioconférence -->
+                    <div class="kanban-column" data-stage="visio">
+                        <div class="kanban-column-header">
+                            <div class="kanban-column-title">
+                                <i class="fas fa-video"></i> Visioconférence
+                                <div class="kanban-column-count">2</div>
+                            </div>
+                            <div class="kanban-column-actions column-actions">
+                                <button class="btn btn-sm btn-light settings-btn">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <div class="column-settings-dropdown">
+                                    <h6>Options d'étape</h6>
+                                    <div class="column-settings-item">
+                                        <i class="fas fa-user-plus"></i>
+                                        <span>Ajouter des membres</span>
+                                    </div>
+                                    <div class="column-settings-item">
+                                        <i class="fas fa-cog"></i>
+                                        <span>Configurer l'étape</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="kanban-column-content">
+                            <!-- Carte candidat 4 -->
+                            <div class="kanban-card" draggable="true" data-candidate-id="4">
+                                <div class="kanban-card-header">
+                                    <div class="kanban-card-title">Prénom N.</div>
+                                    <div class="priority-indicator priority-85">
+                                        <i class="fas fa-percentage"></i> 85%
+                                    </div>
+                                </div>
+                                <div class="kanban-card-job">
+                                    <span class="job-tag">Comptabilité</span>
+                                </div>
+                                <div class="kanban-card-info">
+                                    <p><i class="fas fa-briefcase"></i> 4+ Années d'expérience</p>
+                                    <p><i class="fas fa-map-marker-alt"></i> Bordeaux (15 min)</p>
+                                    <p><i class="fas fa-clock"></i> Disponible immédiatement</p>
+                                </div>
+                                <div class="assigned-members">
+                                    <div class="assigned-members-avatars">
+                                        <div class="member-avatar">MD</div>
+                                        <div class="member-avatar">CL</div>
+                                    </div>
+                                    <button class="add-member-btn">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                                <div class="kanban-card-actions">
+                                    <button class="btn btn-sm btn-outline-secondary view-candidate" data-candidate-id="4">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <div>
+                                        <button class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-calendar-alt"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-danger">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                             
                             <!-- Ajouter une carte -->
                             <div class="kanban-add-card">
@@ -1507,26 +568,137 @@
                         </div>
                     </div>
                     
-                    <!-- Les autres colonnes continueraient avec la même structure -->
+                    <!-- Colonne: Entretien présentiel -->
+                    <div class="kanban-column" data-stage="presentiel">
+                        <div class="kanban-column-header">
+                            <div class="kanban-column-title">
+                                <i class="fas fa-users"></i> Entretien présentiel
+                                <div class="kanban-column-count">1</div>
+                            </div>
+                            <div class="kanban-column-actions column-actions">
+                                <button class="btn btn-sm btn-light settings-btn">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <div class="column-settings-dropdown">
+                                    <h6>Options d'étape</h6>
+                                    <div class="column-settings-item">
+                                        <i class="fas fa-user-plus"></i>
+                                        <span>Ajouter des membres</span>
+                                    </div>
+                                    <div class="column-settings-item">
+                                        <i class="fas fa-cog"></i>
+                                        <span>Configurer l'étape</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="kanban-column-content">
+                            <!-- Carte candidat 5 -->
+                            <div class="kanban-card" draggable="true" data-candidate-id="5">
+                                <div class="kanban-card-header">
+                                    <div class="kanban-card-title">Prénom N.</div>
+                                    <div class="priority-indicator priority-90">
+                                        <i class="fas fa-percentage"></i> 90%
+                                    </div>
+                                </div>
+                                <div class="kanban-card-job">
+                                    <span class="job-tag">Assistant</span>
+                                </div>
+                                <div class="kanban-card-info">
+                                    <p><i class="fas fa-briefcase"></i> 6+ Années d'expérience</p>
+                                    <p><i class="fas fa-map-marker-alt"></i> Paris (10 min)</p>
+                                    <p><i class="fas fa-clock"></i> Disponible sous 1 mois</p>
+                                </div>
+                                <div class="assigned-members">
+                                    <div class="assigned-members-avatars">
+                                        <div class="member-avatar">TM</div>
+                                        <div class="member-avatar">MD</div>
+                                        <div class="member-avatar">JB</div>
+                                    </div>
+                                    <button class="add-member-btn">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                                <div class="kanban-card-actions">
+                                    <button class="btn btn-sm btn-outline-secondary view-candidate" data-candidate-id="5">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <div>
+                                        <button class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-calendar-alt"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-danger">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Ajouter une carte -->
+                            <div class="kanban-add-card">
+                                <i class="fas fa-plus"></i> Ajouter un candidat
+                            </div>
+                        </div>
+                    </div>
                     
+                    <!-- Colonne: Acceptation -->
+                    <div class="kanban-column" data-stage="acceptation">
+                        <div class="kanban-column-header">
+                            <div class="kanban-column-title">
+                                <i class="fas fa-check-circle"></i> Acceptation
+                                <div class="kanban-column-count">0</div>
+                            </div>
+                            <div class="kanban-column-actions column-actions">
+                                <button class="btn btn-sm btn-light settings-btn">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <div class="column-settings-dropdown">
+                                    <h6>Options d'étape</h6>
+                                    <div class="column-settings-item">
+                                        <i class="fas fa-user-plus"></i>
+                                        <span>Ajouter des membres</span>
+                                    </div>
+                                    <div class="column-settings-item">
+                                        <i class="fas fa-cog"></i>
+                                        <span>Configurer l'étape</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="kanban-column-content">
+                            <!-- Ajouter une carte -->
+                            <div class="kanban-add-card">
+                                <i class="fas fa-plus"></i> Ajouter un candidat
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             
             <!-- Les autres onglets (existants) -->
             <div class="tab-pane fade" id="candidates" role="tabpanel" aria-labelledby="candidates-tab">
-                <!-- Contenu de l'onglet Candidatures (existant) -->
+                <!-- Contenu de l'onglet Candidatures -->
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle"></i> Consultez et gérez tous vos candidats dans cette section.
+                </div>
             </div>
             
             <div class="tab-pane fade" id="calendar" role="tabpanel" aria-labelledby="calendar-tab">
-                <!-- Contenu de l'onglet Calendrier (existant) -->
+                <!-- Contenu de l'onglet Calendrier -->
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle"></i> Gérez votre calendrier d'entretiens dans cette section.
+                </div>
             </div>
             
             <div class="tab-pane fade" id="tracking" role="tabpanel" aria-labelledby="tracking-tab">
-                <!-- Contenu de l'onglet Suivi (existant) -->
+                <!-- Contenu de l'onglet Suivi -->
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle"></i> Consultez les statistiques et suivez l'avancement de vos recrutements ici.
+                </div>
             </div>
         </div>
         
-        <!-- Panel de détails candidat (amélioré) -->
+        <!-- Panel de détails candidat -->
         <div class="candidate-details-panel" id="candidateDetailsPanel">
             <button class="panel-close-btn" id="closePanelBtn">
                 <i class="fas fa-times"></i>
@@ -1549,7 +721,7 @@
                 </div>
             </div>
             
-            <!-- NOUVEAU: Section membres de l'équipe assignés -->
+            <!-- Section membres de l'équipe assignés -->
             <div class="panel-section">
                 <h4 class="panel-section-title">
                     <i class="fas fa-users"></i> Membres assignés
@@ -1697,7 +869,7 @@
             </div>
         </div>
         
-        <!-- Modal pour planifier un entretien (amélioré) -->
+        <!-- Modal pour planifier un entretien -->
         <div class="modal fade" id="scheduleInterviewModal" tabindex="-1" aria-labelledby="scheduleInterviewModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -1749,7 +921,7 @@
                                 </div>
                             </div>
                             
-                            <!-- AMÉLIORATION: Sélection de participants avec avatars -->
+                            <!-- Sélection de participants avec avatars -->
                             <div class="mb-3">
                                 <label for="interviewParticipants" class="form-label">Participants</label>
                                 <div class="border rounded p-3">
@@ -1802,12 +974,27 @@
             </div>
         </div>
         
-        <!-- Modal pour ajouter un candidat (même structure que l'original) -->
+        <!-- Modal pour ajouter un candidat -->
         <div class="modal fade" id="addCandidateModal" tabindex="-1" aria-labelledby="addCandidateModalLabel" aria-hidden="true">
-            <!-- Contenu de la modal (identique à l'original) -->
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addCandidateModalLabel">Ajouter un candidat</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <!-- Contenu du formulaire d'ajout de candidat -->
+                            <div class="alert alert-info">
+                                Formulaire d'ajout de candidat
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
         
-        <!-- NOUVEAU: Modal pour assignation de membres -->
+        <!-- Modal pour assignation de membres -->
         <div class="modal fade" id="assignMembersModal" tabindex="-1" aria-labelledby="assignMembersModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -1853,14 +1040,6 @@
                                 </div>
                                 <input type="checkbox" class="team-member-checkbox">
                             </div>
-                            <div class="team-member-item">
-                                <div class="team-member-avatar">PD</div>
-                                <div class="team-member-info">
-                                    <div class="team-member-name">Philippe Duval</div>
-                                    <div class="team-member-role">Chef de projet</div>
-                                </div>
-                                <input type="checkbox" class="team-member-checkbox">
-                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -1873,7 +1052,44 @@
     </main>
     
     <footer id="contact">
-        <!-- Contenu du footer (identique à l'original) -->
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <h4 class="footer-heading">Nexten</h4>
+                    <p class="footer-description">Notre plateforme utilise l'intelligence artificielle pour révolutionner le processus de recrutement, offrant 10 correspondances personnalisées pour les candidats et les recruteurs.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="footer-heading">Navigation</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Accueil</a></li>
+                        <li><a href="candidate-login.html"><i class="fas fa-chevron-right"></i> Espace candidat</a></li>
+                        <li><a href="company-login.html"><i class="fas fa-chevron-right"></i> Espace entreprise</a></li>
+                        <li><a href="about.html"><i class="fas fa-chevron-right"></i> À propos</a></li>
+                        <li><a href="#contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="footer-heading">Contact</h4>
+                    <div class="footer-contact">
+                        <p><i class="fas fa-map-marker-alt"></i> 123 Avenue de l'Innovation, 75001 Paris</p>
+                        <p><i class="fas fa-phone"></i> +33 1 23 45 67 89</p>
+                        <p><i class="fas fa-envelope"></i> contact@nexten.fr</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Nexten - Tous droits réservés | <a href="privacy.html">Politique de confidentialité</a> | <a href="terms.html">Conditions d'utilisation</a></p>
+            </div>
+        </div>
     </footer>
     
     <!-- Bouton de retour en haut -->
@@ -1885,208 +1101,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     
     <!-- Scripts personnalisés -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Menu mobile toggle
-            const menuToggle = document.querySelector('.menu-toggle');
-            const nav = document.querySelector('nav');
-            
-            if (menuToggle && nav) {
-                menuToggle.addEventListener('click', function() {
-                    nav.classList.toggle('active');
-                    this.classList.toggle('active');
-                });
-            }
-            
-            // Header change on scroll
-            const header = document.querySelector('header');
-            
-            window.addEventListener('scroll', function() {
-                if (window.scrollY > 10) {
-                    header.classList.add('scrolled');
-                } else {
-                    header.classList.remove('scrolled');
-                }
-            });
-            
-            // Bouton de retour en haut
-            const scrollToTopButton = document.getElementById('scroll-to-top');
-            
-            if (scrollToTopButton) {
-                window.addEventListener('scroll', function() {
-                    if (window.scrollY > 500) {
-                        scrollToTopButton.classList.add('visible');
-                    } else {
-                        scrollToTopButton.classList.remove('visible');
-                    }
-                });
-                
-                scrollToTopButton.addEventListener('click', function() {
-                    window.scrollTo({
-                        top: 0,
-                        behavior: 'smooth'
-                    });
-                });
-            }
-            
-            // NOUVEAU: Gestion du sélecteur d'offres
-            const jobOfferTabs = document.querySelectorAll('.job-offer-tab');
-            
-            jobOfferTabs.forEach(tab => {
-                tab.addEventListener('click', function() {
-                    // Retirer la classe active de tous les onglets
-                    jobOfferTabs.forEach(t => t.classList.remove('active'));
-                    
-                    // Ajouter la classe active à l'onglet cliqué
-                    this.classList.add('active');
-                    
-                    // Récupérer l'ID de l'offre
-                    const jobId = this.dataset.jobId;
-                    
-                    // Simuler un chargement des candidats pour cette offre
-                    showNotification(`Affichage des candidats pour l'offre "${this.querySelector('.job-offer-title').textContent}"`, 'info');
-                    
-                    // Ici on pourrait filtrer les candidats pour n'afficher que ceux qui correspondent à l'offre sélectionnée
-                });
-            });
-            
-            // NOUVEAU: Gestion du menu de l'équipe
-            const teamDropdown = document.getElementById('teamDropdown');
-            const teamMembersDropdown = document.querySelector('.team-members-dropdown');
-            
-            if (teamDropdown && teamMembersDropdown) {
-                teamDropdown.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    teamMembersDropdown.classList.toggle('show');
-                });
-                
-                document.addEventListener('click', function(e) {
-                    if (!teamMembersDropdown.contains(e.target) && e.target !== teamDropdown) {
-                        teamMembersDropdown.classList.remove('show');
-                    }
-                });
-            }
-            
-            // NOUVEAU: Gestion des membres d'équipe
-            const teamMemberCheckboxes = document.querySelectorAll('.team-member-checkbox');
-            teamMemberCheckboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', function() {
-                    // Ici on pourrait filtrer les candidats pour n'afficher que ceux assignés aux membres sélectionnés
-                    const memberName = this.closest('.team-member-item').querySelector('.team-member-name').textContent;
-                    
-                    if (this.checked) {
-                        showNotification(`${memberName} ajouté aux filtres`, 'success');
-                    } else {
-                        showNotification(`${memberName} retiré des filtres`, 'info');
-                    }
-                });
-            });
-            
-            // NOUVEAU: Gestion des paramètres de colonne
-            const settingsButtons = document.querySelectorAll('.settings-btn');
-            const settingsDropdowns = document.querySelectorAll('.column-settings-dropdown');
-            
-            settingsButtons.forEach(button => {
-                button.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    
-                    // Fermer tous les autres dropdowns
-                    settingsDropdowns.forEach(dropdown => {
-                        if (dropdown !== this.nextElementSibling) {
-                            dropdown.classList.remove('show');
-                        }
-                    });
-                    
-                    // Ouvrir/fermer le dropdown actuel
-                    this.nextElementSibling.classList.toggle('show');
-                });
-            });
-            
-            document.addEventListener('click', function(e) {
-                settingsDropdowns.forEach(dropdown => {
-                    if (!dropdown.contains(e.target) && !e.target.classList.contains('settings-btn')) {
-                        dropdown.classList.remove('show');
-                    }
-                });
-            });
-            
-            // NOUVEAU: Gestion des options de colonne
-            const columnSettingsItems = document.querySelectorAll('.column-settings-item');
-            columnSettingsItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    const actionText = this.querySelector('span').textContent;
-                    const columnTitle = this.closest('.kanban-column').querySelector('.kanban-column-title').textContent.trim();
-                    
-                    // Si c'est l'action "Ajouter des membres"
-                    if (actionText.includes('Ajouter des membres')) {
-                        const assignMembersModal = new bootstrap.Modal(document.getElementById('assignMembersModal'));
-                        assignMembersModal.show();
-                    } else {
-                        // Simuler les autres actions
-                        showNotification(`Action "${actionText}" pour l'étape "${columnTitle}" - Fonctionnalité à venir`, 'info');
-                    }
-                    
-                    // Fermer le dropdown
-                    this.closest('.column-settings-dropdown').classList.remove('show');
-                });
-            });
-            
-            // NOUVEAU: Gestion du bouton d'ajout de membre sur les cartes
-            const addMemberButtons = document.querySelectorAll('.add-member-btn');
-            addMemberButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const assignMembersModal = new bootstrap.Modal(document.getElementById('assignMembersModal'));
-                    assignMembersModal.show();
-                });
-            });
-            
-            // Fonction pour les notifications
-            function showNotification(message, type = 'info') {
-                // Créer l'élément toast
-                const toastEl = document.createElement('div');
-                toastEl.className = `toast align-items-center text-white bg-${type} border-0`;
-                toastEl.setAttribute('role', 'alert');
-                toastEl.setAttribute('aria-live', 'assertive');
-                toastEl.setAttribute('aria-atomic', 'true');
-                
-                // Contenu du toast
-                toastEl.innerHTML = `
-                    <div class="d-flex">
-                        <div class="toast-body">
-                            ${message}
-                        </div>
-                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-                    </div>
-                `;
-                
-                // Ajouter au conteneur
-                const toastContainer = document.querySelector('.toast-container');
-                if (toastContainer) {
-                    toastContainer.appendChild(toastEl);
-                    
-                    // Créer et afficher le toast
-                    const toast = new bootstrap.Toast(toastEl, {
-                        delay: 5000
-                    });
-                    toast.show();
-                    
-                    // Supprimer le toast après qu'il soit caché
-                    toastEl.addEventListener('hidden.bs.toast', function() {
-                        toastEl.remove();
-                    });
-                }
-            }
-        });
-    </script>
-    
-    <!-- Script pour la section Planning (existant) -->
     <script src="../static/scripts/planning.js"></script>
-    
-    <!-- Script pour le système Kanban (existant) -->
     <script src="../static/scripts/kanban.js"></script>
-    
-    <!-- NOUVEAU: Script pour les fonctionnalités améliorées -->
     <script src="../static/scripts/planning-enhanced.js"></script>
 </body>
 </html>
