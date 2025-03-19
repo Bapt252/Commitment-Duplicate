@@ -1,0 +1,437 @@
+/* Planning Kanban par offre d'emploi */
+:root {
+    --primary: #7c3aed;
+    --primary-light: #ede9fe;
+    --primary-dark: #5b21b6;
+    --success: #10b981;
+    --success-light: #d1fae5;
+    --warning: #f59e0b;
+    --warning-light: #fef3c7;
+    --danger: #ef4444;
+    --danger-light: #fee2e2;
+    --info: #3b82f6;
+    --info-light: #dbeafe;
+    
+    --white: #ffffff;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-400: #9ca3af;
+    --gray-500: #6b7280;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-800: #1f2937;
+    --gray-900: #111827;
+    
+    --radius-sm: 0.25rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    
+    --transition-fast: 150ms ease;
+    --transition-normal: 300ms ease;
+}
+
+/* Organisation par offre d'emploi */
+.kanban-job-board {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+}
+
+.job-offer-container {
+    background-color: var(--white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--gray-200);
+    overflow: hidden;
+    transition: var(--transition-normal);
+}
+
+.job-offer-container:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.job-offer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md) var(--spacing-lg);
+    background-color: var(--primary-light);
+    border-bottom: 1px solid var(--primary);
+}
+
+.job-offer-title {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.job-offer-title i {
+    color: var(--primary);
+    font-size: 1.25rem;
+}
+
+.job-offer-title h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--primary-dark);
+    margin: 0;
+}
+
+.job-offer-info {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+}
+
+.job-offer-salary,
+.job-offer-location,
+.job-offer-deadline {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 0.875rem;
+    color: var(--gray-700);
+}
+
+.job-offer-info i {
+    color: var(--primary);
+}
+
+/* Colonnes du Kanban */
+.job-kanban-container {
+    display: flex;
+    overflow-x: auto;
+    padding: var(--spacing-md);
+    gap: var(--spacing-md);
+}
+
+.kanban-column {
+    min-width: 220px;
+    flex: 1;
+    background-color: var(--gray-100);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--gray-200);
+    max-width: 240px;
+}
+
+.kanban-column-header {
+    margin-bottom: var(--spacing-md);
+}
+
+.kanban-column-title {
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--gray-700);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.kanban-column-title i {
+    color: var(--primary);
+    font-size: 0.875rem;
+}
+
+.kanban-column-count {
+    font-size: 0.75rem;
+    background-color: var(--gray-200);
+    color: var(--gray-700);
+    padding: 0.125rem var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    font-weight: 500;
+    margin-left: auto;
+}
+
+.kanban-cards {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    min-height: 50px;
+}
+
+/* Cartes de candidats */
+.candidate-card {
+    background-color: var(--white);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--gray-200);
+    transition: var(--transition-normal);
+    position: relative;
+}
+
+.candidate-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary-light);
+}
+
+.candidate-card-indicator {
+    position: absolute;
+    top: var(--spacing-md);
+    right: var(--spacing-md);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.indicator-high {
+    background-color: var(--success);
+}
+
+.indicator-medium {
+    background-color: var(--warning);
+}
+
+.indicator-low {
+    background-color: var(--danger);
+}
+
+.candidate-name {
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    color: var(--gray-900);
+    padding-right: 15px;
+}
+
+.candidate-details {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-md);
+}
+
+.candidate-detail {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: 0.75rem;
+    color: var(--gray-600);
+}
+
+.candidate-detail-icon {
+    color: var(--gray-500);
+    width: 14px;
+}
+
+.candidate-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--gray-200);
+}
+
+.action-buttons {
+    display: flex;
+    gap: var(--spacing-xs);
+}
+
+.action-button {
+    width: 28px;
+    height: 28px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-fast);
+    color: var(--gray-600);
+    font-size: 0.75rem;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.action-button:hover {
+    background-color: var(--gray-100);
+    color: var(--primary);
+}
+
+.candidate-date {
+    font-size: 0.75rem;
+    color: var(--gray-500);
+}
+
+.add-candidate {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--gray-50);
+    border: 2px dashed var(--gray-300);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    color: var(--gray-600);
+    font-weight: 500;
+    transition: var(--transition-fast);
+    margin-top: var(--spacing-sm);
+    cursor: pointer;
+}
+
+.add-candidate:hover {
+    background-color: var(--gray-100);
+    color: var(--primary);
+    border-color: var(--primary-light);
+}
+
+.add-job-offer {
+    display: flex;
+    justify-content: center;
+    padding: var(--spacing-lg) 0;
+}
+
+.btn-add-job {
+    padding: var(--spacing-md) var(--spacing-lg);
+    font-size: 1rem;
+}
+
+/* Système de notifications */
+.notification {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    max-width: 320px;
+    background: var(--white);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-md) var(--spacing-lg);
+    transform: translateX(150%);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+    border-left: 4px solid var(--primary);
+}
+
+.notification.show {
+    transform: translateX(0);
+}
+
+.notification-icon {
+    margin-right: var(--spacing-md);
+    font-size: 1.25rem;
+}
+
+.notification-success {
+    border-left-color: var(--success);
+}
+
+.notification-success .notification-icon {
+    color: var(--success);
+}
+
+.notification-warning {
+    border-left-color: var(--warning);
+}
+
+.notification-warning .notification-icon {
+    color: var(--warning);
+}
+
+.notification-info {
+    border-left-color: var(--info);
+}
+
+.notification-info .notification-icon {
+    color: var(--info);
+}
+
+.notification-content {
+    flex: 1;
+    font-size: 0.875rem;
+    color: var(--gray-800);
+}
+
+.notification-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--gray-500);
+    padding: var(--spacing-xs);
+    margin-left: var(--spacing-md);
+    transition: color 0.2s ease;
+}
+
+.notification-close:hover {
+    color: var(--gray-900);
+}
+
+/* Tooltips */
+.tooltip {
+    position: relative;
+}
+
+.tooltip-text {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: var(--spacing-xs) var(--spacing-md);
+    background-color: var(--gray-900);
+    color: var(--white);
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: var(--transition-fast);
+    z-index: 100;
+}
+
+.tooltip:hover .tooltip-text {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-5px);
+}
+
+/* Styles pour le drag-and-drop */
+.candidate-card.dragging {
+    opacity: 0.6;
+    cursor: grabbing;
+}
+
+.kanban-cards.drag-over {
+    background-color: var(--primary-light);
+    border-color: var(--primary);
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .job-offer-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-md);
+    }
+    
+    .job-offer-info {
+        flex-wrap: wrap;
+        gap: var(--spacing-md);
+    }
+}
+
+@media (max-width: 768px) {
+    .job-kanban-container {
+        flex-direction: column;
+        overflow-x: visible;
+    }
+    
+    .kanban-column {
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+    }
+}
