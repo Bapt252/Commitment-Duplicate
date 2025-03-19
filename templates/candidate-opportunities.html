@@ -14,385 +14,11 @@
     <link rel="stylesheet" href="../static/styles/dashboard-new.css">
     <link rel="stylesheet" href="../static/styles/nav-improvement.css">
     <link rel="stylesheet" href="../static/styles/candidate-opportunities-new.css">
+    <!-- Nouvelle feuille de style pour les améliorations personnalisées -->
+    <link rel="stylesheet" href="../static/styles/custom-improvements.css">
     
     <!-- Favicon -->
     <link rel="shortcut icon" href="../static/images/favicon.ico" type="image/x-icon">
-    
-    <style>
-        /* Variables de couleurs supplémentaires pour plus de nuances */
-        :root {
-            --yellow: #FFC107;
-            --green: #4CAF50;
-            --green-light: #E8F5E9;
-            --red: #F44336;
-            --red-light: #FFEBEE;
-            --blue: #2196F3;
-            --blue-light: #E3F2FD;
-            --surface: #FFFFFF;
-            --surface-variant: #F8F9FA;
-            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.08);
-            --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.1);
-            --transition-fast: 0.2s ease;
-            --transition-normal: 0.3s ease;
-            --border-radius-sm: 4px;
-            --border-radius-md: 8px;
-            --border-radius-lg: 12px;
-            --border-radius-xl: 20px;
-        }
-        
-        /* Styles modernes et améliorés */
-        body {
-            background-color: #f9f9fb;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        .contextual-nav {
-            margin: 0 0 32px;
-            padding: 15px 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .previous-page {
-            display: flex;
-            align-items: center;
-            color: var(--gray);
-            font-size: 0.9rem;
-            font-weight: 500;
-            padding: 10px 18px;
-            border-radius: var(--border-radius-xl);
-            transition: all var(--transition-fast);
-            background-color: var(--surface-variant);
-            text-decoration: none;
-            box-shadow: var(--shadow-sm);
-        }
-        
-        .previous-page:hover {
-            background-color: var(--purple);
-            color: var(--white);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-        
-        .previous-page i {
-            font-size: 0.8rem;
-            margin-right: 8px;
-        }
-        
-        /* Améliorations pour les cartes d'opportunités */
-        .opportunity-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            margin-bottom: 20px;
-            position: relative;
-            overflow: hidden;
-            border-left: 5px solid var(--purple);
-        }
-        
-        .opportunity-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        /* Amélioration des indicateurs d'étape */
-        .match-percentage {
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-        
-        .match-percentage:hover {
-            transform: scale(1.05);
-        }
-        
-        .match-percentage::before {
-            content: '';
-            position: absolute;
-            top: -15px;
-            left: -15px;
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 30%;
-            transform: rotate(45deg);
-        }
-        
-        /* Améliorations des tooltips */
-        [data-tooltip] {
-            position: relative;
-        }
-        
-        [data-tooltip]::after {
-            content: attr(data-tooltip);
-            position: absolute;
-            bottom: -30px;
-            left: 50%;
-            transform: translateX(-50%) scale(0.8);
-            padding: 8px 12px;
-            background-color: var(--black);
-            color: white;
-            font-size: 0.8rem;
-            border-radius: 6px;
-            white-space: nowrap;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.2s ease;
-            z-index: 100;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        }
-        
-        [data-tooltip]:hover::after {
-            opacity: 1;
-            visibility: visible;
-            transform: translateX(-50%) scale(1);
-        }
-        
-        /* Animation pour les boutons */
-        .btn {
-            position: relative;
-            overflow: hidden;
-            transform: translateY(0);
-            transition: all 0.3s ease;
-        }
-        
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        
-        .btn:active {
-            transform: translateY(0);
-        }
-        
-        .btn::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 5px;
-            height: 5px;
-            background: rgba(255, 255, 255, 0.5);
-            opacity: 0;
-            border-radius: 100%;
-            transform: scale(1, 1) translate(-50%);
-            transform-origin: 50% 50%;
-        }
-        
-        .btn:hover::after {
-            animation: ripple 0.6s ease-out;
-        }
-        
-        @keyframes ripple {
-            0% {
-                transform: scale(0, 0);
-                opacity: 0.5;
-            }
-            100% {
-                transform: scale(30, 30);
-                opacity: 0;
-            }
-        }
-        
-        /* Amélioration des stages de recrutement */
-        .recruitment-stages {
-            position: relative;
-        }
-        
-        .stages-line {
-            position: absolute;
-            top: 15px;
-            left: 30px;
-            right: 30px;
-            height: 3px;
-            background-color: var(--cream-dark);
-            z-index: 1;
-            border-radius: 3px;
-        }
-        
-        .stages-progress {
-            position: absolute;
-            top: 15px;
-            left: 30px;
-            height: 3px;
-            background-color: var(--purple);
-            z-index: 2;
-            transition: width 0.6s ease;
-            border-radius: 3px;
-        }
-        
-        .stage.active .stage-icon {
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4);
-            }
-            70% {
-                transform: scale(1.1);
-                box-shadow: 0 0 0 10px rgba(76, 175, 80, 0);
-            }
-            100% {
-                transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
-            }
-        }
-        
-        /* Amélioration des badges de filtre */
-        .filter-badge {
-            transition: all 0.3s ease;
-            border-radius: 20px;
-            border: none;
-            background-color: #f0f0f0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-        
-        .filter-badge:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        
-        .filter-badge.active {
-            background-color: var(--purple);
-            color: white;
-            box-shadow: 0 4px 8px rgba(124,58,237,0.3);
-        }
-        
-        /* Améliorations UI/UX */
-        .page-title {
-            margin-bottom: 1.5rem;
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: var(--purple);
-            position: relative;
-            display: inline-block;
-        }
-        
-        .page-title::after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 0;
-            width: 50px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--purple) 0%, var(--purple-light) 100%);
-            border-radius: 2px;
-        }
-        
-        .section-header {
-            padding-bottom: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        /* Améliorations des animations */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Animation d'entrée pour les cartes */
-        @keyframes card-entrance {
-            0% {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .opportunity-card {
-            animation: card-entrance 0.5s ease forwards;
-            animation-delay: calc(var(--card-index) * 0.1s);
-            opacity: 0;
-        }
-
-        /* Animation pour le matching */
-        .match-percentage {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .match-percentage::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%);
-            animation: shine 3s infinite;
-        }
-
-        @keyframes shine {
-            0% {
-                transform: scale(0.5) rotate(0deg);
-                opacity: 0;
-            }
-            50% {
-                opacity: 0.5;
-            }
-            100% {
-                transform: scale(1) rotate(360deg);
-                opacity: 0;
-            }
-        }
-        
-        /* Amélioration du header */
-        .header-title {
-            font-size: 1.8rem;
-            color: var(--purple);
-            font-weight: 700;
-            margin-bottom: 5px;
-            position: relative;
-            display: inline-block;
-        }
-        
-        .header-title::after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 0;
-            width: 60px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--purple) 0%, var(--purple-light) 100%);
-            border-radius: 2px;
-        }
-        
-        .main-content-area {
-            padding-top: 20px;
-        }
-        
-        /* Animation subtile pour l'interface */
-        @keyframes fadeInUp {
-            0% {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .animated-element {
-            animation: fadeInUp 0.6s ease forwards;
-        }
-    </style>
 </head>
 <body>
     <!-- Notification bar -->
@@ -424,15 +50,8 @@
     </header>
 
     <div class="container main-container" id="main-content">
-        <!-- Navigation contextuelle avec flèche pour retour au tableau de bord -->
-        <div class="contextual-nav fade-in">
-            <a href="candidate-dashboard.html?email=demo.utilisateur%40nexten.fr&password=s" class="previous-page" data-tooltip="Retour au tableau de bord">
-                <i class="fas fa-chevron-left"></i> Tableau de bord
-            </a>
-        </div>
-        
         <!-- Section Mes opportunités selectionnées -->
-        <div class="candidate-dashboard-section fade-in">
+        <div class="candidate-dashboard-section">
             <div class="section-header">
                 <h2 class="section-heading">MES OPPORTUNITÉS SÉLECTIONNÉES</h2>
             </div>
@@ -458,7 +77,7 @@
             
             <div class="opportunities-container">
                 <!-- Opportunity 1 -->
-                <div class="opportunity-card" data-status="in-progress" style="--card-index: 1">
+                <div class="opportunity-card" data-status="in-progress">
                     <div class="opportunity-header">
                         <div class="opportunity-company">
                             <div class="logo-placeholder">
@@ -556,7 +175,7 @@
                 </div>
                 
                 <!-- Opportunity 2 -->
-                <div class="opportunity-card" data-status="in-progress" style="--card-index: 2">
+                <div class="opportunity-card" data-status="in-progress">
                     <div class="opportunity-header">
                         <div class="opportunity-company">
                             <div class="logo-placeholder">
@@ -654,7 +273,7 @@
                 </div>
                 
                 <!-- Opportunity 3 -->
-                <div class="opportunity-card" data-status="in-progress" style="--card-index: 3">
+                <div class="opportunity-card" data-status="in-progress">
                     <div class="opportunity-header">
                         <div class="opportunity-company">
                             <div class="logo-placeholder">
@@ -882,7 +501,6 @@
                         if (filter === 'all' || opportunity.getAttribute('data-status') === filter) {
                             opportunity.style.display = 'block';
                             opportunity.style.animationDelay = `${index * 0.1}s`;
-                            opportunity.style.setProperty('--card-index', index + 1);
                             hasVisibleOpportunities = true;
                         } else {
                             opportunity.style.display = 'none';
@@ -925,24 +543,6 @@
                 });
             });
             
-            // Interaction avec les cartes d'opportunité
-            const opportunityCards = document.querySelectorAll('.opportunity-card');
-            opportunityCards.forEach((card, index) => {
-                // Ajouter une animation d'entrée avec délai progressif
-                card.style.setProperty('--card-index', index + 1);
-                
-                // Interaction au survol
-                card.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-5px)';
-                    this.style.boxShadow = '0 12px 30px rgba(0, 0, 0, 0.1)';
-                });
-                
-                card.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0)';
-                    this.style.boxShadow = 'var(--card-shadow)';
-                });
-            });
-            
             // Effet de pulsation sur l'étape active
             const activeStageIcons = document.querySelectorAll('.stage.active .stage-icon');
             activeStageIcons.forEach(icon => {
@@ -957,24 +557,46 @@
                 }, 2000);
             });
 
-            // Amélioration des interactions
-            document.querySelectorAll('.interviewer-card').forEach(card => {
-                // Animation d'apparition plus fluide
-                card.addEventListener('transitionend', function(e) {
-                    if (e.propertyName === 'opacity') {
-                        this.classList.add('card-visible');
+            // Script pour masquer les éléments surlignés en jaune via JavaScript
+            document.addEventListener('DOMContentLoaded', function() {
+                // Fonction pour masquer les éléments par sélecteur
+                function hideElements(selector) {
+                    const elements = document.querySelectorAll(selector);
+                    elements.forEach(el => {
+                        el.style.display = 'none';
+                    });
+                }
+                
+                // Masquer le fil d'Ariane
+                hideElements('.breadcrumb');
+                
+                // Masquer les liens de tableau de bord redondants
+                hideElements('[href*="tableau-de-bord"]');
+                hideElements('.contextual-nav a');
+                
+                // Masquer "Mes offres reçues"
+                hideElements('a:contains("Mes offres reçues")');
+                
+                // Masquer la navigation numérotée
+                hideElements('[class*="step-"]');
+                hideElements('.numbered-pagination');
+                
+                // Extension jQuery-like pour simplifier la sélection de texte
+                Element.prototype.contains = function(text) {
+                    return this.textContent.includes(text);
+                };
+                
+                // Sélectionner tous les éléments qui contiennent le texte spécifié
+                document.querySelectorAll('a').forEach(a => {
+                    if (a.textContent.includes('Mes offres reçues') || a.textContent.includes('Tableau de bord')) {
+                        a.style.display = 'none';
                     }
                 });
-            });
-
-            // Animation des statistiques de correspondance
-            document.querySelectorAll('.match-percentage').forEach(match => {
-                const value = parseInt(match.textContent);
-                match.style.setProperty('--match-value', value);
                 
-                // Couleur dynamique basée sur le pourcentage
-                let hue = Math.min(120, value);
-                match.style.background = `hsl(${hue}, 80%, 45%)`;
+                // Masquer les éléments numérotés de 1 à 6
+                for (let i = 1; i <= 6; i++) {
+                    hideElements(`[class*="step-${i}"]`);
+                }
             });
         });
     </script>
