@@ -14,12 +14,18 @@
         /* Styles spécifiques au parsing de fiche de poste */
         .parser-container {
             background-color: var(--white);
-            border-radius: 12px;
+            border-radius: 16px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
             padding: var(--spacing-lg);
             margin-bottom: var(--spacing-xl);
             position: relative;
             overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .parser-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
         }
 
         .parser-container::before {
@@ -27,23 +33,98 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 30%;
+            width: 100%;
             height: 5px;
             background: linear-gradient(90deg, var(--purple) 0%, var(--purple-light) 100%);
             z-index: 1;
         }
 
+        .parser-steps {
+            display: flex;
+            margin-bottom: var(--spacing-lg);
+            border-bottom: 1px solid var(--cream-dark);
+            padding-bottom: var(--spacing-md);
+        }
+
+        .parser-step {
+            flex: 1;
+            text-align: center;
+            padding: var(--spacing-sm);
+            position: relative;
+            opacity: 0.6;
+            transition: all 0.3s ease;
+        }
+
+        .parser-step.active {
+            opacity: 1;
+        }
+
+        .parser-step.completed {
+            opacity: 1;
+            color: var(--purple);
+        }
+
+        .parser-step-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: var(--cream);
+            margin: 0 auto var(--spacing-xs);
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .parser-step.active .parser-step-number {
+            background-color: var(--purple);
+            color: var(--white);
+            box-shadow: 0 4px 10px rgba(124, 58, 237, 0.3);
+        }
+
+        .parser-step.completed .parser-step-number {
+            background-color: var(--purple);
+            color: var(--white);
+        }
+
+        .parser-step.completed .parser-step-number::after {
+            content: '\\f00c';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+        }
+
+        .parser-step::after {
+            content: '';
+            position: absolute;
+            top: 15px;
+            right: -50%;
+            width: 100%;
+            height: 2px;
+            background-color: var(--cream-dark);
+            z-index: -1;
+        }
+
+        .parser-step:last-child::after {
+            display: none;
+        }
+
+        .parser-step.active::after, .parser-step.completed::after {
+            background-color: var(--purple-light);
+        }
+
         .file-upload-container {
             margin-bottom: var(--spacing-lg);
+            transition: all 0.3s ease;
         }
 
         .file-upload {
             position: relative;
             display: block;
             width: 100%;
-            height: 200px;
+            height: 220px;
             border: 2px dashed var(--cream-dark);
-            border-radius: 12px;
+            border-radius: 16px;
             transition: all 0.3s ease;
             cursor: pointer;
             overflow: hidden;
@@ -68,31 +149,41 @@
         }
 
         .file-upload-text i {
-            font-size: 2.5rem;
+            font-size: 3rem;
             color: var(--purple);
             margin-bottom: var(--spacing-sm);
             transition: transform 0.3s ease;
         }
 
         .file-upload:hover .file-upload-text i {
-            transform: translateY(-5px);
+            transform: translateY(-5px) scale(1.1);
         }
 
         .file-upload-text h3 {
             margin-bottom: var(--spacing-xs);
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             color: var(--black);
         }
 
         .file-upload-text p {
             color: var(--gray);
-            font-size: 0.9rem;
+            font-size: 1rem;
             margin-bottom: var(--spacing-xs);
         }
 
         .file-upload-text .supported-formats {
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             color: var(--gray-light);
+            background-color: rgba(255, 255, 255, 0.7);
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-top: var(--spacing-xs);
+            transition: all 0.3s ease;
+        }
+
+        .file-upload:hover .supported-formats {
+            background-color: rgba(255, 255, 255, 0.9);
         }
 
         .file-upload input[type="file"] {
@@ -135,14 +226,15 @@
 
         .paste-text-container textarea {
             width: 100%;
-            min-height: 200px;
+            min-height: 220px;
             padding: var(--spacing-md);
             border: 1px solid var(--cream-dark);
-            border-radius: 12px;
+            border-radius: 16px;
             font-family: 'Inter', sans-serif;
-            font-size: 0.95rem;
+            font-size: 1rem;
             resize: vertical;
             transition: all 0.3s ease;
+            background-color: var(--cream);
         }
 
         .paste-text-container textarea:focus {
@@ -150,6 +242,7 @@
             border-color: var(--purple);
             box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.1);
             transform: translateY(-2px);
+            background-color: var(--white);
         }
 
         .parser-options {
@@ -157,31 +250,41 @@
             flex-wrap: wrap;
             gap: var(--spacing-sm);
             margin-bottom: var(--spacing-lg);
+            background-color: var(--cream);
+            padding: var(--spacing-md);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .parser-options:hover {
+            background-color: var(--cream-dark);
         }
 
         .parser-option {
             display: flex;
             align-items: center;
             gap: var(--spacing-xs);
-            background-color: var(--cream);
-            padding: 8px 16px;
-            border-radius: 8px;
+            background-color: var(--white);
+            padding: 10px 18px;
+            border-radius: 10px;
             cursor: pointer;
             transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
 
         .parser-option:hover {
             background-color: var(--purple-glass);
-            transform: translateY(-2px);
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
         }
 
         .parser-option input[type="checkbox"] {
             appearance: none;
             -webkit-appearance: none;
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             border: 2px solid var(--gray-light);
-            border-radius: 4px;
+            border-radius: 6px;
             cursor: pointer;
             position: relative;
             transition: all 0.3s ease;
@@ -194,7 +297,7 @@
         }
 
         .parser-option input[type="checkbox"]:checked::after {
-            content: '\f00c';
+            content: '\\f00c';
             font-family: 'Font Awesome 5 Free';
             font-weight: 900;
             color: var(--white);
@@ -206,8 +309,13 @@
         }
 
         .parser-option label {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .parser-option:hover label {
+            color: var(--purple);
         }
 
         .results-preview {
@@ -215,41 +323,117 @@
             margin-top: var(--spacing-lg);
             padding: var(--spacing-md);
             background-color: var(--cream);
-            border-radius: 12px;
+            border-radius: 16px;
             animation: fadeIn 0.5s ease forwards;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .results-preview:hover {
+            background-color: var(--cream-dark);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
         }
 
         .results-preview h3 {
             margin-bottom: var(--spacing-md);
             color: var(--purple);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+
+        .results-preview h3 i {
+            font-size: 1.2rem;
+        }
+
+        .result-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: var(--spacing-md);
         }
 
         .result-item {
-            margin-bottom: var(--spacing-sm);
-            padding-bottom: var(--spacing-sm);
-            border-bottom: 1px solid var(--cream-dark);
+            background-color: var(--white);
+            padding: var(--spacing-md);
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.03);
+            transition: all 0.3s ease;
         }
 
-        .result-item:last-child {
-            border-bottom: none;
+        .result-item:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            border-left: 3px solid var(--purple);
         }
 
         .result-item .label {
             font-weight: 500;
             font-size: 0.9rem;
             color: var(--black);
-            margin-bottom: 4px;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .result-item .label i {
+            color: var(--purple);
+            font-size: 0.9rem;
         }
 
         .result-item .value {
-            font-size: 0.95rem;
+            font-size: 1rem;
             color: var(--gray);
+            background-color: var(--cream);
+            padding: 8px 12px;
+            border-radius: 6px;
+            word-break: break-word;
         }
 
         .parser-actions {
             display: flex;
             justify-content: space-between;
             margin-top: var(--spacing-xl);
+            gap: var(--spacing-md);
+        }
+
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-xs);
+            padding: 12px 24px;
+            border-radius: 10px;
+            border: none;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-back {
+            background-color: var(--cream);
+            color: var(--black);
+        }
+
+        .btn-back:hover {
+            background-color: var(--cream-dark);
+            transform: translateX(-5px);
+        }
+
+        .btn-next {
+            background: linear-gradient(135deg, var(--purple) 0%, var(--purple-dark) 100%);
+            color: var(--white);
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.2);
+            flex: 1;
+            max-width: 300px;
+        }
+
+        .btn-next:hover {
+            box-shadow: 0 8px 25px rgba(124, 58, 237, 0.4);
+            transform: translateY(-3px);
         }
 
         .loading-indicator {
@@ -261,18 +445,61 @@
         }
 
         .loading-spinner {
-            width: 60px;
-            height: 60px;
-            border: 4px solid rgba(124, 58, 237, 0.1);
+            width: 70px;
+            height: 70px;
+            border: 5px solid rgba(124, 58, 237, 0.1);
             border-radius: 50%;
-            border-top: 4px solid var(--purple);
+            border-top: 5px solid var(--purple);
             animation: spin 1s linear infinite;
-            margin-bottom: var(--spacing-sm);
+            margin-bottom: var(--spacing-md);
         }
 
         .loading-text {
             color: var(--purple);
             font-weight: 500;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        .loading-progress {
+            width: 100%;
+            max-width: 300px;
+            height: 6px;
+            background-color: var(--cream);
+            border-radius: 3px;
+            margin-top: var(--spacing-sm);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .loading-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--purple-light) 0%, var(--purple) 100%);
+            border-radius: 3px;
+            width: 0%;
+            transition: width 0.5s ease;
+            position: relative;
+        }
+
+        .loading-progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent 0%,
+                rgba(255, 255, 255, 0.4) 50%,
+                transparent 100%
+            );
+            animation: loadingShimmer 2s infinite;
+        }
+
+        @keyframes loadingShimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
 
         @keyframes spin {
@@ -285,8 +512,125 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* Notification améliorée */
+        .notification {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            min-width: 300px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            transform: translateY(100px);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            z-index: 1000;
+            border-left: 4px solid var(--purple);
+        }
+
+        .notification.success {
+            border-left-color: #10B981;
+        }
+
+        .notification.error {
+            border-left-color: #EF4444;
+        }
+
+        .notification.show {
+            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .notification i {
+            font-size: 1.5rem;
+            margin-right: 15px;
+        }
+
+        .notification.success i {
+            color: #10B981;
+        }
+
+        .notification.error i {
+            color: #EF4444;
+        }
+
+        .notification-message {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+
+        .notification-close {
+            margin-left: 15px;
+            cursor: pointer;
+            color: var(--gray);
+            transition: all 0.3s ease;
+        }
+
+        .notification-close:hover {
+            color: var(--black);
+            transform: rotate(90deg);
+        }
+
+        /* Tooltip pour les options */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            margin-left: 5px;
+            color: var(--gray-light);
+            cursor: help;
+        }
+
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            width: 220px;
+            background-color: var(--black);
+            color: var(--white);
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px 12px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.8rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .tooltip .tooltip-text::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: var(--black) transparent transparent transparent;
+        }
+
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
         /* Responsive adjustments */
         @media (max-width: 768px) {
+            .parser-steps {
+                overflow-x: auto;
+                padding-bottom: var(--spacing-sm);
+            }
+            
+            .parser-step {
+                min-width: 120px;
+            }
+            
             .parser-options {
                 flex-direction: column;
                 align-items: flex-start;
@@ -299,6 +643,11 @@
             
             .btn-action {
                 width: 100%;
+                max-width: none;
+            }
+            
+            .result-items {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -349,79 +698,122 @@
     <section>
         <div class="container">
             <div class="parser-container">
-                <div class="file-upload-container">
-                    <label class="file-upload">
-                        <div class="file-upload-text">
-                            <i class="fas fa-file-upload"></i>
-                            <h3>Télécharger votre fiche de poste</h3>
-                            <p>Glissez-déposez votre fichier ici ou cliquez pour sélectionner</p>
-                            <div class="supported-formats">Formats acceptés: PDF, DOCX, TXT (Max 5MB)</div>
+                <!-- Étapes du processus -->
+                <div class="parser-steps">
+                    <div class="parser-step active" id="step-1">
+                        <div class="parser-step-number">1</div>
+                        <div class="parser-step-label">Import</div>
+                    </div>
+                    <div class="parser-step" id="step-2">
+                        <div class="parser-step-number">2</div>
+                        <div class="parser-step-label">Analyse</div>
+                    </div>
+                    <div class="parser-step" id="step-3">
+                        <div class="parser-step-number">3</div>
+                        <div class="parser-step-label">Résultats</div>
+                    </div>
+                </div>
+
+                <div id="step-1-content">
+                    <div class="file-upload-container">
+                        <label class="file-upload">
+                            <div class="file-upload-text">
+                                <i class="fas fa-file-upload"></i>
+                                <h3>Télécharger votre fiche de poste</h3>
+                                <p>Glissez-déposez votre fichier ici ou cliquez pour sélectionner</p>
+                                <div class="supported-formats">Formats acceptés: PDF, DOCX, TXT (Max 5MB)</div>
+                            </div>
+                            <input type="file" id="job-description-file" accept=".pdf,.docx,.txt" />
+                        </label>
+                    </div>
+
+                    <div class="or-divider">ou</div>
+
+                    <div class="paste-text-container">
+                        <textarea id="job-description-text" placeholder="Collez le contenu de votre fiche de poste ici..."></textarea>
+                    </div>
+
+                    <div class="parser-options">
+                        <h3 style="width: 100%; margin-bottom: var(--spacing-sm);">Options d'analyse <span class="tooltip"><i class="fas fa-info-circle"></i><span class="tooltip-text">Sélectionnez les informations que vous souhaitez que notre IA extraie de votre fiche de poste</span></span></h3>
+                        
+                        <div class="parser-option">
+                            <input type="checkbox" id="extract-skills" checked />
+                            <label for="extract-skills">Compétences techniques</label>
                         </div>
-                        <input type="file" id="job-description-file" accept=".pdf,.docx,.txt" />
-                    </label>
-                </div>
-
-                <div class="or-divider">ou</div>
-
-                <div class="paste-text-container">
-                    <textarea id="job-description-text" placeholder="Collez le contenu de votre fiche de poste ici..."></textarea>
-                </div>
-
-                <div class="parser-options">
-                    <div class="parser-option">
-                        <input type="checkbox" id="extract-skills" checked />
-                        <label for="extract-skills">Extraire les compétences techniques</label>
-                    </div>
-                    <div class="parser-option">
-                        <input type="checkbox" id="extract-experience" checked />
-                        <label for="extract-experience">Analyser l'expérience requise</label>
-                    </div>
-                    <div class="parser-option">
-                        <input type="checkbox" id="extract-education" checked />
-                        <label for="extract-education">Identifier le niveau d'éducation</label>
-                    </div>
-                    <div class="parser-option">
-                        <input type="checkbox" id="extract-salary" checked />
-                        <label for="extract-salary">Détecter la fourchette de salaire</label>
+                        <div class="parser-option">
+                            <input type="checkbox" id="extract-experience" checked />
+                            <label for="extract-experience">Expérience requise</label>
+                        </div>
+                        <div class="parser-option">
+                            <input type="checkbox" id="extract-education" checked />
+                            <label for="extract-education">Niveau d'éducation</label>
+                        </div>
+                        <div class="parser-option">
+                            <input type="checkbox" id="extract-salary" checked />
+                            <label for="extract-salary">Fourchette de salaire</label>
+                        </div>
+                        <div class="parser-option">
+                            <input type="checkbox" id="extract-location" checked />
+                            <label for="extract-location">Localisation</label>
+                        </div>
+                        <div class="parser-option">
+                            <input type="checkbox" id="extract-remote" checked />
+                            <label for="extract-remote">Travail à distance</label>
+                        </div>
                     </div>
                 </div>
 
                 <div class="loading-indicator" id="loading-indicator">
                     <div class="loading-spinner"></div>
-                    <div class="loading-text">Analyse en cours...</div>
+                    <div class="loading-text">Analyse en cours... <span id="loading-percent">0%</span></div>
+                    <div class="loading-progress">
+                        <div class="loading-progress-bar" id="loading-progress-bar"></div>
+                    </div>
                 </div>
 
                 <div class="results-preview" id="results-preview">
-                    <h3>Résultats de l'analyse</h3>
+                    <h3><i class="fas fa-check-circle"></i> Résultats de l'analyse</h3>
                     
-                    <div class="result-item">
-                        <div class="label">Intitulé du poste</div>
-                        <div class="value" id="job-title">Développeur Full Stack JavaScript</div>
-                    </div>
-                    
-                    <div class="result-item">
-                        <div class="label">Compétences techniques requises</div>
-                        <div class="value" id="skills">JavaScript, React, Node.js, MongoDB, GraphQL</div>
-                    </div>
-                    
-                    <div class="result-item">
-                        <div class="label">Expérience minimum</div>
-                        <div class="value" id="experience">3-5 ans</div>
-                    </div>
-                    
-                    <div class="result-item">
-                        <div class="label">Niveau d'études</div>
-                        <div class="value" id="education">Bac+5 en informatique ou équivalent</div>
-                    </div>
-                    
-                    <div class="result-item">
-                        <div class="label">Type de contrat</div>
-                        <div class="value" id="contract-type">CDI</div>
-                    </div>
-                    
-                    <div class="result-item">
-                        <div class="label">Fourchette de salaire</div>
-                        <div class="value" id="salary">45K€ - 60K€ selon expérience</div>
+                    <div class="result-items">
+                        <div class="result-item">
+                            <div class="label"><i class="fas fa-briefcase"></i> Intitulé du poste</div>
+                            <div class="value" id="job-title">Développeur Full Stack JavaScript</div>
+                        </div>
+                        
+                        <div class="result-item">
+                            <div class="label"><i class="fas fa-code"></i> Compétences techniques requises</div>
+                            <div class="value" id="skills">JavaScript, React, Node.js, MongoDB, GraphQL</div>
+                        </div>
+                        
+                        <div class="result-item">
+                            <div class="label"><i class="fas fa-history"></i> Expérience minimum</div>
+                            <div class="value" id="experience">3-5 ans</div>
+                        </div>
+                        
+                        <div class="result-item">
+                            <div class="label"><i class="fas fa-graduation-cap"></i> Niveau d'études</div>
+                            <div class="value" id="education">Bac+5 en informatique ou équivalent</div>
+                        </div>
+                        
+                        <div class="result-item">
+                            <div class="label"><i class="fas fa-file-signature"></i> Type de contrat</div>
+                            <div class="value" id="contract-type">CDI</div>
+                        </div>
+                        
+                        <div class="result-item">
+                            <div class="label"><i class="fas fa-coins"></i> Fourchette de salaire</div>
+                            <div class="value" id="salary">45K€ - 60K€ selon expérience</div>
+                        </div>
+                        
+                        <div class="result-item">
+                            <div class="label"><i class="fas fa-map-marker-alt"></i> Localisation</div>
+                            <div class="value" id="location">Paris, France</div>
+                        </div>
+                        
+                        <div class="result-item">
+                            <div class="label"><i class="fas fa-home"></i> Travail à distance</div>
+                            <div class="value" id="remote">Hybride (2-3 jours/semaine)</div>
+                        </div>
                     </div>
                 </div>
 
@@ -431,11 +823,11 @@
                         <span>Retour</span>
                     </button>
                     <button type="button" class="btn-action btn-next" id="analyze-btn">
-                        <span>Analyser</span>
+                        <span>Analyser la fiche de poste</span>
                         <i class="fas fa-magic"></i>
                     </button>
                     <button type="button" class="btn-action btn-next" id="continue-btn" style="display: none;">
-                        <span>Continuer</span>
+                        <span>Continuer vers le questionnaire</span>
                         <i class="fas fa-arrow-right"></i>
                     </button>
                 </div>
@@ -573,12 +965,47 @@
             
             function showFileInfo(file) {
                 const fileText = fileUpload.querySelector('.file-upload-text');
+                const fileIcon = file.name.toLowerCase().endsWith('.pdf') ? 'fa-file-pdf' : 
+                                file.name.toLowerCase().endsWith('.docx') ? 'fa-file-word' : 'fa-file-alt';
+                
                 fileText.innerHTML = `
-                    <i class="fas fa-file-alt"></i>
+                    <i class="fas ${fileIcon}"></i>
                     <h3>${file.name}</h3>
                     <p>${Math.round(file.size / 1024)} KB</p>
                     <div class="supported-formats">Cliquez sur Analyser pour commencer</div>
                 `;
+                
+                // Afficher une notification
+                showNotification(`Fichier "${file.name}" prêt à être analysé.`);
+            }
+            
+            // Fonction pour simuler la progression de l'analyse
+            function simulateProgress() {
+                const progressBar = document.getElementById('loading-progress-bar');
+                const percentText = document.getElementById('loading-percent');
+                let progress = 0;
+                
+                const interval = setInterval(() => {
+                    progress += Math.random() * 15;
+                    if (progress > 100) progress = 100;
+                    
+                    progressBar.style.width = progress + '%';
+                    percentText.textContent = Math.round(progress) + '%';
+                    
+                    if (progress >= 100) {
+                        clearInterval(interval);
+                        setTimeout(() => {
+                            document.getElementById('loading-indicator').style.display = 'none';
+                            document.getElementById('results-preview').style.display = 'block';
+                            document.getElementById('continue-btn').style.display = 'inline-flex';
+                            document.getElementById('step-2').classList.remove('active');
+                            document.getElementById('step-2').classList.add('completed');
+                            document.getElementById('step-3').classList.add('active');
+                            
+                            showNotification('Analyse terminée avec succès !');
+                        }, 500);
+                    }
+                }, 200);
             }
             
             // Fonction pour analyser la fiche de poste
@@ -592,28 +1019,31 @@
                     return;
                 }
                 
+                // Mettre à jour les étapes
+                document.getElementById('step-1').classList.remove('active');
+                document.getElementById('step-1').classList.add('completed');
+                document.getElementById('step-2').classList.add('active');
+                
+                // Masquer le contenu de l'étape 1
+                document.getElementById('step-1-content').style.display = 'none';
+                
                 // Afficher l'indicateur de chargement
                 document.getElementById('loading-indicator').style.display = 'flex';
                 document.getElementById('analyze-btn').style.display = 'none';
                 
-                // Simuler le processus d'analyse (dans un environnement réel, cela ferait une requête API)
-                setTimeout(() => {
-                    // Cacher l'indicateur de chargement et afficher les résultats
-                    document.getElementById('loading-indicator').style.display = 'none';
-                    document.getElementById('results-preview').style.display = 'block';
-                    document.getElementById('continue-btn').style.display = 'inline-flex';
-                    
-                    showNotification('Analyse terminée avec succès !');
-                    
-                    // Dans un environnement réel, les données suivantes seraient renvoyées par l'API
-                    // Ici nous affichons des données factices pour la démonstration
-                    document.getElementById('job-title').textContent = 'Développeur Full Stack JavaScript';
-                    document.getElementById('skills').textContent = 'JavaScript, React, Node.js, MongoDB, GraphQL';
-                    document.getElementById('experience').textContent = '3-5 ans';
-                    document.getElementById('education').textContent = 'Bac+5 en informatique ou équivalent';
-                    document.getElementById('contract-type').textContent = 'CDI';
-                    document.getElementById('salary').textContent = '45K€ - 60K€ selon expérience';
-                }, 2000);
+                // Simuler le processus d'analyse avec progression
+                simulateProgress();
+                
+                // Dans un environnement réel, les données suivantes seraient renvoyées par l'API
+                // Ici nous affichons des données factices pour la démonstration
+                document.getElementById('job-title').textContent = 'Développeur Full Stack JavaScript';
+                document.getElementById('skills').textContent = 'JavaScript, React, Node.js, MongoDB, GraphQL, RESTful APIs, Git';
+                document.getElementById('experience').textContent = '3-5 ans';
+                document.getElementById('education').textContent = 'Bac+5 en informatique ou équivalent';
+                document.getElementById('contract-type').textContent = 'CDI';
+                document.getElementById('salary').textContent = '45K€ - 60K€ selon expérience';
+                document.getElementById('location').textContent = 'Paris, France';
+                document.getElementById('remote').textContent = 'Hybride (2-3 jours/semaine)';
             }
             
             // Event listener pour le bouton Analyser
@@ -628,7 +1058,9 @@
                     experience: document.getElementById('experience').textContent,
                     education: document.getElementById('education').textContent,
                     contractType: document.getElementById('contract-type').textContent,
-                    salary: document.getElementById('salary').textContent
+                    salary: document.getElementById('salary').textContent,
+                    location: document.getElementById('location').textContent,
+                    remote: document.getElementById('remote').textContent
                 };
                 
                 // Stocker les données dans localStorage pour les récupérer dans le questionnaire
