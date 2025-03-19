@@ -53,12 +53,11 @@
         }
         
         .contextual-nav {
-            margin: 16px 0 32px;
+            margin: 0 0 32px;
             padding: 15px 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid var(--cream-dark);
         }
         
         .previous-page {
@@ -353,40 +352,45 @@
             }
         }
         
-        /* Amélioration de la breadcrumb */
-        .breadcrumb {
-            display: flex;
-            align-items: center;
-            padding: 10px 0;
-            margin-bottom: 20px;
-            font-size: 0.95rem;
-        }
-        
-        .breadcrumb a {
-            color: var(--gray);
-            text-decoration: none;
-            transition: color 0.3s ease;
-            display: flex;
-            align-items: center;
-        }
-        
-        .breadcrumb a i {
-            margin-right: 6px;
-            font-size: 0.85rem;
-        }
-        
-        .breadcrumb a:hover {
+        /* Amélioration du header */
+        .header-title {
+            font-size: 1.8rem;
             color: var(--purple);
+            font-weight: 700;
+            margin-bottom: 5px;
+            position: relative;
+            display: inline-block;
         }
         
-        .breadcrumb span {
-            margin: 0 10px;
-            color: var(--gray);
+        .header-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--purple) 0%, var(--purple-light) 100%);
+            border-radius: 2px;
         }
         
-        .breadcrumb span:last-child {
-            color: var(--purple);
-            font-weight: 500;
+        .main-content-area {
+            padding-top: 20px;
+        }
+        
+        /* Animation subtile pour l'interface */
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animated-element {
+            animation: fadeInUp 0.6s ease forwards;
         }
     </style>
 </head>
@@ -420,15 +424,6 @@
     </header>
 
     <div class="container main-container" id="main-content">
-        <!-- Breadcrumb -->
-        <div class="breadcrumb fade-in">
-            <a href="candidate-dashboard.html?email=demo.utilisateur%40nexten.fr&password=s">
-                <i class="fas fa-home"></i> Tableau de bord
-            </a>
-            <span>›</span>
-            <span>Mes opportunités sélectionnées</span>
-        </div>
-        
         <!-- Navigation contextuelle avec flèche pour retour au tableau de bord -->
         <div class="contextual-nav fade-in">
             <a href="candidate-dashboard.html?email=demo.utilisateur%40nexten.fr&password=s" class="previous-page" data-tooltip="Retour au tableau de bord">
