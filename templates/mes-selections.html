@@ -75,6 +75,8 @@
             box-shadow: var(--box-shadow-sm);
             z-index: 1000;
             transition: all var(--transition-normal);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
 
         header.scrolled {
@@ -98,6 +100,11 @@
             display: flex;
             align-items: center;
             position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
         }
 
         .logo span {
@@ -115,14 +122,15 @@
             justify-content: center;
             font-size: 0.75rem;
             margin-left: 2px;
+            box-shadow: 0 4px 10px rgba(124, 58, 237, 0.3);
         }
 
         /* Notification bar */
         .notification-bar {
-            background-color: var(--purple-light);
-            color: var(--purple-dark);
+            background: linear-gradient(135deg, var(--purple) 0%, var(--purple-dark) 100%);
+            color: var(--white);
             text-align: center;
-            padding: 0.5rem;
+            padding: 0.6rem;
             font-size: 0.875rem;
             font-weight: 500;
             position: fixed;
@@ -132,6 +140,7 @@
             z-index: 1001;
             transform: translateY(-100%);
             animation: slideDown 0.5s ease forwards 0.5s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
 
         @keyframes slideDown {
@@ -167,9 +176,26 @@
             color: var(--gray);
             text-decoration: none;
             font-weight: 500;
-            transition: color var(--transition-fast);
+            transition: all var(--transition-fast);
             padding: 0.5rem 0.75rem;
             border-radius: var(--border-radius-sm);
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--purple);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after, nav a.active::after {
+            width: 80%;
         }
 
         nav a:hover {
@@ -188,6 +214,12 @@
             color: var(--dark);
             font-size: 1.5rem;
             cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .menu-toggle:hover {
+            transform: rotate(90deg);
+            color: var(--purple);
         }
 
         .skip-to-content {
@@ -214,7 +246,7 @@
 
         /* Main content */
         #main-content {
-            padding-top: 100px;
+            padding-top: 120px;
             padding-bottom: 60px;
         }
 
@@ -232,8 +264,15 @@
             margin-top: 60px;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 5px 25px rgba(124, 58, 237, 0.3);
-            border-radius: var(--border-radius-sm);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.3);
+            border-radius: var(--border-radius-lg);
+            transform: translateY(0);
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+        }
+
+        .company-banner:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(124, 58, 237, 0.4);
         }
 
         .company-banner::before {
@@ -292,7 +331,7 @@
         }
 
         .company-logo:hover {
-            transform: scale(1.05);
+            transform: scale(1.05) rotate(3deg);
             box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
         }
 
@@ -351,7 +390,7 @@
         }
 
         .user-avatar:hover {
-            transform: scale(1.05);
+            transform: scale(1.05) rotate(5deg);
             background-color: rgba(255, 255, 255, 0.25);
             box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
         }
@@ -369,39 +408,44 @@
         }
 
         .page-title {
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: 700;
             color: var(--dark);
             margin-bottom: 0.3rem;
             position: relative;
+            background: linear-gradient(90deg, var(--dark) 0%, var(--purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .page-subtitle {
-            font-size: 1rem;
+            font-size: 1.1rem;
             color: var(--gray);
-            margin-top: 0;
+            margin-top: 0.5rem;
         }
 
         .back-btn {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 10px 16px;
+            padding: 12px 20px;
             background-color: var(--white);
-            border: 1.5px solid var(--gray-light);
+            border: none;
             border-radius: var(--border-radius-md);
             color: var(--gray);
             font-weight: 500;
             text-decoration: none;
             transition: all var(--transition-normal);
             font-size: 0.95rem;
+            box-shadow: var(--box-shadow-sm);
         }
 
         .back-btn:hover {
             background-color: var(--cream);
             transform: translateY(-3px);
-            box-shadow: var(--box-shadow-sm);
-            color: var(--dark);
+            box-shadow: var(--box-shadow-md);
+            color: var(--purple);
         }
 
         /* Filter and Search */
@@ -411,6 +455,15 @@
             gap: var(--spacing-md);
             margin-bottom: var(--spacing-lg);
             flex-wrap: wrap;
+            background-color: var(--white);
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--box-shadow-sm);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .filter-container:hover {
+            box-shadow: var(--box-shadow-md);
         }
 
         .search-bar {
@@ -421,7 +474,7 @@
 
         .search-input {
             width: 100%;
-            padding: 10px 16px 10px 40px;
+            padding: 12px 16px 12px 45px;
             border: 1.5px solid var(--gray-light);
             border-radius: var(--border-radius-md);
             font-size: 0.95rem;
@@ -438,10 +491,11 @@
 
         .search-icon {
             position: absolute;
-            left: 14px;
+            left: 16px;
             top: 50%;
             transform: translateY(-50%);
             color: var(--gray);
+            font-size: 1.1rem;
         }
 
         .filter-dropdown {
@@ -452,7 +506,7 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 10px 16px;
+            padding: 12px 20px;
             background-color: var(--white);
             border: 1.5px solid var(--gray-light);
             border-radius: var(--border-radius-md);
@@ -465,19 +519,21 @@
 
         .filter-btn:hover {
             background-color: var(--cream);
+            color: var(--purple);
+            border-color: var(--purple-light);
         }
 
         .filter-dropdown-content {
             position: absolute;
             top: 100%;
             right: 0;
-            min-width: 200px;
+            min-width: 250px;
             background-color: var(--white);
             border-radius: var(--border-radius-md);
             box-shadow: var(--box-shadow-md);
             padding: var(--spacing-sm);
             z-index: 10;
-            margin-top: 5px;
+            margin-top: 8px;
             opacity: 0;
             visibility: hidden;
             transform: translateY(10px);
@@ -491,17 +547,20 @@
         }
 
         .filter-option {
-            padding: 8px 12px;
+            padding: 10px 16px;
             border-radius: var(--border-radius-sm);
             cursor: pointer;
             transition: all var(--transition-fast);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            font-weight: 500;
+            margin-bottom: 2px;
         }
 
         .filter-option:hover {
             background-color: var(--cream);
+            color: var(--purple);
         }
 
         .filter-option.active {
@@ -514,11 +573,18 @@
             align-items: center;
             gap: 8px;
             background-color: var(--primary-light);
-            padding: 6px 12px;
+            padding: 8px 16px;
             border-radius: var(--border-radius-md);
             color: var(--purple);
-            font-weight: 500;
-            font-size: 0.9rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+            box-shadow: 0 4px 6px rgba(124, 58, 237, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .selection-counter:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(124, 58, 237, 0.2);
         }
 
         /* Section titles */
@@ -527,6 +593,16 @@
             opacity: 0;
             transform: translateY(20px);
             animation: fadeInUp 0.6s ease forwards;
+            background-color: var(--white);
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-lg);
+            box-shadow: var(--box-shadow-sm);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .section-container:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--box-shadow-md);
         }
 
         @keyframes fadeInUp {
@@ -547,19 +623,30 @@
             margin-bottom: var(--spacing-md);
             padding-bottom: var(--spacing-xs);
             border-bottom: 2px solid var(--gray-light);
+            transition: border-color 0.3s ease;
+        }
+
+        .section-container:hover .section-header {
+            border-color: var(--purple-light);
         }
 
         .section-title {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             font-weight: 600;
             color: var(--dark);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
         .section-title i {
             color: var(--purple);
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .section-container:hover .section-title i {
+            transform: scale(1.2) rotate(5deg);
         }
 
         .section-counter {
@@ -574,18 +661,40 @@
             font-size: 0.9rem;
             font-weight: 600;
             margin-left: 8px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .section-container:hover .section-counter {
+            transform: scale(1.1);
+            background-color: var(--purple);
+            color: var(--white);
         }
 
         .job-title {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: 500;
             margin: var(--spacing-md) 0;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 12px;
             color: var(--dark);
             padding-left: 12px;
             border-left: 3px solid var(--purple);
+            transition: transform 0.3s ease, border-left 0.3s ease;
+        }
+
+        .job-title:hover {
+            transform: translateX(5px);
+            border-left: 5px solid var(--purple);
+        }
+
+        .job-title i {
+            color: var(--purple);
+            transition: transform 0.3s ease;
+        }
+
+        .job-title:hover i {
+            transform: rotate(10deg);
         }
 
         /* Candidate cards */
@@ -606,11 +715,13 @@
             display: flex;
             flex-direction: column;
             height: 100%;
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .candidate-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
             box-shadow: var(--box-shadow-md);
+            border-color: var(--purple-light);
         }
 
         .card-header {
@@ -620,6 +731,11 @@
             align-items: center;
             gap: var(--spacing-md);
             border-bottom: 1px solid var(--gray-light);
+            transition: background-color 0.3s ease;
+        }
+
+        .candidate-card:hover .card-header {
+            background-color: rgba(124, 58, 237, 0.03);
         }
 
         .candidate-avatar {
@@ -633,6 +749,13 @@
             font-size: 1.2rem;
             font-weight: 600;
             color: var(--purple);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .candidate-card:hover .candidate-avatar {
+            transform: scale(1.1) rotate(5deg);
+            background-color: var(--purple);
+            color: var(--white);
         }
 
         .candidate-info {
@@ -667,6 +790,12 @@
             font-weight: 600;
             font-size: 0.9rem;
             box-shadow: 0 2px 8px rgba(124, 58, 237, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .candidate-card:hover .match-badge {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
         }
 
         .card-body {
@@ -675,16 +804,26 @@
         }
 
         .detail-row {
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             display: flex;
             align-items: flex-start;
-            gap: 10px;
+            gap: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        .detail-row:hover {
+            transform: translateX(5px);
         }
 
         .detail-icon {
             color: var(--purple);
             font-size: 0.95rem;
             margin-top: 3px;
+            transition: transform 0.3s ease;
+        }
+
+        .detail-row:hover .detail-icon {
+            transform: rotate(10deg);
         }
 
         .detail-content {
@@ -705,8 +844,8 @@
         .cv-button {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 8px 12px;
+            gap: 10px;
+            padding: 8px 16px;
             background-color: var(--primary-light);
             color: var(--purple);
             border: none;
@@ -721,6 +860,8 @@
         .cv-button:hover {
             background-color: var(--purple);
             color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(124, 58, 237, 0.2);
         }
 
         .maps-link {
@@ -736,16 +877,22 @@
         .maps-link:hover {
             color: var(--purple-dark);
             text-decoration: underline;
+            transform: translateY(-2px);
         }
 
         .star-rating {
             display: flex;
-            gap: 2px;
+            gap: 3px;
         }
 
         .star {
             color: var(--yellow);
             font-size: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .detail-row:hover .star {
+            transform: scale(1.2);
         }
 
         .star.empty {
@@ -753,15 +900,22 @@
         }
 
         .availability {
-            margin-top: 10px;
-            padding: 8px 12px;
+            margin-top: 15px;
+            padding: 10px 16px;
             background-color: var(--green-light);
             color: var(--green-dark);
             border-radius: var(--border-radius-sm);
             font-size: 0.9rem;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            font-weight: 500;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .availability:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(34, 197, 94, 0.15);
         }
 
         .card-footer {
@@ -770,16 +924,22 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background-color: rgba(249, 250, 251, 0.5);
+            transition: background-color 0.3s ease;
+        }
+
+        .candidate-card:hover .card-footer {
+            background-color: rgba(124, 58, 237, 0.03);
         }
 
         .action-buttons {
             display: flex;
-            gap: 10px;
+            gap: 12px;
         }
 
         .action-btn {
-            width: 42px;
-            height: 42px;
+            width: 44px;
+            height: 44px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -789,6 +949,7 @@
             transition: all var(--transition-normal);
             cursor: pointer;
             font-size: 1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         .action-btn.accept {
@@ -797,7 +958,8 @@
 
         .action-btn.accept:hover {
             background-color: var(--green-dark);
-            transform: scale(1.1);
+            transform: scale(1.15);
+            box-shadow: 0 6px 12px rgba(34, 197, 94, 0.2);
         }
 
         .action-btn.reject {
@@ -806,7 +968,8 @@
 
         .action-btn.reject:hover {
             background-color: var(--red-dark);
-            transform: scale(1.1);
+            transform: scale(1.15);
+            box-shadow: 0 6px 12px rgba(239, 68, 68, 0.2);
         }
 
         .action-btn.clicked {
@@ -825,7 +988,8 @@
 
         .action-btn.contact:hover {
             background-color: var(--purple-dark);
-            transform: scale(1.1);
+            transform: scale(1.15);
+            box-shadow: 0 6px 12px rgba(124, 58, 237, 0.2);
         }
 
         .more-button {
@@ -835,8 +999,8 @@
             cursor: pointer;
             transition: all var(--transition-fast);
             font-size: 1.2rem;
-            width: 36px;
-            height: 36px;
+            width: 38px;
+            height: 38px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -846,6 +1010,7 @@
         .more-button:hover {
             background-color: var(--gray-light);
             color: var(--dark);
+            transform: rotate(90deg);
         }
 
         /* Empty state */
@@ -856,16 +1021,28 @@
             background-color: var(--white);
             border-radius: var(--border-radius-lg);
             box-shadow: var(--box-shadow-sm);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .empty-state:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--box-shadow-md);
         }
 
         .empty-icon {
-            font-size: 3rem;
+            font-size: 3.5rem;
             color: var(--gray-light);
             margin-bottom: var(--spacing-md);
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .empty-state:hover .empty-icon {
+            transform: scale(1.1);
+            color: var(--purple-light);
         }
 
         .empty-title {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: 600;
             color: var(--dark);
             margin-bottom: var(--spacing-sm);
@@ -883,7 +1060,7 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 10px 16px;
+            padding: 12px 20px;
             background-color: var(--purple);
             color: white;
             border: none;
@@ -896,15 +1073,27 @@
         .empty-action:hover {
             background-color: var(--purple-dark);
             transform: translateY(-3px);
-            box-shadow: var(--box-shadow-sm);
+            box-shadow: var(--box-shadow-md);
         }
 
         /* Footer */
         footer {
-            background-color: var(--dark);
+            background: linear-gradient(135deg, var(--dark) 0%, #111827 100%);
             color: var(--white);
             padding-top: var(--spacing-xl);
             margin-top: var(--spacing-xxl);
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--purple) 0%, transparent 100%);
         }
 
         .footer-content {
@@ -921,12 +1110,29 @@
             font-weight: 600;
             margin-bottom: var(--spacing-md);
             color: var(--white);
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-heading::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--purple);
+            transition: width 0.3s ease;
+        }
+
+        .footer-heading:hover::after {
+            width: 100%;
         }
 
         .footer-description {
             margin-bottom: var(--spacing-md);
             color: rgba(255, 255, 255, 0.7);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             line-height: 1.6;
         }
 
@@ -940,17 +1146,46 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 36px;
-            height: 36px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             background-color: rgba(255, 255, 255, 0.1);
             color: var(--white);
             transition: all var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer-social a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--purple) 0%, var(--purple-dark) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+        }
+
+        .footer-social a i {
+            position: relative;
+            z-index: 2;
+            transition: transform 0.3s ease;
         }
 
         .footer-social a:hover {
-            background-color: var(--purple);
-            transform: translateY(-3px);
+            transform: translateY(-5px) rotate(10deg);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .footer-social a:hover::before {
+            opacity: 1;
+        }
+
+        .footer-social a:hover i {
+            transform: scale(1.2);
         }
 
         .footer-links {
@@ -959,32 +1194,53 @@
         }
 
         .footer-links li {
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         .footer-links a {
             color: rgba(255, 255, 255, 0.7);
             text-decoration: none;
-            transition: color var(--transition-fast);
+            transition: all var(--transition-fast);
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
+        .footer-links a i {
+            transition: transform 0.3s ease;
+        }
+
         .footer-links a:hover {
             color: var(--white);
+            transform: translateX(5px);
+        }
+
+        .footer-links a:hover i {
+            transform: scale(1.2) rotate(10deg);
+            color: var(--purple-light);
         }
 
         .footer-contact p {
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
             gap: 10px;
             color: rgba(255, 255, 255, 0.7);
+            transition: transform 0.3s ease;
+        }
+
+        .footer-contact p:hover {
+            transform: translateX(5px);
+            color: var(--white);
         }
 
         .footer-contact i {
             color: var(--purple-light);
+            transition: transform 0.3s ease;
+        }
+
+        .footer-contact p:hover i {
+            transform: rotate(10deg);
         }
 
         .footer-bottom {
@@ -1000,10 +1256,26 @@
             color: rgba(255, 255, 255, 0.7);
             text-decoration: none;
             transition: color var(--transition-fast);
+            position: relative;
+        }
+
+        .footer-bottom a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--purple-light);
+            transition: width 0.3s ease;
         }
 
         .footer-bottom a:hover {
             color: var(--white);
+        }
+
+        .footer-bottom a:hover::after {
+            width: 100%;
         }
 
         /* Scroll to top button */
@@ -1011,8 +1283,8 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             background-color: var(--white);
             color: var(--purple);
@@ -1023,20 +1295,21 @@
             align-items: center;
             justify-content: center;
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateY(20px) scale(0.9);
             transition: all var(--transition-normal);
             z-index: 999;
         }
 
         .scroll-to-top.visible {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateY(0) scale(1);
         }
 
         .scroll-to-top:hover {
             background-color: var(--purple);
             color: var(--white);
-            transform: translateY(-5px);
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 10px 25px rgba(124, 58, 237, 0.3);
         }
 
         /* Modal */
@@ -1047,7 +1320,7 @@
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(3px);
+            backdrop-filter: blur(5px);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1066,11 +1339,11 @@
             background-color: var(--white);
             border-radius: var(--border-radius-lg);
             width: 90%;
-            max-width: 600px;
-            max-height: 80vh;
+            max-width: 700px;
+            max-height: 85vh;
             overflow-y: auto;
             box-shadow: var(--box-shadow-lg);
-            transform: translateY(20px) scale(0.95);
+            transform: translateY(30px) scale(0.95);
             transition: all var(--transition-normal);
         }
 
@@ -1084,23 +1357,33 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background: linear-gradient(135deg, var(--purple-light) 0%, var(--purple) 100%);
+            color: white;
+            border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
         }
 
         .modal-title {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: 600;
-            color: var(--dark);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .modal-title i {
+            font-size: 1.1rem;
         }
 
         .modal-close {
-            background: none;
+            background: rgba(255, 255, 255, 0.2);
             border: none;
-            color: var(--gray);
+            color: var(--white);
             font-size: 1.2rem;
             cursor: pointer;
             transition: all var(--transition-fast);
-            width: 32px;
-            height: 32px;
+            width: 36px;
+            height: 36px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1108,8 +1391,8 @@
         }
 
         .modal-close:hover {
-            background-color: var(--gray-light);
-            color: var(--dark);
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
         }
 
         .modal-body {
@@ -1122,6 +1405,8 @@
             display: flex;
             justify-content: flex-end;
             gap: var(--spacing-sm);
+            background-color: var(--cream);
+            border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);
         }
 
         /* CV viewer */
@@ -1137,26 +1422,30 @@
             margin-top: var(--spacing-md);
             display: flex;
             gap: var(--spacing-sm);
+            flex-wrap: wrap;
         }
 
         .cv-btn {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 8px 12px;
+            padding: 10px 16px;
             background-color: var(--white);
-            border: 1.5px solid var(--gray-light);
-            border-radius: var(--border-radius-sm);
+            border: none;
+            border-radius: var(--border-radius-md);
             color: var(--gray);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             font-weight: 500;
             cursor: pointer;
             transition: all var(--transition-normal);
+            box-shadow: var(--box-shadow-sm);
         }
 
         .cv-btn:hover {
             background-color: var(--cream);
             color: var(--dark);
+            transform: translateY(-3px);
+            box-shadow: var(--box-shadow-md);
         }
 
         .cv-btn.primary {
@@ -1167,6 +1456,7 @@
 
         .cv-btn.primary:hover {
             background-color: var(--purple-dark);
+            box-shadow: 0 6px 15px rgba(124, 58, 237, 0.2);
         }
 
         /* Tooltip */
@@ -1179,17 +1469,18 @@
             position: absolute;
             bottom: 100%;
             left: 50%;
-            transform: translateX(-50%);
+            transform: translateX(-50%) translateY(10px);
             background-color: var(--dark);
             color: var(--white);
-            padding: 5px 10px;
+            padding: 8px 12px;
             border-radius: var(--border-radius-sm);
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             white-space: nowrap;
             opacity: 0;
             visibility: hidden;
             transition: all var(--transition-fast);
             z-index: 10;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
         .tooltip:hover::after {
@@ -1393,13 +1684,13 @@
                         <i class="fas fa-clipboard-list"></i> Candidats qui ont postulé
                     </div>
                     <div class="filter-option">
-                        <i class="fas fa-star"></i> Favoris
+                        <i class="fas fa-bolt"></i> Candidats en un clic
                     </div>
                 </div>
             </div>
             
             <span class="selection-counter">
-                <i class="fas fa-users"></i> 7 candidats
+                <i class="fas fa-users"></i> 5 candidats
             </span>
         </div>
         
@@ -1865,191 +2156,13 @@
                 </div>
             </div>
         </section>
-        
-        <!-- Section des candidats favoris -->
-        <section class="section-container">
-            <div class="section-header">
-                <h2 class="section-title">
-                    <i class="fas fa-star"></i> Candidats favoris
-                    <span class="section-counter">2</span>
-                </h2>
-            </div>
-            
-            <div class="candidate-cards">
-                <!-- Candidat 6 -->
-                <div class="candidate-card">
-                    <div class="card-header">
-                        <div class="candidate-avatar">PN</div>
-                        <div class="candidate-info">
-                            <div class="candidate-name">Prénom N.</div>
-                            <div class="candidate-position">Intitulé du profil</div>
-                        </div>
-                        <div class="match-badge">94%</div>
-                    </div>
-                    
-                    <div class="card-body">
-                        <div class="detail-row">
-                            <i class="fas fa-file-alt detail-icon"></i>
-                            <div class="detail-content">
-                                <button class="cv-button" id="view-cv-btn-6">
-                                    <i class="fas fa-eye"></i> Voir le CV
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <div class="detail-row">
-                            <i class="fas fa-search detail-icon"></i>
-                            <div class="detail-content">
-                                <span class="detail-label">Recherche :</span>
-                                <span class="detail-value">CDI CDD Intérim</span>
-                            </div>
-                        </div>
-                        
-                        <div class="detail-row">
-                            <i class="fas fa-euro-sign detail-icon"></i>
-                            <div class="detail-content">
-                                <span class="detail-label">Rémunération :</span>
-                                <span class="detail-value">fourchette transmise par le candidat</span>
-                            </div>
-                        </div>
-                        
-                        <div class="detail-row">
-                            <i class="fas fa-route detail-icon"></i>
-                            <div class="detail-content">
-                                <span class="detail-value">Temps de trajet exact</span><br>
-                                <a href="#" class="maps-link">
-                                    <i class="fas fa-map-marker-alt"></i> Voir sur Maps
-                                </a>
-                            </div>
-                        </div>
-                        
-                        <div class="detail-row">
-                            <i class="fas fa-star detail-icon"></i>
-                            <div class="detail-content">
-                                <div class="star-rating">
-                                    <i class="fas fa-star star"></i>
-                                    <i class="fas fa-star star"></i>
-                                    <i class="fas fa-star star"></i>
-                                    <i class="fas fa-star star"></i>
-                                    <i class="fas fa-star star"></i>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="availability">
-                            <i class="fas fa-calendar-check"></i> Disponibilité pour une prise de poste
-                        </div>
-                    </div>
-                    
-                    <div class="card-footer">
-                        <div class="action-buttons">
-                            <button class="action-btn accept" title="Accepter">
-                                <i class="fas fa-check"></i>
-                            </button>
-                            <button class="action-btn reject" title="Rejeter">
-                                <i class="fas fa-times"></i>
-                            </button>
-                            <button class="action-btn contact" title="Contacter">
-                                <i class="fas fa-comment"></i>
-                            </button>
-                        </div>
-                        <button class="more-button" title="Plus d'options">
-                            <i class="fas fa-ellipsis-v"></i>
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- Candidat 7 -->
-                <div class="candidate-card">
-                    <div class="card-header">
-                        <div class="candidate-avatar">PN</div>
-                        <div class="candidate-info">
-                            <div class="candidate-name">Prénom N.</div>
-                            <div class="candidate-position">Intitulé du profil</div>
-                        </div>
-                        <div class="match-badge">91%</div>
-                    </div>
-                    
-                    <div class="card-body">
-                        <div class="detail-row">
-                            <i class="fas fa-file-alt detail-icon"></i>
-                            <div class="detail-content">
-                                <button class="cv-button" id="view-cv-btn-7">
-                                    <i class="fas fa-eye"></i> Voir le CV
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <div class="detail-row">
-                            <i class="fas fa-search detail-icon"></i>
-                            <div class="detail-content">
-                                <span class="detail-label">Recherche :</span>
-                                <span class="detail-value">CDI CDD Intérim</span>
-                            </div>
-                        </div>
-                        
-                        <div class="detail-row">
-                            <i class="fas fa-euro-sign detail-icon"></i>
-                            <div class="detail-content">
-                                <span class="detail-label">Rémunération :</span>
-                                <span class="detail-value">fourchette transmise par le candidat</span>
-                            </div>
-                        </div>
-                        
-                        <div class="detail-row">
-                            <i class="fas fa-route detail-icon"></i>
-                            <div class="detail-content">
-                                <span class="detail-value">Temps de trajet exact</span><br>
-                                <a href="#" class="maps-link">
-                                    <i class="fas fa-map-marker-alt"></i> Voir sur Maps
-                                </a>
-                            </div>
-                        </div>
-                        
-                        <div class="detail-row">
-                            <i class="fas fa-star detail-icon"></i>
-                            <div class="detail-content">
-                                <div class="star-rating">
-                                    <i class="fas fa-star star"></i>
-                                    <i class="fas fa-star star"></i>
-                                    <i class="fas fa-star star"></i>
-                                    <i class="fas fa-star star"></i>
-                                    <i class="fas fa-star star"></i>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="availability">
-                            <i class="fas fa-calendar-check"></i> Disponibilité pour une prise de poste
-                        </div>
-                    </div>
-                    
-                    <div class="card-footer">
-                        <div class="action-buttons">
-                            <button class="action-btn accept" title="Accepter">
-                                <i class="fas fa-check"></i>
-                            </button>
-                            <button class="action-btn reject" title="Rejeter">
-                                <i class="fas fa-times"></i>
-                            </button>
-                            <button class="action-btn contact" title="Contacter">
-                                <i class="fas fa-comment"></i>
-                            </button>
-                        </div>
-                        <button class="more-button" title="Plus d'options">
-                            <i class="fas fa-ellipsis-v"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
     </main>
     
     <!-- Modal pour afficher le CV -->
     <div class="modal-backdrop" id="cv-modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title">CV de Prénom N.</h2>
+                <h2 class="modal-title"><i class="fas fa-file-alt"></i> CV de Prénom N.</h2>
                 <button class="modal-close" id="close-modal">
                     <i class="fas fa-times"></i>
                 </button>
@@ -2282,6 +2395,33 @@
                     });
                 });
             }
+
+            // Animation d'en-tête au défilement
+            const header = document.querySelector('header');
+            
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+
+            // Animation des sections au défilement
+            const observeSections = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            document.querySelectorAll('.section-container').forEach(section => {
+                observeSections.observe(section);
+            });
         });
     </script>
 </body>
