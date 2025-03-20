@@ -48,7 +48,7 @@
             margin: 0;
             padding: 0;
             color: var(--text);
-            background-color: var(--cream);
+            background-color: var(--light-bg);
         }
 
         /* Header & Navigation */
@@ -154,30 +154,27 @@
             background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
             color: white;
             text-align: center;
-            padding: 10px;
-            font-size: 0.9rem;
+            padding: 12px;
+            font-size: 0.95rem;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             z-index: 1001;
-            transform: translateY(-100%);
-            transition: transform 0.3s ease;
-        }
-
-        .notification-bar.show {
-            transform: translateY(0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
         .notification-bar i {
-            margin-right: 5px;
             animation: pulse 2s infinite;
         }
 
         @keyframes pulse {
-            0% { opacity: 0.5; }
-            50% { opacity: 1; }
-            100% { opacity: 0.5; }
+            0% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 0.5; transform: scale(1); }
         }
 
         /* Skip to content link for accessibility */
@@ -248,11 +245,11 @@
         }
 
         .company-logo {
-            width: 80px;
-            height: 80px;
-            border-radius: 16px;
+            width: 90px;
+            height: 90px;
+            border-radius: 20px;
             background-color: var(--white);
-            padding: 10px;
+            padding: 12px;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
             display: flex;
             align-items: center;
@@ -268,20 +265,40 @@
         }
 
         .company-name {
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: 700;
             margin-bottom: 5px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
         }
 
         .company-category {
-            font-size: 1rem;
-            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .company-category i {
+            color: var(--accent);
         }
 
         .user-info {
             display: flex;
             align-items: center;
             gap: var(--spacing-md);
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 12px 20px;
+            border-radius: 12px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .user-info:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
 
         .user-details {
@@ -289,29 +306,37 @@
         }
 
         .user-fullname {
-            font-size: 1.2rem;
-            font-weight: 500;
+            font-size: 1.3rem;
+            font-weight: 600;
             margin-bottom: 5px;
         }
 
         .user-position {
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 6px;
+        }
+
+        .user-position i {
+            color: var(--accent);
         }
 
         .user-avatar {
-            width: 60px;
-            height: 60px;
+            width: 65px;
+            height: 65px;
             background-color: rgba(255, 255, 255, 0.15);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             color: var(--white);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
             transition: all 0.3s ease;
         }
 
@@ -329,26 +354,39 @@
         }
 
         #main-content {
-            padding-top: 40px;
+            padding-top: 50px;
             min-height: calc(100vh - 300px);
         }
 
         /* Page header */
         .page-header {
-            margin-bottom: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .page-title {
-            font-size: 2rem;
-            font-weight: 600;
+            font-size: 2.2rem;
+            font-weight: 700;
             background: linear-gradient(90deg, var(--dark) 0%, var(--purple) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             text-fill-color: transparent;
+            position: relative;
+            padding-bottom: 8px;
+        }
+
+        .page-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--purple) 0%, var(--purple-light) 100%);
+            border-radius: 2px;
         }
 
         .back-btn {
@@ -359,22 +397,31 @@
             border: 2px solid var(--purple);
             color: var(--purple);
             padding: var(--spacing-sm) var(--spacing-lg);
-            border-radius: 10px;
+            border-radius: 12px;
             text-decoration: none;
-            font-weight: 500;
+            font-weight: 600;
             transition: all 0.3s ease;
         }
 
         .back-btn:hover {
-            background-color: var(--purple-light);
+            background-color: var(--purple);
+            color: white;
             transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(124, 58, 237, 0.1);
+            box-shadow: 0 10px 20px rgba(124, 58, 237, 0.2);
+        }
+
+        .back-btn i {
+            transition: transform 0.3s ease;
+        }
+
+        .back-btn:hover i {
+            transform: translateX(-3px);
         }
 
         /* Card */
         .card {
             background-color: white;
-            border-radius: 12px;
+            border-radius: 16px;
             box-shadow: var(--shadow-md);
             margin-bottom: 2rem;
             border: none;
@@ -384,251 +431,373 @@
 
         .card:hover {
             box-shadow: var(--shadow-lg);
+            transform: translateY(-5px);
         }
 
         .card-header {
             background-color: var(--white);
             border-bottom: 1px solid var(--gray-200);
-            padding: 1.25rem 1.5rem;
+            padding: 1.5rem 1.75rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
         .card-header h3 {
             margin: 0;
-            font-size: 1.3rem;
-            font-weight: 600;
+            font-size: 1.4rem;
+            font-weight: 700;
             color: var(--dark);
         }
 
+        .card-header-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--purple-light) 0%, var(--purple) 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
         .card-body {
-            padding: 1.5rem;
+            padding: 1.75rem;
         }
 
         /* Tabs */
         .nav-tabs {
-            border-bottom: 1px solid var(--gray-200);
-            margin-bottom: 1.5rem;
-            gap: 0.5rem;
+            border-bottom: none;
+            margin-bottom: 1.75rem;
+            gap: 0.75rem;
+            padding: 0 0.5rem;
         }
 
         .nav-tabs .nav-link {
             color: var(--text);
             border: none;
-            padding: 0.75rem 1.25rem;
-            border-radius: 8px 8px 0 0;
-            font-weight: 500;
+            padding: 0.9rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
             transition: all 0.3s ease;
             position: relative;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: var(--gray-100);
         }
 
         .nav-tabs .nav-link:hover {
             color: var(--primary);
-            background-color: rgba(99, 102, 241, 0.05);
+            background-color: var(--gray-200);
+            transform: translateY(-3px);
         }
 
         .nav-tabs .nav-link.active {
-            color: var(--primary);
-            background-color: transparent;
-            border-bottom: 3px solid var(--primary);
+            color: white;
+            background-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(99, 102, 241, 0.3);
         }
 
-        .nav-tabs .nav-link.active::before {
-            content: '';
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background-color: var(--primary);
-            border-radius: 3px 3px 0 0;
+        .nav-tabs .nav-link i {
+            font-size: 1.1rem;
         }
 
         /* Table */
+        .table-container {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
         .table {
             margin-bottom: 0;
         }
 
         .table thead {
-            background-color: var(--gray-100);
+            background: linear-gradient(90deg, var(--gray-100) 0%, var(--white) 100%);
         }
 
         .table th {
             font-weight: 600;
             color: var(--dark);
             border-bottom: 2px solid var(--gray-200);
-            padding: 1rem 0.75rem;
+            padding: 1.2rem 1rem;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
         }
 
         .table td {
-            padding: 1rem 0.75rem;
+            padding: 1.2rem 1rem;
             vertical-align: middle;
             border-bottom: 1px solid var(--gray-200);
+            transition: all 0.2s ease;
         }
 
-        .table tr:hover {
+        .table tbody tr {
+            transition: all 0.3s ease;
+        }
+
+        .table tbody tr:hover {
             background-color: rgba(99, 102, 241, 0.05);
+            transform: translateX(5px);
         }
 
-        .table-responsive {
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: var(--shadow-sm);
+        .table tbody tr:last-child td {
+            border-bottom: none;
         }
 
         /* Status badges */
         .status-badge {
             display: inline-flex;
             align-items: center;
-            padding: 0.35rem 0.75rem;
+            padding: 0.4rem 0.9rem;
             border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            margin-left: 0.5rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-left: 0.75rem;
+            gap: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .status-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
         }
 
         .status-admin {
-            background-color: rgba(239, 68, 68, 0.1);
+            background-color: rgba(239, 68, 68, 0.15);
             color: #ef4444;
         }
 
         .status-manager {
-            background-color: rgba(59, 130, 246, 0.1);
+            background-color: rgba(59, 130, 246, 0.15);
             color: #3b82f6;
         }
 
         .status-recruiter {
-            background-color: rgba(16, 185, 129, 0.1);
+            background-color: rgba(16, 185, 129, 0.15);
             color: #10b981;
         }
 
         /* Button styles */
         .btn {
-            padding: 0.6rem 1.25rem;
-            border-radius: 8px;
-            font-weight: 500;
+            padding: 0.7rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+
+        .btn:active::after {
+            opacity: 0.3;
+            transform: scale(0, 0) translate(-50%);
+            transition: transform 0.5s, opacity 1s;
+        }
+
+        .btn:hover::after {
+            animation: ripple 1s ease-out;
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0) translate(-50%, -50%);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(20, 20) translate(-50%, -50%);
+                opacity: 0;
+            }
         }
 
         .btn-sm {
-            padding: 0.25rem 0.5rem;
+            padding: 0.35rem 0.75rem;
             font-size: 0.875rem;
+            border-radius: 8px;
         }
 
         .btn-primary, .btn-outline-primary:hover {
-            background-color: var(--primary);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             border-color: var(--primary);
             color: white;
         }
 
         .btn-primary:hover {
-            background-color: var(--primary-dark);
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
             border-color: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(99, 102, 241, 0.3);
         }
 
         .btn-outline-primary {
             color: var(--primary);
             border-color: var(--primary);
+            background-color: transparent;
+        }
+
+        .btn-outline-primary:hover {
+            color: white;
         }
 
         .add-contact-btn {
-            background-color: var(--primary);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
             border: none;
             transition: all 0.3s ease;
+            padding: 0.8rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+
+        .add-contact-btn i {
+            transition: transform 0.3s ease;
         }
 
         .add-contact-btn:hover {
-            background-color: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(99, 102, 241, 0.3);
+        }
+
+        .add-contact-btn:hover i {
+            transform: rotate(90deg);
         }
 
         /* Form controls */
         .form-control, .form-select {
-            padding: 0.6rem 1rem;
-            border-radius: 8px;
+            padding: 0.8rem 1.2rem;
+            border-radius: 12px;
             border: 1px solid var(--gray-300);
             transition: all 0.3s ease;
+            font-size: 0.95rem;
+            background-color: var(--gray-100);
         }
 
         .form-control:focus, .form-select:focus {
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+            background-color: white;
         }
 
         .input-group {
-            border-radius: 8px;
+            border-radius: 12px;
             overflow: hidden;
         }
 
         .input-group-text {
             background-color: var(--gray-100);
             border-color: var(--gray-300);
+            padding-left: 1.2rem;
+            padding-right: 1.2rem;
         }
 
         /* Dropdown */
         .dropdown-menu {
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             box-shadow: var(--shadow-lg);
-            padding: 0.5rem;
+            padding: 0.75rem;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .dropdown-item {
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
             transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 2px;
         }
 
         .dropdown-item:hover {
             background-color: rgba(99, 102, 241, 0.1);
             color: var(--primary);
+            transform: translateX(3px);
         }
 
         .dropdown-item i {
             width: 20px;
             text-align: center;
+            font-size: 0.9rem;
         }
 
         /* Recruitment list */
         .recruitment-list {
-            margin: 1rem 0;
+            margin: 1.5rem 0;
         }
 
         .recruitment-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem;
+            padding: 1.2rem;
             background-color: var(--gray-100);
-            border-radius: 8px;
-            margin-bottom: 0.75rem;
+            border-radius: 12px;
+            margin-bottom: 0.85rem;
             transition: all 0.3s ease;
+            border-left: 4px solid transparent;
         }
 
         .recruitment-item:hover {
             background-color: var(--white);
             box-shadow: var(--shadow-md);
-            transform: translateY(-2px);
+            transform: translateY(-3px) translateX(5px);
+            border-left: 4px solid var(--primary);
         }
 
         .recruitment-title {
-            font-weight: 500;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .recruitment-title i {
+            color: var(--primary);
         }
 
         /* Contact actions */
         .assign-to-recruitment {
-            width: 32px;
-            height: 32px;
+            width: 36px;
+            height: 36px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 50%;
+            border-radius: 10px;
             background-color: var(--white);
             border: 1px solid var(--gray-300);
             transition: all 0.3s ease;
             cursor: pointer;
+            color: var(--primary);
         }
 
         .assign-to-recruitment:hover {
@@ -636,57 +805,67 @@
             border-color: var(--primary);
             color: white;
             transform: rotate(90deg);
+            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.3);
         }
 
         /* Contact popup */
         .contact-popup {
             position: absolute;
             top: 0;
-            right: -300px;
-            width: 280px;
+            right: -320px;
+            width: 300px;
             background-color: white;
-            border-radius: 8px;
+            border-radius: 12px;
             box-shadow: var(--shadow-lg);
-            padding: 1.25rem;
+            padding: 1.5rem;
             z-index: 10;
             transition: all 0.3s ease;
             opacity: 0;
             visibility: hidden;
+            border: 1px solid var(--gray-200);
         }
 
         .recruitment-item:hover .contact-popup {
-            right: 100%;
+            right: 105%;
             opacity: 1;
             visibility: visible;
         }
 
         .contact-popup h6 {
-            margin-bottom: 1rem;
-            font-weight: 600;
+            margin-bottom: 1.2rem;
+            font-weight: 700;
             color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .contact-popup h6 i {
+            color: var(--primary);
         }
 
         .contact-item {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.75rem;
-            padding: 0.5rem;
-            border-radius: 6px;
+            gap: 0.75rem;
+            margin-bottom: 0.85rem;
+            padding: 0.75rem;
+            border-radius: 8px;
             background-color: var(--gray-100);
             transition: all 0.2s ease;
         }
 
         .contact-item:hover {
             background-color: rgba(99, 102, 241, 0.1);
+            transform: translateX(3px);
         }
 
         .contact-item-avatar {
-            width: 36px;
-            height: 36px;
-            background-color: var(--primary);
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
-            border-radius: 50%;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -699,15 +878,23 @@
         }
 
         .contact-item-name {
-            font-weight: 500;
+            font-weight: 600;
             margin-bottom: 0.25rem;
             line-height: 1;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
         }
 
         .contact-item-role {
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             color: var(--gray-400);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .contact-item-role i {
+            font-size: 0.7rem;
+            color: var(--primary);
         }
 
         /* Toast notification */
@@ -720,194 +907,233 @@
 
         .toast {
             background-color: white;
-            border-radius: 8px;
+            border-radius: 12px;
             box-shadow: var(--shadow-lg);
             overflow: hidden;
             margin-bottom: 1rem;
             border: none;
             max-width: 350px;
+            animation: slideInRight 0.3s ease;
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
 
         .toast-header {
-            background-color: var(--primary);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
             border-bottom: none;
-        }
-
-        .toast-body {
             padding: 1rem;
         }
 
-        /* Footer */
-        footer {
-            background-color: var(--dark);
-            color: white;
-            padding: 3rem 0 1rem;
-            margin-top: 3rem;
+        .toast-body {
+            padding: 1.2rem;
         }
 
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
+        /* Roles List */
+        .roles-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
             margin-bottom: 2rem;
         }
 
-        .footer-heading {
-            font-size: 1.3rem;
-            margin-bottom: 1.25rem;
-            font-weight: 600;
-        }
-
-        .footer-description {
-            color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-        }
-
-        .footer-social {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .footer-social a {
-            width: 36px;
-            height: 36px;
-            background-color: rgba(255, 255, 255, 0.1);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
+        .role-item {
+            background-color: white;
+            border-radius: 12px;
+            padding: 1.2rem;
+            box-shadow: var(--shadow-sm);
             transition: all 0.3s ease;
+            border-left: 4px solid transparent;
         }
 
-        .footer-social a:hover {
-            background-color: var(--primary);
+        .role-item:hover {
+            box-shadow: var(--shadow-md);
             transform: translateY(-3px);
+            border-left: 4px solid var(--primary);
         }
 
-        .footer-links {
-            list-style: none;
-            padding: 0;
+        .role-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .role-name {
+            font-weight: 600;
             margin: 0;
-        }
-
-        .footer-links li {
-            margin-bottom: 0.75rem;
-        }
-
-        .footer-links a {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 10px;
         }
 
-        .footer-links a:hover {
-            color: white;
-            transform: translateX(5px);
-        }
-
-        .footer-contact p {
-            margin-bottom: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .footer-contact i {
-            width: 20px;
-            text-align: center;
+        .role-name i {
             color: var(--primary);
         }
 
-        .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 0.9rem;
+        .role-description {
+            color: var(--gray-400);
+            margin-bottom: 0;
+            padding-left: 28px;
         }
 
-        .footer-bottom a {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .footer-bottom a:hover {
-            color: white;
-        }
-
-        /* Scroll to top button */
-        .scroll-to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
+        .form-check-input:checked {
             background-color: var(--primary);
-            color: white;
-            border-radius: 50%;
+            border-color: var(--primary);
+        }
+
+        .form-switch .form-check-input {
+            width: 3em;
+            height: 1.5em;
+        }
+
+        /* Permissions info */
+        .permissions-info {
+            background-color: rgba(99, 102, 241, 0.05);
+            border-radius: 12px;
+            padding: 1.2rem;
+            margin-bottom: 1.2rem;
+            border-left: 4px solid var(--primary);
+        }
+
+        .permissions-info h6 {
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 0.75rem;
+        }
+
+        .permissions-info h6 i {
+            color: var(--primary);
+        }
+
+        .permissions-info p {
+            margin-bottom: 0;
+            color: var(--text);
+            padding-left: 28px;
+        }
+
+        /* Settings Form */
+        .settings-form {
+            padding: 1rem;
+            background-color: var(--gray-100);
+            border-radius: 12px;
+        }
+
+        .logo-preview {
+            width: 150px;
+            height: 150px;
+            background-color: white;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.5);
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            border: none;
-            z-index: 999;
-            transform: scale(0.8);
-        }
-
-        .scroll-to-top.visible {
-            opacity: 1;
-            visibility: visible;
-            transform: scale(1);
-        }
-
-        .scroll-to-top:hover {
-            background-color: var(--primary-dark);
-            transform: scale(1.1) translateY(-5px);
-        }
-
-        /* Modal */
-        .modal-content {
-            border: none;
-            border-radius: 12px;
+            margin: 0 auto 1rem;
+            box-shadow: var(--shadow-sm);
             overflow: hidden;
+            border: 2px solid var(--gray-200);
         }
 
-        .modal-header {
-            background-color: var(--primary);
-            color: white;
-            border-bottom: none;
-            padding: 1.25rem 1.5rem;
+        .logo-preview img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
         }
 
-        .modal-title {
+        /* Animation effects */
+        .fade-in-animation {
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--gray-100);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gray-300);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+
+        /* Search and filter */
+        .search-filter-container {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-box {
+            flex: 1;
+            position: relative;
+        }
+
+        .search-box input {
+            padding-left: 40px;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-400);
+        }
+
+        /* Actions bar */
+        .actions-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 2rem;
+            background-color: var(--gray-100);
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+
+        .empty-state-icon {
+            font-size: 3rem;
+            color: var(--gray-300);
+            margin-bottom: 1rem;
+        }
+
+        .empty-state h4 {
             font-weight: 600;
+            margin-bottom: 0.75rem;
         }
 
-        .btn-close {
-            color: white;
-            background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3E%3Cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3E%3C/svg%3E") center/1em auto no-repeat;
-            opacity: 0.8;
+        .empty-state p {
+            color: var(--gray-400);
+            margin-bottom: 1.5rem;
         }
 
-        .btn-close:hover {
-            opacity: 1;
+        /* Pulse effect for buttons */
+        .pulse-effect {
+            animation: pulse-animation 2s infinite;
         }
 
-        .modal-footer {
-            border-top: none;
-            padding: 1rem 1.5rem 1.5rem;
+        @keyframes pulse-animation {
+            0% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(99, 102, 241, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); }
         }
 
         /* Responsive */
@@ -928,8 +1154,17 @@
             
             .page-header {
                 flex-direction: column;
-                gap: 1rem;
+                gap: 1.5rem;
                 text-align: center;
+            }
+
+            .page-title::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .search-filter-container {
+                flex-direction: column;
             }
         }
 
@@ -969,11 +1204,7 @@
             }
             
             .company-name {
-                font-size: 1.5rem;
-            }
-            
-            .card-header {
-                text-align: center;
+                font-size: 1.8rem;
             }
             
             .nav-tabs {
@@ -990,59 +1221,27 @@
             
             .nav-tabs .nav-link {
                 white-space: nowrap;
+                min-width: max-content;
             }
 
-            .footer-content {
-                text-align: center;
+            .actions-bar {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
             }
-            
-            .footer-social {
+
+            .back-btn {
+                width: 100%;
                 justify-content: center;
             }
-            
-            .footer-links a {
-                justify-content: center;
-            }
-            
-            .footer-contact p {
-                justify-content: center;
-            }
-        }
-
-        /* Animation effects */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .fade-in-animation {
-            animation: fadeIn 0.6s ease forwards;
-        }
-
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--gray-100);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--gray-300);
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--primary);
         }
     </style>
 </head>
 <body>
     <!-- Notification bar -->
-    <div class="notification-bar show">
-        <i class="fas fa-bell"></i> Vous avez 5 nouveaux candidats correspondant à vos offres et 2 entretiens programmés aujourd'hui
+    <div class="notification-bar">
+        <i class="fas fa-bell"></i> 
+        <span>Vous avez 5 nouveaux candidats correspondant à vos offres et 2 entretiens programmés aujourd'hui</span>
     </div>
 
     <!-- Lien d'accessibilité pour sauter au contenu principal -->
@@ -1076,13 +1275,13 @@
                 </div>
                 <div>
                     <h2 class="company-name">INNOVTECH</h2>
-                    <p class="company-category">Technologie & Innovation</p>
+                    <p class="company-category"><i class="fas fa-rocket"></i> Technologie & Innovation</p>
                 </div>
             </div>
             <div class="user-info">
                 <div class="user-details">
                     <h3 class="user-fullname">Thomas Martin</h3>
-                    <p class="user-position">Directeur des Ressources Humaines</p>
+                    <p class="user-position"><i class="fas fa-user-tie"></i> Directeur des Ressources Humaines</p>
                 </div>
                 <div class="user-avatar">
                     <span>TM</span>
@@ -1108,19 +1307,28 @@
         <div class="organization-section fade-in-animation">
             <div class="card">
                 <div class="card-header">
+                    <div class="card-header-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
                     <h3>Gestion de l'organisation</h3>
                 </div>
                 <div class="card-body">
                     <!-- Barre de navigation interne -->
                     <ul class="nav nav-tabs mb-4 organization-tabs" id="organizationTabs" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="team-tab" data-bs-toggle="tab" data-bs-target="#team" type="button" role="tab" aria-controls="team" aria-selected="true">Équipe et Contacts</button>
+                            <button class="nav-link active" id="team-tab" data-bs-toggle="tab" data-bs-target="#team" type="button" role="tab" aria-controls="team" aria-selected="true">
+                                <i class="fas fa-users"></i> Équipe et Contacts
+                            </button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="permissions-tab" data-bs-toggle="tab" data-bs-target="#permissions" type="button" role="tab" aria-controls="permissions" aria-selected="false">Gestion des accès</button>
+                            <button class="nav-link" id="permissions-tab" data-bs-toggle="tab" data-bs-target="#permissions" type="button" role="tab" aria-controls="permissions" aria-selected="false">
+                                <i class="fas fa-key"></i> Gestion des accès
+                            </button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" type="button" role="tab" aria-controls="settings" aria-selected="false">Paramètres</button>
+                            <button class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" type="button" role="tab" aria-controls="settings" aria-selected="false">
+                                <i class="fas fa-cog"></i> Paramètres
+                            </button>
                         </li>
                     </ul>
                     
@@ -1128,9 +1336,29 @@
                     <div class="tab-content" id="organizationTabsContent">
                         <!-- Onglet Équipe et Contacts -->
                         <div class="tab-pane fade show active" id="team" role="tabpanel" aria-labelledby="team-tab">
+                            <div class="actions-bar">
+                                <h4><i class="fas fa-user-friends text-primary"></i> Membres de l'équipe</h4>
+                                <button type="button" class="add-contact-btn pulse-effect" data-bs-toggle="modal" data-bs-target="#addContactModal">
+                                    <i class="fas fa-plus"></i> Ajouter un contact
+                                </button>
+                            </div>
+
+                            <div class="search-filter-container">
+                                <div class="search-box">
+                                    <i class="fas fa-search search-icon"></i>
+                                    <input type="text" class="form-control" placeholder="Rechercher un membre..." id="contactSearch">
+                                </div>
+                                <select class="form-select" style="width: 200px;" id="roleFilter">
+                                    <option value="">Tous les rôles</option>
+                                    <option value="admin">Administrateur</option>
+                                    <option value="manager">Manager</option>
+                                    <option value="recruiter">Recruteur</option>
+                                </select>
+                            </div>
+
                             <div class="row">
                                 <div class="col-md-8">
-                                    <div class="table-responsive">
+                                    <div class="table-container">
                                         <table class="table table-hover contacts-table" id="contactsTable">
                                             <thead>
                                                 <tr>
@@ -1147,7 +1375,7 @@
                                                     <td>DURAND</td>
                                                     <td>
                                                         Chargée recrutement
-                                                        <span class="status-badge status-manager">Manager</span>
+                                                        <span class="status-badge status-manager"><i class="fas fa-user-shield"></i> Manager</span>
                                                     </td>
                                                     <td>marie.durand@example.com</td>
                                                     <td>
@@ -1156,8 +1384,8 @@
                                                                 <i class="fas fa-ellipsis-v"></i>
                                                             </button>
                                                             <ul class="dropdown-menu">
-                                                                <li><a class="dropdown-item edit-contact" href="#"><i class="fas fa-edit me-2"></i>Modifier</a></li>
-                                                                <li><a class="dropdown-item delete-contact" href="#"><i class="fas fa-trash me-2"></i>Supprimer</a></li>
+                                                                <li><a class="dropdown-item edit-contact" href="#"><i class="fas fa-edit"></i> Modifier</a></li>
+                                                                <li><a class="dropdown-item delete-contact" href="#"><i class="fas fa-trash"></i> Supprimer</a></li>
                                                             </ul>
                                                         </div>
                                                     </td>
@@ -1167,7 +1395,7 @@
                                                     <td>EUX</td>
                                                     <td>
                                                         DAF
-                                                        <span class="status-badge status-admin">Administrateur</span>
+                                                        <span class="status-badge status-admin"><i class="fas fa-crown"></i> Admin</span>
                                                     </td>
                                                     <td>joseph.eux@example.com</td>
                                                     <td>
@@ -1176,8 +1404,8 @@
                                                                 <i class="fas fa-ellipsis-v"></i>
                                                             </button>
                                                             <ul class="dropdown-menu">
-                                                                <li><a class="dropdown-item edit-contact" href="#"><i class="fas fa-edit me-2"></i>Modifier</a></li>
-                                                                <li><a class="dropdown-item delete-contact" href="#"><i class="fas fa-trash me-2"></i>Supprimer</a></li>
+                                                                <li><a class="dropdown-item edit-contact" href="#"><i class="fas fa-edit"></i> Modifier</a></li>
+                                                                <li><a class="dropdown-item delete-contact" href="#"><i class="fas fa-trash"></i> Supprimer</a></li>
                                                             </ul>
                                                         </div>
                                                     </td>
@@ -1187,7 +1415,7 @@
                                                     <td>MARTIN</td>
                                                     <td>
                                                         Assistante RH
-                                                        <span class="status-badge status-recruiter">Recruteur</span>
+                                                        <span class="status-badge status-recruiter"><i class="fas fa-user-check"></i> Recruteur</span>
                                                     </td>
                                                     <td>sophia.martin@example.com</td>
                                                     <td>
@@ -1196,8 +1424,8 @@
                                                                 <i class="fas fa-ellipsis-v"></i>
                                                             </button>
                                                             <ul class="dropdown-menu">
-                                                                <li><a class="dropdown-item edit-contact" href="#"><i class="fas fa-edit me-2"></i>Modifier</a></li>
-                                                                <li><a class="dropdown-item delete-contact" href="#"><i class="fas fa-trash me-2"></i>Supprimer</a></li>
+                                                                <li><a class="dropdown-item edit-contact" href="#"><i class="fas fa-edit"></i> Modifier</a></li>
+                                                                <li><a class="dropdown-item delete-contact" href="#"><i class="fas fa-trash"></i> Supprimer</a></li>
                                                             </ul>
                                                         </div>
                                                     </td>
@@ -1206,19 +1434,15 @@
                                         </table>
                                     </div>
                                     
-                                    <div class="alert alert-success contact-added-alert d-none">
-                                        <i class="fas fa-check-circle me-2"></i>Contact ajouté
+                                    <div class="alert alert-success contact-added-alert d-none mt-3">
+                                        <i class="fas fa-check-circle me-2"></i> Contact ajouté avec succès !
                                     </div>
                                     
-                                    <div class="d-flex mt-3 gap-3">
-                                        <button type="button" class="btn add-contact-btn" data-bs-toggle="modal" data-bs-target="#addContactModal">
-                                            <i class="fas fa-plus me-2"></i>Ajouter un contact
-                                        </button>
-                                        
+                                    <div class="d-flex mt-4 gap-3">                                        
                                         <form id="invitationForm" class="d-flex flex-grow-1">
                                             <div class="input-group">
-                                                <span class="input-group-text">@</span>
-                                                <input type="email" class="form-control" placeholder="Email" required>
+                                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                                <input type="email" class="form-control" placeholder="Adresse email du collaborateur" required>
                                                 <button type="submit" class="btn btn-outline-primary">Envoyer une invitation</button>
                                             </div>
                                         </form>
@@ -1227,26 +1451,28 @@
                                 
                                 <div class="col-md-4">
                                     <div class="card h-100">
-                                        <div class="card-header bg-light">
-                                            <h5 class="mb-0">Ajouter à un recrutement</h5>
-                                            <p class="text-muted small mb-0">(bouton +, liste déroulante)</p>
+                                        <div class="card-header">
+                                            <div class="card-header-icon">
+                                                <i class="fas fa-briefcase"></i>
+                                            </div>
+                                            <h3>Recrutements actifs</h3>
                                         </div>
                                         <div class="card-body">
                                             <div class="recruitment-list">
                                                 <div class="recruitment-item" data-recruitment-id="1">
-                                                    <span class="recruitment-title">Développeur Full-Stack</span>
-                                                    <button class="assign-to-recruitment btn btn-sm btn-light" data-contact-id="1">
+                                                    <span class="recruitment-title"><i class="fas fa-code"></i> Développeur Full-Stack</span>
+                                                    <button class="assign-to-recruitment" data-contact-id="1">
                                                         <i class="fas fa-plus"></i>
                                                     </button>
                                                     <!-- Contact Pop-up -->
                                                     <div class="contact-popup">
-                                                        <h6>Interlocuteurs entreprise</h6>
+                                                        <h6><i class="fas fa-users"></i> Interlocuteurs entreprise</h6>
                                                         <!-- Contact items -->
                                                         <div class="contact-item">
                                                             <div class="contact-item-avatar">MD</div>
                                                             <div class="contact-item-info">
                                                                 <div class="contact-item-name">Marie DURAND</div>
-                                                                <div class="contact-item-role">Chargée de recrutement</div>
+                                                                <div class="contact-item-role"><i class="fas fa-user-tie"></i> Chargée de recrutement</div>
                                                             </div>
                                                             <button class="btn btn-sm btn-light"><i class="fas fa-times"></i></button>
                                                         </div>
@@ -1259,19 +1485,19 @@
                                                 </div>
 
                                                 <div class="recruitment-item" data-recruitment-id="2">
-                                                    <span class="recruitment-title">Chef de Projet IT</span>
-                                                    <button class="assign-to-recruitment btn btn-sm btn-light" data-contact-id="1">
+                                                    <span class="recruitment-title"><i class="fas fa-tasks"></i> Chef de Projet IT</span>
+                                                    <button class="assign-to-recruitment" data-contact-id="1">
                                                         <i class="fas fa-plus"></i>
                                                     </button>
                                                     <!-- Contact Pop-up -->
                                                     <div class="contact-popup">
-                                                        <h6>Interlocuteurs entreprise</h6>
+                                                        <h6><i class="fas fa-users"></i> Interlocuteurs entreprise</h6>
                                                         <!-- Contact items -->
                                                         <div class="contact-item">
                                                             <div class="contact-item-avatar">JE</div>
                                                             <div class="contact-item-info">
                                                                 <div class="contact-item-name">Joseph EUX</div>
-                                                                <div class="contact-item-role">DAF</div>
+                                                                <div class="contact-item-role"><i class="fas fa-user-tie"></i> DAF</div>
                                                             </div>
                                                             <button class="btn btn-sm btn-light"><i class="fas fa-times"></i></button>
                                                         </div>
@@ -1284,19 +1510,19 @@
                                                 </div>
 
                                                 <div class="recruitment-item" data-recruitment-id="3">
-                                                    <span class="recruitment-title">Designer UX/UI</span>
-                                                    <button class="assign-to-recruitment btn btn-sm btn-light" data-contact-id="1">
+                                                    <span class="recruitment-title"><i class="fas fa-paint-brush"></i> Designer UX/UI</span>
+                                                    <button class="assign-to-recruitment" data-contact-id="1">
                                                         <i class="fas fa-plus"></i>
                                                     </button>
                                                     <!-- Contact Pop-up -->
                                                     <div class="contact-popup">
-                                                        <h6>Interlocuteurs entreprise</h6>
+                                                        <h6><i class="fas fa-users"></i> Interlocuteurs entreprise</h6>
                                                         <!-- Contact items -->
                                                         <div class="contact-item">
                                                             <div class="contact-item-avatar">SM</div>
                                                             <div class="contact-item-info">
                                                                 <div class="contact-item-name">Sophia MARTIN</div>
-                                                                <div class="contact-item-role">Assistante RH</div>
+                                                                <div class="contact-item-role"><i class="fas fa-user-tie"></i> Assistante RH</div>
                                                             </div>
                                                             <button class="btn btn-sm btn-light"><i class="fas fa-times"></i></button>
                                                         </div>
@@ -1309,7 +1535,7 @@
                                                 </div>
                                             </div>
                                             <button class="btn btn-outline-primary w-100 mt-3">
-                                                <i class="fas fa-plus me-2"></i>Nouveau recrutement
+                                                <i class="fas fa-plus me-2"></i> Nouveau recrutement
                                             </button>
                                         </div>
                                     </div>
@@ -1319,12 +1545,12 @@
                         
                         <!-- Onglet Gestion des accès -->
                         <div class="tab-pane fade" id="permissions" role="tabpanel" aria-labelledby="permissions-tab">
-                            <h4 class="mb-4">Gestion des accès → Qui peut faire quoi ?</h4>
+                            <h4 class="mb-4"><i class="fas fa-shield-alt text-primary me-2"></i> Gestion des accès → Qui peut faire quoi ?</h4>
                             
                             <div class="roles-list">
                                 <div class="role-item">
                                     <div class="role-header">
-                                        <h5 class="role-name">Role 1 : Administrateur (gestion complète)</h5>
+                                        <h5 class="role-name"><i class="fas fa-crown"></i> Role 1 : Administrateur (gestion complète)</h5>
                                         <div class="form-check form-switch">
                                             <input class="form-check-input role-switch" type="checkbox" id="adminRoleSwitch" data-role="Administrateur" checked>
                                         </div>
@@ -1334,7 +1560,7 @@
                                 
                                 <div class="role-item">
                                     <div class="role-header">
-                                        <h5 class="role-name">Role 2 : Manager (accès aux recrutements)</h5>
+                                        <h5 class="role-name"><i class="fas fa-user-shield"></i> Role 2 : Manager (accès aux recrutements)</h5>
                                         <div class="form-check form-switch">
                                             <input class="form-check-input role-switch" type="checkbox" id="managerRoleSwitch" data-role="Manager" checked>
                                         </div>
@@ -1344,7 +1570,7 @@
                                 
                                 <div class="role-item">
                                     <div class="role-header">
-                                        <h5 class="role-name">Recruteur (accès limité à certaines candidatures)</h5>
+                                        <h5 class="role-name"><i class="fas fa-user-check"></i> Recruteur (accès limité à certaines candidatures)</h5>
                                         <div class="form-check form-switch">
                                             <input class="form-check-input role-switch" type="checkbox" id="recruiterRoleSwitch" data-role="Recruteur">
                                         </div>
@@ -1366,22 +1592,22 @@
                         
                         <!-- Onglet Paramètres -->
                         <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
-                            <h4 class="mb-4">Paramètres de l'organisation</h4>
+                            <h4 class="mb-4"><i class="fas fa-cogs text-primary me-2"></i> Paramètres de l'organisation</h4>
                             
                             <form id="organizationSettingsForm" class="settings-form">
                                 <div class="row">
                                     <div class="col-md-8">
-                                        <div class="mb-3">
+                                        <div class="mb-4">
                                             <label for="companyName" class="form-label">Nom de l'entreprise</label>
                                             <input type="text" class="form-control" id="companyName" value="InnovTech" required>
                                         </div>
                                         
-                                        <div class="mb-3">
+                                        <div class="mb-4">
                                             <label for="companyDescription" class="form-label">Description</label>
                                             <textarea class="form-control" id="companyDescription" rows="4" placeholder="Décrivez votre entreprise en quelques phrases">Entreprise spécialisée dans l'innovation technologique et le développement de solutions numériques.</textarea>
                                         </div>
                                         
-                                        <div class="mb-3">
+                                        <div class="mb-4">
                                             <label for="companyIndustry" class="form-label">Secteur d'activité</label>
                                             <select class="form-select" id="companyIndustry">
                                                 <option selected value="tech">Technologie & Innovation</option>
@@ -1393,26 +1619,26 @@
                                             </select>
                                         </div>
                                         
-                                        <div class="mb-3">
+                                        <div class="mb-4">
                                             <label for="companyWebsite" class="form-label">Site web</label>
                                             <input type="url" class="form-control" id="companyWebsite" placeholder="https://www.exemple.com" value="https://www.innovtech.com">
                                         </div>
                                     </div>
                                     
                                     <div class="col-md-4">
-                                        <div class="mb-3">
-                                            <label class="form-label">Logo de l'entreprise</label>
+                                        <div class="mb-4">
+                                            <label class="form-label text-center d-block">Logo de l'entreprise</label>
                                             <div class="logo-preview">
                                                 <img src="https://via.placeholder.com/120x120?text=Logo" alt="Aperçu du logo" id="logoPreview">
                                             </div>
-                                            <input type="file" class="form-control mt-2" id="companyLogo" accept="image/*">
-                                            <div class="form-text">Format recommandé: PNG ou JPG (300x300px)</div>
+                                            <input type="file" class="form-control mt-3" id="companyLogo" accept="image/*">
+                                            <div class="form-text text-center">Format recommandé: PNG ou JPG (300x300px)</div>
                                         </div>
                                     </div>
                                 </div>
                                 
                                 <button type="submit" class="btn btn-primary mt-4">
-                                    <i class="fas fa-save me-2"></i>Sauvegarder les modifications
+                                    <i class="fas fa-save me-2"></i> Sauvegarder les modifications
                                 </button>
                             </form>
                         </div>
@@ -1515,7 +1741,7 @@
             <div class="toast-header">
                 <i class="fas fa-check-circle me-2"></i>
                 <strong class="me-auto">Nexten</strong>
-                <small>A l'instant</small>
+                <small>À l'instant</small>
                 <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
             <div class="toast-body">
@@ -1524,54 +1750,9 @@
         </div>
     </div>
     
-    <footer id="contact">
-        <div class="container">
-            <div class="footer-content">
-                <div>
-                    <h4 class="footer-heading">Nexten</h4>
-                    <p class="footer-description">Notre plateforme utilise l'intelligence artificielle pour révolutionner le processus de recrutement, offrant 10 correspondances personnalisées pour les candidats et les recruteurs.</p>
-                    <div class="footer-social">
-                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    </div>
-                </div>
-                
-                <div>
-                    <h4 class="footer-heading">Navigation</h4>
-                    <ul class="footer-links">
-                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Accueil</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> À propos</a></li>
-                        <li><a href="#contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="footer-heading">Contact</h4>
-                    <div class="footer-contact">
-                        <p><i class="fas fa-map-marker-alt"></i> 123 Avenue de l'Innovation, 75001 Paris</p>
-                        <p><i class="fas fa-phone"></i> +33 1 23 45 67 89</p>
-                        <p><i class="fas fa-envelope"></i> contact@nexten.fr</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <p>&copy; 2025 Nexten - Tous droits réservés | <a href="#">Politique de confidentialité</a> | <a href="#">Conditions d'utilisation</a></p>
-            </div>
-        </div>
-    </footer>
-    
-    <!-- Bouton de retour en haut -->
-    <button id="scroll-to-top" class="scroll-to-top" aria-label="Retour en haut">
-        <i class="fas fa-arrow-up"></i>
-    </button>
-    
-    <!-- Bootstrap JavaScript Bundle with Popper -->
+    <!-- JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     
-    <!-- Scripts personnalisés -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Menu mobile toggle
@@ -1596,26 +1777,6 @@
                 }
             });
             
-            // Bouton de retour en haut
-            const scrollToTopButton = document.getElementById('scroll-to-top');
-            
-            if (scrollToTopButton) {
-                window.addEventListener('scroll', function() {
-                    if (window.scrollY > 500) {
-                        scrollToTopButton.classList.add('visible');
-                    } else {
-                        scrollToTopButton.classList.remove('visible');
-                    }
-                });
-                
-                scrollToTopButton.addEventListener('click', function() {
-                    window.scrollTo({
-                        top: 0,
-                        behavior: 'smooth'
-                    });
-                });
-            }
-            
             // Ajouter un contact
             const addContactBtn = document.querySelector('.btn[form="addContactForm"]');
             if (addContactBtn) {
@@ -1628,6 +1789,13 @@
                     // Close modal
                     const modal = bootstrap.Modal.getInstance(document.getElementById('addContactModal'));
                     modal.hide();
+                    
+                    // Show success alert
+                    const alertEl = document.querySelector('.contact-added-alert');
+                    alertEl.classList.remove('d-none');
+                    setTimeout(() => {
+                        alertEl.classList.add('d-none');
+                    }, 3000);
                 });
             }
             
@@ -1660,6 +1828,63 @@
                 el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
                 observer.observe(el);
             });
+            
+            // Recherche et filtrage
+            const contactSearch = document.getElementById('contactSearch');
+            const roleFilter = document.getElementById('roleFilter');
+            const contactsTable = document.getElementById('contactsTable');
+            
+            function filterContacts() {
+                const searchValue = contactSearch.value.toLowerCase();
+                const filterValue = roleFilter.value.toLowerCase();
+                const rows = contactsTable.querySelectorAll('tbody tr');
+                
+                rows.forEach(row => {
+                    const firstName = row.cells[0].textContent.toLowerCase();
+                    const lastName = row.cells[1].textContent.toLowerCase();
+                    const role = row.cells[2].textContent.toLowerCase();
+                    const email = row.cells[3].textContent.toLowerCase();
+                    
+                    const matchesSearch = firstName.includes(searchValue) || 
+                                         lastName.includes(searchValue) || 
+                                         role.includes(searchValue) || 
+                                         email.includes(searchValue);
+                    
+                    const matchesFilter = filterValue === '' || role.includes(filterValue);
+                    
+                    if (matchesSearch && matchesFilter) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            }
+            
+            if (contactSearch) {
+                contactSearch.addEventListener('input', filterContacts);
+            }
+            
+            if (roleFilter) {
+                roleFilter.addEventListener('change', filterContacts);
+            }
+            
+            // Form validation example
+            const invitationForm = document.getElementById('invitationForm');
+            if (invitationForm) {
+                invitationForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Show toast for invitation
+                    const toastEl = document.getElementById('notificationToast');
+                    const toastBody = toastEl.querySelector('.toast-body');
+                    toastBody.innerHTML = 'Invitation envoyée avec succès !';
+                    const toast = new bootstrap.Toast(toastEl);
+                    toast.show();
+                    
+                    // Reset form
+                    invitationForm.reset();
+                });
+            }
         });
     </script>
 </body>
