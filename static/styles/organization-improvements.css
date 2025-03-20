@@ -1,0 +1,696 @@
+/**
+ * Améliorations UI/UX pour la page Organisation
+ * Complément au style existant
+ */
+
+/* Variables supplémentaires */
+:root {
+    --bs-primary: var(--purple);
+    --bs-primary-rgb: 124, 58, 237;
+}
+
+/* Éléments généraux améliorés */
+body {
+    scrollbar-width: thin;
+    scrollbar-color: var(--purple-light) var(--cream);
+}
+
+.container, .main-container {
+    padding-left: var(--spacing-md);
+    padding-right: var(--spacing-md);
+}
+
+.notification-bar {
+    text-align: left;
+    padding: 10px 0;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+}
+
+.notification-bar .container {
+    display: flex;
+    align-items: center;
+}
+
+.notification-bar i {
+    color: var(--purple);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* En-tête et navigation */
+header nav a {
+    position: relative;
+    font-size: 0.95rem;
+    padding: 8px 12px;
+}
+
+header nav a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 3px;
+    background: var(--purple);
+    border-radius: 5px;
+    transition: width 0.3s ease;
+}
+
+header nav a:hover::after {
+    width: 80%;
+}
+
+/* Bannière entreprise */
+.company-banner {
+    background: linear-gradient(135deg, var(--purple) 0%, var(--purple-dark) 100%);
+    box-shadow: 0 8px 30px rgba(124, 58, 237, 0.25);
+    position: relative;
+    overflow: hidden;
+    margin-top: 80px;
+    border-radius: 0 0 16px 16px;
+}
+
+.company-banner::before,
+.company-banner::after {
+    content: '';
+    position: absolute;
+    pointer-events: none;
+}
+
+.company-banner::before {
+    top: -30%;
+    right: -10%;
+    width: 80%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+    transform: rotate(30deg);
+}
+
+.company-banner::after {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, var(--purple-light) 0%, transparent 100%);
+    opacity: 0.7;
+}
+
+.company-logo {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    filter: drop-shadow(0 8px 15px rgba(0, 0, 0, 0.15));
+}
+
+.company-logo:hover {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.company-name {
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.user-avatar {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.user-avatar:hover {
+    transform: scale(1.1) rotate(10deg);
+    border-color: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Contenu principal */
+.page-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 0;
+    background: linear-gradient(90deg, var(--black) 0%, var(--purple) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    border-radius: 10px;
+    font-weight: 500;
+    padding: 10px 20px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    background-color: var(--white);
+    color: var(--purple);
+    border: 2px solid var(--purple);
+}
+
+.back-btn:hover {
+    background-color: var(--purple);
+    color: var(--white);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(124, 58, 237, 0.15);
+}
+
+.back-btn i {
+    transition: transform 0.3s ease;
+}
+
+.back-btn:hover i {
+    transform: translateX(-5px);
+}
+
+/* Cartes et sections */
+.card {
+    border-radius: 16px;
+    overflow: hidden;
+    border: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    border-bottom: none;
+    padding: 20px 25px;
+}
+
+.card-header h3 {
+    margin: 0;
+    color: var(--white);
+    font-weight: 600;
+}
+
+.card-body {
+    padding: 25px;
+}
+
+.organization-section .card-header {
+    background: linear-gradient(135deg, var(--purple) 0%, var(--purple-dark) 100%);
+}
+
+/* Onglets améliorés */
+.organization-tabs {
+    border-bottom: 1px solid var(--cream-dark);
+    padding-bottom: 2px;
+}
+
+.organization-tabs .nav-link {
+    color: var(--gray);
+    font-weight: 500;
+    margin-right: 5px;
+    padding: 12px 20px;
+    border-radius: 8px 8px 0 0;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.organization-tabs .nav-link::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--purple) 0%, var(--purple-light) 100%);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+}
+
+.organization-tabs .nav-link:hover {
+    color: var(--purple);
+    background-color: rgba(124, 58, 237, 0.05);
+}
+
+.organization-tabs .nav-link.active {
+    color: var(--purple);
+    font-weight: 600;
+    background-color: transparent;
+    border-color: var(--cream-dark);
+    border-bottom-color: transparent;
+}
+
+.organization-tabs .nav-link.active::before {
+    transform: scaleX(1);
+}
+
+.organization-tabs .nav-link i {
+    margin-right: 8px;
+    transition: transform 0.3s ease;
+}
+
+.organization-tabs .nav-link:hover i {
+    transform: translateY(-3px);
+}
+
+/* Tableau de contacts */
+.contacts-table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    margin-bottom: 25px;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    background-color: var(--white);
+}
+
+.contacts-table th {
+    background-color: var(--purple);
+    color: var(--white);
+    font-weight: 500;
+    padding: 14px 16px;
+    border: none;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+.contacts-table th:first-child {
+    border-top-left-radius: 8px;
+}
+
+.contacts-table th:last-child {
+    border-top-right-radius: 8px;
+}
+
+.contacts-table td {
+    padding: 12px 16px;
+    border-top: none;
+    border-bottom: 1px solid var(--cream);
+    vertical-align: middle;
+    transition: all 0.2s ease;
+}
+
+.contacts-table tbody tr {
+    transition: all 0.3s ease;
+}
+
+.contacts-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.contacts-table tbody tr:hover {
+    background-color: rgba(124, 58, 237, 0.05);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* Boutons et contrôles */
+.btn-purple {
+    background-color: var(--purple);
+    color: var(--white);
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-purple:hover {
+    background-color: var(--purple-dark);
+    color: var(--white);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(124, 58, 237, 0.2);
+}
+
+.btn-outline-purple {
+    color: var(--purple);
+    border-color: var(--purple);
+    background-color: transparent;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-purple:hover {
+    background-color: var(--purple);
+    color: var(--white);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(124, 58, 237, 0.1);
+}
+
+.form-control {
+    padding: 12px 16px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    border: 1px solid var(--cream-dark);
+}
+
+.form-control:focus {
+    border-color: var(--purple);
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+}
+
+/* Listes de rôles et permissions */
+.roles-list {
+    margin-bottom: 30px;
+}
+
+.role-item {
+    background-color: var(--white);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    border-left: 4px solid var(--purple);
+    transition: all 0.3s ease;
+}
+
+.role-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.role-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.role-name {
+    font-weight: 600;
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--purple);
+}
+
+.role-description {
+    color: var(--gray);
+    margin-bottom: 0;
+}
+
+.permissions-detail {
+    background-color: var(--cream);
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 15px;
+}
+
+.form-check-input:checked {
+    background-color: var(--purple);
+    border-color: var(--purple);
+}
+
+/* Liste des recrutements */
+.recruitment-list {
+    margin-bottom: 20px;
+}
+
+.recruitment-item {
+    margin-bottom: 10px;
+    background-color: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    border: 1px solid var(--cream-dark);
+    overflow: hidden;
+}
+
+.recruitment-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+    border-color: var(--purple-light);
+}
+
+.recruitment-title {
+    font-weight: 500;
+    color: var(--black);
+    transition: color 0.3s ease;
+}
+
+.recruitment-item:hover .recruitment-title {
+    color: var(--purple);
+}
+
+.assign-to-recruitment {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    background-color: var(--white);
+    border: 1px solid var(--cream-dark);
+    color: var(--gray);
+}
+
+.assign-to-recruitment:hover {
+    background-color: var(--purple);
+    color: var(--white);
+    transform: rotate(90deg);
+    border-color: var(--purple);
+}
+
+/* Badges */
+.badge {
+    padding: 6px 10px;
+    font-weight: normal;
+    transition: all 0.3s ease;
+}
+
+.badge.bg-purple {
+    background-color: var(--purple) !important;
+}
+
+.badge.rounded-pill {
+    border-radius: 20px;
+}
+
+/* Alertes et informations */
+.alert {
+    border-radius: 12px;
+    padding: 15px 20px;
+    border: none;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.alert i {
+    margin-right: 10px;
+}
+
+/* Styles du formulaire de paramètres */
+.settings-form .form-label {
+    font-weight: 500;
+    color: var(--gray-dark);
+    margin-bottom: 8px;
+}
+
+.logo-preview {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--white);
+    border: 2px dashed var(--cream-dark);
+    margin-bottom: 15px;
+    padding: 10px;
+    transition: all 0.3s ease;
+}
+
+.logo-preview:hover {
+    border-color: var(--purple-light);
+    transform: scale(1.05);
+}
+
+.save-btn {
+    background: linear-gradient(135deg, var(--purple) 0%, var(--purple-dark) 100%);
+    color: var(--white);
+    padding: 12px 30px;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: none;
+    box-shadow: 0 5px 15px rgba(124, 58, 237, 0.2);
+}
+
+.save-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(124, 58, 237, 0.3);
+}
+
+/* Notification toast */
+.toast {
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.toast-header {
+    border-bottom: none;
+    background-color: transparent;
+}
+
+.toast-body {
+    padding: 15px;
+}
+
+/* Styles spécifiques aux éléments de formulaire */
+.form-control, .form-select, .input-group-text {
+    padding: 12px 16px;
+    border-radius: 8px;
+}
+
+.input-group > .form-control:not(:first-child),
+.input-group > .form-select:not(:first-child) {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.input-group > .form-control:not(:last-child),
+.input-group > .form-select:not(:last-child) {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.input-group-text {
+    border-color: var(--cream-dark);
+    background-color: var(--white);
+    color: var(--purple);
+}
+
+/* Modal */
+.modal-content {
+    border-radius: 16px;
+    overflow: hidden;
+    border: none;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header.bg-purple {
+    background: linear-gradient(135deg, var(--purple) 0%, var(--purple-dark) 100%);
+}
+
+.modal-footer {
+    border-top: 1px solid var(--cream);
+    padding: 20px;
+}
+
+/* Améliorations pour la responsivité */
+@media (max-width: 992px) {
+    .card-body {
+        padding: 20px;
+    }
+    
+    .company-banner-content {
+        flex-direction: column;
+        gap: 20px;
+        align-items: flex-start;
+    }
+    
+    .user-info {
+        width: 100%;
+        justify-content: flex-start;
+    }
+    
+    .user-details {
+        text-align: left;
+    }
+}
+
+@media (max-width: 768px) {
+    .page-header {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+    }
+    
+    .organization-tabs .nav-link {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+    }
+    
+    .recruitment-item .d-flex {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .recruitment-item .assign-to-recruitment {
+        align-self: flex-end;
+        margin-top: -30px;
+    }
+}
+
+@media (max-width: 576px) {
+    .contacts-table {
+        box-shadow: none;
+    }
+    
+    .contacts-table thead {
+        display: none;
+    }
+    
+    .contacts-table tbody tr {
+        display: block;
+        margin-bottom: 20px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    
+    .contacts-table tbody td {
+        display: block;
+        text-align: right;
+        padding: 10px 15px;
+        position: relative;
+    }
+    
+    .contacts-table tbody td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 15px;
+        font-weight: 600;
+    }
+}
+
+/* Animations et effets */
+@keyframes slideInUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.animate-slide-up {
+    animation: slideInUp 0.5s forwards;
+}
+
+/* Classes utilitaires */
+.text-purple {
+    color: var(--purple) !important;
+}
+
+.bg-purple {
+    background-color: var(--purple) !important;
+}
+
+.border-purple {
+    border-color: var(--purple) !important;
+}
