@@ -8,21 +8,34 @@ Une nouvelle fonctionnalité a été ajoutée : l'analyse automatique des fiches
 
 ### Pour tester cette fonctionnalité :
 
-1. Accédez à la page du questionnaire client : [client-questionnaire.html](https://bapt252.github.io/Commitment-/templates/client-questionnaire.html)
+1. Accédez à la page du questionnaire client : [client-questionnaire-working.html](https://bapt252.github.io/Commitment-Duplicate/templates/client-questionnaire-working.html)
 2. Remplissez les informations de l'entreprise à l'étape 1 et passez à l'étape 2
 3. À la question "Avez-vous un poste sur lequel vous souhaitez recruter ?", sélectionnez "Oui"
-4. Utilisez le bouton "Analyser une fiche de poste" qui apparaît (s'il n'apparaît pas, consultez la note ci-dessous)
+4. Utilisez le bouton "Analyser une fiche de poste" qui apparaît pour accéder à l'outil d'analyse
 5. Sur la page d'analyse, téléchargez un fichier ou collez du texte, puis cliquez sur "Analyser"
 6. Après l'analyse, cliquez sur "Continuer" pour revenir au questionnaire avec les champs pré-remplis
 
-> **Note importante** : Si le bouton "Analyser une fiche de poste" n'apparaît pas après avoir sélectionné "Oui", vous pouvez accéder directement à la page d'analyse via ce lien : [job-description-parser.html](https://bapt252.github.io/Commitment-/templates/job-description-parser.html)
+## Solutions aux problèmes précédents
 
-## Problèmes connus
+Les problèmes de cache et d'intégration ont été résolus :
 
-En raison du cache de GitHub Pages, la dernière version du site peut ne pas être immédiatement disponible. Si vous rencontrez des problèmes :
+1. **Nouvelle version fonctionnelle** : Une nouvelle version du questionnaire client a été créée : [client-questionnaire-working.html](https://bapt252.github.io/Commitment-Duplicate/templates/client-questionnaire-working.html). Cette version inclut :
+   - Une intégration directe du bouton d'analyse de fiche de poste dans le HTML
+   - Des correctifs pour le cache du navigateur avec des méta-tags appropriés
+   - Des logs améliorés pour faciliter le débogage
+   - Une meilleure gestion des données entre les pages
 
-1. Essayez d'accéder directement à la version corrigée : [client-questionnaire-fixed.html](https://bapt252.github.io/Commitment-/templates/client-questionnaire-fixed.html)
-2. Ou effectuez un hard refresh de la page (Ctrl+F5 ou Cmd+Shift+R)
+2. **Versions alternatives** :
+   - Version ancienne qui peut rencontrer des problèmes : [client-questionnaire.html](https://bapt252.github.io/Commitment-Duplicate/templates/client-questionnaire.html)
+   - Version minimale simplifiée : [client-questionnaire-fixed.html](https://bapt252.github.io/Commitment-Duplicate/templates/client-questionnaire-fixed.html)
+
+3. **Accès direct** : Vous pouvez également accéder directement à la page d'analyse via ce lien : [job-description-parser.html](https://bapt252.github.io/Commitment-Duplicate/templates/job-description-parser.html)
+
+## Conseils d'utilisation
+
+1. **Utilisez la version -working** : Pour une expérience sans problème, utilisez la version [client-questionnaire-working.html](https://bapt252.github.io/Commitment-Duplicate/templates/client-questionnaire-working.html)
+2. **Hard refresh** : Si nécessaire, effectuez un hard refresh (Ctrl+F5 ou Cmd+Shift+R) pour vider le cache du navigateur
+3. **Vérifiez la console** : Si vous rencontrez des problèmes, ouvrez la console développeur (F12) pour voir les messages de débogage
 
 ## Technologies utilisées
 
